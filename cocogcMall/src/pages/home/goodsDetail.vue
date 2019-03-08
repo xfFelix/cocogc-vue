@@ -1,5 +1,30 @@
 <template>
-    <div class="goodsDetail page-wrapper">
+    <div class="goodsDetail">
+
+        <div class="goodsD-headListW">
+
+            <!-- <div class="goodsD-hBM"> -->
+            <p class="goodsD-hBack" @click="$router.go(-1)">
+                <span></span>
+            </p>
+            <!-- </div> -->
+
+            <ul class="goodsD-headList">
+                <li>
+                    <span>商品</span>
+                </li>
+                <li>
+                    <span>评价</span>
+                </li>
+                <li>
+                    <span>详情</span>
+                </li>
+                <li>
+                    <span>推荐</span>
+                </li>
+            </ul>
+        </div>
+
         <div class="goodsD-headW">
             <div class="goodsD-headImg">
 
@@ -200,7 +225,7 @@
                     <p class="goodDetail-bcName">购物车</p>
                 </div>
                 <div class="goodDetail-buyOper">
-                    <p class="goodDetail-boAdd">加入购物车</p>
+                    <p class="goodDetail-boAdd" @click="fixedCloseFlag=true">加入购物车</p>
                     <p class="goodDetail-boNow">立即购买</p>
                 </div>
             </div>
@@ -265,7 +290,7 @@ import Swiper from 'swiper';
 export default {
     data() {
         return {
-            fixedCloseFlag:true
+            fixedCloseFlag: false
         };
     },
     mounted() {
@@ -285,7 +310,7 @@ export default {
         var swiperBan = new Swiper('.goodsD-eval .swiper-container', {
             spaceBetween: 10,
             autoplay: false,
-            autoplayDisableOnInteraction: false, 
+            autoplayDisableOnInteraction: false,
             slidesPerGroup: 1,
             slidesPerView: "auto",
             centeredSlides: true,
@@ -308,6 +333,41 @@ export default {
 
 
 <style lang="less">
+.goodsD-headListW {
+    background: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 12;
+    .goodsD-headList {
+        display: flex;
+        justify-content: space-around;
+    }
+
+
+    .goodsD-hBack {
+        display: flex;
+        width: 0.78rem;
+        height: 0.78rem;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        span {
+            width: 0.22rem;
+            height: 0.4rem;
+            display: inline-block;
+            background-image: url(/static/images/jl.png);
+            background-repeat: no-repeat;
+            background-position: -0.2rem -0.74rem;
+            background-size: 5.8rem 1.86rem;
+            margin-top: -0.04rem;
+            margin-right: 0.1rem;
+            transform: rotate(180deg)
+        }
+    }
+}
+
+
 .goodsD-headW {
     .goodsD-headImg {
         height: 7.5rem;
@@ -568,7 +628,7 @@ export default {
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 20;
     .goodDetail-bMoney {
         margin-left: 0.2rem;
         .goodDetail-bmReal {
@@ -639,7 +699,7 @@ export default {
     bottom: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.2);
-    z-index: 12;
+    z-index: 21;
     .goodDetail-selectW {
         height: 8.7rem;
         background: #fff;
@@ -665,7 +725,7 @@ export default {
                 margin-right: 0.24rem;
                 img {
                     width: 100%;
-                } 
+                }
             }
             .goodDetail-sMI {
                 width: 72%;

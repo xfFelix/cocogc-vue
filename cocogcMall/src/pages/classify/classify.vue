@@ -10,7 +10,7 @@
                     </p>
                 </div>
                 <div class="home-message">
-                    <span class="home-msg"></span>
+                    搜索
                 </div>
             </div>
             <div class="select-headBan">

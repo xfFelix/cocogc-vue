@@ -22,7 +22,7 @@
                         </div>
                         <div class="address-editDel">
                             <p class="address-edit" @click="addressEditC(item,index)">
-                                <span class="j1Png address-editImg" ></span>
+                                <span class="j1Png address-editImg"></span>
                                 <span>编辑</span>
                             </p>
                             <p class="address-del">
@@ -60,7 +60,8 @@ export default {
     data() {
         return {
             addressList: [],
-            fixedshow: false
+            fixedshow: false,
+            delIndex: ''
         };
     },
     mounted() {
@@ -75,6 +76,7 @@ export default {
         },
         delAddress(index) {
             this.fixedshow = true;
+            this.delIndex = index;
         },
         goAddressEdit() {
             this.$router.push('addressEdit');
@@ -83,6 +85,7 @@ export default {
         //确定删除
         delConfirm() {
             this.fixedshow = false;
+            this.addressList.splice(this.delIndex, 1)
 
         },
         colseFixed() {
