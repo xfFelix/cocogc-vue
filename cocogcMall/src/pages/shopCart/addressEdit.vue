@@ -65,6 +65,7 @@
 
 import headerTop from "../../common/header.vue";
 import addressSelect from "../../components/shopCart/addressSelect.vue";
+import api from '../../service/api';
 
 export default {
     data() {
