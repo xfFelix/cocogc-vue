@@ -5,14 +5,14 @@
         </keep-alive>
 
 
-    <v-footer></v-footer> 
+        <v-footer></v-footer>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
 import { IsEmpty } from "@/util/common";
 import Footer from '@/common/footer.vue'
+
 
 export default {
     name: 'App',
@@ -28,8 +28,6 @@ export default {
 
     },
     methods: {
-
-
         getToken: function() {
             var token = localStorage.getItem("token");
             if (IsEmpty(token)) {
@@ -59,7 +57,7 @@ export default {
         // this.getToken();
         localStorage.setItem("token", '14c575b1f592da075b3cacccb96d7246');
 
-        
+
 
     },
     components: {

@@ -49,23 +49,23 @@
             <div class="main select-bGoodsW">
                 <div class="select-bGoods">
                     <div class="select-bGoodsT" v-for="(item,index) in cateTypeList" :key="index">
-                         <h3 class="title">{{item.name}}</h3> 
+                         <h3 class="title">{{item.name}}</h3>
                         <ul>
-                            <li class="one-bottom-px">
-                                <p> 
-                                    <!-- <span>{{item.name}}</span> -->
-                                    <!-- <img src="static/images/goos_01.png" alt="" /> -->
+                            <li class="one-bottom-px" v-for="(i,index) in item.childCategory" @click="">
+                              <router-link :to="{path: '/detail/' + i.id}">
+                                <p>
+                                  <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''"/>
+                                  <span>{{i.name}}</span>
                                 </p>
+                              </router-link>
                             </li>
-                           
+
                         </ul>
                     </div>
                 </div>
 
             </div>
         </div>
-
-       
         <!-- <v-footer></v-footer> -->
     </div>
 </template>
@@ -74,7 +74,8 @@
 import Footer from '../../common/footer.vue';
 import api from '../../service/api';
 
-export default {
+export default
+{
     data() {
         return {
             cateId: 0,
@@ -82,42 +83,46 @@ export default {
             activeIndex: 0,
             cateTypeList: [],
             cateGoodsList:[]
-            // cateTitle:''
         };
     },
     mounted() {
-        this.categories(this.cateId);
-        this.categories('1');
+      let that = this;
+      this.showLoading();
+      this.categories(this.cateId,function (data) {
+        if(data.length>0){
+          that.cateList = data;
+          let first = data[0].id;
+          that.categories(first,function (data) {
+            that.cateTypeList = data;
+            that.hideLoading();
+          });
+        }
+      });
     },
     methods: {
-        categories: function(cateId) {
-            let _this = this;
+        categories: function(cateId,callback) {
             this.axios(testUrl + api.categories, {
                 "id": cateId
             }, 'post')
                 .then((data) => {
-                    if (data.error_code == 1) {
-                        if (cateId == 0) {
-                            _this.cateList = data.data;
-                            
-                        } else {
-                            _this.cateTypeList = data.data;
-                            _this.cateTitle = data.data[0].parentName;
-                            
-                        }
-                    } else {
-
+                    if (data.error_code == 0) {
+                      if(callback)
+                        callback(data.data);
                     }
                 })
                 .catch((err) => {
-
-
+                  console.log(err);
                 })
         },
 
         activeIndexC: function(index, itemId) {
+            var that = this;
             this.activeIndex = index;
-            this.categories(itemId);
+            this.showLoading();
+            this.categories(itemId,function (data) {
+              that.cateTypeList = data;
+              that.hideLoading();
+            });
         }
 
 

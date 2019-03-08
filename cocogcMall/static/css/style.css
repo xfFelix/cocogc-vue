@@ -159,5 +159,6 @@ height: 45px;
     background: #fff;
     height: 100%;
 }
-
-
+.mint-indicator-wrapper{
+  z-index:99999;
+}

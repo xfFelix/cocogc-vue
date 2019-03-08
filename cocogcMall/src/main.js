@@ -1,64 +1,62 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import App from './App'
-import router from './router'
+import Vue from 'vue';
+import App from './App';
+import router from './router';
 import axios from './service/http'
-// import Vconsole from 'vconsole'
-import * as filters from './util/filter.js'
-import Toast from './common/toast'
-// import store from './store'
-// import Swiper from 'swiper'
+import * as filters from './util/filter.js';
+// import Swiper from 'swiper';
 import 'swiper/dist/css/swiper.css';
-import '../static/css/style.css'
-import VueCookie from 'vue-cookies'
-import $ from 'jquery'
+import '../static/css/style.css';
+import VueCookie from 'vue-cookies';
+import VueLazyload from 'vue-lazyload';
 
-import Vconsole from 'vconsole'
-// new Vconsole();
-
-import VueLazyload from 'vue-lazyload'
-
-Vue.use(Toast)
 Vue.use(VueCookie);
+//mint-ui
+import 'mint-ui/lib/style.css'
+import {
+  MessageBox,
+  Indicator,
+  Toast
+} from "mint-ui";
 
+Vue.prototype.Toast = Toast;
+Vue.prototype.Messagebox = MessageBox;
+//Vue.prototype.Indicator = Indicator;
+Vue.prototype.showLoading = function () {
+  Indicator.open({spinnerType: 'fading-circle'});
+};
+Vue.prototype.hideLoading = function () {
+  Indicator.close();
+};
 
-Vue.use(VueLazyload, {
-  preLoad: 1.3,
-  error: 'static/images/loading.jpg',
-  loading: 'static/images/loading.jpg',
-  attempt: 1,
-  // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
-  listenEvents: [ 'scroll' ]
-})
-
-
-
-// new Vconsole();
+// Vue.use(VueLazyload, {
+//   preLoad: 1.3,
+//   error: 'static/images/loading.jpg',
+//   loading: 'static/images/loading.jpg',
+//   attempt: 1,
+//   // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
+//   listenEvents: [ 'scroll' ]
+// })
 Vue.config.productionTip = false
+
 Vue.prototype.axios = axios;
 
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
-})
-
+});
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>',
-  // store
-})
-
-
-
+  template: '<App/>'
+});
 
 router.afterEach((to,from,next) => {
     window.scrollTo(0,0);
 });
-
 
 // router.beforeEach((to, from, next) => {
 //     // while (Vue.Cancel.length > 0) {
@@ -71,4 +69,3 @@ router.afterEach((to,from,next) => {
 //     console.log('路由切换')
 // })
 
-  

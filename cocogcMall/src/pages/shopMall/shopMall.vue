@@ -64,7 +64,6 @@
 
     <!-- 头部 -->
 <!-- <v-footer></v-footer> -->
-    <v-loading></v-loading>
   </div>
 </template>
 
@@ -75,7 +74,6 @@ import Footer from '../../common/footer.vue'
 import Shortcut from '../../components/home/shortcut.vue'
 import HotGoods from '../../components/home/hotGoods.vue'
 import Integral from '../../components/home/integral.vue'
-import Loading from '../../common/loading.vue'
 
 
 
@@ -170,8 +168,7 @@ export default {
     "v-footer": Footer,
     "v-shortcut": Shortcut,
     "v-hotGoods": HotGoods,
-    "v-integral": Integral,
-    'v-loading': Loading
+    "v-integral": Integral
   }
 };
 </script>
