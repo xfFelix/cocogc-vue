@@ -231,9 +231,8 @@
             </div>
         </div>
 
-        <div class="goodDetail-selectFixed" @click="fixedClose($event)" v-if="fixedCloseFlag"  >
+        <div class="goodDetail-selectFixed" @click="fixedClose($event)" v-if="fixedCloseFlag">
             <div class="goodDetail-selectW">
-                {{item}}
                 <div class="goodDetail-sim">
                     <div class="goodDetail-sGoodsImg">
                         <img src="static/images/goos_01.png" alt="" />
@@ -295,8 +294,7 @@ export default {
         return {
             fixedCloseFlag: false,
             goodsId: this.$route.params.goodId,
-            goodsDetailList:[],
-            l_attrs:[]
+            goodsDetailList: [],
         };
     },
     mounted() {
@@ -335,10 +333,7 @@ export default {
                     if (data.error_code == 0) {
                         _this.goodsDetailList = data.data;
                         _this.l_attrs = data.data.l_attrs;
-                        var s = [];
-                        s = _this.l_attrs
-console.log(s)
-
+  
 
                     }
                 })

@@ -11,11 +11,8 @@ import classify from '@/pages/classify/classify';
 
 import shopMall from '@/pages/shopMall/shopMall';
 
-
-
 import account from '@/pages/account/account';
 import setUp from '@/pages/account/setUp';
-
 import addressMag from '@/pages/shopCart/addressMag';
 import addressEdit from '@/pages/shopCart/addressEdit';
 
