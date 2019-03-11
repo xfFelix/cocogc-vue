@@ -32,7 +32,7 @@
         <div class="goodsD-priceAddress">
             <div class="goodsD-priceW one-bottom-px">
                 <div class="changeGoods">
-                    <p class="changeGoodsa">{{goodsInfo.name}} {{goodsInfo.attrs}}</p>
+                    <p class="changeGoodsa">{{goodsInfo.name}} {{goodsInfo.noSpecs==0?goodsInfo.attrs:""}}</p>
                     <p class="changeGoodsb">{{goodsInfo.marketPrice}}</p>
                 </div>
                 <div class="changeMoney">
@@ -81,10 +81,12 @@
 
             <div class="goodDetail-buyCO">
                 <div class="goodDetail-buyCard">
+                  <router-link :to="{path: '/shopCart'}">
                     <p class="navImg goodDetail-bcImg">
                         <span>{{carTotal}}</span>
                     </p>
                     <p class="goodDetail-bcName">购物车</p>
+                  </router-link>
                 </div>
                 <div class="goodDetail-buyOper">
                     <p class="goodDetail-boAdd" @click="fixedCloseFlag=true">加入购物车</p>
@@ -288,7 +290,10 @@ export default {
              if(data.error_code == 0)
              {
                that.Toast("添加购物车成功!");
-               this.fixedCloseFlag = false;
+               that.fixedCloseFlag = false;
+               that.getCarInfo(function (data) {
+                 that.carTotal = data;
+               });
              }else{
                that.Toast("添加购物车失败：" +data.message);
              }

@@ -22,34 +22,26 @@
 
             <div class="shop-dStoreWW">
                 <div class="shop-dStoreW" v-for="(items,index) in list" :key="index">
-                    <div class="shop-dStore">
-                        <span @click="selTypeAll(items,index,$event)" :class="!items.AllFlag ?'shop-selectN':'shop-selectY'"></span>
-                        <!-- <input type="checkbox" id="shop_all"  v-model="selTypeAllFlag">
-                        <label for="shop_all" class="shop" :class="selTypeAllFlag?'shop-selectY':'shop-selectN'" @click="selTypeAll(items,index,$event)"></label> -->
-                        <span class="shop-dNameImg"></span>
-                        <span class="shop-dName">{{items.goodStore}}</span>
-                        <span class="shop-dGo"></span>
-                    </div>
                     <ul class="shop-contentUl">
-                        <li v-for="(goodsItem,goodsIndex) in items.goodsList" :key="goodsIndex">
+                        <li>
                             <span class="shop-selectW">
-                                <span @click="selGoods(index,goodsIndex,$event)" :class="!goodsItem.check?'shop-selectN':'shop-selectY'">
+                                <span @click="selGoods(index,0,$event)" :class="!items.check?'shop-selectN':'shop-selectY'">
                                 </span>
                             </span>
                             <span class="shop-selImg">
                                 <img src="static/images/goos_01.png" alt="" />
                             </span>
                             <div class="shop-selInfo">
-                                <p class="shop-selGoodsT">{{goodsItem.name}}</p>
-                                <p class="shop-selGoodsC">{{goodsItem.goodSInfo}}</p>
+                                <p class="shop-selGoodsT">{{items.goods.name}}</p>
+                                <p class="shop-selGoodsC">{{items.goods.attrs}}</p>
                                 <div class="shop-selGoodsN">
-                                    <span class="shop-selGoodsS">{{goodsItem.price*goodsItem.count}}</span>
+                                    <span class="shop-selGoodsS">{{items.goods.currentPrice}}</span>
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
-                                        <span @click="numDecrease(goodsItem,goodsIndex),storeMoney() " :class="goodsItem.count>1?'decNum':'decNoNum'"></span>
-                                        <span><input type="number" @input="storeMoney" v-model.number="goodsItem.count" /></span>
+                                        <span @click="numDecrease(index) " :class="items.num>1?'decNum':'decNoNum'"></span>
+                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly"/></span>
                                         <!-- 是否需要有货和没货？+号颜色是否要变 -->
-                                        <span @click="numIncrease(index,goodsItem,goodsIndex),storeMoney()"></span>
+                                        <span @click="numIncrease(index)"></span>
                                     </p>
                                 </div>
                             </div>
@@ -103,161 +95,168 @@
 <script>
 import Guesslike from "../../common/guesslike.vue";
 import Footer from '../../common/footer.vue'
+import api from '../../service/api';
+import { IsEmpty,getToken } from "@/util/common";
+
 export default {
     data() {
         return {
-            list: [
-                {
-                    goodStore: "京东商品",
-                    AllFlag: false,
-                    goodsList: [{
-                        id: 1,
-                        name: "京东商品1阿迪斯发是手动阀手动阀京东商品1阿迪斯发是手动阀手动阀",
-                        price: 1.8,
-                        count: 5,
-                        Stotal: 180,
-                        sku: '001',
-                        check: false
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false
-                    }]
-                },
-                {
-                    goodStore: "自营商品",
-                    AllFlag: false,
-                    goodsList: [{
-                        id: 3,
-                        name: "自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品11",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '003',
-                        check: false
-                    }]
-                }
-
-            ],
+            list: [],
             selTypeAllFlag: false,
             selGoodsFlag: false,
             selectAllFlag: false,
             selectAllPrice: 0,
             selectAllGoods: 0,
             deitDelFlag: true,
-            
+
         };
     },
     mounted() {
-        
-
-    },
-    watch: {
+      var that = this;
+      this.getCartGoodsList(function (data) {
+        if(data == null) {
+          that.list = [];
+        }else{
+          that.list = data;
+        }
+        that.computeTotal();
+      });
 
     },
     methods: {
-        // 删除
-        delGoods() {
-
-            if (this.selectAllFlag == true) {
-                this.list.splice(0, this.list.length)
-            }
-            this.list.forEach((res, resIndex) => {
-                if (res.AllFlag == true) {
-                    this.list.splice(resIndex, 1)
-                }
-                res.goodsList.forEach((res2, resIndex2) => {
-                    if (res2.check == true) {
-                        res.goodsList.splice(resIndex2, 1)
-                    }
-                })
+        getCartGoodsList(callback){
+          this.axios(testUrl + api.selectCarts,
+            {
+              token: getToken()
+            },
+            'post')
+            .then((data) => {
+              if (data.error_code == 0) {
+                if(callback)
+                  callback(data.data);
+              }
             })
-
-            this.selectAllGoods = 0;
-            this.selectAllPrice = 0;
+            .catch((err) => {
+              console.log(err);
+            })
+        },
+        // 删除
+        delGoods()
+        {
+          var that = this;
+          var ids = [];
+          that.list.forEach((res) => {
+            if (res.check == true) {
+              ids.push(res.id);
+            }
+          });
+          if(ids.length>0){
+            that.axios(testUrl + api.removeCarts,
+              {
+                token: getToken(),
+                id:ids.join(",")
+              },
+              'post')
+              .then((data) => {
+                if (data.error_code == 0)
+                {
+                  that.getCartGoodsList(function (data) {
+                    if(data == null) {
+                      that.list = [];
+                    }else{
+                      that.list = data;
+                    }
+                    that.deitDelFlag = false;
+                    that.selectAllPrice = 0;
+                    that.selectAllGoods = 0;
+                  });
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+          }
         },
         //结算
         settleGoods(){
+          var that = this;
+          var buys = [];
+          that.list.forEach(function (v) {
+            if(v.check) {
+              var buy = {};
+              buy.goodsId = v.goodsId;
+              buy.nums = v.num;
+              buys.push(buy);
+            }
+          });
+          if(that.selectAllGoods == 0) return false;
+          if(buys.length<=0){
+            that.Toast("请选择结算商品！");
+            return false;
+          }
+          that.axios(testUrl + api.updateCart,
+            {
+              token: getToken(),
+              buys:buys
+            },
+            'post')
+            .then((data) => {
+              if (data.error_code == 0)
+              {
+                that.$router.push('/order');
+              }
+            });
 
         },
         //编辑
         deitDel() {
             this.deitDelFlag = false;
-           
+
         },
         deitDelOk() {
             this.deitDelFlag = true;
-            
-        },
-        findPositon(id) {
 
+        },
+        computeTotal() {
+          var that = this;
+          this.selectAllPrice = 0;
+          this.selectAllGoods = 0;
+          this.list.forEach((res) => {
+            if (res.check == true) {
+              that.selectAllPrice += res.num * res.goods.currentPrice;
+              that.selectAllGoods++;
+            }
+          });
         },
         // 数量减小
-        numDecrease(goodsItem, goodsIndex) {
-            if (goodsItem.count > 1) {
-                goodsItem.count--;
-            }
-            this.selectAllPrice = 0;
-            this.list.forEach((res) => {
-                res.goodsList.forEach((res2) => {
-                    if (res2.check == true) {
-                        this.selectAllPrice += res2.count * res2.price;
-
-                    }
-                })
-            })
+        numDecrease(index) {
+          if(this.list[index].num>1)
+          {
+            this.list[index].num--;
+            this.computeTotal();
+          }
         },
         //增加
-        numIncrease(index, goodsItem, goodsIndex) {
-            goodsItem.count++
-            this.selectAllPrice = 0;
-            this.list.forEach((res) => {
-                res.goodsList.forEach((res2) => {
-                    if (res2.check == true) {
-                        this.selectAllPrice += res2.count * res2.price;
-
-                    }
-                })
-            })
+        numIncrease(index)
+        {
+          if(this.list[index].num < this.list[index].goods.stocks){
+            this.list[index].num++;
+            this.computeTotal();
+          }
         },
         //输入的数量
-        storeMoney(e) {
-            this.selectAllPrice = 0;
-            this.list.forEach((res) => {
-                res.goodsList.forEach((res2) => {
-                    if (res2.check == true) {
-                        this.selectAllPrice += res2.count * res2.price;
-                    }
-
-                })
-            })
-
-            // let tgoodCount =  e.target.value.replace(/[^1-9]*$/,"");
-            // return tgoodCount
-
+        storeMoney(e,index)
+        {
+            this.list[index].num = e;
+            this.computeTotal();
         },
         //单个商品选中
         selGoods(index, goodsIndex) {
             var List = this.list;
-            List[index].goodsList[goodsIndex].check = !List[index].goodsList[goodsIndex].check;
+            List[index].check = !List[index].check;
             //判断是否全选
-            this.Isquanxuan(index);
-            this.selectAllPrice = 0;
-            this.selectAllGoods = 0;
-            this.list.forEach((res) => {
-                res.goodsList.forEach((res2) => {
-                    if (res2.check == true) {
-                        this.selectAllPrice += res2.count * res2.price;
-                        this.selectAllGoods++
-                    }
-                })
-            })
-
+            this.IsQuanXuan();
+            this.computeTotal();
         },
         //全选
         selectAll() {
@@ -265,65 +264,25 @@ export default {
             this.selectAllPrice = 0;
             this.selectAllGoods = 0;
             this.list.forEach((res) => {
-                res.AllFlag = this.selectAllFlag
-                res.goodsList.forEach((res2) => {
-                    res2.check = this.selectAllFlag;
-                    if (res.AllFlag == true) {
-                        this.selectAllPrice += res2.count * res2.price;
-                        this.selectAllGoods++
-                    }
-                })
-
-            })
+                res.AllFlag = this.selectAllFlag;
+                res.check = this.selectAllFlag;
+                if (res.AllFlag == true) {
+                    this.selectAllPrice += res.num * res.goods.currentPrice;
+                    this.selectAllGoods++
+                }
+            });
         },
         //某个商品不选，全选不选
-        Isquanxuan(index) {
-            let List = this.list;
+        IsQuanXuan(index)
+        {
             let Notselected = true;
-            List[index].goodsList.forEach((res) => {
+            this.list.forEach((res) => {
                 if (!res.check) {
                     Notselected = false
                 }
-            })
-            List[index].AllFlag = Notselected;
-            this.IsStorexuan()
+            });
+           this.selectAllFlag = Notselected;
         },
-        //某个店铺不选，全选不选
-        IsStorexuan() {
-            let storeNot = true;
-            this.list.forEach((res) => {
-                if (!res.AllFlag) {
-                    storeNot = false;
-                }
-            })
-            this.selectAllFlag = storeNot;
-        },
-        //店铺商品选中
-        selTypeAll(itemStore, index, e) {
-            let List = this.list;
-            this.selectAllPrice = 0;
-            this.selectAllGoods = 0;
-            List[index].AllFlag = !List[index].AllFlag;
-            List[index].goodsList.forEach((res) => {
-                res.check = List[index].AllFlag;
-            })
-            this.list.forEach((res) => {
-                if (res.AllFlag == true) {
-                    res.goodsList.forEach((res2) => {
-                        this.selectAllPrice += res2.count * res2.price;
-                        this.selectAllGoods++
-                    })
-                }
-            })
-
-            this.IsStorexuan();
-        },
-
-
-
-
-
-
     },
     components: {
         "guess-like": Guesslike,
@@ -527,7 +486,7 @@ export default {
         width: 100%;
         line-height: 1rem;
         background: #30ce84;
-        color: #fff; //         
+        color: #fff; //
         display: flex;
         align-items: center;
         justify-content: space-around;

@@ -19,6 +19,8 @@ const goodsDetailInfo = 'goodsDetailInfo'; //商品详情
 const add2Cart = 'add2Cart'; //放入购物车
 const selectCarts = 'selectCarts'; //购物车
 const totalCarts = 'totalCarts'; //购物车商品数
+const removeCarts = 'removeCarts'; //删除购物车商品
+const updateCart = 'updateCart'; //更新购物车商品
 
 export default {
   register,
@@ -35,5 +37,7 @@ export default {
   goodsDetailInfo,
   add2Cart,
   selectCarts,
-  totalCarts
+  totalCarts,
+  removeCarts,
+  updateCart
 }
