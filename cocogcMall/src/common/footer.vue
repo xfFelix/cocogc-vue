@@ -31,6 +31,7 @@ export default {
 
     },
     beforeRouteEnter(to, from, next) {
+        console.log('111')
         console.log(to, from)
         next()
     },

@@ -1,274 +1,259 @@
 <template>
-    <div class="addressEdit">
+    <div class="addressMag">
         <header-top></header-top>
+        <div class="address-contentW">
+            <ul class="address-content">
+                <li v-for="(item,index) in addressList" :key="index">
+                    <div class="address-infoW one-bottom-px">
+                        <p class="address-nameTel">
+                            <span>{{item.name}}</span>
+                            <span>{{item.tel}}</span>
+                        </p>
+                        <p class="address-address">{{item.address}}</p>
+                    </div>
+                    <div class="address-operW">
+                        <div class="address-def">
+                            
+                            <span class="j1Png" :class="item.isDefault==1?'address-defImg':'address-defImgNo'"></span>
 
-        <div class="addEdit-contentWrap">
-            <ul class="addEdit-content">
-                <li class="one-bottom-px">
-                    <p>
-                        <span>收货人</span>
-                        <span>
-                            <input type="text" placeholder="请填写收货人姓名" v-model="takeName">
-                        </span>
-                    </p>
-                    <p class="j1Png addEdid-delInp" @click="takeNameC">
-                    </p>
-                </li>
-                <li class="one-bottom-px">
-                    <p>
-                        <span>手机号码</span>
-                        <span>
-                            <input type="text" placeholder="请填写收货人手机号" v-model="takeTel">
-                        </span>
-                    </p>
-                    <p class="j1Png addEdid-delInp" @click="takeTelC">
-                    </p>
-                </li>
-                <li class="one-bottom-px">
-                    <p>
-                        <span>所在地区</span>
-                        <span>
-                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @focus="fixedShowC()">
-                        </span>
-                    </p>
-                    <p class="j1Png addEdid-delInp" @click="takeAddressC">
-                    </p>
-                </li>
-                <li class="one-bottom-px">
-                    <p>
-                        <span>详细地区</span>
-                        <textarea type="text" placeholder="街道、楼牌号等" v-model="takeDAddress">
-                        </textarea>
-                    </p>
-                    <p class="j1Png addEdid-delInp" @click="takeDAddressC">
-                    </p>
+                            <span class="address-defAddress">
+                                <span>设为默认地址</span>
+                            </span>
+                        </div>
+                        <div class="address-editDel">
+                            <p class="address-edit" @click="addressEditC(item,index)">
+                                <span class="j1Png address-editImg"></span>
+                                <span>编辑</span>
+                            </p>
+                            <p class="address-del">
+                                <span class="j1Png address-delImg"></span>
+                                <span @click="delAddress(item,index)">删除</span>
+                            </p>
+                        </div>
+                    </div>
                 </li>
             </ul>
-            <div class="address-operW">
-                <div class="address-def">
-                    <span class="j1Png " :class="addressDef?'address-defImgNo':'address-defImg'" @click="addressDef=!addressDef"></span>
-                    <!-- <span class="j1Png "></span> -->
 
-                    <span class="address-defAddress">
-                        <span>设为默认地址</span>
-                    </span>
-                </div>
+            <p class="button addBnt" @click="goAddressEdit()">
+                添加新地址
+            </p>
+        </div>
+
+        <div class="address-fixedWrap" v-if="fixedshow">
+            <div class="address-fixed">
+                <div class="address-whether one-bottom-px">确定要删除该地址吗？</div>
+                <p class="address-fixedDel">
+                    <span @click="colseFixed">取消</span>
+                    <span @click="delConfirm()">确定</span>
+                </p>
             </div>
         </div>
 
-        <p class="address-keep" @click="takeKeep()">保存</p>
-         <address-select v-if="fixedShow==true" @childShow = "parentShow"  @childAddress = "parentAddress"></address-select> 
-
     </div>
 </template>
-<script>
 
+<script>
 import headerTop from "../../common/header.vue";
-import addressSelect from "../../components/shopCart/addressSelect.vue";
 import api from '../../service/api';
 
 export default {
     data() {
         return {
-            takeName: '',
-            takeTel: '',
-            takeAddress: '',
-            takeDAddress: '',
-            addressDef: true,
-            fixedShow:false
+            addressList: [],
+            fixedshow: false,
+            delIndex:'',
+            delId:''
         };
     },
     mounted() {
-
-        var adEdit = localStorage.getItem('addressEdit');
-        if (adEdit) {
-            console.log(adEdit)
-            var item = JSON.parse(adEdit);
-            this.takeName = item.name;
-            this.takeTel = item.tel;
-            this.takeAddress = item.area;
-            this.takeDAddress = item.address;
-            localStorage.setItem('addressEdit', '');
-        }
-    },
-    updated() {
-
+        this.addressMag()
     },
     methods: {
-        parentShow(val){
-            this.fixedShow = val;
+        addressEditC(item, index) {
+            var editItem = JSON.stringify(item);
+            localStorage.setItem('addressEdit', editItem);
+            this.$router.push('addressEdit')
         },
-        parentAddress(val){
-            this.takeAddress = val;
-            console.log(val)
+        delAddress(item,index) {
+            this.fixedshow = true;
+            this.delIndex = index;
+            this.delId = item.id;
         },
-        fixedShowC(){
-            this.fixedShow = true;
+        goAddressEdit() {
+            this.$router.push('addressEdit');
+            localStorage.setItem('addressEdit', '');
         },
-        takeNameC() {
-            this.takeName = '';
+        //确定删除
+        delConfirm() {
+            this.fixedshow = false;
+            this.removeAddress()
+            
         },
-        takeTelC() {
-            this.takeTel = '';
+        colseFixed() {
+            this.fixedshow = false;
         },
-        takeAddressC() {
-            this.takeAddress = '';
-        },
-        takeDAddressC() {
-            this.takeDAddress = '';
-        },
-        //地址更新
-        updateAddress: function() {
-            var token = localStorage.getItem("token");
+
+        //地址列表
+        addressMag: function(token) {
             let _this = this;
-            this.axios(testUrl + api.updateAddress, {
-                "token": token,
-                "name": _this.takeName,
-                "tel": _this.takeTel,
-                "code": "1,3,3",
-                "area": _this.takeAddress,
-                "address":_this.takeDAddress,
-                "id": "6d613f78697845c7959e640b439fd1d5"
+            var token = localStorage.getItem("token");
+            this.axios(testUrl + api.selectAddresses, {
+                "token": token
             }, 'post')
                 .then((data) => {
-                    
-                    if (data.error_code == 1) {
-
+                    if (data.error_code == 0) {
                         _this.addressList = data.data;
-
                     } else {
 
                     }
                 })
                 .catch((err) => {
-
-
                 })
         },
-        takeKeep() {
-            if (this.takeName != "" && this.takeTel != "" && this.takeAddress != "" && this.takeDAddress != "") {
-                this.updateAddress()
-            }
-        }
+
+        //删除地址
+        removeAddress: function(token, id) {
+            let _this = this;
+            var token = localStorage.getItem("token");
+            this.axios(testUrl + api.removeAddress, {
+                "token": token,
+                "id": _this.delId
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        _this.addressList.splice(this.delIndex,1)
+                    } else {
+
+                    }
+                })
+                .catch((err) => {
+                })
+        },
+
     },
     components: {
-        "header-top": headerTop,
-        "address-select": addressSelect
+        "header-top": headerTop
+
     }
-};
+
+}
 </script>
+
 <style lang="less">
-.addEdit-contentWrap {
-    background: #fff;
-    margin: 0.2rem 0.28rem;
-    padding: 0 0.4rem;
-    .addEdit-content {
+.address-content {
+    li {
+        background: #fff;
+        margin: 0.2rem 0.28rem;
+
         font-size: 0.28rem;
-        li {
+        .address-infoW {
+            padding: 0.3rem 0.32rem 0.2rem 0.32rem;
+            .address-nameTel {
+                color: #000;
+                span:nth-of-type(1) {}
+                span:nth-of-type(1) {}
+            }
+            .address-address {
+                color: #666666;
+                line-height: 0.5rem;
+            }
+        }
+        .address-operW {
+            font-size: 0.24rem;
             display: flex;
             justify-content: space-between;
-            padding: 0.36rem 0 0.16rem 0;
-            p:nth-of-type(1) {
-                width: 90%;
+            align-items: center;
+            padding: 0.24rem 0.32rem;
+            .address-def {
                 display: flex;
-                span:nth-of-type(1) {
-                    width: 24%;
-                    display: inline-block;
+                align-items: center;
+                .address-defImg,
+                .address-defImgNo {
+                    width: 0.34rem;
+                    height: 0.34rem;
+                }
+                .address-defImg {
+                    background-position: -1.87rem -1.52rem;
+                }
+                .address-defImgNo {
+                    background-position: -2.94rem -1.52rem;
+                }
+                .address-defAddress {
+                    color: #999999;
+                    margin-left: 0.08rem;
+                    span {}
                 }
             }
-
-            input {
-                font-weight: bold;
-                color: #000;
-                height: 100%;
-            }
-             ::-webkit-input-placeholder {
-                /* WebKit, Blink, Edge */
-                color: #999999;
-                font-size: 0.26rem;
-                font-weight: 100;
-            }
-
-             :-moz-placeholder {
-                /* Mozilla Firefox 4 to 18 */
-                color: #999999;
-                font-size: 0.26rem;
-                font-weight: 100;
-            }
-
-             ::-moz-placeholder {
-                /* Mozilla Firefox 19+ */
-                color: #999999;
-                font-size: 0.26rem;
-                font-weight: 100;
-            }
-
-            input:-ms-input-placeholder {
-                /* Internet Explorer 10-11 */
-                color: #999999;
-                font-size: 0.26rem;
-                font-weight: 100;
-            }
-            .addEdid-delInp {
-                width: 0.45rem;
-                height: 0.45rem;
-                background-color: #efefef;
-                border-radius: 50%;
-                background-position: -4.78rem -1.44rem;
+            .address-editDel {
+                color: #333;
+                display: flex;
+                align-items: center;
+                .address-edit {
+                    display: flex;
+                    align-items: center;
+                    .address-editImg {
+                        width: 0.35rem;
+                        height: 0.35rem;
+                        background-position: -1.4rem -1.26rem;
+                        margin-right: 0.1rem;
+                    }
+                    span {}
+                }
+                .address-del {
+                    display: flex;
+                    align-items: center;
+                    .address-delImg {
+                        width: 0.35rem;
+                        height: 0.35rem;
+                        background-position: -0.95rem -1.26rem;
+                        margin-right: 0.1rem;
+                        margin-left: 0.37rem;
+                    }
+                    span {}
+                }
             }
         }
     }
 }
 
-.address-operW {
-    font-size: 0.24rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.24rem 0;
-    .address-def {
-        display: flex;
-        align-items: center;
-        .address-defImg,
-        .address-defImgNo {
-            width: 0.34rem;
-            height: 0.34rem;
-        }
-        .address-defImg {
-            background-position: -1.87rem -1.52rem;
-        }
-        .address-defImgNo {
-            background-position: -2.94rem -1.52rem;
-        }
-        .address-defAddress {
-            color: #999999;
-            margin-left: 0.08rem;
-        }
-    }
+.addBnt {
+    background: #30ce84;
+    margin: 2rem 0.26rem 0.1rem 0.26rem;
 }
 
-.address-keep {
-    margin: 0.2rem 0.28rem;
-    height: 45px;
-    background: #91efb1;
-    border-radius: 40px;
-    line-height: 45px;
-    color: #fff;
+.address-fixedWrap {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     font-size: 0.3rem;
-    text-align: center;
-}
-
-textarea {
-    border: none;
-    resize: none;
-    outline: none;
-    font-weight: bold;
-    color: #000;
-    width: 70%;
-    height: 1.38rem;
+    z-index: 12;
+    .address-fixed {
+        border-radius: 5px;
+        background: #fff;
+        margin: 3rem 0.68rem 0 0.68rem;
+        .address-whether {
+            text-align: center;
+            color: #000000;
+            padding: 1.05rem 0 0.85rem 0;
+        }
+    }
+    .address-fixedDel {
+        display: flex;
+        span {
+            width: 50%;
+            display: inline-block;
+            text-align: center;
+            height: 0.96rem;
+            line-height: 0.96rem;
+        }
+        span:nth-of-type(2) {
+            background: #30ce84;
+            color: #fff;
+            border-radius: 0 0 5px 0;
+        }
+    }
 }
 </style>
-
-
-
-

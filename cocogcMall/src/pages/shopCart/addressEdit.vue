@@ -18,7 +18,7 @@
                     <p>
                         <span>手机号码</span>
                         <span>
-                            <input type="text" placeholder="请填写收货人手机号" v-model="takeTel">
+                            <input type="number" placeholder="请填写收货人手机号" v-model="takeTel">
                         </span>
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeTelC">
@@ -28,7 +28,7 @@
                     <p>
                         <span>所在地区</span>
                         <span>
-                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @click="showFixed()">
+                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @focus="fixedShowC()">
                         </span>
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeAddressC">
@@ -45,10 +45,8 @@
                 </li>
             </ul>
             <div class="address-operW">
-                <div class="address-def">
-                    <span class="j1Png " :class="addressDef?'address-defImg':'address-defImgNo'" @click="addressDef=!addressDef"></span>
-                    <!-- <span class="j1Png "></span> -->
-
+                <div class="address-def" @click="addressDef=!addressDef">
+                    <span class="j1Png " :class="addressDef?'address-defImgNo':'address-defImg'"></span>
                     <span class="address-defAddress">
                         <span>设为默认地址</span>
                     </span>
@@ -56,9 +54,8 @@
             </div>
         </div>
 
-        <p class="address-keep"  @click="takeKeep()">保存</p>
-
-        <address-select v-if="showFixedFlag" @childShow="parentShow"></address-select>
+        <p class="address-keep" @click="takeKeep()">保存</p>
+        <address-select v-if="fixedShow==true" @childShow="parentShow" @childAddress="parentAddress" @childAddressId="parentAddressId"></address-select>
 
     </div>
 </template>
@@ -67,6 +64,8 @@
 import headerTop from "../../common/header.vue";
 import addressSelect from "../../components/shopCart/addressSelect.vue";
 import api from '../../service/api';
+import { IsEmpty, IsMobile, CheckPass } from "@/util/common";
+
 
 export default {
     data() {
@@ -74,33 +73,42 @@ export default {
             takeName: '',
             takeTel: '',
             takeAddress: '',
+            takeAddressId: '',
             takeDAddress: '',
-            addressDef: false, //是否设为默认地址
-            showFixedFlag: false,
+            addressDef: true,
+            fixedShow: false,
+            areaCode: ''
         };
     },
     mounted() {
-
         var adEdit = localStorage.getItem('addressEdit');
         if (adEdit) {
-            console.log(adEdit)
             var item = JSON.parse(adEdit);
             this.takeName = item.name;
             this.takeTel = item.tel;
             this.takeAddress = item.area;
             this.takeDAddress = item.address;
-            localStorage.setItem('addressEdit', '');
+            this.takeAddressId = item.id;
+            this.areaCode = item.areaCode;  //编辑页面传来的areacode
         }
     },
     updated() {
 
     },
     methods: {
-        showFixed() {
-            this.showFixedFlag = true;
-        },
         parentShow(val) {
-            this.showFixedFlag = val;
+            this.fixedShow = val;
+        },
+        //子组件传来的地址名
+        parentAddress(val) {
+            this.takeAddress = val;
+        },
+        //子组件传来的areacode
+        parentAddressId(valCode) {
+            this.areaCode = valCode;
+        },
+        fixedShowC() {
+            this.fixedShow = true;
         },
         takeNameC() {
             this.takeName = '';
@@ -115,22 +123,21 @@ export default {
             this.takeDAddress = '';
         },
         //地址更新
-        updateAddress: function() {
+        updateAddress: function(addressDef) {
             var token = localStorage.getItem("token");
             let _this = this;
             this.axios(testUrl + api.updateAddress, {
                 "token": token,
                 "name": _this.takeName,
                 "tel": _this.takeTel,
-                "code": "1,3,3",
+                "code": _this.areaCode,
                 "area": _this.takeAddress,
                 "address": _this.takeDAddress,
-                "id": "6d613f78697845c7959e640b439fd1d5"
+                "id": _this.takeAddressId,
+                "isDefault": addressDef
             }, 'post')
                 .then((data) => {
-
                     if (data.error_code == 1) {
-
                         _this.addressList = data.data;
 
                     } else {
@@ -143,8 +150,32 @@ export default {
                 })
         },
         takeKeep() {
-            if (this.takeName != "" && this.takeTel != "" && this.takeAddress != "" && this.takeDAddress != "") {
-                this.updateAddress();
+            if (IsEmpty(this.takeName)) {
+                this.$toast("收货人不能为空");
+                return false;
+            } else if (IsEmpty(this.takeTel)) {
+                this.$toast("手机号码不能为空");
+                return false;
+            }
+            else if (!IsMobile(this.takeTel)) {
+                this.$toast("手机号码错误");
+                return false;
+            }
+            else if (IsEmpty(this.takeAddress)) {
+                this.$toast("地区不能为空");
+                return false;
+            }
+            else if (IsEmpty(this.takeDAddress)) {
+                this.$toast("详细地址不能为空");
+                return false;
+            } else {
+                if (this.addressDef == false) {
+                    this.updateAddress(1)
+                } else {
+                    this.updateAddress(0)
+                }
+                this.$router.push('/addressMag')
+                localStorage.setItem('addressEdit', '');
             }
         }
     },
@@ -247,8 +278,7 @@ export default {
 .address-keep {
     margin: 0.2rem 0.28rem;
     height: 45px;
-    // background: #91efb1;
-    background: #30CE84;
+    background: #30ce84;
     border-radius: 40px;
     line-height: 45px;
     color: #fff;

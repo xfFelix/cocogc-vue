@@ -220,6 +220,9 @@ export default {
                 this.areaAddress = this.Province + ' ' + this.City + ' ' + this.District;
                 this.$emit('childAddress', this.areaAddress);
 
+                this.areaAddressId = this.province + ',' + this.city + ',' + this.district;
+                this.$emit('childAddressId', this.areaAddressId);
+
 
                 return
             }
@@ -243,6 +246,10 @@ export default {
 
             this.areaAddress = this.Province + ' ' + this.City + ' ' + this.District + ' ' + this.Town;
             this.$emit('childAddress', this.areaAddress);
+
+             this.areaAddressId = this.province + ',' + this.city + ',' + this.district+',' + this.town;
+                this.$emit('childAddressId', this.areaAddressId);
+
         },
 
 

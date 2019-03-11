@@ -3,142 +3,144 @@
         <header-top></header-top>
 
         <!-- 地址 -->
-        <div class="order-addressWN">
-            <div class="order-addressW">
-                <div class="order-address">
-                    <p class="order-addPerson">
-                        <span>默认</span>
-                        <span>王先生</span>
-                        <span>137****5425</span>
-                    </p>
-                    <p class="order-addInfo">
-                        广东深圳市南山区 粤海街道科技生态园 10栋A座1002
-                    </p>
+        <div>
+            <div class="order-addressWN" addressMag>
+
+                <router-link  class="order-addressW" to="/addressMag">
+                    <div class="order-address">
+                        <p class="order-addPerson">
+                            <span>默认</span>
+                            <span>{{dataAddress.userName}}</span>
+                            <span>{{dataAddress.userMobile}}</span>
+                        </p>
+                        <p class="order-addInfo">
+                            {{dataAddress.userAddress}}
+                        </p>
+                    </div>
+                    <div>
+                        <span class="goTo" @click="$router.push('/addressEdit')"></span>
+                    </div>
+                </router-link>
+
+                <div class="order-addressN">
+                    <span class="order-addNImg"></span>
+                    <p>您还没有收货地址，点击添加</p>
                 </div>
-                <div>
-                    <span class="goTo"></span>
-                </div>
+
+                <div class="order-bottom"></div>
             </div>
+            
 
-            <div class="order-addressN">
-                <span class="order-addNImg"></span>
-                <p>您还没有收货地址，点击添加</p>
-            </div>
+            <div v-for="(dataItem,dataIndex) in dataList" :key="dataIndex">
 
-            <div class="order-bottom"></div>
-        </div>
+                <!-- 多种商品 -->
+                <div v-if="dataItem.goodsList.length>1" class="order-goodsMW">
+                    <div class="order-goodS">
+                        <span class="shop-dNameImg"></span>
+                        <span>{{dataItem.vendorId}}</span>
+                        <p>
+                            (共
+                            <span></span>件)
+                        </p>
+                    </div>
 
-        <div v-for="(item,index) in list" :key="index" :class="item.goodStoreId">
-            <!-- 多种商品 -->
-            <div v-if="item.goodsList.length>1" class="order-goodsMW">
-                <div class="order-goodS">
-                    <span class="shop-dNameImg"></span>
-                    <span>{{item.goodStore}}</span>
-                    <p>
-                        (共<span>2</span>件)
-                    </p>
-                </div>
-
-                <div class="order-swipeW">
-                    <div class="order-swipe">
-
-                        <div class="swiper-container">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
-                                    <div class="order-goodsList">
-                                        <img :src="itemGoods.imgsrc" alt="" />
+                    <div class="order-swipeW" :class="'res'+dataItem.goodsList[0].goodsId">
+                        <div class="order-swipe">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide" v-for="(itemGoods,indexGoods) in dataItem.goodsList" :key="indexGoods">
+                                        <div class="order-goodsList">
+                                            <!-- <img :src="itemGoods.imgsrc" alt="" /> -->
+                                            <!-- <img src="static/images/goos_01.png" alt="" /> -->
+                                            {{itemGoods.goodsName}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="order-goodsList">
-                                        <!-- <img src="static/images/goos_01.png" alt="" /> -->
-                                    </div>
+
                                 </div>
 
                             </div>
-
+                        </div>
+                        <div class="swipe-bntWrap">
+                            <div class="swiper-button-next swiper-button-black"></div>
                         </div>
                     </div>
-                    <div class="swipe-bntWrap">
-                        <div class="swiper-button-next swiper-button-black"></div>
-                    </div>
-                </div>
 
-                <p class="order-freight one-top-px">
-                    <span>运费</span>
-                    <span>0.00</span>
-                </p>
-                <p class="order-priceAll">
-                    <span>小计</span>
-                    <span>2054.00</span>
-                </p>
-            </div>
-
-            <!-- 单种商品 -->
-            <div class="order-goodSW" v-else>
-                <div class="order-goodS">
-                    <span class="shop-dNameImg"></span>
-                    <span>{{item.goodStore}}</span>
-                    <p>
-                        (共
-                        <span>2</span>件)
+                    <p class="order-freight one-top-px">
+                        <span>运费</span>
+                        <span>0.00</span>
+                    </p>
+                    <p class="order-priceAll">
+                        <span>小计</span>
+                        <span>2054.00</span>
                     </p>
                 </div>
 
-                <div class="order-goodSInfo one-bottom-px" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
-                    <div class="order-goodSIImg">
-                        <img :src="itemGoods.imgsrc" alt="" />
+                <!-- 单种商品 -->
+                <div class="order-goodSW" v-else>
+                    <div class="order-goodS">
+                        <span class="shop-dNameImg"></span>
+                        <span>{{dataItem.vendorId}}</span>
+                        <p>
+                            (共
+                            <span>2</span>件)
+                        </p>
                     </div>
-                    <div class="order-goodsDetail">
-                        <p class="order-goodsDName">漫步者（EDIFIER） H210P 手机耳</p>
-                        <p class="order-goodsDType">黑色</p>
-                        <div class="order-goodsDPriceW">
-                            <span class="order-goodsDPrice">105.00</span>
-                            <p class="order-goodsDNumW">
-                                <span class="order-goodsDNumI"></span>
-                                <span class="order-goodsDNum">2</span>
-                            </p>
+
+                    <div class="order-goodSInfo one-bottom-px">
+                        <div class="order-goodSIImg">
+                            <!-- <img :src="itemGoods.imgsrc" alt="" /> -->
+                        </div>
+                        <div class="order-goodsDetail" v-for="(itemGoods,indexGoods) in dataItem.goodsList" :key="indexGoods">
+                            <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
+                            <p class="order-goodsDType">黑色</p>
+                            <div class="order-goodsDPriceW">
+                                <span class="order-goodsDPrice">{{itemGoods.totalMoney}}</span>
+                                <p class="order-goodsDNumW">
+                                    <span class="order-goodsDNumI"></span>
+                                    <span class="order-goodsDNum">2</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
+                    <p class="order-freight">
+                        <span>运费</span>
+                        <span>0.00</span>
+                    </p>
+                    <p class="order-priceAll">
+                        <span>小计</span>
+                        <span>2054.00</span>
+                    </p>
                 </div>
-                <p class="order-freight">
-                    <span>运费</span>
-                    <span>0.00</span>
-                </p>
-                <p class="order-priceAll">
-                    <span>小计</span>
-                    <span>2054.00</span>
-                </p>
-            </div>
-        </div>
 
-        <!-- 费用 -->
-        <div class="order-priceDetail one-bottom-px">
-            <p>
-                <span>商品</span>
-                <span>6153.66</span>
-            </p>
-            <p>
-                <span>运费</span>
-                <span>6153.66</span>
-            </p>
-            <p>
-                <span>服务费</span>
-                <span>6153.66</span>
-            </p>
-            <p>
-                <span>税费</span>
-                <span>6153.66</span>
-            </p>
-            <p>
-                <span>合计</span>
-                <span>6153.66</span>
-            </p>
+                <!-- 费用 -->
+                <div class="order-priceDetail one-bottom-px">
+                    <p>
+                        <span>商品</span>
+                        <span>{{dataItem.sellMoney}}</span>
+                    </p>
+                    <p>
+                        <span>运费</span>
+                        <span>{{dataItem.shippingFee}}</span>
+                    </p>
+                    <p>
+                        <span>服务费</span>
+                        <span>{{dataItem.serviceMoney}}</span>
+                    </p>
+                    <p>
+                        <span>税费</span>
+                        <span>{{dataItem.taxFee}}</span>
+                    </p>
+                    <p>
+                        <span>合计</span>
+                        <span>{{dataItem.totalMoney}}</span>
+                    </p>
+                </div>
+            </div>
         </div>
         <div class="order-sumitW">
             <div class="order-sumitP">
-                <span>6201</span>.
-                <span>25</span>
+                <span class="shop-cPriceInt">{{message|toDecimal2Fp(message)}}.</span>
+                <span class="shop-cPriceFloat">{{message|toDecimal2Ap(message)}}</span>
             </div>
             <div class="order-sumit">提交订单</div>
         </div>
@@ -148,177 +150,82 @@
 <script>
 import headerTop from "../../common/header.vue"
 import Swiper from 'swiper';
+import api from '../../service/api';
+
 export default {
     data() {
         return {
-            list: [
-                {
-                    goodStore: "京东商品",
-                    AllFlag: false,
-                    goodStoreId: "aaa",
-                    goodsList: [{
-                        id: 1,
-                        name: "京东商品1阿迪斯发是手动阀手动阀京东商品1阿迪斯发是手动阀手动阀",
-                        price: 10,
-                        count: 5,
-                        Stotal: 180,
-                        sku: '001',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }]
-                },
-                {
-                    goodStore: "京东商品",
-                    AllFlag: false,
-                    goodStoreId: "bbb",
-                    goodsList: [{
-                        id: 1,
-                        name: "京东商品1阿迪斯发是手动阀手动阀京东商品1阿迪斯发是手动阀手动阀",
-                        price: 10,
-                        count: 5,
-                        Stotal: 180,
-                        sku: '001',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }]
-                },
-                {
-                    goodStore: "自营商品",
-                    AllFlag: false,
-                    goodStoreId: "ccc",
-                    goodsList: [{
-                        id: 3,
-                        name: "自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品11",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '003',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }]
-                }, {
-                    goodStore: "自营商品",
-                    AllFlag: false,
-                    goodStoreId: "ddd",
-                    goodsList: [{
-                        id: 3,
-                        name: "自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品11",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '003',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }]
-                }
-
-            ],
+            dataList: [],
+            dataAddress: {},
+            message: ""
         };
     },
     mounted() {
-        //多商品轮播图
-        this.list.forEach((res) => {
-            var goodsId = res.goodStoreId;
-            var classg = '.' + goodsId + ' .swiper-container';
-            var bnt = '.' + goodsId + ' .swiper-button-next';
-            new Swiper(classg, {
-                slidesPerView: 4,
-                slidesPerGroup: 1,
-                spaceBetween: 10,
-                navigation: {
-                    nextEl: bnt,
-                    // prevEl: '.swiper-button-prev',
-                },
-
-            })
-        });
+        this.previewOrder()
     },
     methods: {
+        // 订单预览
+        previewOrder: function() {
+            var token = localStorage.getItem("token");
+            let _this = this;
+            this.axios(testUrl + api.previewOrder, {
+                "token": "hhf7512935295b36d9b469e672c531d4c8",
+                "id": "b636fd2b5cfb481b875f25f69e7c8fae",
+                "buys": [
+                    {
+                        "goodsId": "35",
+                        "nums": "1"
+                    },
+                    {
+                        "goodsId": "34",
+                        "nums": "1"
+                    },
+                    {
+                        "goodsId": "33",
+                        "nums": "1"
+                    }]
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        _this.message = data.message;
+                        _this.dataList = data.data;
+                        _this.dataAddress = data.data[0];
+                        //多商品轮播图
+                        _this.dataList.forEach((res, index) => {
+                            if (res.goodsList.length > 1) {
+                                var goodsId = 'res' + res.goodsList[0].goodsId;
+                                var classg = '.' + goodsId + ' .swiper-container';
+                                var bnt = '.' + goodsId + ' .swiper-button-next';
+                                _this.$nextTick(function() {
+                                    new Swiper(classg, {
+                                        slidesPerView: 4,
+                                        slidesPerGroup: 1,
+                                        spaceBetween: 10,
+                                        navigation: {
+                                            nextEl: bnt,
+                                            // prevEl: '.swiper-button-prev',
+                                        },
+                                    })
+                                })
+                            }
+                        });
+                        //地址存到localStorage
+                        var editItem = JSON.stringify(_this.dataAddress);
+                        localStorage.setItem('addressEdit', editItem);
+                    
+
+                    }
+                })
+                .catch((err) => {
+
+                })
+        },
+
+
 
     },
     components: {
         "header-top": headerTop
-
     }
 
 }
@@ -422,6 +329,7 @@ export default {
             }
         }
         .order-goodsDetail {
+            width: 57%;
             .order-goodsDName {
                 line-height: 0.4rem;
                 color: #333;

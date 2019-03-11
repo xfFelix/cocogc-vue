@@ -25,7 +25,7 @@
                     <div class="shop-dStore">
                         <span @click="selTypeAll(items,index,$event)" :class="!items.AllFlag ?'shop-selectN':'shop-selectY'"></span>
                         <!-- <input type="checkbox" id="shop_all"  v-model="selTypeAllFlag">
-                        <label for="shop_all" class="shop" :class="selTypeAllFlag?'shop-selectY':'shop-selectN'" @click="selTypeAll(items,index,$event)"></label> -->
+                            <label for="shop_all" class="shop" :class="selTypeAllFlag?'shop-selectY':'shop-selectN'" @click="selTypeAll(items,index,$event)"></label> -->
                         <span class="shop-dNameImg"></span>
                         <span class="shop-dName">{{items.goodStore}}</span>
                         <span class="shop-dGo"></span>
@@ -150,11 +150,11 @@ export default {
             selectAllPrice: 0,
             selectAllGoods: 0,
             deitDelFlag: true,
-            
+
         };
     },
     mounted() {
-        
+
 
     },
     watch: {
@@ -182,17 +182,20 @@ export default {
             this.selectAllPrice = 0;
         },
         //结算
-        settleGoods(){
+        settleGoods() {
+            if (this.selectAllGoods > 0) {
+                this.$router.push('/order');
 
+            }
         },
         //编辑
         deitDel() {
             this.deitDelFlag = false;
-           
+
         },
         deitDelOk() {
             this.deitDelFlag = true;
-            
+
         },
         findPositon(id) {
 

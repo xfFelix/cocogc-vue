@@ -1,8 +1,6 @@
 <template>
     <div id="app">
-  
-            <router-view></router-view>
-
+        <router-view></router-view>
         <v-footer></v-footer>
     </div>
 </template>
@@ -59,8 +57,8 @@ export default {
 
     },
     components: {
-    "v-footer": Footer,
-  }
+        "v-footer": Footer,
+    }
 }
 
 
@@ -98,12 +96,6 @@ export default {
 // .router-link-active {
 //     text-decoration: none;
 // }
-
-
-
-
-
-
 // .navImgWrap {
 //     display: flex;
 //     justify-content: space-around;
@@ -158,7 +150,6 @@ export default {
 //         }
 //     }
 // }
-
 .active {
     color: #30CE84;
 }

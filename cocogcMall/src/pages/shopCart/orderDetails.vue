@@ -17,11 +17,11 @@
                 <div class="order-address">
                     <p class="order-addPerson">
                         <span>默认</span>
-                        <span>王先生</span>
-                        <span>137****5425</span>
+                        <span>{{dataList.userName}}</span>
+                        <span>{{dataList.userMobile}}</span>
                     </p>
                     <p class="order-addInfo">
-                        广东深圳市南山区 粤海街道科技生态园 10栋A座1002
+                       {{dataList.userAddress}}
                     </p>
                 </div>
                 <div>
@@ -36,7 +36,7 @@
             <div class="od-numberWrap">
                 <p class="od-number">
                     <span>订单编号：</span>
-                    <span>201803051548625</span>
+                    <span>{{dataList.orderId}}</span>
                 </p>
                 <p class="od-numberCopy">复制</p>
             </div>
@@ -47,20 +47,21 @@
             </div>
         </div>
 
-        <div v-for="(item,index) in list" :key="index" :class="item.goodStoreId">
+        <div v-for="(item,index) in dataList.goodsList" :key="index" >
             <div class="order-goodSW">
-                <div class="order-goodSInfo" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
+                <div class="order-goodSInfo">
                     <div class="order-goodSIImg">
-                        <img :src="itemGoods.imgsrc" alt="" />
+                        <!-- <img :src="itemGoods.imgsrc" alt="" /> -->
                     </div>
                     <div class="order-goodsDetail">
-                        <p class="order-goodsDName">漫步者（EDIFIER） H210P 手机耳</p>
-                        <p class="order-goodsDType">黑色</p>
+                        <p class="order-goodsDName">{{item.goodsName}}</p>
+                        <!-- <p class="order-goodsDType">黑色</p> -->
+                        <p class="order-goodsDType"></p>
                         <div class="order-goodsDPriceW">
-                            <span class="order-goodsDPrice">105.00</span>
+                            <span class="order-goodsDPrice">{{item.buyPrice}}</span>
                             <p class="order-goodsDNumW">
                                 <span class="order-goodsDNumI"></span>
-                                <span class="order-goodsDNum">2</span>
+                                <span class="order-goodsDNum">{{item.buyNum}}</span>
                             </p>
                         </div>
                     </div>
@@ -68,8 +69,8 @@
 
                 <div class="od-goodSNumWrap one-top-px">
                     <p class="od-goodSNum">
-                        <span class="od-goodSNumName">京东单号：</span>
-                        <span>201803051548625</span>
+                        <span class="od-goodSNumName">{{dataList.vendorId}}</span>
+                        <span>{{item.orderId}}</span>
                     </p>
                     <p class="od-logistic">
                         <span>查看物流</span>
@@ -83,25 +84,25 @@
             <ul class="od-priceUl one-bottom-px">
                 <li>
                     <span>商品总额</span>
-                    <span>2045.32</span>
+                    <span>{{dataList.sellMoney}}</span>
                 </li>
                 <li>
                     <span>运费</span>
-                    <span>2045.32</span>
+                    <span>{{dataList.shippingFee}}</span>
                 </li>
                 <li>
                     <span>服务费</span>
-                    <span>2045.32</span>
+                    <span>{{dataList.serviceMoney}}</span>
                 </li>
                 <li>
                     <span>税费</span>
-                    <span>2045.32</span>
+                    <span>{{dataList.taxFee}}</span>
                 </li>
 
             </ul>
             <p class="od-realPrice">
                 <span>实付：</span>
-                <span>2563.02</span>
+                <span>{{dataList.totalMoney}}</span>
             </p>
         </div>
 
@@ -109,7 +110,10 @@
 </template>
 <script>
 
-import headerTop from "../../common/header.vue"
+import headerTop from "../../common/header.vue";
+import api from '../../service/api';
+
+
 export default {
     data() {
         return {
@@ -255,13 +259,36 @@ export default {
                 }
 
             ],
+            dataList:{},
+            orderId:this.$route.params.orderId
         };
     },
     mounted() {
-      
+      this.findOrder()
 
     },
     methods: {
+        
+         // 查找订单
+        findOrder: function() {
+            var token = localStorage.getItem("token");
+            let _this = this;
+            this.axios(testUrl + api.findOrder, {
+                "token":token,
+                "code":this.orderId
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        _this.dataList = data.data;
+                        console.log(_this.dataList)
+  
+
+                    }
+                })
+                .catch((err) => {
+
+                })
+        },
 
     },
     components: {

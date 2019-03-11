@@ -11,9 +11,9 @@
         </div>
 
         <div class="orderContent">
-            <div v-for="(item,index) in list" :key="index" :class="'ye'+item.id">
+            <router-link v-for="(item,index) in list" :key="index" :class="'ye'+item.id" :to="{name: 'orderDetails', params: {orderId:item.orderId}}" >
                 <!-- 多种商品 -->
-                <div v-if="item.goodsList.length>1" class="order-goodsMW">
+                <div  v-if="item.goodsList.length>1" class="order-goodsMW">
                     <div class="oMGoodsTit">
                         <p class="oMGoodsTitLeft">
                             <span>自营</span>
@@ -42,9 +42,13 @@
 
                             </div>
                         </div>
+
                         <div class="swipe-bntWrap">
                             <div class="swiper-button-next swiper-button-black"></div>
                         </div>
+
+                        
+
                     </div>
 
                     <div class="oMGoodsTotal">
@@ -94,7 +98,7 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </router-link>
         </div>
 
     </div>
