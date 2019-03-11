@@ -15,11 +15,9 @@ import shopMall from '@/pages/shopMall/shopMall';
 
 import account from '@/pages/account/account';
 import setUp from '@/pages/account/setUp';
-// import addressAdd from '@/pages/account/addressAdd';
 
 import addressMag from '@/pages/shopCart/addressMag';
 import addressEdit from '@/pages/shopCart/addressEdit';
-
 
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="addressFixed" v-if="fixedshow">
+    <div class="addressFixed">
         <div class="addressSelect">
             <div>
                 <p class="address-selTitle one-bottom-px">
@@ -8,27 +8,47 @@
                 </p>
 
                 <section class=" address-selAlready">
-                    <div class="address-area" @click="provinceSelected()">
-                        {{Province?Province:info[province-1].name}}
+                    <div class="address-area" @click="provinceSelected()" :class="Province?'':'active'">
+                        <span :class="selectArea == 1?'selectArea':''">
+                            {{Province?Province:'请选择'}}
+                        </span>
+
                     </div>
-                    <div class="address-area" @click="citySelected()" :class="City?'':'active'">
-                        {{City?City:'请选择'}}
+                    <div class="address-area" @click="citySelected()" :class="City?'':'active'" v-show="Province">
+                        <span :class="selectArea == 2?'selectArea':''">
+                            {{City?City:'请选择'}}
+                        </span>
                     </div>
                     <div class="address-area" @click="districtSelected()" :class="District?'':'active'" v-show="City">
-                        {{District?District:'请选择'}}
+                        <span :class="selectArea == 3?'selectArea':''">
+                            {{District?District:'请选择'}}
+                        </span>
+
+                    </div>
+                    <div class="address-area" @click="townSelected()" :class="Town?'':'active'" v-show="District">
+                        <span :class="selectArea == 4?'selectArea':''">
+                            {{Town?Town:'请选择'}}
+                        </span>
                     </div>
                 </section>
 
                 <ul class="addressUl one-top-px">
-                    <li class="addList" v-for="(v,k) in info" @click="getProvinceId(v.id, v.name, k)" v-show="showProvince" :class="v.selected ? 'active' : ''" :key="k">
+                    <li class="addList" v-for="(v,k) in info" @click="getProvinceId(v.id, v.name, k)" v-show="showProvince" :class="v.name ==  Province? 'active' : ''" :key="k">
                         {{v.name}}
 
                     </li>
-                    <li class="addList" v-for="(v,k) in showCityList" @click="getCityId(v.id, v.name, k)" v-show="showCity" :class="v.selected ? 'active' : ''" :key="k">
-                        {{v.name}}
+                    <li class="addList" v-for="(v,k,i) in showCityList" @click="getCityId(v,k,i)" v-show="showCity" :class="v[0]==City ? 'active' : ''" :key="k">
+                        {{v[0]}}
                     </li>
-                    <li class="addList" v-for="(v,k) in showDistrictList" @click="getDistrictId(v.id, v.name, k)" v-show="showDistrict" :class="v.selected ? 'active' : ''" :key="k">
-                        {{v.name}}
+                    <li class="addList" v-for="(v,k,i) in showDistrictList" @click="getDistrictId(v, k, i)" v-show="showDistrict" :key="k">
+
+                        <span v-if="levelShow==false" :class="v[0] == District ? 'active' : ''">{{v[0]}}</span>
+                        <span v-if="levelShow" :class="v == District ? 'active' : ''">{{v}}</span>
+
+                    </li>
+
+                    <li class="addList" v-for="(v,k) in showTownList" @click="getTownId(v,k)" v-show="showTown" :class="v == Town ? 'active' : ''" :key="k">
+                        {{v}}
                     </li>
                 </ul>
 
@@ -81,33 +101,43 @@ export default {
                 { id: 53283, name: '海外' },
             ],
             addressArray: [],
-            fixedshow: true,
             addressVal: '',
 
             showChose: true,
-            showProvince: true,  //省份是否展示
-            showCity: false,
-            showDistrict: false,  //市是否展示
+            showProvince: true,  //省(展示)
+            showCity: false,   //市(展示)
+            showDistrict: false,  //区(展示)
+            showTown: false,   //镇(展示)
+
             showCityList: false,      //市列表
             showDistrictList: false,  //地区列表
+            showTownList: false,  //镇列表
+
             province: 1,              //省份id
-            city: 3,             //市id
-            district: 57,        //地区id
-            GetProvinceId: 2,
+            city: 0,             //市id
+            district: 0,        //地区id
+            town: 0,
+
             District: false,    //省份name
             Province: false,    //省份name
             City: false,
-            // v-for循环判断是否为当前
-            selected: false,
+            Town: false,
+
+            levelShow: false,
+            selectArea: 0,
+            areaAddress: ''
+
         };
     },
     mounted() {
-
-
-
-
     },
     methods: {
+
+        //关闭
+        colseFixed() {
+            this.showChose = false;
+            this.$emit('childShow', this.showChose)
+        },
         // 选择城市
         selectCities: function(codeId) {
             let _this = this;
@@ -115,21 +145,10 @@ export default {
                 "id": codeId
             }, 'post')
                 .then((data) => {
-                
-               
-                    _this.showCityList = data.data.cities;
-
-// Object.keys(_this.showCityList)
-
-// console.log(Object.getOwnPropertyDescriptors(_this.showCityList))
-//                    for (let key in _this.showCityList) {
-//     console.log(key)
-// }
-                
-
                     if (data.error_code == 0) {
-
-                    } else {
+                        var citiecList = []
+                        citiecList = data.data.cities;
+                        _this.showCityList = citiecList;
 
                     }
                 })
@@ -138,84 +157,127 @@ export default {
                     console.log('2222222222222222222')
                 })
         },
-        colseFixed() {
-            this.fixedshow = false;
-        },
-        addressSelect(value) {
-            this.addressVal = value;
-        },
 
 
 
-        _filter(add, name, code) {
-            let result = [];
-            for (let i = 0; i < add.length; i++) {
-                if (code == add[i].id) {
-                    result = add[i][name];
-                }
-            }
-            return result;
-        },
-        getProvinceId: function(code, input, index) {
+        //点击省份
+        getProvinceId: function(value, key, index) {
+            this.province = value;
+            this.Province = key;
 
-            this.province = code;
-            this.Province = input;
             this.showProvince = false;
             this.showCity = true;
             this.showDistrict = false;
-            this.selectCities(code);
-            this.showCityList = this._filter(this.info, 'city', this.province);
+            this.showTown = false;
 
-            // 点击选择当前
-            this.info.map(a => a.selected = false);
-            this.info[index].selected = true;
-        },
-        provinceSelected: function() {
-            console.log(this.info[this.province - 1].name);
-            console.log(this.Province);
-            console.log(this.info)
-            console.log(this.province)
+            this.selectCities(value);
+            this.selectArea = 2;
 
-            // 清除市级和区级列表
-            this.showCityList = false;
-            this.showDistrictList = false;
-            // 清除市级和区级选项
-            this.City = false;
-            this.District = false;
-            // 选项页面的切换
-            this.showProvince = true;
-            this.showCity = false;
-            this.showDistrict = false;
+
         },
-        getCityId: function(code, input, index) {
-            this.city = code;
-            this.City = input;
+        //点击市
+        getCityId: function(value, key, index) {
+
+            this.city = key;
+            this.City = value[0];
+            this.selectArea = 3;
+
             this.showProvince = false;
             this.showCity = false;
             this.showDistrict = true;
-            this.showDistrictList = this._filter(this.showCityList, 'district', this.city);
-            // 选择当前添加active
-            this.showCityList.map(a => a.selected = false);
-            this.showCityList[index].selected = true;
+            this.showTown = false;
+
+            var disValue = {};
+            disValue = value[1];
+            for (const key in disValue) {
+                let DisType = typeof (disValue[key])
+                if (DisType == 'object') {
+                    this.levelShow = false;
+                } else {
+                    this.levelShow = true;
+
+                }
+                this.showDistrictList = disValue
+                return
+            }
+
         },
+
+
+        //点击区
+        getDistrictId: function(value, key, index) {
+            this.selectArea = 4;
+            this.district = key;
+            if (typeof (value) == 'object') {
+                this.District = value[0];
+
+            } else {
+                this.District = value;
+                // this.District = false;
+                this.showChose = false;
+                this.$emit('childShow', this.showChose);
+
+                this.areaAddress = this.Province + ' ' + this.City + ' ' + this.District;
+                this.$emit('childAddress', this.areaAddress);
+
+
+                return
+            }
+
+            this.showProvince = false;
+            this.showCity = false;
+            this.showDistrict = false;
+            this.showTown = true;
+
+            this.showTownList = value[1]
+        },
+
+        //点击镇
+        getTownId: function(value, key, index) {
+            this.town = key;
+            this.Town = value;
+
+            // 选取市区选项之后关闭弹层
+            this.showChose = false;
+            this.$emit('childShow', this.showChose);
+
+            this.areaAddress = this.Province + ' ' + this.City + ' ' + this.District + ' ' + this.Town;
+            this.$emit('childAddress', this.areaAddress);
+        },
+
+
+
+
+        provinceSelected: function() {
+            this.showProvince = true;
+            this.showCity = false;
+            this.showDistrict = false;
+            this.showTown = false;
+            this.selectArea = 1;
+        },
+
         citySelected: function() {
             this.showProvince = false;
             this.showCity = true;
             this.showDistrict = false;
+            this.showTown = false;
+            this.selectArea = 2;
         },
-        getDistrictId: function(code, input, index) {
-            this.district = code;
-            this.District = input;
-            // 选择当前添加active
-            this.showDistrictList.map(a => a.selected = false);
-            this.showDistrictList[index].selected = true;
-            // 选取市区选项之后关闭弹层
-            this.showChose = false;
-        },
+
         districtSelected: function() {
             this.showProvince = false;
             this.showCity = false;
             this.showDistrict = true;
+            this.showTown = false;
+            this.selectArea = 3;
+        },
+        townSelected: function() {
+            this.showProvince = false;
+            this.showCity = false;
+            this.showDistrict = false;
+            this.showTown = true;
+
+            this.selectArea = 4;
         }
     },
     components: {
@@ -286,6 +348,11 @@ export default {
             }
         }
     }
+}
+
+.selectArea {
+    padding-bottom: 4px;
+    border-bottom: 2px solid #30CE84;
 }
 </style>
 

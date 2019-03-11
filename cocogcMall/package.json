@@ -17,6 +17,7 @@
     "jsencrypt": "^3.0.0-rc.1",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "min-ui": "0.0.2",
     "mint-ui": "^2.2.13",
     "pdfjs-dist": "^2.0.489",
     "swiper": "^4.4.6",
