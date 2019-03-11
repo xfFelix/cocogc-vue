@@ -13,9 +13,13 @@ const categories = 'categories';  //商品分类
 const selectOrders = 'selectOrders';  //订单列表
 const selectAddresses = 'selectAddresses';  //地址列表
 
+
 const updateAddress = 'updateAddress';  //地址更新
 const selectCities = 'selectCities';  //城市列表
 
+
+const goodsDetailInfo = 'goodsDetailInfo';  //商品详细信息
+const goodsInfo = 'goodsInfo';  //商品详情
 
 
 export default {
@@ -29,5 +33,7 @@ export default {
   selectOrders,
   selectAddresses,
   updateAddress,
-  selectCities
+  selectCities,
+  goodsDetailInfo,
+  goodsInfo
 }

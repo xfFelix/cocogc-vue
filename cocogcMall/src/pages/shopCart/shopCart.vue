@@ -149,10 +149,13 @@ export default {
             selectAllFlag: false,
             selectAllPrice: 0,
             selectAllGoods: 0,
-            deitDelFlag: true
+            deitDelFlag: true,
+            
         };
     },
     mounted() {
+        
+
     },
     watch: {
 

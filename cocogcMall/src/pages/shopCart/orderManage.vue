@@ -21,9 +21,7 @@
                             <span>{{item.orderId}}</span>
                         </p>
                         <p class="oMGoodsTitRight">
-
                             <span>{{item.payStatus}}</span>
-
                         </p>
                     </div>
 
@@ -116,32 +114,31 @@ export default {
         }
     },
     watch: {
-     
+
     },
     mounted() {
         var token = localStorage.getItem("token");
-        // this.pathStatus = this.$route.query.status;
-        // switch (this.pathStatus) {
-        //         case '0':
-        //             this.headIndex = 0;
-        //             break;
-        //         case '1':
-        //             this.headIndex = 1;
+        this.pathStatus = this.$route.query.status;
+        switch (this.pathStatus) {
+            case '0':
+                this.headIndex = 0;
+                break;
+            case '1':
+                this.headIndex = 1;
 
-        //             break;
-        //         case '2':
-        //             this.headIndex = 2;
+                break;
+            case '2':
+                this.headIndex = 2;
 
-        //             break;
-        //         case '3':
-        //             this.headIndex = 3;
+                break;
+            case '3':
+                this.headIndex = 3;
 
-        //             break;
-        //         default:
-        //             this.headIndex = 0;
-        //             break;
-        //     }
-
+                break;
+            default:
+                this.headIndex = 0;
+                break;
+        }
 
         this.selectOrders(token, this.headIndex);
 
@@ -160,12 +157,12 @@ export default {
                 "status": headIndex
             }, 'post')
                 .then((data) => {
-                    if (data.error_code == 1) {
 
+                    if (data.error_code == 0) {
                         _this.list = data.data;
-
                         _this.$nextTick(function() {
                             _this.list.forEach((res) => {
+
                                 var goodsId = 'ye' + res.id;
                                 var classg = '.' + goodsId + ' .swiper-container';
                                 var bnt = '.' + goodsId + ' .swiper-button-next';

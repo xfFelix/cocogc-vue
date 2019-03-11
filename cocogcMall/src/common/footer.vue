@@ -30,6 +30,10 @@ export default {
     created() {
 
     },
+    beforeRouteEnter(to, from, next) {
+        console.log(to, from)
+        next()
+    },
     watch: {
         screenHeight(val) {
             // this.screenHeight = val;
@@ -45,8 +49,6 @@ export default {
                 }, 400)
             }
         },
-
-
     },
     methods: {
         selectNav(title) {
@@ -54,16 +56,11 @@ export default {
             isThis.isSelect = title; //当点击或啥返回上一页时都可以获取当前的名称
             sessionStorage.setItem('isSelect', this.isSelect);  //sessionStorage(会话储存)储存名称为isSelect的变量  this.isSelect为值
         },
-
-
-
-
     },
     components: {
 
     },
     mounted() {
-
         // window.onresize监听页面高度的变化
         const that = this;
         window.onresize = () => {
@@ -72,16 +69,10 @@ export default {
                 that.screenHeight = window.screenHeight;
             })()
         }
-
-
-
         this.isSelect = sessionStorage.getItem('isSelect');   //sessionStrorage(会话储存)获取之前储存的内容
         if (this.$route.name == "index" || this.$route.name == 'shopMall' || this.$route.name == 'classify' || this.$route.name == 'shopCart' || this.$route.name == 'account') {
             this.selectNav(this.$route.name);   //当前页面为index或者notice或者activity或者my时执行获取当前url的name  
         }
-
-
-
     },
 }
 </script>
@@ -90,7 +81,7 @@ export default {
     width: 100%;
     height: 49px; // position: absolute!important;
     background: #fff; // position: fixed;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     display: flex;
     font-size: 16px;

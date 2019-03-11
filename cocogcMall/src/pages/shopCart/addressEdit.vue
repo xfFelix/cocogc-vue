@@ -28,7 +28,7 @@
                     <p>
                         <span>所在地区</span>
                         <span>
-                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress">
+                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @click="showFixed()">
                         </span>
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeAddressC">
@@ -46,7 +46,7 @@
             </ul>
             <div class="address-operW">
                 <div class="address-def">
-                    <span class="j1Png " :class="addressDef?'address-defImgNo':'address-defImg'" @click="addressDef=!addressDef"></span>
+                    <span class="j1Png " :class="addressDef?'address-defImg':'address-defImgNo'" @click="addressDef=!addressDef"></span>
                     <!-- <span class="j1Png "></span> -->
 
                     <span class="address-defAddress">
@@ -56,8 +56,9 @@
             </div>
         </div>
 
-        <p class="address-keep" @click="takeKeep()">保存</p>
-         <address-select></address-select> 
+        <p class="address-keep"  @click="takeKeep()">保存</p>
+
+        <address-select v-if="showFixedFlag" @childShow="parentShow"></address-select>
 
     </div>
 </template>
@@ -74,7 +75,8 @@ export default {
             takeTel: '',
             takeAddress: '',
             takeDAddress: '',
-            addressDef: true
+            addressDef: false, //是否设为默认地址
+            showFixedFlag: false,
         };
     },
     mounted() {
@@ -94,6 +96,12 @@ export default {
 
     },
     methods: {
+        showFixed() {
+            this.showFixedFlag = true;
+        },
+        parentShow(val) {
+            this.showFixedFlag = val;
+        },
         takeNameC() {
             this.takeName = '';
         },
@@ -116,11 +124,11 @@ export default {
                 "tel": _this.takeTel,
                 "code": "1,3,3",
                 "area": _this.takeAddress,
-                "address":_this.takeDAddress,
+                "address": _this.takeDAddress,
                 "id": "6d613f78697845c7959e640b439fd1d5"
             }, 'post')
                 .then((data) => {
-                    
+
                     if (data.error_code == 1) {
 
                         _this.addressList = data.data;
@@ -136,7 +144,7 @@ export default {
         },
         takeKeep() {
             if (this.takeName != "" && this.takeTel != "" && this.takeAddress != "" && this.takeDAddress != "") {
-                this.updateAddress()
+                this.updateAddress();
             }
         }
     },
@@ -239,7 +247,8 @@ export default {
 .address-keep {
     margin: 0.2rem 0.28rem;
     height: 45px;
-    background: #91efb1;
+    // background: #91efb1;
+    background: #30CE84;
     border-radius: 40px;
     line-height: 45px;
     color: #fff;

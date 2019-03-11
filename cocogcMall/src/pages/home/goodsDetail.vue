@@ -231,22 +231,23 @@
             </div>
         </div>
 
-        <div class="goodDetail-selectFixed" @click="fixedClose($event)" v-if="fixedCloseFlag">
+        <div class="goodDetail-selectFixed" @click="fixedClose($event)" v-if="fixedCloseFlag"  >
             <div class="goodDetail-selectW">
+                {{item}}
                 <div class="goodDetail-sim">
                     <div class="goodDetail-sGoodsImg">
                         <img src="static/images/goos_01.png" alt="" />
                     </div>
                     <div class="goodDetail-sMI">
-                        <p class="goodDetail-sMoney">5200.00</p>
-                        <p class="goodDetail-sInfo">已选：已选：银色，128G，标配版，1个已选：银色，128G，标配版，1个</p>
+                        <p class="goodDetail-sMoney">{{goodsDetailList.currentPrice}}</p>
+                        <p class="goodDetail-sInfo">已选：{{goodsDetailList.attrs}}</p>
                     </div>
                     <div class="j1Png goodDetail-sClose"></div>
                 </div>
 
                 <div class="goodDetail-selectPage">
                     <div class="goodDetail-selectTypeW">
-                        <p class="goodDetail-sType">颜色</p>
+                        <p class="goodDetail-sType"></p>
                         <p class="goodDetail-sTypeSlect">
                             <span class="goodsTypeNo">极光色</span>
                             <span class="goodsTypeActive">极光色</span>
@@ -287,10 +288,15 @@
 
 <script>
 import Swiper from 'swiper';
+import api from '../../service/api';
+
 export default {
     data() {
         return {
-            fixedCloseFlag: false
+            fixedCloseFlag: false,
+            goodsId: this.$route.params.goodId,
+            goodsDetailList:[],
+            l_attrs:[]
         };
     },
     mounted() {
@@ -315,8 +321,33 @@ export default {
             slidesPerView: "auto",
             centeredSlides: true,
         });
+
+        this.goodsDetailInfo()
     },
     methods: {
+        // 商品详情
+        goodsDetailInfo: function() {
+            let _this = this;
+            this.axios(testUrl + api.goodsDetailInfo, {
+                "id": 21
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        _this.goodsDetailList = data.data;
+                        _this.l_attrs = data.data.l_attrs;
+                        var s = [];
+                        s = _this.l_attrs
+console.log(s)
+
+
+                    }
+                })
+                .catch((err) => {
+
+                })
+        },
+
+
         fixedClose(e) {
             if (e.target.className.indexOf('goodDetail-sClose') != -1 || e.target.className.indexOf('goodDetail-selectFixed') != -1) {
                 this.fixedCloseFlag = false;

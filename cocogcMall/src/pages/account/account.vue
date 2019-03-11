@@ -5,7 +5,7 @@
                 <div class="acc-headCSM">
                     <span class="acc-headCrown"></span>
                     <span class="acc-headSet" @click="$router.push('/setUp')"></span>
-  
+
                 </div>
             </div>
             <div class="acc-headInfo">
@@ -25,8 +25,8 @@
 
         <div class="account-quickW">
             <ul class="account-quickUl">
-                <li v-for="(item,index) in orderList" :key="index" >
-                    <router-link class="account-quickA" :to="item.path"> 
+                <li v-for="(item,index) in orderList" :key="index">
+                    <router-link class="account-quickA" :to="item.path">
                         <p :class="item.bgImgClass"></p>
                         <p class="account-qName">{{item.name}}</p>
                     </router-link>
@@ -142,12 +142,11 @@ import Footer from '../../common/footer.vue'
 export default {
     data() {
         return {
-            orderList:[
-                {bgImgClass:'account-qImg01',name:'全部订单',path:'/orderManage?status=0'},
-                // {bgImgClass:'account-qImg02',name:'未完成'},
-                {bgImgClass:'account-qImg03',name:'未完成',path:'/orderManage?status=1'},
-                {bgImgClass:'account-qImg04',name:'已完成',path:'/orderManage?status=2'},
-                {bgImgClass:'account-qImg05',name:'退换/售后',path:'/orderManage?status=3'},
+            orderList: [
+                { bgImgClass: 'account-qImg01', name: '全部订单', path: '/orderManage?status=0' },
+                { bgImgClass: 'account-qImg03', name: '未完成', path: '/orderManage?status=1' },
+                { bgImgClass: 'account-qImg04', name: '已完成', path: '/orderManage?status=2' },
+                { bgImgClass: 'account-qImg05', name: '退换/售后', path: '/orderManage?status=3' },
             ]
         };
     },
@@ -171,8 +170,7 @@ export default {
     methods: {
 
     },
-components: {
-        
+    components: {
         "v-footer": Footer
     }
 };
@@ -193,7 +191,7 @@ components: {
             margin-top: 0.6rem;
             padding-right: 0.2rem;
             .acc-headCrown,
-            .acc-headSet{
+            .acc-headSet {
                 width: 0.42rem;
                 height: 0.42rem;
                 display: inline-block;
@@ -209,7 +207,6 @@ components: {
             .acc-headSet {
                 background-position: -0.73rem -1.09rem;
             }
-
         }
     }
     .acc-headInfo {
@@ -386,7 +383,6 @@ components: {
                         background-repeat: no-repeat;
                         background-size: 3.12rem 2.95rem;
                         background-position: -2.7rem -0.25rem;
-                     
                     }
                 }
             }
