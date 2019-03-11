@@ -32,3 +32,16 @@ export const CheckPass = (s) => {
     }
     return true;
 }
+
+//获取用户token
+export const getToken = () =>
+{
+  var token = localStorage.getItem("token");
+  if (IsEmpty(token)) {
+    token = this.$cookies.get("yeyun_token");
+    if (IsEmpty(token)) {
+      localStorage.setItem("token", token);
+    }
+  }
+  return token;
+}
