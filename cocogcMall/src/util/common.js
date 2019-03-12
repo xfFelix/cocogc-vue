@@ -19,7 +19,7 @@ export const IsMobile = mobile => {
 // 密码检测
 export const CheckPass = (s) => {
 
-    if (s != 'undefined' || s != null) {
+    if (s!='undefined' || s!=null) {
         if (s.length < 6 || s.length > 20) {
             return false;
         }
@@ -31,4 +31,17 @@ export const CheckPass = (s) => {
         return false;
     }
     return true;
+}
+
+//获取用户token
+export const getToken = () =>
+{
+  var token = localStorage.getItem("token");
+  if (IsEmpty(token)) {
+    token = this.$cookies.get("yeyun_token");
+    if (IsEmpty(token)) {
+      localStorage.setItem("token", token);
+    }
+  }
+  return token;
 }

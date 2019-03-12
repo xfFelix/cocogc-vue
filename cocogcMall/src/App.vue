@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { IsEmpty } from "@/util/common";
+import { IsEmpty,getToken } from "@/util/common";
 import Footer from '@/common/footer.vue'
 
 
@@ -25,16 +25,9 @@ export default {
     },
     methods: {
         getToken: function() {
-            var token = localStorage.getItem("token");
+            var token = getToken();
             if (IsEmpty(token)) {
-                token = this.$cookies.get("yeyun_token");
-                if (IsEmpty(token)) {
-                    localStorage.setItem("token", token);
-                } else {
-                    this.$router.push('/login');
-                }
-            } else {
-                this.$router.push('/index');
+                this.$router.push('/login');
             }
         },
 
@@ -52,9 +45,6 @@ export default {
     mounted() {
         // this.getToken();
         localStorage.setItem("token", '14c575b1f592da075b3cacccb96d7246');
-
-
-
     },
     components: {
         "v-footer": Footer,

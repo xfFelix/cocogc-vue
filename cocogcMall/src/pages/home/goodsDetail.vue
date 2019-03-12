@@ -2,27 +2,9 @@
     <div class="goodsDetail">
 
         <div class="goodsD-headListW">
-
-            <!-- <div class="goodsD-hBM"> -->
             <p class="goodsD-hBack" @click="$router.go(-1)">
                 <span></span>
             </p>
-            <!-- </div> -->
-
-            <ul class="goodsD-headList">
-                <li>
-                    <span>商品</span>
-                </li>
-                <li>
-                    <span>评价</span>
-                </li>
-                <li>
-                    <span>详情</span>
-                </li>
-                <li>
-                    <span>推荐</span>
-                </li>
-            </ul>
         </div>
 
         <div class="goodsD-headW">
@@ -30,15 +12,9 @@
 
                 <div class="swiper-container goodsD-headImg">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="static/images/goodBanner.jpg" alt="" /></div>
-                        <div class="swiper-slide"><img src="static/images/goodBanner.jpg" alt="" /></div>
-                        <div class="swiper-slide"><img src="static/images/goodBanner.jpg" alt="" /></div>
-                        <div class="swiper-slide"><img src="static/images/goodBanner.jpg" alt="" /></div>
+                        <div class="swiper-slide" v-for="item in goodsInfo.gallery.split('|')"><img v-bind:src="item" alt="" /></div>
                     </div>
-                    <!-- Add Pagination -->
                     <div class="swiper-pagination"></div>
-                    <!-- Add Arrows -->
-
                 </div>
 
             </div>
@@ -56,11 +32,11 @@
         <div class="goodsD-priceAddress">
             <div class="goodsD-priceW one-bottom-px">
                 <div class="changeGoods">
-                    <p class="changeGoodsa">忆江南 茶叶乌龙茶 新天尊龙品 安溪特级铁观音茶叶年货礼盒 500g</p>
-                    <p class="changeGoodsb">9000</p>
+                    <p class="changeGoodsa">{{goodsInfo.name}} {{goodsInfo.noSpecs==0?goodsInfo.attrs:""}}</p>
+                    <p class="changeGoodsb">{{goodsInfo.marketPrice}}</p>
                 </div>
                 <div class="changeMoney">
-                    <p class="changeMoneya">8200</p>
+                    <p class="changeMoneya">{{goodsInfo.currentPrice}}</p>
                     <p class="changeMoneyb">兑换价</p>
                 </div>
             </div>
@@ -82,147 +58,35 @@
 
         <div class="goodsD-info">
             <h3>商品简介</h3>
-            <p>
-                <span>商品编号</span>
-                <span>1534BIHJ4</span>
-            </p>
-            <p>
-                <span>品牌</span>
-                <span>忆江南</span>
-            </p>
-            <p>
-                <span>保质期</span>
-                <span>365天</span>
-            </p>
-            <p>
-                <span>等级</span>
-                <span>明前特级</span>
-            </p>
-            <p>
-                <span>储存方法</span>
-                <span>密封，防异味，干燥</span>
-            </p>
-            <p>
-                <span>产品标准号</span>
-                <span>Q/HXZ</span>
-            </p>
-            <p>
-                <span>生产许可证</span>
-                <span>0001S</span>
-            </p>
-            <p>
-                <span>净含量</span>
-                <span>SC11433016574984</span>
-            </p>
-        </div>
-
-        <div class="goodsD-eval">
-            <h3>商品评价(
-                <span>54</span>)</h3>
-
-            <div class="goodsD-evalSwipe">
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="goodsD-evalList">
-                                <div class="goodsD-evalNum">
-                                    <div class="goodsD-humanH">
-                                        <img src="static/images/goos_01.png" alt="" />
-                                    </div>
-                                    <div class="goodsD-humanNik">
-                                        <p class="goodsD-tel">
-                                            137****1545
-                                        </p>
-                                        <p class="goodsD-startW">
-                                            <span class="goodsD-start"></span>
-                                            <span class="goodsD-startGray"></span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <p class="goodsD-evalInfo">不错不错，非常喜欢。包装挺好的。做工也很不错，物流 超赞。</p>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="goodsD-evalList">
-                                <div class="goodsD-evalNum">
-                                    <div class="goodsD-humanH">
-                                        <img src="static/images/goos_01.png" alt="" />
-                                    </div>
-                                    <div class="goodsD-humanNik">
-                                        <p class="goodsD-tel">
-                                            137****1545
-                                        </p>
-                                        <p class="goodsD-startW">
-                                            <span class="goodsD-start"></span>
-                                            <span class="goodsD-startGray"></span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <p class="goodsD-evalInfo">不错不错，非常喜欢。包装挺好的。做工也很不错，物流 超赞。</p>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="goodsD-evalList">
-                                <div class="goodsD-evalNum">
-                                    <div class="goodsD-humanH">
-                                        <img src="static/images/goos_01.png" alt="" />
-                                    </div>
-                                    <div class="goodsD-humanNik">
-                                        <p class="goodsD-tel">
-                                            137****1545
-                                        </p>
-                                        <p class="goodsD-startW">
-                                            <span class="goodsD-start"></span>
-                                            <span class="goodsD-startGray"></span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <p class="goodsD-evalInfo">不错不错，非常喜欢。包装挺好的。做工也很不错，物流 超赞。</p>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="goodsD-evalList">
-                                <div class="goodsD-evalNum">
-                                    <div class="goodsD-humanH">
-                                        <img src="static/images/goos_01.png" alt="" />
-                                    </div>
-                                    <div class="goodsD-humanNik">
-                                        <p class="goodsD-tel">
-                                            137****1545
-                                        </p>
-                                        <p class="goodsD-startW">
-                                            <span class="goodsD-start"></span>
-                                            <span class="goodsD-startGray"></span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <p class="goodsD-evalInfo">不错不错，非常喜欢。包装挺好的。做工也很不错，物流 超赞。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div>
+              {{goodsInfo.brief}}
             </div>
+
         </div>
 
         <div class="goodsD-imgW">
             <h3>商品详情</h3>
-
+            <div>
+              {{goodsInfo.detail}}
+            </div>
         </div>
 
         <div class="goodDetail-buyW">
             <div class="goodDetail-bMoney">
                 <p class="goodDetail-bmReal">
-                    2000
+                  {{goodsInfo.currentPrice}}
                 </p>
-                <p class="goodDetail-bmNo">9000.00</p>
+                <p class="goodDetail-bmNo">{{goodsInfo.marketPrice}}</p>
             </div>
 
             <div class="goodDetail-buyCO">
                 <div class="goodDetail-buyCard">
+                  <router-link :to="{path: '/shopCart'}">
                     <p class="navImg goodDetail-bcImg">
-                        <span>200</span>
+                        <span>{{carTotal}}</span>
                     </p>
                     <p class="goodDetail-bcName">购物车</p>
+                  </router-link>
                 </div>
                 <div class="goodDetail-buyOper">
                     <p class="goodDetail-boAdd" @click="fixedCloseFlag=true">加入购物车</p>
@@ -235,48 +99,35 @@
             <div class="goodDetail-selectW">
                 <div class="goodDetail-sim">
                     <div class="goodDetail-sGoodsImg">
-                        <img src="static/images/goos_01.png" alt="" />
+                        <img v-bind:src="goodsInfo.picUrl" alt="" />
                     </div>
                     <div class="goodDetail-sMI">
-                        <p class="goodDetail-sMoney">{{goodsDetailList.currentPrice}}</p>
-                        <p class="goodDetail-sInfo">已选：{{goodsDetailList.attrs}}</p>
+                        <p class="goodDetail-sMoney">{{goodsInfo.currentPrice}}</p>
+                        <p class="goodDetail-sInfo">已选：{{goodsInfo.name}} {{goodsInfo.noSpecs==0?goodsInfo.attrs:""}}<span>{{buyNum}}{{goodsInfo.unit}}</span></p>
                     </div>
                     <div class="j1Png goodDetail-sClose"></div>
                 </div>
 
                 <div class="goodDetail-selectPage">
-                    <div class="goodDetail-selectTypeW">
-                        <p class="goodDetail-sType"></p>
-                        <p class="goodDetail-sTypeSlect">
-                            <span class="goodsTypeNo">极光色</span>
-                            <span class="goodsTypeActive">极光色</span>
-                            <span class="goodsTypeNo">极光色</span>
-                            <span class="goodsTypeNo">极光色</span>
-                            <span class="goodsTypeNo">极光色</span>
-                            <span class="goodsTypeNo">极光色</span>
-                        </p>
+                    <div v-if="goodsInfo.noSpecs == 0">
+                      <div class="goodDetail-selectTypeW" v-for="(item,index) in goodsInfo.l_attrs[0]" :key="index">
+                          <p class="goodDetail-sType">{{item}}</p>
+                          <p class="goodDetail-sTypeSlect" ref="goodsAttrs">
+                            <template  v-for="lv in goodsInfo.l_attrs[1][index]">
+                              <span v-if="containAttr(lv)" class="goodsTypeActive">{{lv}}</span>
+                              <span v-else class="goodsTypeNo" @click="chooseAttr(index,lv)">{{lv}}</span>
+                            </template>
+                          </p>
+                      </div>
                     </div>
-
-                    <div class="goodDetail-selectTypeW">
-                        <p class="goodDetail-sType">颜色</p>
-                        <p class="goodDetail-sTypeSlect">
-                            <span class="goodsTypeNo">极光色</span>
-                            <span class="goodsTypeActive">极光色</span>
-                            <span class="goodsTypeNo">极光色</span>
-                            <span class="goodsTypeNo">极光色</span>
-                            <span class="goodsTypeNo">极光色</span>
-                            <span class="goodsTypeNo">极光色</span>
-                        </p>
-                    </div>
-
                     <div class="goodDetail-selectNumW">
-                        <span class="goodDetail-selectDec">-</span>
-                        <span class="goodDetail-selectNum"><input type="number" value="1"></span>
-                        <span class="goodDetail-selectInc">+</span>
+                        <span class="goodDetail-selectDec" @click="setBuyNum(0)">-</span>
+                        <span class="goodDetail-selectNum"><input type="number" :value="buyNum"></span>
+                        <span class="goodDetail-selectInc" @click="setBuyNum(1)">+</span>
                     </div>
                 </div>
 
-                <div class="button goodsDetailBnt">确定</div>
+                <div class="button goodsDetailBnt" @click="toBuyCar()">确定</div>
             </div>
 
         </div>
@@ -286,70 +137,171 @@
 
 
 <script>
+import { IsEmpty,getToken } from "@/util/common";
 import Swiper from 'swiper';
 import api from '../../service/api';
 
 export default {
     data() {
         return {
-            fixedCloseFlag: false,
-            goodsId: this.$route.params.goodId,
-            goodsDetailList: [],
+          fixedCloseFlag: false,
+          goodsId:null,
+          goodsInfo: {
+            gallery:'',
+            noSpecs:0,
+            l_attrs:[[],[]]
+          },
+          attrs:[],
+          buyNum:1,
+          carTotal: 0
         };
     },
     mounted() {
+      var that =this;
         //图片轮播
         var swiperBan = new Swiper('.goodsD-headImg .swiper-container', {
             pagination: {
                 el: '.goodsD-headImg .swiper-pagination',
                 type: 'fraction',
                 renderFraction: function(currentClass, totalClass) {
-                    return '<span class="' + currentClass + '"></span>' +
-                        ' | ' +
-                        '<span class="' + totalClass + '"></span>';
+                    return '<span class="' + currentClass + '"></span>' +  ' | ' + '<span class="' + totalClass + '"></span>';
                 },
             },
         });
-        //评价轮播
-        var swiperBan = new Swiper('.goodsD-eval .swiper-container', {
-            spaceBetween: 10,
-            autoplay: false,
-            autoplayDisableOnInteraction: false,
-            slidesPerGroup: 1,
-            slidesPerView: "auto",
-            centeredSlides: true,
-        });
-
-        this.goodsDetailInfo()
+        //获取商品信息
+      that.goodsId = this.$route.params.goodId;
+      that.getGoodsInfo(that.goodsId,function (data) {
+          if(data != null){
+            that.setGoodsData(data);
+          }else{
+            that.Toast("该商品不存在！");
+            that.$router.push('/');
+          }
+      });
+      that.getCarInfo(function (data) {
+          that.carTotal = data;
+      });
     },
     methods: {
-        // 商品详情
-        goodsDetailInfo: function() {
-            let _this = this;
-            this.axios(testUrl + api.goodsDetailInfo, {
-                "id": 21
-            }, 'post')
-                .then((data) => {
-                    if (data.error_code == 0) {
-                        _this.goodsDetailList = data.data;
-                        _this.l_attrs = data.data.l_attrs;
-  
-
-                    }
-                })
-                .catch((err) => {
-
-                })
-        },
-
-
         fixedClose(e) {
             if (e.target.className.indexOf('goodDetail-sClose') != -1 || e.target.className.indexOf('goodDetail-selectFixed') != -1) {
                 this.fixedCloseFlag = false;
             }
+        },
+        getCarInfo(callback){
+          this.axios(testUrl + api.totalCarts,
+            {
+              token: getToken()
+            },
+            'post')
+            .then((data) => {
+              if (data.error_code == 0) {
+                  if(callback)
+                    callback(data.data);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        },
+        getGoodsInfo(goodId,callback){
+          this.axios(testUrl + api.goodsDetailInfo,
+            {
+            "id": goodId
+            },
+            'post')
+            .then((data) => {
+              if (data.error_code == 0) {
+                if(callback)
+                  callback(data.data);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        },
+       containAttr(attr){
+         for (var i = 0; i < this.attrs.length; i++){
+           if (this.attrs[i] == attr)
+             return true;
+         }
+         return false;
+       },
+      setGoodsData(data){
+          var that = this;
+          that.goodsInfo = data;
+          if(!IsEmpty(that.goodsInfo.l_attrs))
+            that.goodsInfo.l_attrs = JSON.parse(that.goodsInfo.l_attrs);
+          if(!IsEmpty(that.goodsInfo.attrs))
+            that.attrs = that.goodsInfo.attrs.split(",");
+          if(IsEmpty(that.goodsInfo.unit))that.goodsInfo.unit = "件";
+      },
+      chooseAttr(i,v){
+        var that = this;
+        this.attrs[i] = v;
+        var a = this.attrs.join(",");
+        var id = this.findGoodsFromList(a);
+        this.goodsId = id;
+        that.getGoodsInfo(that.goodsId,function (data) {
+          if(data != null){
+            that.setGoodsData(data);
+          }
+        });
+        this.$router.push('/goodsDetail/' + id);
+      },
+      findGoodsFromList(attr)
+      {
+        var ret = null;
+        var attrsGoods = this.goodsInfo.attrsGoods;
+        if(attrsGoods)
+        {
+          attrsGoods = JSON.parse(attrsGoods);
+          attrsGoods.forEach(function (v,i) {
+              var key = Object.keys(v)[0];
+              var val = Object.values(v)[0];
+              if(val == attr) {
+                ret = key;
+                return false;
+              }
+          });
         }
-
-
+        return ret;
+      },
+      setBuyNum(t){
+          if(t == 0 && this.buyNum>1){
+            this.buyNum = this.buyNum - 1;
+          }
+        if(t == 1 && this.buyNum<this.goodsInfo.stocks){
+          this.buyNum = this.buyNum + 1;
+        }
+      },
+      toBuyCar(){
+          var that = this;
+        //添加到购物车
+        var data = {
+          token: getToken(),
+          id:this.goodsId,
+          num:this.buyNum
+        }
+        this.axios(testUrl + api.add2Cart,
+          data,
+          'post')
+          .then((data) => {
+             if(data.error_code == 0)
+             {
+               that.Toast("添加购物车成功!");
+               that.fixedCloseFlag = false;
+               that.getCarInfo(function (data) {
+                 that.carTotal = data;
+               });
+             }else{
+               that.Toast("添加购物车失败：" +data.message);
+             }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      }
     },
     components: {
 
@@ -689,6 +641,7 @@ export default {
                     font-size: 0.18rem;
                     color: #fff;
                     border-radius: 40px;
+                    padding:0 3px;
                 }
             }
             .goodDetail-bcName {

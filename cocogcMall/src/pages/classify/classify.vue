@@ -52,7 +52,7 @@
                          <h3 class="title">{{item.name}}</h3>
                         <ul>
                             <li class="one-bottom-px" v-for="(i,index) in item.childCategory" @click="">
-                              <router-link :to="{path: '/detail/' + i.id}">
+                              <router-link :to="{path: '/list/' + i.id}">
                                 <p>
                                   <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''"/>
                                   <span>{{i.name}}</span>

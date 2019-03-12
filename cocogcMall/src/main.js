@@ -16,22 +16,22 @@ import Toast from './common/toast'
 Vue.use(VueCookie);
 Vue.use(Toast)
 //mint-ui
-// import 'mint-ui/lib/style.css'
-// import {
-//   MessageBox,
-//   Indicator,
+import 'mint-ui/lib/style.css'
+import {
+  MessageBox,
+  Indicator,
 //   Toast
-// } from "mint-ui";
+} from "mint-ui";
 
 // Vue.prototype.Toast = Toast;
-// Vue.prototype.Messagebox = MessageBox;
-//Vue.prototype.Indicator = Indicator;
-// Vue.prototype.showLoading = function () {
-//   Indicator.open({spinnerType: 'fading-circle'});
-// };
-// Vue.prototype.hideLoading = function () {
-//   Indicator.close();
-// };
+Vue.prototype.Messagebox = MessageBox;
+Vue.prototype.Indicator = Indicator;
+Vue.prototype.showLoading = function () {
+  Indicator.open({spinnerType: 'fading-circle'});
+};
+Vue.prototype.hideLoading = function () {
+  Indicator.close();
+};
 
 // Vue.use(VueLazyload, {
 //   preLoad: 1.3,
