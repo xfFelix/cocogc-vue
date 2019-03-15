@@ -40,7 +40,7 @@ export default {
     methods: {
         show() {
             this.$router.push('/certified')
-            // this.$toast('register')
+            // this.$tips('register')
         }
     },
     mounted() {

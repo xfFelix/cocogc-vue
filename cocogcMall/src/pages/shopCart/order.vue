@@ -6,7 +6,7 @@
         <div>
             <div class="order-addressWN" addressMag>
 
-                <router-link  class="order-addressW" to="/addressMag">
+                <router-link class="order-addressW" to="/addressMag">
                     <div class="order-address">
                         <p class="order-addPerson">
                             <span>默认</span>
@@ -29,7 +29,6 @@
 
                 <div class="order-bottom"></div>
             </div>
-            
 
             <div v-for="(dataItem,dataIndex) in dataList" :key="dataIndex">
 
@@ -92,24 +91,24 @@
                         </div>
                         <div class="order-goodsDetail" v-for="(itemGoods,indexGoods) in dataItem.goodsList" :key="indexGoods">
                             <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
-                            <p class="order-goodsDType">黑色</p>
+                            <p class="order-goodsDType">类型没有</p>
                             <div class="order-goodsDPriceW">
-                                <span class="order-goodsDPrice">{{itemGoods.totalMoney}}</span>
+                                <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
                                 <p class="order-goodsDNumW">
                                     <span class="order-goodsDNumI"></span>
-                                    <span class="order-goodsDNum">2</span>
+                                    <span class="order-goodsDNum">{{itemGoods.buyNum}}</span>
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <p class="order-freight">
+                    <!-- <p class="order-freight">
                         <span>运费</span>
                         <span>0.00</span>
                     </p>
                     <p class="order-priceAll">
                         <span>小计</span>
                         <span>2054.00</span>
-                    </p>
+                    </p> -->
                 </div>
 
                 <!-- 费用 -->
@@ -142,7 +141,7 @@
                 <span class="shop-cPriceInt">{{message|toDecimal2Fp(message)}}.</span>
                 <span class="shop-cPriceFloat">{{message|toDecimal2Ap(message)}}</span>
             </div>
-            <div class="order-sumit">提交订单</div>
+            <div class="order-sumit" @click="sumitOrder()">提交订单</div>
         </div>
     </div>
 </template>
@@ -164,26 +163,19 @@ export default {
         this.previewOrder()
     },
     methods: {
+        sumitOrder(){
+            this.saveOrder();
+        },
         // 订单预览
         previewOrder: function() {
             var token = localStorage.getItem("token");
+            var buys = JSON.parse(sessionStorage.getItem('buys'))
+            var addressId = localStorage.getItem("addressId");
             let _this = this;
             this.axios(testUrl + api.previewOrder, {
-                "token": "hhf7512935295b36d9b469e672c531d4c8",
-                "id": "b636fd2b5cfb481b875f25f69e7c8fae",
-                "buys": [
-                    {
-                        "goodsId": "35",
-                        "nums": "1"
-                    },
-                    {
-                        "goodsId": "34",
-                        "nums": "1"
-                    },
-                    {
-                        "goodsId": "33",
-                        "nums": "1"
-                    }]
+                "token": token,
+                "id": addressId,
+                "buys": buys
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
@@ -212,7 +204,29 @@ export default {
                         //地址存到localStorage
                         var editItem = JSON.stringify(_this.dataAddress);
                         localStorage.setItem('addressEdit', editItem);
-                    
+                    }
+                })
+                .catch((err) => {
+
+                })
+        },
+        //下单
+
+        saveOrder: function() {
+            var token = localStorage.getItem("token");
+            var buys = JSON.parse(sessionStorage.getItem('buys'));
+             var addressId = localStorage.getItem("addressId");
+
+            let _this = this;
+            this.axios(testUrl + api.saveOrder, {
+                "token": token,
+                "id": addressId,
+                "buys": buys
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        var orderId = data.data[0].orderId;
+                        this.$router.push({name:'orderDetails',params:{orderId:orderId}})
 
                     }
                 })
@@ -220,8 +234,6 @@ export default {
 
                 })
         },
-
-
 
     },
     components: {

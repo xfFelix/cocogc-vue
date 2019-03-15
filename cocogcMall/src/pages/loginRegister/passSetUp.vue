@@ -89,11 +89,11 @@ export default {
                     if (data.error_code == 0) {
                         this.$router.push('/passSetUp')
                     } else {
-                        this.$toast(data.message);
+                        this.$tips(data.message);
                     }
                 })
                 .catch((data) => {
-                    this.$toast(data.message);
+                    this.$tips(data.message);
                 })
         },
         // 忘记密码短信接口
@@ -120,11 +120,11 @@ export default {
                             }
                         }, 1000)
                     } else {
-                        this.$toast(data.message);
+                        this.$tips(data.message);
                     }
                 })
                 .catch((data) => {
-                    this.$toast(data.message);
+                    this.$tips(data.message);
                 })
         },
 
@@ -139,15 +139,15 @@ export default {
         */
         validateCli: function() {
             if (IsEmpty(this.passSet.userName) || !IsMobile(this.passSet.userName)) {
-                this.$toast("手机号码错误");
+                this.$tips("手机号码错误");
                 return false;
             }
             if (!CheckPass(this.passSet.passWord)) {
-                this.$toast("密码格式错误");
+                this.$tips("密码格式错误");
                 return false;
             }
             if (this.passSet.passWord !== this.passSet.passConfirm) {
-                this.$toast("密码设置不一致");
+                this.$tips("密码设置不一致");
                 return false;
             }
 
@@ -161,15 +161,16 @@ export default {
         */
         passSetBnt: function() {
             if (IsEmpty(this.passSet.userName) || !IsMobile(this.passSet.userName)) {
-                this.$toast("手机号码错误");
+
+                this.$tips("手机号码错误");
                 return false;
             }
             if (!CheckPass(this.passSet.passWord)) {
-                this.$toast("密码格式错误");
+                this.$tips("密码格式错误");
                 return false;
             }
             if (this.passSet.passWord !== this.passSet.passConfirm) {
-                this.$toast("密码设置不一致");
+                this.$tips("密码设置不一致");
                 return false;
             }
             this.passSetUp();

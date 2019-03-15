@@ -6,14 +6,14 @@
                 <span class="j1Png home-logo"></span>
                 <span class="j1Png home-searchL"></span>
                 <p class="home-searchI">
-                    <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" />
+                    <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont"/>
                 </p>
             </div>
             <span class="home-smdel" @click="cleanInp">
                 <span class="j1Png home-smdelImg"></span>
             </span>
         </div>
-        <div class="home-smClose">
+        <div class="home-smClose" @click="sendSearch()">
             搜索
         </div>
     </div>
@@ -28,7 +28,13 @@ export default {
     methods:{
         cleanInp(){
             this.searchCont =""
+        },
+        sendSearch(){
+            this.$emit('searchChild',this.searchCont)
         }
+    },
+    mounted() {
+        this.searchCont = this.$route.query.keyWord
     }
 }
 </script>

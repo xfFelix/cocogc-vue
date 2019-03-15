@@ -6,7 +6,8 @@ import qs from 'qs'
 import { baseUrl } from '@/config'
 axios.defaults.timeout = 30000;
 axios.defaults.baseURL = baseUrl;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.headers['Content-Type'] = 'application/json';
+
 
 var urlEncode = function (param, key, encode) {
   if (param === null) return ''
@@ -50,7 +51,10 @@ export default async (url = '', data = {}, type = 'GET') => {
       request = axios({
         method: type,
         url: url,
-        params: data
+        params: data,
+         headers: {
+          'Content-Type': 'application/json'
+        }
       })
     }
 

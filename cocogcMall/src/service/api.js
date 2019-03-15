@@ -7,26 +7,34 @@ const sms = 'user/sms';   //忘记密码（短信）
 
 
 
-const categories = 'categories';
-const goodsInfo = 'goodsInfo';
+const categories = 'api/categories';
+const goodsInfo = 'api/goodsInfo';
 
 
-const goodsGroups = 'goodsGroups';
-const selectOrders = 'selectOrders';  //订单列表
-const previewOrder = 'previewOrder';  //订单预览
-const findOrder = 'findOrder';  //订单预览
+const goodsGroups = 'api/goodsGroups';
+const selectOrders = 'api/selectOrders';  //订单列表
+const previewOrder = 'api/previewOrder';  //订单预览
+const findOrder = 'api/findOrder';  //查找订单
+const saveOrder = 'api/saveOrder';  //保存订单
 
 
-const selectAddresses = 'selectAddresses';  //地址列表
-const removeAddress = 'removeAddress';  //删除地址
-const updateAddress = 'updateAddress';  //地址更新
-const selectCities = 'selectCities';  //城市列表
-const goodsDetailInfo = 'goodsDetailInfo'; //商品详情
-const add2Cart = 'add2Cart'; //放入购物车
-const selectCarts = 'selectCarts'; //购物车
-const totalCarts = 'totalCarts'; //购物车商品数
-const removeCarts = 'removeCarts'; //删除购物车商品
-const updateCart = 'updateCart'; //更新购物车商品
+
+const selectAddresses = 'api/selectAddresses';  //地址列表
+const removeAddress = 'api/removeAddress';  //删除地址
+const updateAddress = 'api/updateAddress';  //地址更新
+const selectCities = 'api/selectCities';  //城市列表
+const goodsDetailInfo = 'api/goodsDetailInfo'; //商品详情
+const add2Cart = 'api/add2Cart'; //放入购物车
+const selectCarts = 'api/selectCarts'; //购物车
+const totalCarts = 'api/totalCarts'; //购物车商品数
+const removeCarts = 'api/removeCarts'; //删除购物车商品
+const updateCart = 'api/updateCart'; //更新购物车商品
+
+const price = 'query/price'; //积分区间
+const salesVolume = 'query/salesVolume'; //销量排序
+const order = 'query/order'; //价格排序
+
+const keyword = 'query/keyword'; //商品列表查询
 
 
 
@@ -52,5 +60,10 @@ export default {
   selectCarts,
   totalCarts,
   removeCarts,
-  updateCart
+  updateCart,
+  saveOrder,
+  price,
+  salesVolume,
+  order,
+  keyword
 }

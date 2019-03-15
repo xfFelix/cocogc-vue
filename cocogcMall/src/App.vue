@@ -1,20 +1,21 @@
 <template>
     <div id="app">
         <router-view></router-view>
-        <v-footer></v-footer>
+        <v-footer v-if="footerShow"></v-footer>
     </div>
 </template>
 
 <script>
-import { IsEmpty,getToken } from "@/util/common";
-import Footer from '@/common/footer.vue'
+import { IsEmpty, getToken } from "@/util/common";
+import Footer from '@/common/footer.vue';
+import api from '@/service/api';
 
 
 export default {
     name: 'App',
     data() {
         return {
-
+            footerShow: false
         }
     },
     created() {
@@ -23,14 +24,45 @@ export default {
     components: {
 
     },
+    watch: {
+        //以路径来判断是否需要底部
+        // '$route'(to, from) {
+        //     if (to.path == '/shopMall' ||to.path == '/account' ||to.path == '/index'||to.path == '/classify'||to.path == '/shopCart' || to.path == '/addressMag' || to.path == '/addressEdit' || to.path =='/orderManage') {
+        //         this.footerShow = true;
+        //     } else {
+        //         this.footerShow = false;
+        //     }
+        // },
+    },
     methods: {
         getToken: function() {
             var token = getToken();
+            console.log(token)
             if (IsEmpty(token)) {
                 this.$router.push('/login');
+            } else {
+                this.addressMag(token)
             }
         },
 
+        //地址列表，拿地址id
+        addressMag: function(token) {
+            let _this = this;
+            var token = localStorage.getItem("token");
+            this.axios(testUrl + api.selectAddresses, {
+                "token": token
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        _this.addressList = data.data;
+                        localStorage.setItem("addressId", data.data[0].id)
+                    } else {
+
+                    }
+                })
+                .catch((err) => {
+                })
+        },
 
         // 退出登录的时候才需{要
         // delToken: function() {
@@ -43,8 +75,10 @@ export default {
 
     },
     mounted() {
-        // this.getToken();
-        localStorage.setItem("token", '14c575b1f592da075b3cacccb96d7246');
+        this.getToken();
+        this.$cookies.set("yeyun_token",'hhf7512935295b36d9b469e672c531d4c8');
+        // localStorage.setItem("token", 'hhf7512935295b36d9b469e672c531d4c8');
+
     },
     components: {
         "v-footer": Footer,
@@ -58,7 +92,7 @@ export default {
 #app {
     width: 100%;
     height: 100%;
-    background: #eef1f6;
+    // background: #eef1f6;
 }
 
 .order-head {

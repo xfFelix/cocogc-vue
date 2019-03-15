@@ -47,8 +47,6 @@
                             <div class="swiper-button-next swiper-button-black"></div>
                         </div>
 
-                        
-
                     </div>
 
                     <div class="oMGoodsTotal">
@@ -187,8 +185,6 @@ export default {
                     }
                 })
                 .catch((err) => {
-
-
                 })
         },
 

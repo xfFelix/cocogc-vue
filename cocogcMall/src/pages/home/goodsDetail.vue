@@ -59,7 +59,7 @@
         <div class="goodsD-info">
             <h3>商品简介</h3>
             <div>
-              {{goodsInfo.brief}}
+                {{goodsInfo.brief}}
             </div>
 
         </div>
@@ -67,26 +67,26 @@
         <div class="goodsD-imgW">
             <h3>商品详情</h3>
             <div>
-              {{goodsInfo.detail}}
+                {{goodsInfo.detail}}
             </div>
         </div>
 
         <div class="goodDetail-buyW">
             <div class="goodDetail-bMoney">
                 <p class="goodDetail-bmReal">
-                  {{goodsInfo.currentPrice}}
+                    {{goodsInfo.currentPrice}}
                 </p>
                 <p class="goodDetail-bmNo">{{goodsInfo.marketPrice}}</p>
             </div>
 
             <div class="goodDetail-buyCO">
                 <div class="goodDetail-buyCard">
-                  <router-link :to="{path: '/shopCart'}">
-                    <p class="navImg goodDetail-bcImg">
-                        <span>{{carTotal}}</span>
-                    </p>
-                    <p class="goodDetail-bcName">购物车</p>
-                  </router-link>
+                    <router-link :to="{path: '/shopCart'}">
+                        <p class="navImg goodDetail-bcImg">
+                            <span>{{carTotal}}</span>
+                        </p>
+                        <p class="goodDetail-bcName">购物车</p>
+                    </router-link>
                 </div>
                 <div class="goodDetail-buyOper">
                     <p class="goodDetail-boAdd" @click="fixedCloseFlag=true">加入购物车</p>
@@ -103,22 +103,24 @@
                     </div>
                     <div class="goodDetail-sMI">
                         <p class="goodDetail-sMoney">{{goodsInfo.currentPrice}}</p>
-                        <p class="goodDetail-sInfo">已选：{{goodsInfo.name}} {{goodsInfo.noSpecs==0?goodsInfo.attrs:""}}<span>{{buyNum}}{{goodsInfo.unit}}</span></p>
+                        <p class="goodDetail-sInfo">已选：{{goodsInfo.name}} {{goodsInfo.noSpecs==0?goodsInfo.attrs:""}}
+                            <span>{{buyNum}}{{goodsInfo.unit}}</span>
+                        </p>
                     </div>
                     <div class="j1Png goodDetail-sClose"></div>
                 </div>
 
                 <div class="goodDetail-selectPage">
                     <div v-if="goodsInfo.noSpecs == 0">
-                      <div class="goodDetail-selectTypeW" v-for="(item,index) in goodsInfo.l_attrs[0]" :key="index">
-                          <p class="goodDetail-sType">{{item}}</p>
-                          <p class="goodDetail-sTypeSlect" ref="goodsAttrs">
-                            <template  v-for="lv in goodsInfo.l_attrs[1][index]">
-                              <span v-if="containAttr(lv)" class="goodsTypeActive">{{lv}}</span>
-                              <span v-else class="goodsTypeNo" @click="chooseAttr(index,lv)">{{lv}}</span>
-                            </template>
-                          </p>
-                      </div>
+                        <div class="goodDetail-selectTypeW" v-for="(item,index) in goodsInfo.l_attrs[0]" :key="index">
+                            <p class="goodDetail-sType">{{item}}</p>
+                            <p class="goodDetail-sTypeSlect" ref="goodsAttrs">
+                                <template v-for="lv in goodsInfo.l_attrs[1][index]">
+                                    <span v-if="containAttr(lv)" class="goodsTypeActive">{{lv}}</span>
+                                    <span v-else class="goodsTypeNo" @click="chooseAttr(index,lv)">{{lv}}</span>
+                                </template>
+                            </p>
+                        </div>
                     </div>
                     <div class="goodDetail-selectNumW">
                         <span class="goodDetail-selectDec" @click="setBuyNum(0)">-</span>
@@ -137,50 +139,50 @@
 
 
 <script>
-import { IsEmpty,getToken } from "@/util/common";
+import { IsEmpty, getToken } from "@/util/common";
 import Swiper from 'swiper';
 import api from '../../service/api';
 
 export default {
     data() {
         return {
-          fixedCloseFlag: false,
-          goodsId:null,
-          goodsInfo: {
-            gallery:'',
-            noSpecs:0,
-            l_attrs:[[],[]]
-          },
-          attrs:[],
-          buyNum:1,
-          carTotal: 0
+            fixedCloseFlag: false,
+            goodsId: null,
+            goodsInfo: {
+                gallery: '',
+                noSpecs: 0,
+                l_attrs: [[], []]
+            },
+            attrs: [],
+            buyNum: 1,
+            carTotal: 0
         };
     },
     mounted() {
-      var that =this;
+        var that = this;
         //图片轮播
         var swiperBan = new Swiper('.goodsD-headImg .swiper-container', {
             pagination: {
                 el: '.goodsD-headImg .swiper-pagination',
                 type: 'fraction',
                 renderFraction: function(currentClass, totalClass) {
-                    return '<span class="' + currentClass + '"></span>' +  ' | ' + '<span class="' + totalClass + '"></span>';
+                    return '<span class="' + currentClass + '"></span>' + ' | ' + '<span class="' + totalClass + '"></span>';
                 },
             },
         });
         //获取商品信息
-      that.goodsId = this.$route.params.goodId;
-      that.getGoodsInfo(that.goodsId,function (data) {
-          if(data != null){
-            that.setGoodsData(data);
-          }else{
-            that.Toast("该商品不存在！");
-            that.$router.push('/');
-          }
-      });
-      that.getCarInfo(function (data) {
-          that.carTotal = data;
-      });
+        that.goodsId = this.$route.params.goodId;
+        that.getGoodsInfo(that.goodsId, function(data) {
+            if (data != null) {
+                that.setGoodsData(data);
+            } else {
+                that.Toast("该商品不存在！");
+                that.$router.push('/');
+            }
+        });
+        that.getCarInfo(function(data) {
+            that.carTotal = data;
+        });
     },
     methods: {
         fixedClose(e) {
@@ -188,120 +190,118 @@ export default {
                 this.fixedCloseFlag = false;
             }
         },
-        getCarInfo(callback){
-          this.axios(testUrl + api.totalCarts,
-            {
-              token: getToken()
-            },
-            'post')
-            .then((data) => {
-              if (data.error_code == 0) {
-                  if(callback)
-                    callback(data.data);
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            })
+        getCarInfo(callback) {
+            this.axios(testUrl + api.totalCarts,
+                {
+                    token: getToken()
+                },
+                'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        if (callback)
+                            callback(data.data);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         },
-        getGoodsInfo(goodId,callback){
-          this.axios(testUrl + api.goodsDetailInfo,
-            {
-            "id": goodId
-            },
-            'post')
-            .then((data) => {
-              if (data.error_code == 0) {
-                if(callback)
-                  callback(data.data);
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            })
+        getGoodsInfo(goodId, callback) {
+            this.axios(testUrl + api.goodsDetailInfo,
+                {
+                    "id": goodId
+                },
+                'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        if (callback)
+                            callback(data.data);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         },
-       containAttr(attr){
-         for (var i = 0; i < this.attrs.length; i++){
-           if (this.attrs[i] == attr)
-             return true;
-         }
-         return false;
-       },
-      setGoodsData(data){
-          var that = this;
-          that.goodsInfo = data;
-          if(!IsEmpty(that.goodsInfo.l_attrs))
-            that.goodsInfo.l_attrs = JSON.parse(that.goodsInfo.l_attrs);
-          if(!IsEmpty(that.goodsInfo.attrs))
-            that.attrs = that.goodsInfo.attrs.split(",");
-          if(IsEmpty(that.goodsInfo.unit))that.goodsInfo.unit = "件";
-      },
-      chooseAttr(i,v){
-        var that = this;
-        this.attrs[i] = v;
-        var a = this.attrs.join(",");
-        var id = this.findGoodsFromList(a);
-        this.goodsId = id;
-        that.getGoodsInfo(that.goodsId,function (data) {
-          if(data != null){
-            that.setGoodsData(data);
-          }
-        });
-        this.$router.push('/goodsDetail/' + id);
-      },
-      findGoodsFromList(attr)
-      {
-        var ret = null;
-        var attrsGoods = this.goodsInfo.attrsGoods;
-        if(attrsGoods)
-        {
-          attrsGoods = JSON.parse(attrsGoods);
-          attrsGoods.forEach(function (v,i) {
-              var key = Object.keys(v)[0];
-              var val = Object.values(v)[0];
-              if(val == attr) {
-                ret = key;
-                return false;
-              }
-          });
+        containAttr(attr) {
+            for (var i = 0; i < this.attrs.length; i++) {
+                if (this.attrs[i] == attr)
+                    return true;
+            }
+            return false;
+        },
+        setGoodsData(data) {
+            var that = this;
+            that.goodsInfo = data;
+            if (!IsEmpty(that.goodsInfo.l_attrs))
+                that.goodsInfo.l_attrs = JSON.parse(that.goodsInfo.l_attrs);
+            if (!IsEmpty(that.goodsInfo.attrs))
+                that.attrs = that.goodsInfo.attrs.split(",");
+            if (IsEmpty(that.goodsInfo.unit)) that.goodsInfo.unit = "件";
+        },
+        chooseAttr(i, v) {
+            var that = this;
+            this.attrs[i] = v;
+            var a = this.attrs.join(",");
+            var id = this.findGoodsFromList(a);
+            this.goodsId = id;
+            that.getGoodsInfo(that.goodsId, function(data) {
+                if (data != null) {
+                    that.setGoodsData(data);
+                }
+            });
+            this.$router.push('/goodsDetail/' + id);
+        },
+        findGoodsFromList(attr) {
+            var ret = null;
+            var attrsGoods = this.goodsInfo.attrsGoods;
+            if (attrsGoods) {
+                attrsGoods = JSON.parse(attrsGoods);
+                attrsGoods.forEach(function(v, i) {
+                    var key = Object.keys(v)[0];
+                    var val = Object.values(v)[0];
+                    if (val == attr) {
+                        ret = key;
+                        return false;
+                    }
+                });
+            }
+            return ret;
+        },
+        setBuyNum(t) {
+            if (t == 0 && this.buyNum > 1) {
+                this.buyNum = this.buyNum - 1;
+            }
+            if (t == 1 && this.buyNum < this.goodsInfo.stocks) {
+                this.buyNum = this.buyNum + 1;
+            }
+        },
+        toBuyCar() {
+            var that = this;
+            //添加到购物车
+            var data = {
+                token: getToken(),
+                id: this.goodsId,
+                num: this.buyNum
+            }
+            this.axios(testUrl + api.add2Cart,
+                data,
+                'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        that.Toast("添加购物车成功!");
+                        that.fixedCloseFlag = false;
+                        that.getCarInfo(function(data) {
+                            that.carTotal = data;
+                        });
+
+                    } else {
+                        that.Toast("添加购物车失败：" + data.message);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
-        return ret;
-      },
-      setBuyNum(t){
-          if(t == 0 && this.buyNum>1){
-            this.buyNum = this.buyNum - 1;
-          }
-        if(t == 1 && this.buyNum<this.goodsInfo.stocks){
-          this.buyNum = this.buyNum + 1;
-        }
-      },
-      toBuyCar(){
-          var that = this;
-        //添加到购物车
-        var data = {
-          token: getToken(),
-          id:this.goodsId,
-          num:this.buyNum
-        }
-        this.axios(testUrl + api.add2Cart,
-          data,
-          'post')
-          .then((data) => {
-             if(data.error_code == 0)
-             {
-               that.Toast("添加购物车成功!");
-               that.fixedCloseFlag = false;
-               that.getCarInfo(function (data) {
-                 that.carTotal = data;
-               });
-             }else{
-               that.Toast("添加购物车失败：" +data.message);
-             }
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      }
     },
     components: {
 
@@ -594,6 +594,10 @@ export default {
         color: #000;
         padding: 0.5rem 0.26rem;
     }
+    div{
+        width: 100%;
+        overflow: hidden;
+    }
     margin-bottom: 0.9rem;
 }
 
@@ -641,7 +645,7 @@ export default {
                     font-size: 0.18rem;
                     color: #fff;
                     border-radius: 40px;
-                    padding:0 3px;
+                    padding: 0 3px;
                 }
             }
             .goodDetail-bcName {

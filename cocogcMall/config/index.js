@@ -14,15 +14,22 @@ module.exports = {
       '/api': {
         target: 'http://yzmall.dev.legendpoker.cn/',
         changeOrigin: true,
-        pathRewrite:{
-          '^/api':''
+        pathRewrite: {
+          '^/api': ''
+        },
+        '/jdApi': {
+          target: 'http://192.168.0.110:9988/',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/jdApi': ''
+          }
         }
       },
     },
 
     // Various Dev Server settings
-    //host: '0.0.0.0', // can be overwritten by process.env.HOST
-    host:'localhost',
+    host: '0.0.0.0', // can be overwritten by process.env.HOST
+    // host: 'localhost',
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

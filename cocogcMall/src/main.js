@@ -11,24 +11,27 @@ import '../static/css/style.css';
 import VueCookie from 'vue-cookies';
 import VueLazyload from 'vue-lazyload';
 
-import Toast from './common/toast'
+import Tips from './common/tips'
 
+
+Vue.component(Spinner.name, Spinner)
 Vue.use(VueCookie);
-Vue.use(Toast)
+Vue.use(Tips);
+
 //mint-ui
 import 'mint-ui/lib/style.css'
 import {
   MessageBox,
   Indicator,
-//   Toast
+  Toast,
+  Spinner//无限滚动
 } from "mint-ui";
 
-// Vue.prototype.Toast = Toast;
+Vue.prototype.Toast = Toast;
 Vue.prototype.Messagebox = MessageBox;
 Vue.prototype.Indicator = Indicator;
-Vue.prototype.showLoading = function () {
-  Indicator.open({spinnerType: 'fading-circle'});
-};
+// Vue.prototype.InfiniteScroll = InfiniteScroll;
+
 Vue.prototype.hideLoading = function () {
   Indicator.close();
 };

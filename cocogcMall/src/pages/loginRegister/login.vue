@@ -84,9 +84,6 @@ export default {
 
     },
     methods: {
-        // 登录成功，存token，存COOKIE,
-        // 判断有没有cookie,有的话跳转
-
         // 登录
         login: function() {
             let _this = this;
@@ -97,15 +94,14 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         this.$router.push('/index');
-                        localStorage.setItem("yeyun_token", data.data.token);
-                        this.$cookies.set("yeyun_token", data.data.token,30)
+                        let token = data.data.token;
+                        localStorage.setItem("yeyun_token", token);
+                        this.$cookies.set("yeyun_token",token,30)
                     } else {
-
                         this.tipBgShow = true;
                     }
                 })
                 .catch((err) => {
-
                     this.tipBgShow = true;
                 })
         },
@@ -136,11 +132,11 @@ export default {
         //登录按钮
         loginBnt: function() {
             if (IsEmpty(this.loginForm.userName) || !IsMobile(this.loginForm.userName)) {
-                this.$toast("登录手机号码错误");
+                this.$tips("登录手机号码错误");
                 return false;
             }
             if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
-                this.$toast("登录密码错误");
+                this.$tips("登录密码错误");
                 return false;
             }
             this.login()

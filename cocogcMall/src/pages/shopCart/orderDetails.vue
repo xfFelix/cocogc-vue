@@ -51,11 +51,10 @@
             <div class="order-goodSW">
                 <div class="order-goodSInfo">
                     <div class="order-goodSIImg">
-                        <!-- <img :src="itemGoods.imgsrc" alt="" /> -->
                     </div>
                     <div class="order-goodsDetail">
                         <p class="order-goodsDName">{{item.goodsName}}</p>
-                        <!-- <p class="order-goodsDType">黑色</p> -->
+                         <p class="order-goodsDType">类型没有</p> 
                         <p class="order-goodsDType"></p>
                         <div class="order-goodsDPriceW">
                             <span class="order-goodsDPrice">{{item.buyPrice}}</span>
@@ -280,9 +279,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.dataList = data.data;
-                        console.log(_this.dataList)
-  
-
+                      
                     }
                 })
                 .catch((err) => {

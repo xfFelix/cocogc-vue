@@ -132,7 +132,7 @@ export default new Router({
       meta: { title: '物流详情' },
     },
     {
-      path: '/orderDetails',
+      path: '/orderDetails/:orderId',
       name: 'orderDetails',
       component: orderDetails,
       meta: { title: '订单详情' },

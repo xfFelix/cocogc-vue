@@ -11,11 +11,10 @@
                 <div class="swiper-wrapper">
 
                     <div class="swiper-slide" v-for="(item,index) in goodsList" :key="index">
-
                         <div class="home-hGoodsW">
                             <router-link :to="{path:'goodsDetail/'+item.id}">
                                 <div class="home-hGoods">
-                                    <img src="static/images/goos_01.png" alt="" />
+                                     <img :src="item.picUrl" alt="" /> 
                                       <!-- <img :src="item.picUrl" alt="" /> -->
                                     <span class="home-hSTags"></span>
                                 </div>
@@ -96,7 +95,7 @@ export default {
                         })
 
                     } else {
-
+                        Toast(data.message)
                     }
                 })
                 .catch((err) => {
@@ -125,7 +124,7 @@ export default {
             // width: 2rem;
             width: 1.77rem;
             height: 1.77rem;
-            background: #f8f8f8;
+            // background: #f8f8f8;
             text-align: center;
             position: relative;
             img {

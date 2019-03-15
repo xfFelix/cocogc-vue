@@ -140,7 +140,12 @@ height: 45px;
     display: inline-block;
   }
 
-
+.accountImg{
+    display: inline-block;
+    background-image: url(/static/images/account.png);
+    background-repeat: no-repeat;
+    background-size: 3.12rem 2.95rem;
+}
   .page-wrapper {
     position: relative;
     width: 100%;

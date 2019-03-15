@@ -1,13 +1,13 @@
 <template>
-    <div class="home-integralW" >
+    <div class="home-integralW">
         <div class="home-rHM">
             <h3>积分区间</h3>
             <span class="home-rMore" @click="$router.push('/goodsList')"></span>
         </div>
         <p class="home-hSE">INTEGRAL DIMENSION</p>
         <div class="home-iSelectW">
-            <ul class="home-iSelect" ref="intergraSel">
-                <li v-for="(item,index) in homeSel" :key="index" v-if="item.homeSelShow" @click="iSelect(index)" :class="item.id==iSelectAct?'iSelectCla':'iSelectNo'">
+            <ul class="home-iSelect">
+                <li v-for="(item,index) in homeSel" :key="index" v-if="item.homeSelShow" @click="iSelect(item,index)" :class="item.id==iSelectAct?'iSelectCla':'iSelectNo'">
                     {{item.integral}}
                 </li>
             </ul>
@@ -22,82 +22,57 @@
         <div class="home-interWrap">
             <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
                 <div class="home-iGoods">
-                    <img src="static/images/goos_02.png" alt="" />
-                    <span class="home-iTags">
-                        <span class="iGoods" v-if="item.Annual==1"></span>
-                        <span class="iDrop" v-if="item.iDrop==1">直降</span>
-                        <span class="iSelf" v-if="item.iSelf==1">自营</span>
-                    </span>
+                    <img :src="item.image" alt="" />
                 </div>
                 <p class="home-iNmame">
-                    {{item.goodsName}}
+                    {{item.name|wordSize(item.name)}}
                 </p>
                 <div class="home-iMoneyW">
                     <span class="home-iMoneyL"></span>
-                    <span class="home-iMoney">{{item.price}}</span>
+                    <span class="home-iMoney">{{item.currentPrice}}</span>
                 </div>
             </div>
         </div>
-          <div class="home-integralM one-top-px">查看更多</div>
+        <div class="home-integralM one-top-px" @click="toGoodsList()">
+            查看更多
+        </div>
     </div>
 </template>
 <script>
 import Swiper from 'swiper';
+import api from '../../service/api';
 export default {
     data() {
         return {
             homeSel: [
                 { id: 0, integral: "我要兑换", homeSelShow: true },
                 { id: 1, integral: "0~50", homeSelShow: true },
-                { id: 2, integral: "50~200", homeSelShow: true },
-                { id: 3, integral: "200~1000", homeSelShow: true },
-                { id: 4, integral: "1000~2000", homeSelShow: true },
-                { id: 5, integral: "1000~2000", homeSelShow: true },
-                { id: 6, integral: "0~50", homeSelShow: true },
-                { id: 7, integral: "50~200", homeSelShow: true },
-                { id: 8, integral: "200~1000", homeSelShow: true },
-                { id: 9, integral: "1000~2000", homeSelShow: true },
-                { id: 10, integral: "1000~2000", homeSelShow: true },
-                { id: 11, integral: "1000~2000", homeSelShow: true },
+                { id: 2, integral: "51~200", homeSelShow: true },
+                { id: 3, integral: "201~500", homeSelShow: true },
+                { id: 4, integral: "501~1000", homeSelShow: true },
+                { id: 5, integral: "1001~2000", homeSelShow: true },
             ],
-            goodsList: [
-                {
-                    goodsName: '联想ThinkPad 14英寸轻 薄窄边框笔记本电脑新',
-                    Annual: '1', //年货专场
-                    iDrop: '1',
-                    iSelf: '1',
-                    price: '6848.00'
-                },
-                {
-                    goodsName: '联想ThinkPad 14英寸轻 薄窄边框笔记本电脑新',
-                    Annual: '1', //年货专场
-                    iDrop: '0',
-                    iSelf: '0',
-                    price: '6848.00'
-                },
-                {
-                    goodsName: '联想ThinkPad 14英寸轻 薄窄边框笔记本电脑新',
-                    Annual: '1', //年货专场
-                    iDrop: '0',
-                    iSelf: '1',
-                    price: '6848.00'
-                },
-            ],
-             homeSelFlag: 0,
-             iSelectAct: '',
+            homeSelFlag: 0,
+            iSelectAct: '',
+            iSintegra:'',
+            goodsList: [],
         }
     },
     mounted() {
+        //积分列表展示
         this.homeSel.forEach((item, index) => {
             if (index > 4) {
                 item.homeSelShow = false
             }
         })
+        this.goodsAll()
     },
     methods: {
-        /*
-              积分区间 
-            */
+        //带积分到列表页
+        toGoodsList() {
+            this.$router.push({path:'/goodsList',query:{integra:this.iSintegra}})
+        },
+        // 积分区间
         integraM() {
             if (this.homeSelFlag == 0) {
                 this.homeSel.forEach((item, index) => {
@@ -115,9 +90,69 @@ export default {
                 this.homeSelFlag = 0
             }
         },
-        iSelect(index) {
-            this.iSelectAct = index
-        }
+        iSelect(item, index) {
+            this.iSelectAct = index;
+            if (item.id != 0) {
+                this.price(item.integral);
+                this.iSintegra = item.integral.replace('~', '-');
+            } else {
+                this.goodsAll()
+                this.iSintegra = "";
+            }
+        },
+        price: function(integral) {
+            let integrals = integral.replace('~', '-');
+            var token = localStorage.getItem("token");
+            let _this = this;
+            this.axios(jdTestUrl + api.price, {
+                "price": integrals,
+                "offset": 0,
+                "rows": 16
+            }, 'get')
+                .then((data) => {
+                    if (data.code == 0) {
+                        _this.goodsList = data.list;
+                        
+                    } else {
+
+                    }
+                })
+                .catch((err) => {
+
+
+                })
+        },
+
+        goodsAll: function() {
+            let _this = this;
+            this.axios(jdTestUrl + api.keyword, {
+                "offset": 1,
+                "rows": 10,
+                "keyWord": "",
+                "brandId": "",
+                "timeSort": "",
+                "salesVolume": "",
+                "priceRange": "",
+                "price": "",
+            }, 'post')
+                .then((data) => {
+                    if (data.code == 0) {
+                        if (data.list.length > 0) {
+                            _this.goodsList = data.list;
+                        }else{
+
+                        }
+                    } else {
+                        this.Toast(data.message)
+                    }
+                })
+                .catch((err) => {
+                    this.Toast(err.message)
+
+                })
+        },
+
+        // http://192.168.0.110:9988/query/keyword
     }
 
 }
@@ -133,8 +168,7 @@ export default {
         font-size: 0.2rem;
         overflow: auto;
         display: flex;
-        justify-content: space-around;
-        // margin-bottom: 0.2rem;
+        justify-content: space-around; // margin-bottom: 0.2rem;
         .home-iSelect {
             width: 6.90rem;
             li {
@@ -253,10 +287,9 @@ export default {
         }
     }
     .home-integralM {
-        padding: 0.33rem 0;
+        padding: 0.33rem 0 1.3rem 0;
         text-align: center;
-        font-size: 0.3rem;
-        // margin-bottom: 49px;
+        font-size: 0.3rem; // margin-bottom: 49px;
     }
 }
 </style>

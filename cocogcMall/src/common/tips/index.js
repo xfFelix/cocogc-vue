@@ -1,9 +1,9 @@
-import ToastComponent from './toast.vue'
+import ToastComponent from './tips.vue'
 
-const Toast = {};
+const Tips = {};
 
 // 注册Toast
-Toast.install = function (Vue) {
+Tips.install = function (Vue) {
     // 生成一个Vue的子类
     // 同时这个子类也就是组件
     const ToastConstructor = Vue.extend(ToastComponent)
@@ -17,7 +17,7 @@ Toast.install = function (Vue) {
 
     // 通过Vue的原型注册一个方法
     // 让所有实例共享这个方法 
-    Vue.prototype.$toast = (msg) => {
+    Vue.prototype.$tips = (msg) => {
         instance.message = msg;
 
         // setTimeout(() => {
@@ -66,4 +66,4 @@ Toast.install = function (Vue) {
 }
 
 // console.log(Toast)
-export default Toast
+export default Tips

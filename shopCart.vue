@@ -39,7 +39,7 @@
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
                                         <span @click="numDecrease(index) " :class="items.num>1?'decNum':'decNoNum'"></span>
-                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" /></span>
+                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly"/></span>
                                         <!-- 是否需要有货和没货？+号颜色是否要变 -->
                                         <span @click="numIncrease(index)"></span>
                                     </p>
@@ -54,7 +54,7 @@
 
         <div class="shopEmpty" v-if="list.length == 0">
             <p>购物车竟然是空的~~</p>
-            <!-- <p>再忙也记得买点什么犒赏自己</p> -->
+            <p>再忙也记得买点什么犒赏自己</p>
         </div>
 
         <!-- 猜你喜欢 -->
@@ -82,7 +82,8 @@
             <div class="shop-cPN" v-if="!deitDelFlag">
                 <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum1':'shop-cartNum0'">
                     <span class="shop-carNumI" @click="delGoods">
-                        删除(<span class="shop-cartNum">{{selectAllGoods}}</span>)
+                        删除(
+                        <span class="shop-cartNum">{{selectAllGoods}}</span>)
                     </span>
                 </p>
             </div>
@@ -95,7 +96,7 @@
 import Guesslike from "../../common/guesslike.vue";
 import Footer from '../../common/footer.vue'
 import api from '../../service/api';
-import { IsEmpty, getToken } from "@/util/common";
+import { IsEmpty,getToken } from "@/util/common";
 
 export default {
     data() {
@@ -111,99 +112,103 @@ export default {
         };
     },
     mounted() {
-        var that = this;
-        this.getCartGoodsList(function(data) {
-            if (data == null) {
-                that.list = [];
-            } else {
-                that.list = data;
-            }
-            that.computeTotal();
-        });
+      var that = this;
+      this.getCartGoodsList(function (data) {
+        if(data == null) {
+          that.list = [];
+        }else{
+          that.list = data;
+        }
+        that.computeTotal();
+      });
 
     },
     methods: {
-        getCartGoodsList(callback) {
-            this.axios(testUrl + api.selectCarts,
-                {
-                    token: getToken()
-                },
-                'post')
-                .then((data) => {
-                    if (data.error_code == 0) {
-                        if (callback)
-                            callback(data.data);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
+        getCartGoodsList(callback){
+          this.axios(testUrl + api.selectCarts,
+            {
+              token: getToken()
+            },
+            'post')
+            .then((data) => {
+              if (data.error_code == 0) {
+                if(callback)
+                  callback(data.data);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            })
         },
         // 删除
-        delGoods() {
-            var that = this;
-            var ids = [];
-            that.list.forEach((res) => {
-                if (res.check == true) {
-                    ids.push(res.id);
-                }
-            });
-            if (ids.length > 0) {
-                that.axios(testUrl + api.removeCarts,
-                    {
-                        token: getToken(),
-                        id: ids.join(",")
-                    },
-                    'post')
-                    .then((data) => {
-                        if (data.error_code == 0) {
-                            that.getCartGoodsList(function(data) {
-                                if (data == null) {
-                                    that.list = [];
-                                } else {
-                                    that.list = data;
-                                }
-                                that.deitDelFlag = false;
-                                that.selectAllPrice = 0;
-                                that.selectAllGoods = 0;
-                            });
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
+        delGoods()
+        {
+          var that = this;
+          var ids = [];
+          that.list.forEach((res) => {
+            if (res.check == true) {
+              ids.push(res.id);
             }
+          });
+          if(ids.length>0){
+            that.axios(testUrl + api.removeCarts,
+              {
+                token: getToken(),
+                id:ids.join(",")
+              },
+              'post')
+              .then((data) => {
+                if (data.error_code == 0)
+                {
+                  that.getCartGoodsList(function (data) {
+                    if(data == null) {
+                      that.list = [];
+                    }else{
+                      that.list = data;
+                    }
+                    that.deitDelFlag = false;
+                    that.selectAllPrice = 0;
+                    that.selectAllGoods = 0;
+                  });
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+          }
         },
         //结算
-        settleGoods() {
-            var that = this;
-            var buys = [];
-            that.list.forEach(function(v) {
-                if (v.check) {
-                    var buy = {};
-                    buy.goodsId = v.goodsId;
-                    buy.nums = v.num;
-                    buys.push(buy);
-                }
-            });
-            if (that.selectAllGoods == 0) return false;
-            if (buys.length <= 0) {
-                that.Toast("请选择结算商品！");
-                return false;
+        settleGoods(){
+          var that = this;
+          var buys = [];
+          that.list.forEach(function (v) {
+            if(v.check) {
+              var buy = {};
+              buy.goodsId = v.goodsId;
+              buy.nums = v.num;
+              buys.push(buy);
             }
-            that.axios(testUrl + api.updateCart,
-                {
-                    token: getToken(),
-                    buys: buys
-                },
-                'post')
-                .then((data) => {
-                    if (data.error_code == 0) {
-                        sessionStorage.setItem('buys', JSON.stringify(buys));
-                        that.$router.push('/order');
+          });
+          if(that.selectAllGoods == 0) return false;
+          if(buys.length<=0){
+            that.Toast("请选择结算商品！");
+            return false;
+          }
+          that.axios(testUrl + api.updateCart,
+            {
+              token: getToken(),
+              buys:buys
+            },
+            'post')
+            .then((data) => {
+              if (data.error_code == 0)
+              {
+                that.$router.push('/order');
 
-                    }
-                });
+
+                
+              }
+            });
 
         },
         //编辑
@@ -216,32 +221,35 @@ export default {
 
         },
         computeTotal() {
-            var that = this;
-            this.selectAllPrice = 0;
-            this.selectAllGoods = 0;
-            this.list.forEach((res) => {
-                if (res.check == true) {
-                    that.selectAllPrice += res.num * res.goods.currentPrice;
-                    that.selectAllGoods++;
-                }
-            });
+          var that = this;
+          this.selectAllPrice = 0;
+          this.selectAllGoods = 0;
+          this.list.forEach((res) => {
+            if (res.check == true) {
+              that.selectAllPrice += res.num * res.goods.currentPrice;
+              that.selectAllGoods++;
+            }
+          });
         },
         // 数量减小
         numDecrease(index) {
-            if (this.list[index].num > 1) {
-                this.list[index].num--;
-                this.computeTotal();
-            }
+          if(this.list[index].num>1)
+          {
+            this.list[index].num--;
+            this.computeTotal();
+          }
         },
         //增加
-        numIncrease(index) {
-            if (this.list[index].num < this.list[index].goods.stocks) {
-                this.list[index].num++;
-                this.computeTotal();
-            }
+        numIncrease(index)
+        {
+          if(this.list[index].num < this.list[index].goods.stocks){
+            this.list[index].num++;
+            this.computeTotal();
+          }
         },
         //输入的数量
-        storeMoney(e, index) {
+        storeMoney(e,index)
+        {
             this.list[index].num = e;
             this.computeTotal();
         },
@@ -268,14 +276,15 @@ export default {
             });
         },
         //某个商品不选，全选不选
-        IsQuanXuan(index) {
+        IsQuanXuan(index)
+        {
             let Notselected = true;
             this.list.forEach((res) => {
                 if (!res.check) {
                     Notselected = false
                 }
             });
-            this.selectAllFlag = Notselected;
+           this.selectAllFlag = Notselected;
         },
     },
     components: {
@@ -516,7 +525,7 @@ export default {
     align-items: center;
     height: 1.2rem;
     position: fixed;
-    bottom: 48px;
+    bottom: 49px;
     width: 100%;
     border-top: 1px solid #dfdfdf;
     justify-content: space-between;

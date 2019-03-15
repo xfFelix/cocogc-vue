@@ -1,3 +1,4 @@
+import Vue from 'vue';
 
 /*
     是否为空
@@ -19,7 +20,7 @@ export const IsMobile = mobile => {
 // 密码检测
 export const CheckPass = (s) => {
 
-    if (s!='undefined' || s!=null) {
+    if (s != 'undefined' || s != null) {
         if (s.length < 6 || s.length > 20) {
             return false;
         }
@@ -34,14 +35,14 @@ export const CheckPass = (s) => {
 }
 
 //获取用户token
-export const getToken = () =>
-{
-  var token = localStorage.getItem("token");
-  if (IsEmpty(token)) {
-    token = this.$cookies.get("yeyun_token");
+export const getToken = () => {
+    var token = localStorage.getItem("token");
     if (IsEmpty(token)) {
-      localStorage.setItem("token", token);
+        token = Vue.prototype.$cookies.get("yeyun_token");
+        if (!IsEmpty(token)) {
+            localStorage.setItem("token", token);
+        }
     }
-  }
-  return token;
+
+    return token;
 }

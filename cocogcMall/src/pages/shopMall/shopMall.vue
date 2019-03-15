@@ -26,7 +26,7 @@
             <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" />
           </p>
         </div>
-        <span @click="seachClick" class="seachBnt">搜索</span>
+        <span @click="seachClick()" class="seachBnt">搜索</span>
       </div>
 
       <div class="home-smWrapA" v-if="homeSmWrap==true">
@@ -63,7 +63,7 @@
     <!-- 底部切换 -->
 
     <!-- 头部 -->
-<!-- <v-footer></v-footer> -->
+    <!-- <v-footer></v-footer> -->
   </div>
 </template>
 
@@ -141,9 +141,8 @@ export default {
         })
     },
 
-
     seachClick() {
-
+      this.$router.push({ path: '/goodsList', query: { keyWord: this.searchCont} })
     },
     handleScroll() {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
