@@ -15,13 +15,13 @@ export default {
     data() {
         return {
             tableList: [
-                { title: '首页', path: '/index', icon: 'navGo01', iconGreen: 'navGo11', name: 'index' },
-                { title: '商城', path: '/shopMall', icon: 'navGo02', iconGreen: 'navGo12', name: 'shopMall' },
-                { title: '分类', path: '/classify', icon: 'navGo03', iconGreen: 'navGo13', name: 'classify' },
-                { title: '购物车', path: '/shopCart', icon: 'navGo04', iconGreen: 'navGo14', name: 'shopCart' },
-                { title: '我的', path: '/account', icon: 'navGo05', iconGreen: 'navGo15', name: 'account' },
+                { title: '首页', path: 'home', icon: 'navGo01', iconGreen: 'navGo11', name: 'home' },
+                { title: '商城', path: 'shopMall', icon: 'navGo02', iconGreen: 'navGo12', name: 'shopMall' },
+                { title: '分类', path: 'classify', icon: 'navGo03', iconGreen: 'navGo13', name: 'classify' },
+                { title: '购物车', path: 'shopCart', icon: 'navGo04', iconGreen: 'navGo14', name: 'shopCart' },
+                { title: '我的', path: 'account', icon: 'navGo05', iconGreen: 'navGo15', name: 'account' },
             ],
-            isSelect: 'index',
+            isSelect: 'home',
             screenHeight: document.body.clientHeight,// 这里是给到了一个默认值 （这个很重要），默认屏幕高度
             originHeight: document.body.clientHeight,//默认高度在watch里拿来做比较，实时屏幕高度
             hideShow: true  //显示或者隐藏footer
@@ -72,7 +72,7 @@ export default {
         }
         // this.isSelect = sessionStorage.getItem('isSelect');   //sessionStrorage(会话储存)获取之前储存的内容
         // if (this.$route.name == "index" || this.$route.name == 'shopMall' || this.$route.name == 'classify' || this.$route.name == 'shopCart' || this.$route.name == 'account') {
-        //     this.selectNav(this.$route.name);   //当前页面为index或者notice或者activity或者my时执行获取当前url的name  
+        //     this.selectNav(this.$route.name);   //当前页面为index或者notice或者activity或者my时执行获取当前url的name
         // }
     },
 }
