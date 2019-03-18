@@ -70,7 +70,6 @@
 <script>
 import Swiper from 'swiper';
 import api from '../../service/api'
-import Footer from '../../common/footer.vue'
 import Shortcut from '../../components/home/shortcut.vue'
 import HotGoods from '../../components/home/hotGoods.vue'
 import Integral from '../../components/home/integral.vue'
@@ -164,7 +163,6 @@ export default {
     // console.log('updated')
   },
   components: {
-    "v-footer": Footer,
     "v-shortcut": Shortcut,
     "v-hotGoods": HotGoods,
     "v-integral": Integral

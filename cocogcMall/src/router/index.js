@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import index from '@/pages/home/index';
+import home from '@/pages/home/index';
 import goodsDetail from '@/pages/home/goodsDetail'; //商品详情页
 import goodsList from '@/pages/home/goodsList'; //列表页
 import searchPage from '@/pages/home/searchPage'; //列表页
@@ -30,8 +30,9 @@ import passSetUp from '@/pages/loginRegister/passSetUp';
 import passSetSucess from '@/pages/loginRegister/passSetSucess';
 import register from '@/pages/loginRegister/register';
 import registerSucess from '@/pages/loginRegister/registerSucess';
+import { homedir } from 'os';
 
-
+import Layout from '@/pages/layout/Layout'
 Vue.use(Router)
 
 export default new Router({
@@ -39,7 +40,44 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/index',
+      redirect: '/layout/home',
+    },
+    {
+      path: '/layout',
+      name: 'layout',
+      component: Layout,
+      children: [
+        {
+          path: 'home',
+          name: 'home',
+          component: home,
+          meta: { title: '首页' },
+        },
+        {
+          path: 'shopMall',
+          name: 'shopMall',
+          component: shopMall,
+          meta: { title: '商城' },
+        },
+        {
+          path: 'shopCart',
+          name: 'shopCart',
+          component: shopCart,
+          meta: { title: '购物车' },
+        },
+        {
+          path: 'account',
+          name: 'account',
+          component: account,
+          meta: { title: '账户' },
+        },
+        {
+          path: 'classify',
+          name: 'classify',
+          component: classify,
+          meta: { title: '分类' },
+        }
+      ]
     },
     {
       path: '/searchPage',
@@ -53,39 +91,6 @@ export default new Router({
       component: goodsList,
       meta: { title: '商品列表' },
     },
-    {
-      path: '/index',
-      name: 'index',
-      component: index,
-      meta: { title: '首页' },
-    },
-
-    {
-      path: '/classify',
-      name: 'classify',
-      component: classify,
-      meta: { title: '分类' },
-    },
-    {
-      path: '/shopMall',
-      name: 'shopMall',
-      component: shopMall,
-      meta: { title: '商城' },
-    },
-
-    {
-      path: '/shopCart',
-      name: 'shopCart',
-      component: shopCart,
-      meta: { title: '购物车' },
-    },
-    {
-      path: '/account',
-      name: 'account',
-      component: account,
-      meta: { title: '账户' },
-    },
-
     {
       path: '/addressMag',
       name: 'addressMag',
