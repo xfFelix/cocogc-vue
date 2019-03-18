@@ -31,7 +31,6 @@ window.Toast= Toast;
 window.MessageBox= MessageBox;
 window.Indicator= Indicator;
 
-
 Vue.prototype.Toast = Toast;
 
 

@@ -320,11 +320,8 @@ export default {
         async goPreview() {
           let buys = []
           buys.push({goodsId: this.goodsId, nums: this.buyNum})
-          let data = await this.axios(testUrl + api.updateCart,{token: getToken(),buys},'post')
-          if (data.error_code == 0) {
-            sessionStorage.setItem('buys', JSON.stringify(buys))
-            this.$router.push('/order');
-          }
+          sessionStorage.setItem('buys', JSON.stringify(buys))
+          this.$router.push('/order');
         }
     },
     components: {
