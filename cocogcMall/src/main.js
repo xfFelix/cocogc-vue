@@ -10,10 +10,11 @@ import 'swiper/dist/css/swiper.css';
 import '../static/css/style.css';
 import VueCookie from 'vue-cookies';
 import VueLazyload from 'vue-lazyload';
+import Foot from '@/assets/direct/foot'
 
 import Tips from './common/tips'
 
-
+Vue.use(Foot)
 Vue.component(Spinner.name, Spinner)
 Vue.use(VueCookie);
 Vue.use(Tips);
