@@ -8,7 +8,6 @@ import searchPage from '@/pages/home/searchPage'; //列表页
 
 
 import classify from '@/pages/classify/classify';
-
 import shopMall from '@/pages/shopMall/shopMall';
 
 import account from '@/pages/account/account';

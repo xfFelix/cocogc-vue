@@ -89,11 +89,11 @@ export default {
                     if (data.error_code == 0) {
                         this.$router.push('/passSetUp')
                     } else {
-                        this.$tips(data.message);
+                        MessageBox("提示", data.message)
                     }
                 })
                 .catch((data) => {
-                    this.$tips(data.message);
+                    MessageBox("提示", data.message)
                 })
         },
         // 忘记密码短信接口
@@ -120,11 +120,11 @@ export default {
                             }
                         }, 1000)
                     } else {
-                        this.$tips(data.message);
+                         MessageBox("提示", data.message)
                     }
                 })
                 .catch((data) => {
-                    this.$tips(data.message);
+                    MessageBox("提示", data.message)
                 })
         },
 
@@ -139,15 +139,15 @@ export default {
         */
         validateCli: function() {
             if (IsEmpty(this.passSet.userName) || !IsMobile(this.passSet.userName)) {
-                this.$tips("手机号码错误");
+                MessageBox("手机号码错误", "请输入有效的11位手机号码。")
                 return false;
             }
             if (!CheckPass(this.passSet.passWord)) {
-                this.$tips("密码格式错误");
+                MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
                 return false;
             }
             if (this.passSet.passWord !== this.passSet.passConfirm) {
-                this.$tips("密码设置不一致");
+                MessageBox("密码错误", "密码设置不一致")
                 return false;
             }
 
@@ -161,16 +161,15 @@ export default {
         */
         passSetBnt: function() {
             if (IsEmpty(this.passSet.userName) || !IsMobile(this.passSet.userName)) {
-
-                this.$tips("手机号码错误");
+                MessageBox("手机号码错误", "请输入有效的11位手机号码。")
                 return false;
             }
             if (!CheckPass(this.passSet.passWord)) {
-                this.$tips("密码格式错误");
+                MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
                 return false;
             }
             if (this.passSet.passWord !== this.passSet.passConfirm) {
-                this.$tips("密码设置不一致");
+                MessageBox("密码错误", "密码设置不一致")
                 return false;
             }
             this.passSetUp();

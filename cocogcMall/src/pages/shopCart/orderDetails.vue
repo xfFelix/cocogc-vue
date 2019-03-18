@@ -57,7 +57,7 @@
                          <p class="order-goodsDType">类型没有</p> 
                         <p class="order-goodsDType"></p>
                         <div class="order-goodsDPriceW">
-                            <span class="order-goodsDPrice">{{item.buyPrice}}</span>
+                            <span class="order-goodsDPrice">{{item.buyPrice|toDecimal2(item.buyPrice)}}</span>
                             <p class="order-goodsDNumW">
                                 <span class="order-goodsDNumI"></span>
                                 <span class="order-goodsDNum">{{item.buyNum}}</span>
@@ -83,25 +83,25 @@
             <ul class="od-priceUl one-bottom-px">
                 <li>
                     <span>商品总额</span>
-                    <span>{{dataList.sellMoney}}</span>
+                    <span>{{dataList.sellMoney|toDecimal2(dataList.sellMoney)}}</span>
                 </li>
                 <li>
                     <span>运费</span>
-                    <span>{{dataList.shippingFee}}</span>
+                    <span>{{dataList.shippingFee|toDecimal2(dataList.shippingFee)}}</span>
                 </li>
                 <li>
                     <span>服务费</span>
-                    <span>{{dataList.serviceMoney}}</span>
+                    <span>{{dataList.serviceMoney|toDecimal2(dataList.serviceMoney)}}</span>
                 </li>
                 <li>
                     <span>税费</span>
-                    <span>{{dataList.taxFee}}</span>
+                    <span>{{dataList.taxFee|toDecimal2(dataList.taxFee)}}</span>
                 </li>
 
             </ul>
             <p class="od-realPrice">
                 <span>实付：</span>
-                <span>{{dataList.totalMoney}}</span>
+                <span>{{dataList.totalMoney|toDecimal2(dataList.totalMoney)}}</span>
             </p>
         </div>
 
@@ -116,155 +116,14 @@ import api from '../../service/api';
 export default {
     data() {
         return {
-            list: [
-                {
-                    goodStore: "京东商品",
-                    AllFlag: false,
-                    goodStoreId: "aaa",
-                    goodsList: [{
-                        id: 1,
-                        name: "京东商品1阿迪斯发是手动阀手动阀京东商品1阿迪斯发是手动阀手动阀",
-                        price: 10,
-                        count: 5,
-                        Stotal: 180,
-                        sku: '001',
-                        check: false,
-                        imgsrc: "static/images/goos_02.jpg"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }]
-                },
-                {
-                    goodStore: "京东商品",
-                    AllFlag: false,
-                    goodStoreId: "bbb",
-                    goodsList: [{
-                        id: 1,
-                        name: "京东商品1阿迪斯发是手动阀手动阀京东商品1阿迪斯发是手动阀手动阀",
-                        price: 10,
-                        count: 5,
-                        Stotal: 180,
-                        sku: '001',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }]
-                },
-                {
-                    goodStore: "自营商品",
-                    AllFlag: false,
-                    goodStoreId: "ccc",
-                    goodsList: [{
-                        id: 3,
-                        name: "自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品11",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '003',
-                        check: false,
-                        imgsrc: "static/images/goos_02.png"
-                    }]
-                }, {
-                    goodStore: "自营商品",
-                    AllFlag: false,
-                    goodStoreId: "ddd",
-                    goodsList: [{
-                        id: 3,
-                        name: "自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品11",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '003',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }]
-                }
-
-            ],
+            list: [],
             dataList:{},
             orderId:this.$route.params.orderId
         };
     },
     mounted() {
-      this.findOrder()
-
+      this.findOrder();
+      console.log("1111")
     },
     methods: {
         
@@ -279,7 +138,6 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.dataList = data.data;
-                      
                     }
                 })
                 .catch((err) => {

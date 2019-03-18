@@ -49,13 +49,13 @@ let toDecimal2Ap = x => {
 }
 
 //超出30个字省略号
-let wordSize = x =>{
-    let removeSpace = x.replace(' ','');
+let wordSize = x => {
+    let removeSpace = x.replace(' ', '');
 
-    if(x!=null && x.length>20){
-        let xs = removeSpace.substring(0,20)+"..."
+    if (x != null && x.length > 20) {
+        let xs = removeSpace.substring(0, 20) + "..."
         return xs
-    }else{
+    } else {
         return x
     }
 
@@ -63,4 +63,4 @@ let wordSize = x =>{
 
 }
 
-export { formatMoney, toDecimal2, toDecimal2Fp ,toDecimal2Ap,wordSize }
+export { formatMoney, toDecimal2, toDecimal2Fp, toDecimal2Ap, wordSize }

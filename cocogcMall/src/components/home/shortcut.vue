@@ -5,48 +5,15 @@
             <div class="swiper-container">
                 <!-- 页面 -->
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <a href="#" class="home-quickA">
-                            <p class="home-qImg">
-                                <span class="home-qIde">HOT</span>
+                    <div class="swiper-slide" v-for="(item,index) in quickList" :key="index">
+                        <router-link :to="quickItem.path" class="home-quickA" v-for="(quickItem,quickIndex) in item" :key="quickIndex">
+                            <p class="navImg home-qImg" :class="quickItem.imgBg">
+                                <!-- <span class="home-qIde">HOT</span> -->
                             </p>
-                            <p class="home-qName">黄金兑换</p>
-                        </a>
-                        <a href="#" class="home-quickA">
-                            <p class="home-qImg"></p>
-                            <p class="home-qName">话费兑换</p>
-                        </a>
-                        <a href="#" class="home-quickA">
-                            <p class="home-qImg"></p>
-                            <p class="home-qName">信用卡还款</p>
-                        </a>
-                        <a href="#" class="home-quickA">
-                            <p class="home-qImg"></p>
-                            <p class="home-qName">京东优选</p>
-                        </a>
-
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="#" class="home-quickA">
-                            <p class="home-qImg"></p>
-                            <p class="home-qName">黄金兑换</p>
-                        </a>
-                        <a href="#" class="home-quickA">
-                            <p class="home-qImg"></p>
-                            <p class="home-qName">话费兑换</p>
-                        </a>
-                        <a href="#" class="home-quickA">
-                            <p class="home-qImg"></p>
-                            <p class="home-qName">信用卡还款</p>
-                        </a>
-                        <a href="#" class="home-quickA">
-                            <p class="home-qImg"></p>
-                            <p class="home-qName">京东优选</p>
-                        </a>
-
+                            <p class="home-qName">{{quickItem.name}}</p>
+                        </router-link>
                     </div>
                 </div>
-                <!-- 分页器 -->
                 <div class="swiper-pagination"></div>
             </div>
 
@@ -58,7 +25,20 @@ import Swiper from 'swiper';
 export default {
     data() {
         return {
+            quickList: [
+                [
+                    { name: "精彩活动", path: '/aa', imgBg: 'home-qImg01' },
+                    { name: "团购预售", path: '/aa', imgBg: 'home-qImg02' },
+                    { name: "一元购", path: '/aa', imgBg: 'home-qImg03' },
+                    { name: "日用超市", path: '/aa', imgBg: 'home-qImg04' },
+                ],
+                [
+                    { name: "手机数码", path: '/aa', imgBg: 'home-qImg05' },
+                    { name: "家用电器", path: '/aa', imgBg: 'home-qImg06' },
+                    { name: "美妆护肤", path: '/aa', imgBg: 'home-qImg07' },
 
+                ]
+            ]
         }
     },
     mounted() {
@@ -103,12 +83,8 @@ export default {
             .home-qImg {
                 width: 0.5rem;
                 height: 0.5rem;
-                display: inline-block;
-                background-image: url(/static/images/banner.png);
-                background-repeat: no-repeat;
-                background-position: -0.09rem -0.09rem;
-                background-size: 4.82rem 1.97rem;
                 position: relative;
+
                 .home-qIde {
                     position: absolute;
                     font-size: 0.14rem;
@@ -121,12 +97,31 @@ export default {
                     -webkit-transform: scale(0.8);
                 }
             }
+            .home-qImg01 {
+                background-position: -0.09rem -0.09rem;
+            }
+            .home-qImg02 {
+                background-position: -0.09rem -0.09rem;
+            }
+            .home-qImg03 {
+                background-position: -0.09rem -0.09rem;
+            }
+            .home-qImg04 {
+                background-position: -0.09rem -0.09rem;
+            }
+            .home-qImg05 {
+                background-position: -0.09rem -0.09rem;
+            }
+            .home-qImg06 {
+                background-position: -0.09rem -0.09rem;
+            }
+            .home-qImg07 {
+                background-position: -0.09rem -0.09rem;
+            }
             .home-qName {
                 margin-top: 0.16rem;
             }
         }
-
-
     }
 }
 </style>

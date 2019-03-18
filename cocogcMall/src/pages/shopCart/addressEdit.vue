@@ -28,7 +28,7 @@
                     <p>
                         <span>所在地区</span>
                         <span>
-                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @clicl="fixedShowC()">
+                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @click="fixedShowC()">
                         </span>
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeAddressC">
@@ -139,34 +139,32 @@ export default {
                 .then((data) => {
                     if (data.error_code == 1) {
                         _this.addressList = data.data;
-
                     } else {
 
                     }
                 })
                 .catch((err) => {
 
-
                 })
         },
         takeKeep() {
             if (IsEmpty(this.takeName)) {
-                this.$tips("收货人不能为空");
+                MessageBox("提示", "收货人不能为空");
                 return false;
             } else if (IsEmpty(this.takeTel)) {
-                this.$tips("手机号码不能为空");
+                MessageBox("提示", "手机号码不能为空");
                 return false;
             }
             else if (!IsMobile(this.takeTel)) {
-                this.$tips("手机号码错误");
+                MessageBox("提示", "手机号码格式错误");
                 return false;
             }
             else if (IsEmpty(this.takeAddress)) {
-                this.$tips("地区不能为空");
+                MessageBox("提示", "地区不能为空")
                 return false;
             }
             else if (IsEmpty(this.takeDAddress)) {
-                this.$tips("详细地址不能为空");
+                MessageBox("提示", "详细地址不能为空")
                 return false;
             } else {
                 if (this.addressDef == false) {

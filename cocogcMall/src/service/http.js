@@ -1,12 +1,29 @@
 import axios from 'axios'
-// import Vue from 'vue';
-// import router from '@/router'
-import qs from 'qs'
+
 
 import { baseUrl } from '@/config'
-axios.defaults.timeout = 30000;
+axios.defaults.timeout = 300;
 axios.defaults.baseURL = baseUrl;
 axios.defaults.headers['Content-Type'] = 'application/json';
+
+//拦截器
+axios.interceptors.request.use(config => {
+  Indicator.open('Loading...');
+  return config;
+}, error => {
+  Indicator.close()
+  Toast("加载超时...")
+  return Promise.reject(error)
+})
+
+axios.interceptors.response.use(config => {
+ Indicator.close()
+  return config;
+}, error => {
+  Toast("加载超时...")
+  return Promise.reject(error)
+})
+
 
 
 var urlEncode = function (param, key, encode) {
@@ -38,7 +55,6 @@ export default async (url = '', data = {}, type = 'GET') => {
       })
     } else if (type === 'form') {
       var transform = urlEncode(data)
-      console.log(transform)
       request = axios({
         method: 'post',
         url: url,
@@ -52,7 +68,7 @@ export default async (url = '', data = {}, type = 'GET') => {
         method: type,
         url: url,
         params: data,
-         headers: {
+        headers: {
           'Content-Type': 'application/json'
         }
       })
@@ -63,7 +79,7 @@ export default async (url = '', data = {}, type = 'GET') => {
       // 如果http状态码正常，则直接返回数据
       // debugger
       if (response && (response.status === 200 || response.status === 304 || response.status === 400)) {
-        
+
         resolve(response.data)
       }
       if (response && response.status === 500) {
@@ -81,3 +97,4 @@ export default async (url = '', data = {}, type = 'GET') => {
     })
   })
 }
+

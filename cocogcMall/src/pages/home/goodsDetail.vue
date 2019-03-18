@@ -66,8 +66,8 @@
 
         <div class="goodsD-imgW">
             <h3>商品详情</h3>
-            <div>
-                {{goodsInfo.detail}}
+            <div v-html="goodsInfo.detail" class="detailImg">
+
             </div>
         </div>
 
@@ -161,15 +161,7 @@ export default {
     mounted() {
         var that = this;
         //图片轮播
-        var swiperBan = new Swiper('.goodsD-headImg .swiper-container', {
-            pagination: {
-                el: '.goodsD-headImg .swiper-pagination',
-                type: 'fraction',
-                renderFraction: function(currentClass, totalClass) {
-                    return '<span class="' + currentClass + '"></span>' + ' | ' + '<span class="' + totalClass + '"></span>';
-                },
-            },
-        });
+
         //获取商品信息
         that.goodsId = this.$route.params.goodId;
         that.getGoodsInfo(that.goodsId, function(data) {
@@ -232,6 +224,20 @@ export default {
         setGoodsData(data) {
             var that = this;
             that.goodsInfo = data;
+
+            this.$nextTick(function() {
+                var swiperBan = new Swiper('.goodsD-headImg .swiper-container', {
+                    pagination: {
+                        el: '.goodsD-headImg .swiper-pagination',
+                        type: 'fraction',
+                        renderFraction: function(currentClass, totalClass) {
+                            return '<span class="' + currentClass + '"></span>' + ' | ' + '<span class="' + totalClass + '"></span>';
+                        },
+                    },
+                });
+            })
+
+
             if (!IsEmpty(that.goodsInfo.l_attrs))
                 that.goodsInfo.l_attrs = JSON.parse(that.goodsInfo.l_attrs);
             if (!IsEmpty(that.goodsInfo.attrs))
@@ -434,7 +440,7 @@ export default {
         display: flex;
         justify-content: space-between;
         .changeMoney {
-            width: 1.4rem;
+            width: 1.6rem;
             height: 1.4rem;
             display: block;
             text-align: center;
@@ -590,11 +596,18 @@ export default {
 
 .goodsD-imgW {
     background: #fff;
+    .detailImg {
+        font-size: 0px;
+        img {
+            width: 100%;
+        }
+    }
+
     h3 {
         color: #000;
         padding: 0.5rem 0.26rem;
     }
-    div{
+    div {
         width: 100%;
         overflow: hidden;
     }

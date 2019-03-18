@@ -66,13 +66,13 @@
         <div v-show="moreShow==false">
             已经到底了噢~~
         </div>
-        <!-- <v-loading></v-loading> -->
+
 
     </div>
 </template>
 <script>
 import headSearch from "../../common/headSearch.vue";
-import Loading from "../../common/loading.vue";
+
 
 import api from '../../service/api';
 
@@ -251,7 +251,6 @@ export default {
     },
     components: {
         "head-search": headSearch,
-        "v-loading": Loading,
     }
 
 }

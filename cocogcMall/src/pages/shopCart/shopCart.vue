@@ -29,13 +29,13 @@
                                 </span>
                             </span>
                             <span class="shop-selImg">
-                                <img src="static/images/goos_01.png" alt="" />
+                                <img :src="items.goods!=null?items.goods.picUrl:''" alt="" />
                             </span>
                             <div class="shop-selInfo">
-                                <p class="shop-selGoodsT">{{items.goods.name}}</p>
-                                <p class="shop-selGoodsC">{{items.goods.attrs}}</p>
+                                <p class="shop-selGoodsT">{{items.goods!=null?items.goods.name:''}}</p>
+                                <p class="shop-selGoodsC">{{items.goods!=null?items.goods.attrs:''}}</p>
                                 <div class="shop-selGoodsN">
-                                    <span class="shop-selGoodsS">{{items.goods.currentPrice}}</span>
+                                    <span class="shop-selGoodsS">{{items.goods!=null?items.goods.currentPrice:''}}</span>
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
                                         <span @click="numDecrease(index) " :class="items.num>1?'decNum':'decNoNum'"></span>
@@ -60,7 +60,7 @@
         <!-- 猜你喜欢 -->
         <guess-like></guess-like>
 
-        <div class="shop-cartBot" v-if="list.length != 0">
+        <div class="shop-cartBot one-top-px" v-if="list.length != 0">
             <p class="shop-cSelectW">
                 <span @click="selectAll()" :class="!selectAllFlag?'shop-selectN':'shop-selectY'"></span>
                 <span>全选</span>
@@ -220,7 +220,7 @@ export default {
             this.selectAllPrice = 0;
             this.selectAllGoods = 0;
             this.list.forEach((res) => {
-                if (res.check == true) {
+                if (res.check == true && res.goods!=null) {
                     that.selectAllPrice += res.num * res.goods.currentPrice;
                     that.selectAllGoods++;
                 }
@@ -235,7 +235,7 @@ export default {
         },
         //增加
         numIncrease(index) {
-            if (this.list[index].num < this.list[index].goods.stocks) {
+            if (this.list[index].goods!=null && this.list[index].num < this.list[index].goods.stocks) {
                 this.list[index].num++;
                 this.computeTotal();
             }

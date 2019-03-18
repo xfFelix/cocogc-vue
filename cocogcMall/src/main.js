@@ -15,6 +15,7 @@ import Tips from './common/tips'
 
 
 Vue.component(Spinner.name, Spinner)
+
 Vue.use(VueCookie);
 Vue.use(Tips);
 
@@ -24,13 +25,21 @@ import {
   MessageBox,
   Indicator,
   Toast,
-  Spinner//无限滚动
+  Spinner,
 } from "mint-ui";
 
-Vue.prototype.Toast = Toast;
+window.Toast= Toast;
+window.MessageBox= MessageBox;
+window.Indicator= Indicator;
+
+
+// Vue.prototype.Toast = Toast;
+
+
 Vue.prototype.Messagebox = MessageBox;
 Vue.prototype.Indicator = Indicator;
-// Vue.prototype.InfiniteScroll = InfiniteScroll;
+
+
 
 Vue.prototype.hideLoading = function () {
   Indicator.close();

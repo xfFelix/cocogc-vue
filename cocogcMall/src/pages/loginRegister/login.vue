@@ -96,7 +96,7 @@ export default {
                         this.$router.push('/index');
                         let token = data.data.token;
                         localStorage.setItem("yeyun_token", token);
-                        this.$cookies.set("yeyun_token",token,30)
+                        this.$cookies.set("yeyun_token", token, 30)
                     } else {
                         this.tipBgShow = true;
                     }
@@ -130,13 +130,13 @@ export default {
 
 
         //登录按钮
-        loginBnt: function() {
+       loginBnt: function() {
             if (IsEmpty(this.loginForm.userName) || !IsMobile(this.loginForm.userName)) {
-                this.$tips("登录手机号码错误");
+                MessageBox("手机号码错误", "请输入有效的11位手机号码。")
                 return false;
             }
             if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
-                this.$tips("登录密码错误");
+                 MessageBox("密码错误", "请输入正确的密码。")
                 return false;
             }
             this.login()

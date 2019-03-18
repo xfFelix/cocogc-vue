@@ -105,11 +105,11 @@ export default {
           if (data.error_code == 0) {
             this.$router.push('/registerSucess');
           } else {
-            this.$tips(data.message);
+             Toast(data.message)
           }
         })
         .catch((data) => {
-          this.$tips(data.message);
+           Toast(data.message)
         })
     },
     /*
@@ -139,11 +139,11 @@ export default {
               }
             }, 1000)
           } else {
-            this.$tips(data.message);
+             Toast(data.message)
           }
         })
         .catch((data) => {
-          this.$tips(data.message);
+           Toast(data.message)
         })
     },
 
@@ -167,19 +167,19 @@ export default {
     */
     registerBnt: function() {
       if (IsEmpty(this.register.userName) || !IsMobile(this.register.userName)) {
-        this.$tips("手机号码错误");
+         MessageBox("手机号码错误", "请输入有效的11位手机号码。")
         return false;
       }
       if (IsEmpty(this.register.captcha) || this.register.captcha.length < 4) {
-        this.$tips("请输入图片验证码");
+        MessageBox("验证码格式错误", "请输入正确的图片验证码。")
         return false;
       }
       if (IsEmpty(this.register.msgValidate) || this.register.msgValidate.length < 4) {
-        this.$tips("短信验证码错误");
+        MessageBox("短信验证码错误", "请输入有效的短信验证码。")
         return false;
       }
       if (!CheckPass(this.register.inputPass)) {
-        this.$tips("密码格式错误");
+        MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
         return false;
       }
       this.regist();
@@ -191,11 +191,12 @@ export default {
     validateCli: function() {
       var that = this;
       if (IsEmpty(this.register.userName) || !IsMobile(this.register.userName)) {
-        this.$tips("手机号码错误");
+        MessageBox("手机号码错误", "请输入有效的11位手机号码。")
+
         return false;
       }
       if (IsEmpty(this.register.captcha) && this.register.captcha.length < 4) {
-        this.$tips("请输入图片验证码");
+        MessageBox("验证码格式错误", "请输入正确的图片验证码。")
         return false;
       }
 
