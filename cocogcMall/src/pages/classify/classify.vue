@@ -55,7 +55,7 @@
                                 <router-link :to="{path:'/goodsList',query:{classfyId:'11878'}}">
                                     <p>
                                         <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
-                                        <span>{{i.name}}</span>
+                                        <span class="product-name">{{i.name}}</span>
                                     </p>
                                 </router-link>
                             </li>
@@ -66,12 +66,10 @@
 
             </div>
         </div>
-        <!-- <v-footer></v-footer> -->
     </div>
 </template>
 
 <script>
-import Footer from '../../common/footer.vue';
 import api from '../../service/api';
 
 export default
@@ -131,14 +129,24 @@ export default
             }
 
 
-        },
-        components: {
-            "v-footer": Footer
         }
     };
 </script>
 
 <style lang="less">
+.title {
+  padding: 10px 0;
+}
+.product-name{
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  padding: 2px 0 ;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  white-space: nowrap;
+}
 .select-head {
     width: 100%;
     height: 2.41rem;

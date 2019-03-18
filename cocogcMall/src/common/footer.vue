@@ -1,5 +1,5 @@
 <template>
-    <footer class="tabs one-top-px" v-show="hideShow" v-foot>
+    <footer class="tabs one-top-px" v-show="hideShow">
         <div v-for="(item,index) in tableList" @click="selectNav(item.name)" :key='index' class="navTabWrap">
             <router-link :to="item.path" class="navTab">
                 <span class="navImg" :class="isSelect == item.name ? item.iconGreen : item.icon"></span>

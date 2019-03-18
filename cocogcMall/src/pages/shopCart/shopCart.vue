@@ -88,12 +88,10 @@
             </div>
         </div>
 
-        <!-- <v-footer></v-footer> -->
     </div>
 </template>
 <script>
 import Guesslike from "../../common/guesslike.vue";
-import Footer from '../../common/footer.vue'
 import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
 
@@ -279,8 +277,7 @@ export default {
         },
     },
     components: {
-        "guess-like": Guesslike,
-        "v-footer": Footer
+        "guess-like": Guesslike
     }
 };
 </script>
