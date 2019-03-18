@@ -1,23 +1,16 @@
 <template>
     <div id="app">
         <router-view></router-view>
-        <v-footer v-if="footerShow"></v-footer>
     </div>
 </template>
 
 <script>
 import { IsEmpty, getToken } from "@/util/common";
-import Footer from '@/common/footer.vue';
 import api from '@/service/api';
 
 
 export default {
     name: 'App',
-    data() {
-        return {
-            footerShow: true
-        }
-    },
     created() {
 
     },
@@ -79,9 +72,6 @@ export default {
         this.$cookies.set("yeyun_token",'hhf7512935295b36d9b469e672c531d4c8');
         // localStorage.setItem("token", 'hhf7512935295b36d9b469e672c531d4c8');
 
-    },
-    components: {
-        "v-footer": Footer,
     }
 }
 
