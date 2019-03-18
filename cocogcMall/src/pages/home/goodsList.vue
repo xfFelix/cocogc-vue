@@ -63,7 +63,7 @@
                 <span class="loading-more-txt"> 点击加载更多...</span>
             </div>
         </div>
-        <div v-show="moreShow==false">
+        <div v-show="moreShow==false" style="text-align: center;">
             已经到底了噢~~
         </div>
 

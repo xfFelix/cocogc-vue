@@ -32,7 +32,7 @@ window.MessageBox= MessageBox;
 window.Indicator= Indicator;
 
 
-// Vue.prototype.Toast = Toast;
+Vue.prototype.Toast = Toast;
 
 
 Vue.prototype.Messagebox = MessageBox;

@@ -81,7 +81,7 @@
 
             <div class="goodDetail-buyCO">
                 <div class="goodDetail-buyCard">
-                    <router-link :to="{path: '/shopCart'}">
+                    <router-link :to="{path: '/layout/shopCart'}">
                         <p class="navImg goodDetail-bcImg">
                             <span>{{carTotal}}</span>
                         </p>
@@ -89,8 +89,8 @@
                     </router-link>
                 </div>
                 <div class="goodDetail-buyOper">
-                    <p class="goodDetail-boAdd" @click="fixedCloseFlag=true">加入购物车</p>
-                    <p class="goodDetail-boNow">立即购买</p>
+                    <p class="goodDetail-boAdd" @click="selectCart">加入购物车</p>
+                    <p class="goodDetail-boNow" @click="selectOrder">立即购买</p>
                 </div>
             </div>
         </div>
@@ -129,7 +129,7 @@
                     </div>
                 </div>
 
-                <div class="button goodsDetailBnt" @click="toBuyCar()">确定</div>
+                <div class="button goodsDetailBnt" @click="isGo=='cart'?toBuyCar():goPreview()">确定</div>
             </div>
 
         </div>
@@ -155,7 +155,8 @@ export default {
             },
             attrs: [],
             buyNum: 1,
-            carTotal: 0
+            carTotal: 0,
+            isGo: 'cart'
         };
     },
     mounted() {
@@ -168,7 +169,7 @@ export default {
             if (data != null) {
                 that.setGoodsData(data);
             } else {
-                that.Toast("该商品不存在！");
+                that.$toast("该商品不存在！");
                 that.$router.push('/');
             }
         });
@@ -197,6 +198,14 @@ export default {
                 .catch((err) => {
                     console.log(err);
                 })
+        },
+        selectCart() {
+          this.fixedCloseFlag=true
+          this.isGo = 'cart'
+        },
+        selectOrder() {
+          this.fixedCloseFlag=true
+          this.isGo = 'order'
         },
         getGoodsInfo(goodId, callback) {
             this.axios(testUrl + api.goodsDetailInfo,
@@ -307,6 +316,15 @@ export default {
                 .catch((err) => {
                     console.log(err);
                 })
+        },
+        async goPreview() {
+          let buys = []
+          buys.push({goodsId: this.goodsId, nums: this.buyNum})
+          let data = await this.axios(testUrl + api.updateCart,{token: getToken(),buys},'post')
+          if (data.error_code == 0) {
+            sessionStorage.setItem('buys', JSON.stringify(buys))
+            this.$router.push('/order');
+          }
         }
     },
     components: {
@@ -469,9 +487,11 @@ export default {
             .changeGoodsa {
                 line-height: 0.5rem;
                 margin-top: 0.5rem;
+                font-size: 14px;
             }
             .changeGoodsb {
                 text-decoration: line-through;
+                color: #ccc;
             }
         }
     }
@@ -512,7 +532,7 @@ export default {
     background: #fff;
     h3 {
 
-        font-size: 0.3rem;
+        // font-size: 0.3rem;
         color: #000000;
     }
     p {
@@ -600,12 +620,13 @@ export default {
         font-size: 0px;
         img {
             width: 100%;
+            height: 100%;
         }
     }
 
     h3 {
         color: #000;
-        padding: 0.5rem 0.26rem;
+        padding: 0.22rem 0.24rem;
     }
     div {
         width: 100%;

@@ -20,7 +20,7 @@
         </div>
 
         <div class="home-interWrap">
-            <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
+            <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index" @click="goDetail(item)">
                 <div class="home-iGoods">
                     <img :src="item.image" alt="" />
                 </div>
@@ -90,6 +90,11 @@ export default {
                 this.homeSelFlag = 0
             }
         },
+        goDetail (item) {
+          this.$router.push({
+            path: '/goodsDetail/' + item.id
+          })
+        },
         iSelect(item, index) {
             this.iSelectAct = index;
             if (item.id != 0) {
@@ -112,7 +117,7 @@ export default {
                 .then((data) => {
                     if (data.code == 0) {
                         _this.goodsList = data.list;
-                        
+
                     } else {
 
                     }

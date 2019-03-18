@@ -52,7 +52,7 @@
                         <h3 class="title">{{item.name}}</h3>
                         <ul>
                             <li class="one-bottom-px" v-for="(i,index) in item.childCategory" :key="index">
-                                <router-link :to="{path:'/goodsList',query:{classfyId:'11878'}}">
+                                <router-link :to="{path:'/goodsList',query:{classfyId: i.id}}">
                                     <p>
                                         <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
                                         <span class="product-name">{{i.name}}</span>
