@@ -70,7 +70,7 @@ export default {
     mounted() {
         this.getToken();
         this.$cookies.set("yeyun_token",'hhf7512935295b36d9b469e672c531d4c8');
-        // localStorage.setItem("token", 'hhf7512935295b36d9b469e672c531d4c8');
+
 
     }
 }
@@ -106,73 +106,10 @@ export default {
         transform: rotate(180deg);
     }
 }
-
-// .router-link-active {
-//     text-decoration: none;
-// }
-// .navImgWrap {
-//     display: flex;
-//     justify-content: space-around;
-//     font-size: 0.24rem;
-//     height: 49px;
-//     .navTab {
-//         text-align: center;
-//         flex-direction: column;
-//         display: flex;
-//         justify-content: center;
-//         margin: 0 auto;
-//         .navImg {
-//             width: 0.42rem;
-//             height: 0.42rem;
-//             display: inline-block;
-//             background-image: url(/static/images/banner.png);
-//             background-repeat: no-repeat;
-//             background-size: 4.82rem 1.97rem;
-//             position: relative;
-//             color: #000000; // border: 1px solid #000;
-//             margin: 0 auto;
-//         }
-//         .navGo01 {
-//             background-position: -0.1rem -0.73rem;
-//         }
-//         .navGo02 {
-//             background-position: -0.65rem -0.73rem;
-//         }
-//         .navGo03 {
-//             background-position: -1.17rem -0.73rem;
-//         }
-//         .navGo04 {
-//             background-position: -1.71rem -0.73rem;
-//         }
-//         .navGo05 {
-//             background-position: -2.24rem -0.73rem;
-//         }
-//         .navGo11 {
-//             background-position: -0.1rem -1.29rem;
-//         }
-//         .navGo12 {
-//             background-position: -0.65rem -1.29rem;
-//         }
-//         .navGo13 {
-//             background-position: -1.17rem -1.29rem;
-//         }
-//         .navGo14 {
-//             background-position: -1.71rem -1.29rem;
-//         }
-//         .navGo15 {
-//             background-position: -2.24rem -1.29rem;
-//         }
-//     }
-// }
 .active {
     color: #30CE84;
 }
 
-// .navTabWrap {
-//     display: flex;
-//     align-items: center;
-//     width: 25%;
-// }
 </style>
 
 

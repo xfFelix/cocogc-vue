@@ -13,7 +13,7 @@
                     搜索
                 </div>
             </div>
-            <div class="select-headBan">
+            <!-- <div class="select-headBan">
                 <ul class="select-headUl">
                     <li>
                         <p class="select-headImg01"></p>
@@ -32,15 +32,15 @@
                         <p>热门推荐</p>
                     </li>
                 </ul>
-            </div>
+            </div> -->
         </div>
 
         <div class="view select-goodsW">
             <div class="aside select-brandW">
                 <ul class="select-brand">
-                    <li v-for="(item,index) in cateList" :key="index" class="select-brandLi activeBand" @click="activeIndexC(index,item.id)">
+                    <li v-for="(item,index) in cateList" :key="index" class="select-brandLi" @click="activeIndexC(index,item.id)">
                         <span class="activeGre" v-if="activeIndex==index"></span>
-                        <span>{{item.name}}</span>
+                        <span :style="(activeIndex==index ?'color: #30ce84':'color: #333')">{{item.name}}</span>
                     </li>
 
                 </ul>
@@ -51,7 +51,7 @@
                     <div class="select-bGoodsT" v-for="(item,index) in cateTypeList" :key="index">
                         <h3 class="title">{{item.name}}</h3>
                         <ul>
-                            <li class="one-bottom-px" v-for="(i,index) in item.childCategory" :key="index">
+                            <li v-for="(i,index) in item.childCategory" :key="index">
                                 <router-link :to="{path:'/goodsList',query:{classfyId:'11878'}}">
                                     <p>
                                         <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
@@ -66,7 +66,6 @@
 
             </div>
         </div>
-        <!-- <v-footer></v-footer> -->
     </div>
 </template>
 
@@ -141,7 +140,7 @@ export default
 <style lang="less">
 .select-head {
     width: 100%;
-    height: 2.41rem;
+    height: 1.3rem;
     background: #fff;
     padding: 0.42rem 0 0.24rem 0;
     box-shadow: 0.05rem 0.09rem 0.1rem 0px rgba(225, 235, 255, 0.3);
@@ -245,49 +244,47 @@ export default
             }
         }
     }
-    .select-headBan {
-        .select-headUl {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            margin-top: 0.56rem;
-            font-size: 0.24rem;
-            color: #333;
-            .select-headImg01,
-            .select-headImg02,
-            .select-headImg03,
-            .select-headImg04 {
-                width: 0.42rem;
-                height: 0.42rem;
-                background-image: url(/static/images/jl.png);
-                background-repeat: no-repeat;
-                background-size: 5.8rem 1.86rem;
-                margin: 0px auto 0.09rem auto;
-            }
-            .select-headImg01 {
-                background-position: -0.16rem -0.17rem;
-            }
-            .select-headImg02 {
-                background-position: -0.68rem -0.17rem;
-            }
-            .select-headImg03 {
-                background-position: -1.18rem -0.17rem;
-            }
-            .select-headImg04 {
-                background-position: -1.65rem -0.17rem;
-            }
-        }
-    }
+    // .select-headBan {
+    //     .select-headUl {
+    //         display: flex;
+    //         justify-content: space-around;
+    //         text-align: center;
+    //         margin-top: 0.56rem;
+    //         font-size: 0.24rem;
+    //         color: #333;
+    //         .select-headImg01,
+    //         .select-headImg02,
+    //         .select-headImg03,
+    //         .select-headImg04 {
+    //             width: 0.42rem;
+    //             height: 0.42rem;
+    //             background-image: url(/static/images/jl.png);
+    //             background-repeat: no-repeat;
+    //             background-size: 5.8rem 1.86rem;
+    //             margin: 0px auto 0.09rem auto;
+    //         }
+    //         .select-headImg01 {
+    //             background-position: -0.16rem -0.17rem;
+    //         }
+    //         .select-headImg02 {
+    //             background-position: -0.68rem -0.17rem;
+    //         }
+    //         .select-headImg03 {
+    //             background-position: -1.18rem -0.17rem;
+    //         }
+    //         .select-headImg04 {
+    //             background-position: -1.65rem -0.17rem;
+    //         }
+    //     }
+    // }
 }
 
 .select-goodsW {
-    margin-top: 0.28rem;
     margin-bottom: 49px;
     display: flex;
     position: relative;
     height: 100%;
     .select-brandW {
-        // position: absolute;
         height: 100%;
         position: relative;
         overflow: scroll;
@@ -300,34 +297,49 @@ export default
             line-height: 0.7rem;
             position: relative;
             font-size: 0.24rem;
+            background: #f3f4f6;
             .activeGre {
                 width: 0.06rem;
                 height: 100%;
                 display: block;
                 position: absolute;
                 background: #30ce84;
-            } // span:nth-of-type(2) {
-            //     margin-left: 0.3rem;
-            // }
+            } 
         }
         .activeBand {
-            background: #fff;
+            
         }
     }
     .select-bGoodsW {
         width: 100%;
+        h3{
+            font-size: 0.24rem;
+            color: #333;
+            text-align: center;
+            margin: 0.16rem 0 0.5rem 0;
+        }
         ul {
             width: 100%;
             li {
-                width: 28%;
-                margin: 0 2.16%;
+                width: 24%;
+                margin: 0 4.66%;
                 display: inline-block;
+                font-size: 0.22rem;
+                text-align: center;
+                color: #333;
                 p {
                     img {
                         width: 100%;
                     }
+                    span{
+                            white-space: nowrap;
+                    }
                 }
+                margin-bottom: 0.38rem;
             }
+        }
+        .select-bGoodsT:nth-of-type(1){
+            margin-top: 0.34rem;
         }
     }
 }

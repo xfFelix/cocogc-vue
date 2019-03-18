@@ -102,13 +102,13 @@
                         </div>
                     </div>
                     <!-- <p class="order-freight">
-                        <span>运费</span>
-                        <span>0.00</span>
-                    </p>
-                    <p class="order-priceAll">
-                        <span>小计</span>
-                        <span>2054.00</span>
-                    </p> -->
+                                                                                <span>运费</span>
+                                                                                <span>0.00</span>
+                                                                            </p>
+                                                                            <p class="order-priceAll">
+                                                                                <span>小计</span>
+                                                                                <span>2054.00</span>
+                                                                            </p> -->
                 </div>
 
                 <!-- 费用 -->
@@ -143,6 +143,27 @@
             </div>
             <div class="order-sumit" @click="sumitOrder()">提交订单</div>
         </div>
+
+        <div class="phonePay-wrap" id="phonePay-sms">
+            <div class="phonePay-bgWrap">
+                <div class="phonePay-bg">
+                    <p class="phonePay-title">
+                        <span class="phoneChe-backW">
+                            <span class="phoneChe-back"></span>
+                        </span>
+                        <span class="phonePay-tName">确认兑换</span>
+                    </p>
+                    <p class="phonePay-telW hide">短信验证码已发送至手机
+                        <span class="phonePay-tel"></span>
+                    </p>
+                    <p class="phonePay-inpW">
+                        <input class="phonePay-msg" type="number" placeholder="请输入短信验证码" />
+                        <span class="sendPhoneSms" style="background: green;" @click="sendPhoneSms()">{{validate}}</span>
+                    </p>
+                    <p class="phonePay-confirm phonePay-conA">确认兑换</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -156,14 +177,16 @@ export default {
         return {
             dataList: [],
             dataAddress: {},
-            message: ""
+            message: "",
+            validate: "获取验证码",
+            validateFlag: 1,
         };
     },
     mounted() {
         this.previewOrder()
     },
     methods: {
-        sumitOrder(){
+        sumitOrder() {
             this.saveOrder();
         },
         // 订单预览
@@ -211,11 +234,10 @@ export default {
                 })
         },
         //下单
-
         saveOrder: function() {
             var token = localStorage.getItem("token");
             var buys = JSON.parse(sessionStorage.getItem('buys'));
-             var addressId = localStorage.getItem("addressId");
+            var addressId = localStorage.getItem("addressId");
 
             let _this = this;
             this.axios(testUrl + api.saveOrder, {
@@ -226,7 +248,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         var orderId = data.data[0].orderId;
-                        this.$router.push({name:'orderDetails',params:{orderId:orderId}})
+                        this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
 
                     }
                 })
@@ -235,6 +257,27 @@ export default {
                 })
         },
 
+
+        //定时
+        sendPhoneSms: function() {
+            if (this.validateFlag == 1) {
+                this.validate = "120s 重新获取"
+                let _this = this;
+                let timeInit = 120;
+                let countDown = setInterval(function() {
+                    let i = 1;
+                    timeInit = timeInit - i;
+                    if (timeInit > 0) {
+                        _this.validate = timeInit + 's 重新获取';
+                        _this.validateFlag = 0
+                    } else {
+                        _this.validate = "重新获取"
+                        _this.validateFlag = 1;
+                        clearInterval(countDown)
+                    }
+                }, 1000)
+            }
+        },
     },
     components: {
         "header-top": headerTop
@@ -490,6 +533,114 @@ export default {
         color: #ffffff;
         font-size: 0.3rem;
         text-align: center;
+    }
+}
+
+
+
+.phonePay-wrap {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    .phonePay-bgWrap {
+        position: relative;
+        width: 100%;
+        height: 100%; // background: #f3f4f6;
+        padding-bottom: 15px; // border-radius: 10px 10px 0 0;
+        .phonePay-bg {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            bottom: 0; // border-radius: 5px;
+            margin: 0 auto;
+            right: 0;
+            background: #F3F4F6;
+            input {
+                width: 65%;
+                height: 23px;
+                line-height: 23px;
+                padding-left: 11px;
+                font-size: 18px;
+                color: #333;
+                position: absolute;
+                top: 10px;
+                left: 0;
+                z-index: 1;
+            }
+            .phonePay-title {
+                background: #fff;
+                text-align: center;
+                height: 45px;
+                line-height: 45px;
+                /* border-bottom: 1px solid #dfdfdf; */
+                color: #333333;
+                font-size: 15px;
+                position: relative;
+                .phoneChe-backW {
+                    width: 0.22rem;
+                    height: 0.38rem;
+                    background-image: url(/static/images/jl.png);
+                    background-repeat: no-repeat;
+                    background-size: 5.8rem 1.86rem;
+                    background-position: -0.2rem -0.74rem;
+                    position: absolute;
+                    left: 0.32rem;
+                    top: 0.26rem;
+                    -webkit-transform: rotate(180deg);
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+
+    .phonePay-telW {
+        //   width: 5.67rem;
+        max-width: 339px;
+        margin: 23px auto 0 auto;
+        color: #333;
+        font-size: 13px;
+    }
+    .phonePay-inpW {
+        /* border: 1px solid #dfdfdf;  */
+        height: 44px; // width: 5.67rem;
+        max-width: 339px;
+        display: flex;
+        justify-content: space-between;
+        margin: 16px auto;
+        position: relative;
+        /* box-shadow:0px 0px 0px 1px #ccc; */
+        background: #fff;
+    }
+
+    .phonePay-inpW span {
+        display: inline-block;
+        width: 30%;
+        background: #999999;
+        height: 45px;
+        line-height: 44px;
+        text-align: center;
+        color: #fff;
+        position: absolute;
+        right: -1px;
+        z-index: 1;
+    }
+
+    .phonePay-confirm {
+        margin: 0 auto;
+        line-height: 45px;
+        height: 45px;
+        text-align: center;
+        color: #ffffff;
+        font-size: 15px;
+        box-shadow: 0px 0px 10px 0px rgba(135, 248, 199, 0.4);
+        border-radius: 50px;
+        background: #91efb1;
+        width: 90%;
+        margin-bottom: 1rem;
     }
 }
 </style>

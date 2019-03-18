@@ -92,6 +92,14 @@ export default {
             this.areaCode = item.areaCode;  //编辑页面传来的areacode
         }
     },
+    created() {
+        var adEdit = localStorage.getItem('addressEdit');
+        if (adEdit) {
+            this.$route.meta.title = "编辑地址"
+        } else {
+            this.$route.meta.title = "添加地址";
+        }
+    },
     updated() {
 
     },
@@ -165,6 +173,9 @@ export default {
             }
             else if (IsEmpty(this.takeDAddress)) {
                 MessageBox("提示", "详细地址不能为空")
+                return false;
+            } else if (this.takeDAddress.length >= 30) {
+                MessageBox("提示", "详细地址不能超过30个字")
                 return false;
             } else {
                 if (this.addressDef == false) {

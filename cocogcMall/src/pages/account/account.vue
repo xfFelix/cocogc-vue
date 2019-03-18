@@ -38,42 +38,51 @@
             <div class="acc-content">
                 <ul class="acc-contentUl">
                     <li>
-                        <span class="acc-contentLog01"></span>
-                        <div class="acc-contentInfo">
-                            <span class="acc-contentName">我的椰子分</span>
-                            <p class="acc-contentR">
-                                <span>积分余额：</span>
-                                <span>19.01</span>
-                                <span class="acc-contentGo"></span>
-                            </p>
-                        </div>
+                        <a href="https://api.cocogc.cn/#!/slogs">
+                            <span class="acc-contentLog01"></span>
+                            <div class="acc-contentInfo">
+                                <span class="acc-contentName">我的椰子分</span>
+                                <p class="acc-contentR">
+                                    <span>积分余额：</span>
+                                    <span>19.01</span>
+                                    <span class="acc-contentGo"></span>
+                                </p>
+                            </div>
+                        </a>
+
                     </li>
                     <li>
-                        <span class="acc-contentLog02"></span>
-                        <div class="acc-contentInfo">
-                            <span class="acc-contentName">信用卡还款</span>
-                            <p class="acc-contentR">
-                                <span class="acc-contentGo"></span>
-                            </p>
-                        </div>
+                        <a href="https://api.cocogc.cn/#!/pay?back=pay">
+                            <span class="acc-contentLog02"></span>
+                            <div class="acc-contentInfo">
+                                <span class="acc-contentName">信用卡还款</span>
+                                <p class="acc-contentR">
+                                    <span class="acc-contentGo"></span>
+                                </p>
+                            </div>
+                        </a>
                     </li>
                     <li>
-                        <span class="acc-contentLog03"></span>
-                        <div class="acc-contentInfo">
-                            <span class="acc-contentName">黄金兑换</span>
-                            <p class="acc-contentR">
-                                <span class="acc-contentGo"></span>
-                            </p>
-                        </div>
+                        <a href="https://api.cocogc.cn/#!/goldChange">
+                            <span class="acc-contentLog03"></span>
+                            <div class="acc-contentInfo">
+                                <span class="acc-contentName">黄金兑换</span>
+                                <p class="acc-contentR">
+                                    <span class="acc-contentGo"></span>
+                                </p>
+                            </div>
+                        </a>
                     </li>
                     <li>
-                        <span class="acc-contentLog04"></span>
-                        <div class="acc-contentInfo">
-                            <span class="acc-contentName">话费充值</span>
-                            <p class="acc-contentR">
-                                <span class="acc-contentGo"></span>
-                            </p>
-                        </div>
+                        <a href="https://api.cocogc.cn/#!/phoneBill">
+                            <span class="acc-contentLog04"></span>
+                            <div class="acc-contentInfo">
+                                <span class="acc-contentName">话费充值</span>
+                                <p class="acc-contentR">
+                                    <span class="acc-contentGo"></span>
+                                </p>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -81,31 +90,37 @@
             <div class="acc-content">
                 <ul class="acc-contentUl">
                     <li>
-                        <span class="acc-contentLog05"></span>
-                        <div class="acc-contentInfo">
-                            <span class="acc-contentName">帮助中心</span>
-                            <p class="acc-contentR">
-                                <span class="acc-contentGo"></span>
-                            </p>
-                        </div>
+                        <a href="https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q">
+                            <span class="acc-contentLog05"></span>
+                            <div class="acc-contentInfo">
+                                <span class="acc-contentName">帮助中心</span>
+                                <p class="acc-contentR">
+                                    <span class="acc-contentGo"></span>
+                                </p>
+                            </div>
+                        </a>
                     </li>
                     <li>
-                        <span class="acc-contentLog06"></span>
-                        <div class="acc-contentInfo">
-                            <span class="acc-contentName">联系客服</span>
-                            <p class="acc-contentR">
-                                <span class="acc-contentGo"></span>
-                            </p>
-                        </div>
+                        <a href="https://api.cocogc.cn/#!/contact">
+                            <span class="acc-contentLog06"></span>
+                            <div class="acc-contentInfo">
+                                <span class="acc-contentName">联系客服</span>
+                                <p class="acc-contentR">
+                                    <span class="acc-contentGo"></span>
+                                </p>
+                            </div>
+                        </a>
                     </li>
                     <li>
-                        <span class="acc-contentLog07"></span>
-                        <div class="acc-contentInfo">
-                            <span class="acc-contentName">商务合作</span>
-                            <p class="acc-contentR">
-                                <span class="acc-contentGo"></span>
-                            </p>
-                        </div>
+                        <a href="https://api.cocogc.cn/#!/cooperation">
+                            <span class="acc-contentLog07"></span>
+                            <div class="acc-contentInfo">
+                                <span class="acc-contentName">商务合作</span>
+                                <p class="acc-contentR">
+                                    <span class="acc-contentGo"></span>
+                                </p>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -318,71 +333,77 @@ export default {
         margin-top: 0.26rem;
         .acc-contentUl {
             li {
-                align-items: center;
-                display: flex;
-                justify-content: space-between;
-                .acc-contentLog01,
-                .acc-contentLog02,
-                .acc-contentLog03,
-                .acc-contentLog04,
-                .acc-contentLog05,
-                .acc-contentLog06,
-                .acc-contentLog07 {
-                    width: 0.3rem;
-                    height: 0.3rem;
-                    display: inline-block;
-                    background-image: url("../../../static/images/account.png");
-                    background-repeat: no-repeat;
-                    background-size: 3.12rem 2.95rem;
-                    margin: 0 0.36rem;
-                }
-                .acc-contentLog01 {
-                    background-position: -0.17rem -0.68rem;
-                }
-                .acc-contentLog02 {
-                    background-position: -0.58rem -0.7rem;
-                }
-                .acc-contentLog03 {
-                    background-position: -1rem -0.7rem;
-                }
-                .acc-contentLog04 {
-                    background-position: -1.5rem -0.7rem;
-                }
-                .acc-contentLog05 {
-                    background-position: -1.88rem -0.7rem;
-                }
-                .acc-contentLog06 {
-                    background-position: -2.3rem -0.7rem;
-                }
-                .acc-contentLog07 {
-                    background-position: -2.71rem -0.7rem;
-                }
-                .acc-contentInfo {
-                    font-size: 0.30rem;
-                    color: #666666;
-                    border-bottom: 1px solid #f4f4f4;
+                a {
+                    align-items: center;
                     display: flex;
                     justify-content: space-between;
-                    flex: 1;
-                    padding: 0.36rem 0;
-                    margin-right: 0.36rem;
-                }
-                .acc-contentR {
-                    font-size: 0.24rem;
-                    color: #999;
-                    display: flex;
-                    align-items: center;
-                    span {
-                        color: #ebc99d;
-                    }
-                    .acc-contentGo {
-                        width: 0.25rem;
-                        height: 0.25rem;
+                    .acc-contentLog01,
+                    .acc-contentLog02,
+                    .acc-contentLog03,
+                    .acc-contentLog04,
+                    .acc-contentLog05,
+                    .acc-contentLog06,
+                    .acc-contentLog07 {
+                        width: 0.3rem;
+                        height: 0.3rem;
                         display: inline-block;
                         background-image: url("../../../static/images/account.png");
                         background-repeat: no-repeat;
                         background-size: 3.12rem 2.95rem;
-                        background-position: -2.7rem -0.25rem;
+                        margin: 0 0.36rem;
+                    }
+                    .acc-contentLog01 {
+                        background-position: -0.17rem -0.68rem;
+                    }
+                    .acc-contentLog02 {
+                        background-position: -0.58rem -0.7rem;
+                    }
+                    .acc-contentLog03 {
+                        background-position: -1rem -0.7rem;
+                    }
+                    .acc-contentLog04 {
+                        background-position: -1.5rem -0.7rem;
+                    }
+                    .acc-contentLog05 {
+                        background-position: -1.88rem -0.7rem;
+                    }
+                    .acc-contentLog06 {
+                        background-position: -2.3rem -0.7rem;
+                    }
+                    .acc-contentLog07 {
+                        background-position: -2.71rem -0.7rem;
+                    }
+
+
+                    .acc-contentInfo {
+                        font-size: 0.30rem;
+                        color: #666666;
+                        border-bottom: 1px solid #f4f4f4;
+                        display: flex;
+                        justify-content: space-between;
+                        flex: 1;
+                        padding: 0.36rem 0;
+                        margin-right: 0.36rem;
+                    }
+
+
+                    .acc-contentR {
+                        font-size: 0.24rem;
+                        color: #999;
+                        display: flex;
+                        align-items: center;
+                        span {
+                            color: #ebc99d;
+                        }
+                        .acc-contentGo {
+                            width: 0.25rem;
+                            height: 0.25rem;
+                            display: inline-block;
+                            background-image: url("../../../static/images/account.png");
+                            background-repeat: no-repeat;
+                            background-size: 3.12rem 2.95rem;
+                            background-position: -2.7rem -0.25rem;
+                        }
                     }
                 }
             }

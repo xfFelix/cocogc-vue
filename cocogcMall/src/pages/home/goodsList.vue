@@ -44,29 +44,27 @@
         <div class="goodList-interWrap">
             <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
                 <router-link :to="{path:'goodsDetail/'+item.id}">
-                <div class="home-iGoods">
-                    <img :src="item.image" alt="" />
-                </div>
-                <p class="home-iNmame">
-                    {{item.name|wordSize(item.name)}}
-                </p>
-                <div class="home-iMoneyW">
-                    <span class="home-iMoneyL"></span>
-                    <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
-                </div>
+                    <div class="home-iGoods">
+                        <img :src="item.image" alt="" />
+                    </div>
+                    <p class="home-iNmame">
+                        {{item.name|wordSize(item.name)}}
+                    </p>
+                    <div class="home-iMoneyW">
+                        <span class="home-iMoneyL"></span>
+                        <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
+                    </div>
                 </router-link>
             </div>
-        </div>
-        <div id="moreMsg" @click="moreMsg()" v-show="moreShow">
-            <div class="loading-box tc">
+            <div id="moreMsg" @click="moreMsg()" v-show="moreShow">
                 <mt-spinner type="fading-circle" class="loading-more"></mt-spinner>
-                <span class="loading-more-txt"> 点击加载更多...</span>
+                <p class="loading-more-txt"> 点击加载更多...</p>
             </div>
-        </div>
-        <div v-show="moreShow==false">
-            已经到底了噢~~
-        </div>
+            <div class="onBottom" v-show="moreShow==false">
+                已经到底了噢~~
+            </div>
 
+        </div>
 
     </div>
 </template>
@@ -103,11 +101,11 @@ export default {
             keyWord: '',//关键字
             priceRange: '', //判断价格的高低
             priceRangeFlag: true,  //判断价格的高低
-            salesVolume:"" //销量排序
+            salesVolume: "" //销量排序
         };
     },
     mounted() {
-        //观察是否到了底部
+        // 观察是否到了底部
         this.observer = new IntersectionObserver(
             function(entries) {
                 // 如果不可见，就返回
@@ -183,12 +181,12 @@ export default {
             this.goodsList = [];
             this.price = "";
             this.priceRange = "";
-            this.salesVolume="";
+            this.salesVolume = "";
             this.goodsListSearch(1);
         },
 
         //销量排序
-        goodsOrder(){
+        goodsOrder() {
             this.pages = 1;
             this.offsetRows = 1;
             this.goodsList = [];
@@ -232,12 +230,9 @@ export default {
                     if (data.code == 0) {
                         if (data.list.length > 0) {
                             _this.goodsList = _this.goodsList.concat(data.list);
-
-                            _this.moreShow = true
-
-
+                            _this.moreShow = true;
                         } else {
-                            _this.moreShow = false
+                            _this.moreShow = false;
                         }
                     } else {
 
@@ -259,6 +254,7 @@ export default {
 <style lang="less">
 .goodsList {
     height: 100%;
+    background: #fff;
     .home-smWrap {
         padding: 0.5rem 0 0 0;
         width: 100%; // align-items: center;
@@ -287,19 +283,17 @@ export default {
 
 
 .goodList-interWrap {
-    height: 100%;
     width: 100%;
-    background: #fff;
-    overflow: auto;
+    background: #fff; // overflow: auto;
     padding-top: 2.22rem;
+    box-sizing: content-box;
     .home-iGoodsW {
-        float: left;
+        // float: left;
+        display: inline-block;
         width: 50%;
         padding: 0 0.32rem;
         box-sizing: border-box;
-        margin: 0.2rem 0;
-        height: 4.1rem;
-
+        margin: 0.2rem 0; // height: 4.1rem;
         .home-iGoods {
             width: 100%;
             text-align: center;
@@ -367,6 +361,12 @@ export default {
     }
 }
 
+.goodsList {
+    .home-iSelectW {
+        box-shadow: 0.05rem 0.09rem 0.1rem 0px rgba(0, 0, 0, 0.3);
+        border-radius: 0 0 5px 5px;
+    }
+}
 
 .home-iSelectW {
     color: #333333;
@@ -375,6 +375,7 @@ export default {
     display: flex;
     justify-content: space-around;
     padding-bottom: 0.15rem;
+
     .home-iSelect {
         width: 6.90rem;
         li {
@@ -421,12 +422,22 @@ export default {
 }
 
 #moreMsg {
-    height: 0.8rem;
     background: #fff;
-    .loading-box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    width: 100%;
+    display: inline-block;
+    color: #666;
+    padding: 0.2rem 0;
+    .mint-spinner-fading-circle {
+        margin: 0 auto;
     }
+    .loading-more-txt {
+        text-align: center;
+    }
+}
+
+.onBottom {
+    text-align: center;
+    padding: 0.2rem;
+    color: #666;
 }
 </style>

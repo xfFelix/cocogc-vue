@@ -28,15 +28,15 @@ import {
   Spinner,
 } from "mint-ui";
 
-window.Toast= Toast;
-window.MessageBox= MessageBox;
-window.Indicator= Indicator;
+// window.Toast= Toast;
+// window.MessageBox= MessageBox;
+// window.Indicator= Indicator;
 
 
-// Vue.prototype.Toast = Toast;
+Vue.prototype.Toast = Toast;
 
 
-Vue.prototype.Messagebox = MessageBox;
+Vue.prototype.MessageBox = MessageBox;
 Vue.prototype.Indicator = Indicator;
 
 

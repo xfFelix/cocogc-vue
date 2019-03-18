@@ -27,17 +27,11 @@ export default {
         return {
             quickList: [
                 [
-                    { name: "精彩活动", path: '/aa', imgBg: 'home-qImg01' },
-                    { name: "团购预售", path: '/aa', imgBg: 'home-qImg02' },
-                    { name: "一元购", path: '/aa', imgBg: 'home-qImg03' },
-                    { name: "日用超市", path: '/aa', imgBg: 'home-qImg04' },
+                    { name: "日用超市", path: '/aa', imgBg: 'home-qImg01' },
+                    { name: "手机数码", path: '/aa', imgBg: 'home-qImg02' },
+                    { name: "家用电器", path: '/aa', imgBg: 'home-qImg03' },
+                    { name: "美妆护肤", path: '/aa', imgBg: 'home-qImg04' },
                 ],
-                [
-                    { name: "手机数码", path: '/aa', imgBg: 'home-qImg05' },
-                    { name: "家用电器", path: '/aa', imgBg: 'home-qImg06' },
-                    { name: "美妆护肤", path: '/aa', imgBg: 'home-qImg07' },
-
-                ]
             ]
         }
     },
@@ -81,7 +75,7 @@ export default {
             text-align: center;
             margin-top: 0.5rem;
             .home-qImg {
-                width: 0.5rem;
+                width: 0.6rem;
                 height: 0.5rem;
                 position: relative;
 
@@ -98,26 +92,22 @@ export default {
                 }
             }
             .home-qImg01 {
-                background-position: -0.09rem -0.09rem;
+                width: 0.6rem;
+                background-position: -0.07rem -0.09rem;
             }
             .home-qImg02 {
-                background-position: -0.09rem -0.09rem;
+                width: 0.35rem;
+                background-position: -0.77rem -0.09rem;
             }
             .home-qImg03 {
-                background-position: -0.09rem -0.09rem;
+                width: 0.42rem;
+                background-position: -1.21rem -0.09rem;
             }
             .home-qImg04 {
-                background-position: -0.09rem -0.09rem;
+                width: 0.5rem;
+                background-position: -1.74rem -0.09rem;
             }
-            .home-qImg05 {
-                background-position: -0.09rem -0.09rem;
-            }
-            .home-qImg06 {
-                background-position: -0.09rem -0.09rem;
-            }
-            .home-qImg07 {
-                background-position: -0.09rem -0.09rem;
-            }
+
             .home-qName {
                 margin-top: 0.16rem;
             }

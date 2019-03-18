@@ -2,40 +2,59 @@
   <div class="index">
     <!-- 头部 -->
     <div class="index-head">
-      <div class="ih-noticeW">
-        <div class="ih-notice">
-          <span class="ih-hormImg j1Png"></span>
-          <p>椰云公告：应税务局要求缴税规则调整....</p>
+      <a href="https://mp.weixin.qq.com/s?__biz=MzU0NDkzNTM3NQ==&mid=100000020&idx=1&sn=127b63d967b7f6a7ca3a5c279143b1ea&chksm=7b75ddb44c0254a2df472ccc626784b2fe09f2b9cf77c1b910b91b8e83a12dae6b801a76e247&xtrack=1&scene=0&subscene=93&clicktime=1552877700&ascene=7&devicetype=android-26&version=2700033b&nettype=WIFI&abtest_cookie=BQABAAgACgALABIAEwAGAJ2GHgAjlx4AVpkeAMOZHgDZmR4A3JkeAAAA&lang=zh_CN&pass_ticket=oDj080h7pGe7HlMtp4xb3XrV7xaXUp9jeLO2aUdHmznoVOKjpo0L6C5vME3ddskV&wx_header=1">
+        <div class="ih-noticeW">
+          <div class="ih-notice">
+            <span class="ih-hormImg j1Png"></span>
+            <p>椰云公告：应税务局要求缴税规则调整....</p>
+          </div>
+          <span class="ih-goImg j1Png"></span>
         </div>
-
-        <span class="ih-goImg j1Png"></span>
-      </div>
+      </a>
 
       <div class="ih-balanceW">
         <div class="ih-balance">
           <p class="ih-money">19.01</p>
           <p class="ih-moneya">椰子分余额</p>
         </div>
-        <div class="ih-recharge">
-          去充值
-        </div>
+        <a href="https://api.cocogc.cn/#!/charge">
+          <div class="ih-recharge">
+            去充值
+          </div>
+        </a>
       </div>
     </div>
 
     <!-- 导航 -->
-
     <ul class="index-fastNav">
       <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
-        <router-link :to="item.path">
-          <p class="navImg" :class="item.imgBg"></p>
+        <a :href="item.path">
+          <p class="navImg imgBg" :class="item.imgBg"></p>
           <p class="ifa-name">{{item.name}}</p>
-        </router-link>
+        </a>
       </li>
     </ul>
 
     <!-- 图片 -->
-    <div class="index-banner">
-      <img src="static/images/indexBan.jpg" alt="">
+    <div class="index-swipeW">
+      <div class="index-swipe">
+        <div class="swiper-container">
+          <!-- 页面 -->
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="static/images/indexBan.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/indexBan.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="static/images/indexBan.jpg" alt="">
+            </div>
+          </div>
+          <!-- 分页器 -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
     </div>
 
     <!-- 热门爆款 -->
@@ -63,24 +82,24 @@
  
 <script>
 
-
+import Swiper from 'swiper';
 export default {
   name: 'index',
   data() {
     return {
       fastList: [
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-ImgW', path: '/huangjin' },
+        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: 'https://api.cocogc.cn/#!/goldChange' },
+        { id: 1, name: "话费兑换", imgBg: 'ifa-imgBg02', path: 'https://api.cocogc.cn/#!/phoneBill' },
+        { id: 1, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: 'https://api.cocogc.cn/#!/pay?back=pay' },
+        { id: 1, name: "机票酒店", imgBg: 'ifa-imgBg04', path: '/huangjin' },
+        { id: 1, name: "加油卡兑换", imgBg: 'ifa-imgBg05', path: '/huangjin' },
+        { id: 1, name: "生活缴费", imgBg: 'ifa-imgBg06', path: '/huangjin' },
+        { id: 1, name: "会员卡券", imgBg: 'ifa-imgBg07', path: '/huangjin' },
+        { id: 1, name: "保险服务", imgBg: 'ifa-imgBg08', path: '/huangjin' },
+        { id: 1, name: "兑换商城", imgBg: 'ifa-imgBg09', path: '/huangjin' },
+        { id: 1, name: "小米有品", imgBg: 'ifa-imgBg10', path: '/huangjin' },
+        { id: 1, name: "每日优鲜", imgBg: 'ifa-imgBg11', path: '/huangjin' },
+        { id: 1, name: "更多", imgBg: 'ifa-imgBg12', path: '/huangjin' },
       ],
       goodList: [
         { id: 1, goodImg: 'static/images/goods_03.jpg', name: "联想", money: '2222.00' },
@@ -95,7 +114,17 @@ export default {
   created() {
   },
   mounted() {
-
+    var swiperBan = new Swiper('.index-swipe .swiper-container', {
+      // autoplay: {
+      //   delay: 1000,
+      //   stopOnLastSlide: false,
+      //   disableOnInteraction: false,
+      // },
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+      },
+    })
   },
   components: {
     // LinkTab
@@ -129,6 +158,7 @@ export default {
         height: 0.24rem;
         background-position: -4.31rem -1.64rem;
         margin-left: 0.1rem;
+        margin-right: 0.1rem;
         display: inline-block;
       }
       p {
@@ -193,6 +223,49 @@ export default {
     text-align: center;
     margin: 0.34rem 0 0.1rem 0;
     float: left;
+    .imgBg {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+
+    .ifa-imgBg01 {
+      background-position: -2.34rem -0.11rem;
+    }
+    .ifa-imgBg02 {
+      background-position: -2.92rem -0.11rem;
+    }
+    .ifa-imgBg03 {
+      background-position: -3.49rem -0.04rem;
+    }
+    .ifa-imgBg04 {
+      background-position: -4.12rem -0.08rem;
+    }
+    .ifa-imgBg05 {
+      background-position: -2.69rem -0.7rem;
+    }
+    .ifa-imgBg06 {
+      background-position: -3.23rem -0.7rem;
+    }
+    .ifa-imgBg07 {
+      background-position: -3.79rem -0.7rem;
+    }
+    .ifa-imgBg08 {
+      background-position: -4.34rem -0.7rem;
+    }
+    .ifa-imgBg09 {
+      background-position: -2.69rem -1.34rem;
+    }
+    .ifa-imgBg10 {
+      background-position: -3.23rem -1.34rem;
+    }
+    .ifa-imgBg11 {
+      background-position: -3.79rem -1.34rem;
+    }
+    .ifa-imgBg12 {
+      background-position: -4.34rem -1.34rem;
+    }
+
+
     .ifa-ImgW {
       width: 0.5rem;
       height: 0.5rem;
@@ -205,7 +278,7 @@ export default {
   }
 }
 
-.index-banner {
+.index-swipeW {
   margin-bottom: 0.1rem;
   img {
     width: 100%;

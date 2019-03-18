@@ -54,7 +54,7 @@ export default {
         selectNav(title) {
             var isThis = this;
             isThis.isSelect = title; //当点击或啥返回上一页时都可以获取当前的名称
-            // sessionStorage.setItem('isSelect', this.isSelect);  //sessionStorage(会话储存)储存名称为isSelect的变量  this.isSelect为值
+            sessionStorage.setItem('isSelect', this.isSelect); 
         },
     },
     components: {
@@ -70,10 +70,10 @@ export default {
                 that.screenHeight = window.screenHeight;
             })()
         }
-        // this.isSelect = sessionStorage.getItem('isSelect');   //sessionStrorage(会话储存)获取之前储存的内容
-        // if (this.$route.name == "index" || this.$route.name == 'shopMall' || this.$route.name == 'classify' || this.$route.name == 'shopCart' || this.$route.name == 'account') {
-        //     this.selectNav(this.$route.name);   //当前页面为index或者notice或者activity或者my时执行获取当前url的name
-        // }
+        this.isSelect = sessionStorage.getItem('isSelect'); 
+        if (this.$route.name == "index" || this.$route.name == 'shopMall' || this.$route.name == 'classify' || this.$route.name == 'shopCart' || this.$route.name == 'account') {
+            this.selectNav(this.$route.name); 
+        }
     },
 }
 </script>
