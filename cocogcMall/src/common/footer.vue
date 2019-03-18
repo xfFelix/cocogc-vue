@@ -1,5 +1,5 @@
 <template>
-    <footer class="tabs one-top-px" v-show="hideShow">
+    <footer class="tabs one-top-px" v-show="hideShow" v-foot>
         <div v-for="(item,index) in tableList" @click="selectNav(item.name)" :key='index' class="navTabWrap">
             <router-link :to="item.path" class="navTab">
                 <span class="navImg" :class="isSelect == item.name ? item.iconGreen : item.icon"></span>
@@ -46,7 +46,12 @@ export default {
                 }, 400)
             }
         },
-
+        '$route': {
+          handler(val) {
+            this.isSelect = val.name
+          },
+          immediate: true
+        }
 
 
     },
