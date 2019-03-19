@@ -142,7 +142,7 @@
                 <span class="shop-cPriceInt">{{message|toDecimal2Fp(message)}}.</span>
                 <span class="shop-cPriceFloat">{{message|toDecimal2Ap(message)}}</span>
             </div>
-            <div class="order-sumit" @click="sumitOrder()">提交订单</div>
+            <div class="order-sumit" @click="showSendCode = true">提交订单</div>
         </div>
 
         <div class="phonePay-wrap" id="phonePay-sms">
@@ -172,6 +172,7 @@
 import headerTop from "../../common/header.vue"
 import Swiper from 'swiper';
 import api from '../../service/api';
+import { Popup } from 'mint-ui'
 
 export default {
     data() {
@@ -181,6 +182,7 @@ export default {
             message: "",
             validate: "获取验证码",
             validateFlag: 1,
+            showSendCode: false
         };
     },
     mounted() {
@@ -228,6 +230,9 @@ export default {
                         //地址存到localStorage
                         var editItem = JSON.stringify(_this.dataAddress);
                         localStorage.setItem('addressEdit', editItem);
+                    } else {
+                      this.Toast(data.message)
+                      this.$router.back()
                     }
                 })
                 .catch((err) => {
@@ -281,7 +286,8 @@ export default {
         },
     },
     components: {
-        "header-top": headerTop
+        "header-top": headerTop,
+        'mt-popup': Popup
     }
 
 }

@@ -31,7 +31,6 @@ import {
 // window.MessageBox= MessageBox;
 // window.Indicator= Indicator;
 
-
 Vue.prototype.Toast = Toast;
 
 

@@ -79,7 +79,7 @@
     </div>
   </div>
 </template>
- 
+
 <script>
 
 import Swiper from 'swiper';
@@ -134,7 +134,7 @@ export default {
   }
 }
 </script>
- 
+
 <style lang="less" scoped>
 .index-head {
   background: url("/static/images/indexBg.jpg") no-repeat;
