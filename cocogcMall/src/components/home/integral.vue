@@ -20,19 +20,17 @@
         </div>
 
         <div class="home-interWrap">
-            <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
-                <router-link :to="{path:'/goodsDetail/'+item.id}">
-                    <div class="home-iGoods">
-                        <img :src="item.image" alt="" />
-                    </div>
-                    <p class="home-iNmame">
-                        {{item.name|wordSize(item.name)}}
-                    </p>
-                    <div class="home-iMoneyW">
-                        <span class="home-iMoneyL"></span>
-                        <span class="home-iMoney">{{item.currentPrice}}</span>
-                    </div>
-                </router-link>
+            <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index" @click="goDetail(item)">
+                <div class="home-iGoods">
+                    <img :src="item.image" alt="" />
+                </div>
+                <p class="home-iNmame">
+                    {{item.name|wordSize(item.name)}}
+                </p>
+                <div class="home-iMoneyW">
+                    <span class="home-iMoneyL"></span>
+                    <span class="home-iMoney">{{item.currentPrice}}</span>
+                </div>
             </div>
         </div>
         <div class="home-integralM one-top-px" @click="toGoodsList()">
@@ -56,7 +54,7 @@ export default {
             ],
             homeSelFlag: 0,
             iSelectAct: '',
-            iSintegra: '',
+            iSintegra:'',
             goodsList: [],
         }
     },
@@ -72,7 +70,7 @@ export default {
     methods: {
         //带积分到列表页
         toGoodsList() {
-            this.$router.push({ path: '/goodsList', query: { integra: this.iSintegra } })
+            this.$router.push({path:'/goodsList',query:{integra:this.iSintegra}})
         },
         // 积分区间
         integraM() {
@@ -91,6 +89,11 @@ export default {
                 })
                 this.homeSelFlag = 0
             }
+        },
+        goDetail (item) {
+          this.$router.push({
+            path: '/goodsDetail/' + item.id
+          })
         },
         iSelect(item, index) {
             this.iSelectAct = index;
@@ -141,7 +144,7 @@ export default {
                     if (data.code == 0) {
                         if (data.list.length > 0) {
                             _this.goodsList = data.list;
-                        } else {
+                        }else{
 
                         }
                     } else {
@@ -153,6 +156,8 @@ export default {
 
                 })
         },
+
+        // http://192.168.0.110:9988/query/keyword
     }
 
 }

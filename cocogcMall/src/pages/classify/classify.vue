@@ -13,6 +13,7 @@
                     搜索
                 </div>
             </div>
+            
             <!-- <div class="select-headBan">
                 <ul class="select-headUl">
                     <li>
@@ -40,6 +41,7 @@
                 <ul class="select-brand">
                     <li v-for="(item,index) in cateList" :key="index" class="select-brandLi" @click="activeIndexC(index,item.id)">
                         <span class="activeGre" v-if="activeIndex==index"></span>
+                      
                         <span :style="(activeIndex==index ?'color: #30ce84':'color: #333')">{{item.name}}</span>
                     </li>
 
@@ -51,11 +53,14 @@
                     <div class="select-bGoodsT" v-for="(item,index) in cateTypeList" :key="index">
                         <h3 class="title">{{item.name}}</h3>
                         <ul>
+                         
                             <li v-for="(i,index) in item.childCategory" :key="index">
-                                <router-link :to="{path:'/goodsList',query:{classfyId:'11878'}}">
+                              
+                                <router-link :to="{path:'/goodsList',query:{classfyId: i.id}}">
                                     <p>
                                         <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
-                                        <span>{{i.name}}</span>
+                                   
+                                        <span class="product-name">{{i.name}}</span>
                                     </p>
                                 </router-link>
                             </li>
@@ -70,7 +75,6 @@
 </template>
 
 <script>
-import Footer from '../../common/footer.vue';
 import api from '../../service/api';
 
 export default
@@ -130,16 +134,27 @@ export default
             }
 
 
-        },
-        components: {
-            "v-footer": Footer
         }
     };
 </script>
 
 <style lang="less">
+.title {
+  padding: 10px 0;
+}
+.product-name{
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  padding: 2px 0 ;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  white-space: nowrap;
+}
 .select-head {
     width: 100%;
+
     height: 1.3rem;
     background: #fff;
     padding: 0.42rem 0 0.24rem 0;
@@ -244,6 +259,7 @@ export default
             }
         }
     }
+
     // .select-headBan {
     //     .select-headUl {
     //         display: flex;
@@ -321,6 +337,8 @@ export default
         ul {
             width: 100%;
             li {
+      
+
                 width: 24%;
                 margin: 0 4.66%;
                 display: inline-block;

@@ -39,7 +39,7 @@
                         <span>{{dataItem.vendorId}}</span>
                         <p>
                             (共
-                            <span></span>件)
+                            <span>{{dataItem.goodsList.length}}</span>件)
                         </p>
                     </div>
 
@@ -81,7 +81,7 @@
                         <span>{{dataItem.vendorId}}</span>
                         <p>
                             (共
-                            <span>2</span>件)
+                            <span>1</span>件)
                         </p>
                     </div>
 
@@ -93,7 +93,7 @@
                             <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
                             <p class="order-goodsDType">类型没有</p>
                             <div class="order-goodsDPriceW">
-                                <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
+                                <span class="order-goodsDPrice">￥{{itemGoods.buyPrice}}</span>
                                 <p class="order-goodsDNumW">
                                     <span class="order-goodsDNumI"></span>
                                     <span class="order-goodsDNum">{{itemGoods.buyNum}}</span>
@@ -138,6 +138,7 @@
         </div>
         <div class="order-sumitW">
             <div class="order-sumitP">
+                ￥
                 <span class="shop-cPriceInt">{{message|toDecimal2Fp(message)}}.</span>
                 <span class="shop-cPriceFloat">{{message|toDecimal2Ap(message)}}</span>
             </div>
@@ -387,8 +388,9 @@ export default {
             width: 57%;
             .order-goodsDName {
                 line-height: 0.4rem;
-                color: #333;
+                color: #000;
                 font-size: 0.3rem;
+                font-size: 14px;
                 margin-bottom: 0.06rem;
             }
             .order-goodsDType {
@@ -400,7 +402,9 @@ export default {
                 justify-content: space-between;
                 font-size: 0.3rem;
                 margin-top: 0.48rem;
-                .order-goodsDPrice {}
+                .order-goodsDPrice {
+                  color: #F56C6C;
+                }
                 .order-goodsDNumW {
                     .order-goodsDNumI {
                         width: 0.36rem;
@@ -518,8 +522,14 @@ export default {
     display: flex;
     justify-content: space-between;
     padding-left: 0.27rem;
-    margin-bottom: 48px;
+    // margin-bottom: 48px;
+    position: fixed;
+    width: 100%;
+    bottom: -1px;
+    left: 0;
     .order-sumitP {
+      font-weight: 500;
+      color: #F56C6C;
         span:nth-of-type(1) {
             font-size: 0.48rem;
         }

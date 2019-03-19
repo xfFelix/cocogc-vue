@@ -68,6 +68,7 @@
 
             <div class="shop-cPN" v-if="deitDelFlag">
                 <p class="shop-cPriceW">
+                    <span style="display: flex;align-items: flex-end;margin-bottom: 1px;">￥</span>
                     <span class="shop-cPriceInt">{{selectAllPrice|toDecimal2Fp(selectAllPrice)}}.</span>
                     <span class="shop-cPriceFloat">{{selectAllPrice|toDecimal2Ap(selectAllPrice)}}</span>
                 </p>
@@ -88,12 +89,10 @@
             </div>
         </div>
 
-        <!-- <v-footer></v-footer> -->
     </div>
 </template>
 <script>
 import Guesslike from "../../common/guesslike.vue";
-import Footer from '../../common/footer.vue'
 import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
 
@@ -279,8 +278,7 @@ export default {
         },
     },
     components: {
-        "guess-like": Guesslike,
-        "v-footer": Footer
+        "guess-like": Guesslike
     }
 };
 </script>
@@ -551,9 +549,9 @@ export default {
         .shop-cPriceW {
             display: flex;
             align-self: center;
+            color: #fb5c5c;
             .shop-cPriceInt {
                 font-size: 0.36rem;
-                color: #000;
             }
             .shop-cPriceFloat {
                 font-size: 0.24rem;

@@ -46,7 +46,12 @@ export default {
                 }, 400)
             }
         },
-
+        '$route': {
+          handler(val) {
+            this.isSelect = val.name
+          },
+          immediate: true
+        }
 
 
     },

@@ -63,6 +63,10 @@
             <div class="onBottom" v-show="moreShow==false">
                 已经到底了噢~~
             </div>
+        </div>
+        <div v-show="moreShow==false" style="text-align: center;">
+            已经到底了噢~~
+        </div>
 
         </div>
 

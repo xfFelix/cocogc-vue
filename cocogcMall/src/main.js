@@ -13,7 +13,6 @@ import VueLazyload from 'vue-lazyload';
 
 import Tips from './common/tips'
 
-
 Vue.component(Spinner.name, Spinner)
 
 Vue.use(VueCookie);
