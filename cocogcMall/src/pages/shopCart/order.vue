@@ -144,35 +144,37 @@
             </div>
             <div class="order-sumit" @click="showSendCode = true">提交订单</div>
         </div>
-
-        <div class="phonePay-wrap" id="phonePay-sms">
-            <div class="phonePay-bgWrap">
-                <div class="phonePay-bg">
-                    <p class="phonePay-title">
-                        <span class="phoneChe-backW">
-                            <span class="phoneChe-back"></span>
-                        </span>
-                        <span class="phonePay-tName">确认兑换</span>
-                    </p>
-                    <p class="phonePay-telW hide">短信验证码已发送至手机
-                        <span class="phonePay-tel"></span>
-                    </p>
-                    <p class="phonePay-inpW">
-                        <input class="phonePay-msg" type="number" placeholder="请输入短信验证码" />
-                        <span class="sendPhoneSms" style="background: green;" @click="sendPhoneSms()">{{validate}}</span>
-                    </p>
-                    <p class="phonePay-confirm phonePay-conA">确认兑换</p>
-                </div>
+        <transition enter-active-class="animated slideInUp"
+                    leave-active-class="animated slideOutDown">
+            <div class="phonePay-bg" id="phonePay-sms" v-if="showSendCode">
+                <p class="phonePay-title">
+                    <span class="phoneChe-backW" @click="showSendCode = false">
+                        <span class="phoneChe-back"></span>
+                    </span>
+                    <span class="phonePay-tName">确认兑换</span>
+                </p>
+                <p class="phonePay-telW hide">短信验证码已发送至手机
+                    <span class="phonePay-tel"></span>
+                </p>
+                <p class="phonePay-inpW">
+                    <input class="phonePay-msg" type="number" placeholder="请输入短信验证码" />
+                    <span class="sendPhoneSms" style="background: green;" @click="sendPhoneSms()">{{validate}}</span>
+                </p>
+                <p class="phonePay-confirm phonePay-conA">确认兑换</p>
             </div>
-        </div>
+        </transition>
+        <transition enter-active-class="animated fadeIn"
+                    leave-active-class="animated fadeOut">
+          <bg-mask v-model="showSendCode"></bg-mask>
+        </transition>
     </div>
 </template>
 
 <script>
 import headerTop from "../../common/header.vue"
+import BgMask from "@/common/BgMask"
 import Swiper from 'swiper';
 import api from '../../service/api';
-import { Popup } from 'mint-ui'
 
 export default {
     data() {
@@ -287,7 +289,7 @@ export default {
     },
     components: {
         "header-top": headerTop,
-        'mt-popup': Popup
+        BgMask
     }
 
 }
@@ -554,26 +556,15 @@ export default {
 
 
 
-.phonePay-wrap {
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    .phonePay-bgWrap {
-        position: relative;
-        width: 100%;
-        height: 100%; // background: #f3f4f6;
-        padding-bottom: 15px; // border-radius: 10px 10px 0 0;
+
         .phonePay-bg {
-            position: absolute;
+            position: fixed;
             left: 0;
             width: 100%;
             bottom: 0; // border-radius: 5px;
             margin: 0 auto;
             right: 0;
+            z-index: 101;
             background: #F3F4F6;
             input {
                 width: 65%;
@@ -611,7 +602,7 @@ export default {
                 }
             }
         }
-    }
+
 
     .phonePay-telW {
         //   width: 5.67rem;
@@ -658,5 +649,5 @@ export default {
         width: 90%;
         margin-bottom: 1rem;
     }
-}
+
 </style>
