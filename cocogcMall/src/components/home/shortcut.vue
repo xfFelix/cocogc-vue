@@ -6,7 +6,7 @@
                 <!-- 页面 -->
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" v-for="(item,index) in quickList" :key="index">
-                        <router-link :to="quickItem.path" class="home-quickA" v-for="(quickItem,quickIndex) in item" :key="quickIndex">
+                        <router-link :to="{path: quickItem.path, query: {id: quickItem.id}}" class="home-quickA" v-for="(quickItem,quickIndex) in item" :key="quickIndex">
                             <p class="navImg home-qImg" :class="quickItem.imgBg">
                                 <!-- <span class="home-qIde">HOT</span> -->
                             </p>
@@ -27,17 +27,17 @@ export default {
         return {
             quickList: [
                 [
-                    { name: "日用超市", path: '/aa', imgBg: 'home-qImg01' },
-                    { name: "手机数码", path: '/aa', imgBg: 'home-qImg02' },
-                    { name: "家用电器", path: '/aa', imgBg: 'home-qImg03' },
-                    { name: "美妆护肤", path: '/aa', imgBg: 'home-qImg04' },
+                    { name: "日用超市", path: 'classify', imgBg: 'home-qImg01', id: '1620' },
+                    { name: "手机数码", path: 'classify', imgBg: 'home-qImg02', id: '9987' },
+                    { name: "家用电器", path: 'classify', imgBg: 'home-qImg03', id: '737' },
+                    { name: "美妆护肤", path: 'classify', imgBg: 'home-qImg04', id: '1316' },
                 ],
             ]
         }
     },
     mounted() {
         /*
-          快捷通道 
+          快捷通道
         */
         var swiperQuick = new Swiper('.home-quick .swiper-container', {
             // autoplay: {

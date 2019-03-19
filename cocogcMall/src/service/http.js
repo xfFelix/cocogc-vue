@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 import { baseUrl } from '@/config'
-axios.defaults.timeout = 300;
+axios.defaults.timeout = 10000;
 axios.defaults.baseURL = baseUrl;
 axios.defaults.headers['Content-Type'] = 'application/json';
 

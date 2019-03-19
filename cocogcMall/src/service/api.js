@@ -35,6 +35,9 @@ const salesVolume = 'query/salesVolume'; //销量排序
 const order = 'query/order'; //价格排序
 
 const keyword = 'query/keyword'; //商品列表查询
+const sendSms = 'api/sendSms' // 发送验证码
+const previewOrderByCart = 'api/previewOrderByCart' // 通过购物车进入预览订单
+const saveOrderByCart = 'api/saveOrderByCart' // 通过购物车下单
 
 
 
@@ -65,5 +68,8 @@ export default {
   price,
   salesVolume,
   order,
-  keyword
+  keyword,
+  sendSms,
+  previewOrderByCart,
+  saveOrderByCart
 }

@@ -49,9 +49,9 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide" v-for="(itemGoods,indexGoods) in dataItem.goodsList" :key="indexGoods">
                                         <div class="order-goodsList">
-                                            <!-- <img :src="itemGoods.imgsrc" alt="" /> -->
+                                            <img :src="itemGoods.picUrl" alt="" />
                                             <!-- <img src="static/images/goos_01.png" alt="" /> -->
-                                            {{itemGoods.goodsName}}
+                                            <!-- {{itemGoods.goodsName}} -->
                                         </div>
                                     </div>
 
@@ -85,11 +85,11 @@
                         </p>
                     </div>
 
-                    <div class="order-goodSInfo one-bottom-px">
+                    <div class="order-goodSInfo one-bottom-px" v-for="(itemGoods,indexGoods) in dataItem.goodsList" :key="indexGoods">
                         <div class="order-goodSIImg">
-                            <!-- <img :src="itemGoods.imgsrc" alt="" /> -->
+                            <img :src="itemGoods.picUrl" alt="" />
                         </div>
-                        <div class="order-goodsDetail" v-for="(itemGoods,indexGoods) in dataItem.goodsList" :key="indexGoods">
+                        <div class="order-goodsDetail" >
                             <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
                             <p class="order-goodsDType">类型没有</p>
                             <div class="order-goodsDPriceW">
@@ -157,10 +157,10 @@
                     <span class="phonePay-tel"></span>
                 </p>
                 <p class="phonePay-inpW">
-                    <input class="phonePay-msg" type="number" placeholder="请输入短信验证码" />
+                    <input class="phonePay-msg" type="number" placeholder="请输入短信验证码" v-model="smsCode"/>
                     <span class="sendPhoneSms" style="background: green;" @click="sendPhoneSms()">{{validate}}</span>
                 </p>
-                <p class="phonePay-confirm phonePay-conA">确认兑换</p>
+                <p class="phonePay-confirm phonePay-conA" :class="smsCode?'light': ''" @click="sumitOrder">确认兑换</p>
             </div>
         </transition>
         <transition enter-active-class="animated fadeIn"
@@ -184,15 +184,24 @@ export default {
             message: "",
             validate: "获取验证码",
             validateFlag: 1,
-            showSendCode: false
+            showSendCode: false,
+            smsCode: undefined
         };
     },
     mounted() {
+      if (this.$route.query.cart) {
+        this.previewOrderByCart()
+      } else {
         this.previewOrder()
+      }
     },
     methods: {
         sumitOrder() {
+          if (this.$route.query.cart) {
+            this.saveOrderByCart()
+          } else {
             this.saveOrder();
+          }
         },
         // 订单预览
         previewOrder: function() {
@@ -241,6 +250,51 @@ export default {
 
                 })
         },
+        // 通过购物车进来
+        previewOrderByCart: function() {
+            var token = localStorage.getItem("token");
+            var addressId = localStorage.getItem("addressId");
+            let _this = this;
+            this.axios(testUrl + api.previewOrderByCart, {
+                "token": token,
+                "id": addressId,
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        _this.message = data.message;
+                        _this.dataList = data.data;
+                        _this.dataAddress = data.data[0];
+                        //多商品轮播图
+                        _this.dataList.forEach((res, index) => {
+                            if (res.goodsList.length > 1) {
+                                var goodsId = 'res' + res.goodsList[0].goodsId;
+                                var classg = '.' + goodsId + ' .swiper-container';
+                                var bnt = '.' + goodsId + ' .swiper-button-next';
+                                _this.$nextTick(function() {
+                                    new Swiper(classg, {
+                                        slidesPerView: 4,
+                                        slidesPerGroup: 1,
+                                        spaceBetween: 10,
+                                        navigation: {
+                                            nextEl: bnt,
+                                            // prevEl: '.swiper-button-prev',
+                                        },
+                                    })
+                                })
+                            }
+                        });
+                        //地址存到localStorage
+                        var editItem = JSON.stringify(_this.dataAddress);
+                        localStorage.setItem('addressEdit', editItem);
+                    } else {
+                      this.Toast(data.message)
+                      this.$router.back()
+                    }
+                })
+                .catch((err) => {
+
+                })
+        },
         //下单
         saveOrder: function() {
             var token = localStorage.getItem("token");
@@ -251,7 +305,8 @@ export default {
             this.axios(testUrl + api.saveOrder, {
                 "token": token,
                 "id": addressId,
-                "buys": buys
+                "buys": buys,
+                code: this.smsCode
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
@@ -264,11 +319,36 @@ export default {
 
                 })
         },
+        // 通过购物车下单
+        saveOrderByCart: function() {
+            var token = localStorage.getItem("token");
+            var addressId = localStorage.getItem("addressId");
+            let _this = this;
+            this.axios(testUrl + api.saveOrderByCart, {
+                token,
+                id: addressId,
+                code: this.smsCode
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        var orderId = data.data[0].orderId;
+                        this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
+                    } else {
+                      this.Toast(data.message)
+                    }
+                })
+                .catch((err) => {
 
+                })
+        },
 
         //定时
-        sendPhoneSms: function() {
+        async sendPhoneSms() {
             if (this.validateFlag == 1) {
+                let data = await this.axios(testUrl + api.sendSms, {token: localStorage.getItem('token')}, 'post')
+                if (data.error_code) {
+                  return this.Toast(data.message)
+                }
                 this.validate = "120s 重新获取"
                 let _this = this;
                 let timeInit = 120;
@@ -648,6 +728,9 @@ export default {
         background: #91efb1;
         width: 90%;
         margin-bottom: 1rem;
+    }
+    .light{
+      background-color: #27bd5a;
     }
 
 </style>

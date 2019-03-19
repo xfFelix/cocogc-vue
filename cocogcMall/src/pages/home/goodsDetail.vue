@@ -169,8 +169,8 @@ export default {
             if (data != null) {
                 that.setGoodsData(data);
             } else {
-                that.$toast("该商品不存在！");
-                that.$router.push('/');
+                that.Toast("该商品不存在！");
+                that.$router.back();
             }
         });
         that.getCarInfo(function(data) {

@@ -30,7 +30,6 @@ export default {
     methods: {
         getToken: function() {
             var token = getToken();
-            console.log(token)
             if (IsEmpty(token)) {
                 this.$router.push('/login');
             } else {
