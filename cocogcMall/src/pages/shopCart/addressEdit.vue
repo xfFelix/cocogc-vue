@@ -157,25 +157,25 @@ export default {
         },
         takeKeep() {
             if (IsEmpty(this.takeName)) {
-                MessageBox("提示", "收货人不能为空");
+                this.MessageBox("提示", "收货人不能为空");
                 return false;
             } else if (IsEmpty(this.takeTel)) {
-                MessageBox("提示", "手机号码不能为空");
+                this.MessageBox("提示", "手机号码不能为空");
                 return false;
             }
             else if (!IsMobile(this.takeTel)) {
-                MessageBox("提示", "手机号码格式错误");
+                this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
             else if (IsEmpty(this.takeAddress)) {
-                MessageBox("提示", "地区不能为空")
+                this.MessageBox("提示", "地区不能为空")
                 return false;
             }
             else if (IsEmpty(this.takeDAddress)) {
-                MessageBox("提示", "详细地址不能为空")
+                this.MessageBox("提示", "详细地址不能为空")
                 return false;
             } else if (this.takeDAddress.length >= 30) {
-                MessageBox("提示", "详细地址不能超过30个字")
+                this.MessageBox("提示", "详细地址不能超过30个字")
                 return false;
             } else {
                 if (this.addressDef == false) {

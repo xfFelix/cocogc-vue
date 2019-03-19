@@ -132,11 +132,11 @@ export default {
         //登录按钮
        loginBnt: function() {
             if (IsEmpty(this.loginForm.userName) || !IsMobile(this.loginForm.userName)) {
-                MessageBox("手机号码错误", "请输入有效的11位手机号码。")
+                this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
                 return false;
             }
             if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
-                 MessageBox("密码错误", "请输入正确的密码。")
+                 this.MessageBox("密码错误", "请输入正确的密码。")
                 return false;
             }
             this.login()

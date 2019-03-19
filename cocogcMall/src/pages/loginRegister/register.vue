@@ -167,19 +167,19 @@ export default {
     */
     registerBnt: function() {
       if (IsEmpty(this.register.userName) || !IsMobile(this.register.userName)) {
-         MessageBox("手机号码错误", "请输入有效的11位手机号码。")
+         this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
         return false;
       }
       if (IsEmpty(this.register.captcha) || this.register.captcha.length < 4) {
-        MessageBox("验证码格式错误", "请输入正确的图片验证码。")
+        this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
         return false;
       }
       if (IsEmpty(this.register.msgValidate) || this.register.msgValidate.length < 4) {
-        MessageBox("短信验证码错误", "请输入有效的短信验证码。")
+        this.MessageBox("短信验证码错误", "请输入有效的短信验证码。")
         return false;
       }
       if (!CheckPass(this.register.inputPass)) {
-        MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
+        this.MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
         return false;
       }
       this.regist();
@@ -191,12 +191,12 @@ export default {
     validateCli: function() {
       var that = this;
       if (IsEmpty(this.register.userName) || !IsMobile(this.register.userName)) {
-        MessageBox("手机号码错误", "请输入有效的11位手机号码。")
+        this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
 
         return false;
       }
       if (IsEmpty(this.register.captcha) && this.register.captcha.length < 4) {
-        MessageBox("验证码格式错误", "请输入正确的图片验证码。")
+        this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
         return false;
       }
 
