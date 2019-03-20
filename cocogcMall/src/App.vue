@@ -80,12 +80,7 @@ export default {
                 })
         },
 
-        // 退出登录的时候才需{要
-        // delToken: function() {
-        //     localStorage.removeItem("token");
-        //     this.delCookie("yeyun_token");
-        // },
-
+      
 
     },
     beforeMounted() {

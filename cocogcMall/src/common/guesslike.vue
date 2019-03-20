@@ -40,8 +40,7 @@ export default {
     methods: {
         guessLike: function() {
             let _this = this;
-            let name = JSON.parse(localStorage.getItem("cartShop")) 
-            console.log(name)
+            let name = JSON.parse(localStorage.getItem("cartShop")) ;
             this.axios(jdTestUrl + api.guessLike, {
                 "name": name
             }, 'post')

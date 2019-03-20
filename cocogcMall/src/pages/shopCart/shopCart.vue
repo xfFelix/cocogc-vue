@@ -123,8 +123,8 @@ export default {
     },
     methods: {
         getCartGoodsList(callback) {
-            this.axios(testUrl + api.selectCarts,
-                {
+            let _this = this;
+            this.axios(testUrl + api.selectCarts,{
                     token: getToken()
                 },
                 'post')
@@ -132,18 +132,18 @@ export default {
                     if (data.error_code == 0) {
                         if (callback)
                             callback(data.data);
-
                             //传给猜你喜欢
                             let cartShop = [];
                             data.data.forEach((res)=>{
                                 cartShop.push(res.goods.name)
                             })
                             localStorage.setItem('cartShop',JSON.stringify(cartShop));
-                            console.log(JSON.stringify(cartShop))
+                    }else{
+                        _this.Toast(data.message)
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                    _this.Toast(err.message)
                 })
         },
         // 删除

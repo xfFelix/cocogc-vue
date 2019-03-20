@@ -22,18 +22,17 @@
           <p class="ih-moneya">椰子分余额</p>
         </div>
 
-        <a href="https://api.cocogc.cn/#!/charge">
-          <div class="ih-recharge">
-            去充值
-          </div>
-        </a>
+        <div class="ih-recharge" @click="recharge()">
+          去充值
+        </div>
+
       </div>
     </div>
 
     <!-- 导航 -->
     <ul class="index-fastNav">
       <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
-        <a :href="item.path">
+        <a :href='item.path+"?token="+ $cookies.get("yeyun_token")'>
           <p class="navImg imgBg" :class="item.imgBg"></p>
           <p class="ifa-name">{{item.name}}</p>
         </a>
@@ -71,14 +70,14 @@
       <div class="ihot-goodsW">
         <div class="ihot-goods" v-for="(item,index) in goodsList.slice(0, 6)" :key="index">
           <router-link :to="{path:'/goodsDetail/'+item.id}">
-          <div class="ihot-goodsImg">
-            <img :src="item.picUrl" alt="" />
-          </div>
-          <p class="ihot-name">{{item.name|wordSize(item.name)}}</p>
-          <p class="ihot-moneyW">
-            <span class="ihot-logo accountImg"></span>
-            <span class="ihot-money">{{item.currentPrice}}</span>
-          </p>
+            <div class="ihot-goodsImg">
+              <img :src="item.picUrl" alt="" />
+            </div>
+            <p class="ihot-name">{{item.name|wordSize(item.name)}}</p>
+            <p class="ihot-moneyW">
+              <span class="ihot-logo accountImg"></span>
+              <span class="ihot-money">{{item.currentPrice}}</span>
+            </p>
           </router-link>
         </div>
       </div>
@@ -97,9 +96,9 @@ export default {
   data() {
     return {
       fastList: [
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: 'https://api.cocogc.cn/#!/goldChange' },
-        { id: 1, name: "话费兑换", imgBg: 'ifa-imgBg02', path: 'https://api.cocogc.cn/#!/phoneBill' },
-        { id: 1, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: 'https://api.cocogc.cn/#!/pay?back=pay' },
+        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange' },
+        { id: 1, name: "话费兑换", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill' },
+        { id: 1, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay' },
         { id: 1, name: "机票酒店", imgBg: 'ifa-imgBg04', path: '/huangjin' },
         { id: 1, name: "加油卡兑换", imgBg: 'ifa-imgBg05', path: '/huangjin' },
         { id: 1, name: "生活缴费", imgBg: 'ifa-imgBg06', path: '/huangjin' },
@@ -113,35 +112,21 @@ export default {
       goodsList: [],
       loginFlag: false,
       loScore: ''
-
-
     }
   },
   created() {
   },
   mounted() {
     var swiperBan = new Swiper('.index-swipe .swiper-container', {
-      // autoplay: {
-      //   delay: 1000,
-      //   stopOnLastSlide: false,
-      //   disableOnInteraction: false,
-      // },
       loop: true,
       pagination: {
         el: '.swiper-pagination',
       },
     })
     this.rank();
-
     this.loScore = localStorage.getItem('score');
-    // if(loScore){
-    //   this.loginFlag = true;
-    // }else{
-    //   this.loginFlag = false;
-    // }
   },
   components: {
-    // LinkTab
   },
   methods: {
     rank: function() {
@@ -161,6 +146,9 @@ export default {
           _this.Toast(data.message);
         })
     },
+    recharge() {
+      window.location = infoURl + '#!/charge?token='+this.$cookies.get("yeyun_token")
+    }
   }
 }
 </script>

@@ -5,7 +5,6 @@
                 <div class="acc-headCSM">
                     <span class="acc-headCrown"></span>
                     <span class="acc-headSet" @click="$router.push('/setUp')"></span>
-
                 </div>
             </div>
             <div class="acc-headInfo">
@@ -37,48 +36,14 @@
         <div class="account-contentW">
             <div class="acc-content">
                 <ul class="acc-contentUl">
-                    <li>
-                        <a href="https://api.cocogc.cn/#!/slogs">
-                            <span class="acc-contentLog01"></span>
+                    <li v-for="(item,index) in jumpList" :key="index">
+                        <a :href="item.path">
+                            <span :class="item.bgImg"></span>
                             <div class="acc-contentInfo">
-                                <span class="acc-contentName">我的椰子分</span>
+                                <span class="acc-contentName">{{item.name}}</span>
                                 <p class="acc-contentR">
-                                    <span>积分余额：</span>
-                                    <span>{{score}}</span>
-                                    <span class="acc-contentGo"></span>
-                                </p>
-                            </div>
-                        </a>
-
-                    </li>
-                    <li>
-                        <a href="https://api.cocogc.cn/#!/pay?back=pay">
-                            <span class="acc-contentLog02"></span>
-                            <div class="acc-contentInfo">
-                                <span class="acc-contentName">信用卡还款</span>
-                                <p class="acc-contentR">
-                                    <span class="acc-contentGo"></span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://api.cocogc.cn/#!/goldChange">
-                            <span class="acc-contentLog03"></span>
-                            <div class="acc-contentInfo">
-                                <span class="acc-contentName">黄金兑换</span>
-                                <p class="acc-contentR">
-                                    <span class="acc-contentGo"></span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://api.cocogc.cn/#!/phoneBill">
-                            <span class="acc-contentLog04"></span>
-                            <div class="acc-contentInfo">
-                                <span class="acc-contentName">话费充值</span>
-                                <p class="acc-contentR">
+                                    <span v-if="item.scoreShow">积分余额：</span>
+                                    <span v-if="item.scoreShow">{{score}}</span>
                                     <span class="acc-contentGo"></span>
                                 </p>
                             </div>
@@ -89,33 +54,11 @@
 
             <div class="acc-content">
                 <ul class="acc-contentUl">
-                    <li>
-                        <a href="https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q">
-                            <span class="acc-contentLog05"></span>
+                    <li v-for="(item,index) in helpList" :key="index">
+                        <a :href="item.path">
+                            <span :class="item.bgImg"></span>
                             <div class="acc-contentInfo">
-                                <span class="acc-contentName">帮助中心</span>
-                                <p class="acc-contentR">
-                                    <span class="acc-contentGo"></span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://api.cocogc.cn/#!/contact">
-                            <span class="acc-contentLog06"></span>
-                            <div class="acc-contentInfo">
-                                <span class="acc-contentName">联系客服</span>
-                                <p class="acc-contentR">
-                                    <span class="acc-contentGo"></span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://api.cocogc.cn/#!/cooperation">
-                            <span class="acc-contentLog07"></span>
-                            <div class="acc-contentInfo">
-                                <span class="acc-contentName">商务合作</span>
+                                <span class="acc-contentName">{{item.name}}</span>
                                 <p class="acc-contentR">
                                     <span class="acc-contentGo"></span>
                                 </p>
@@ -124,7 +67,6 @@
                     </li>
                 </ul>
             </div>
-
         </div>
 
         <div class="account-swipeW">
@@ -147,8 +89,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- <v-footer></v-footer> -->
     </div>
 </template>
 <script>
@@ -163,8 +103,19 @@ export default {
                 { bgImgClass: 'account-qImg04', name: '已完成', path: '/orderManage?status=2' },
                 { bgImgClass: 'account-qImg05', name: '退换/售后', path: '/orderManage?status=3' },
             ],
-            score:'',
-            userName:''
+            score: '',
+            userName: '',
+            jumpList: [
+                { name: '我的椰子分', scoreShow: true, path: infoURl + "#!/goldChange?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog01" },
+                { name: '信用卡还款', scoreShow: false, path: infoURl + "#!/goldChange?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog02" },
+                { name: '黄金兑换', scoreShow: false, path: infoURl + "#!/goldChange?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog03" },
+                { name: '话费充值', scoreShow: false, path: infoURl + "#!/goldChange?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog04" },
+            ],
+            helpList: [
+                { name: '帮助中心', path: 'https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q', bgImg: "acc-contentLog05" },
+                { name: '联系客服', path: infoURl + "#!/contact?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog06" },
+                { name: '商务合作', path: infoURl + "#!/cooperation?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog07" },
+            ]
         };
     },
     mounted() {

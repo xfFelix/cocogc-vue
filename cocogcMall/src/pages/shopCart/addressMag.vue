@@ -96,7 +96,7 @@ export default {
         //地址列表
         addressMag: function(token) {
             let _this = this;
-            var token = localStorage.getItem("token");
+            var token = localStorage.getItem("yeyun_token");
             this.axios(testUrl + api.selectAddresses, {
                 "token": token
             }, 'post')

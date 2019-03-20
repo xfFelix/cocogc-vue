@@ -42,6 +42,8 @@ export const getToken = () => {
         if (!IsEmpty(token)) {
             localStorage.setItem("yeyun_token", token);
         }
+    } else {
+        Vue.prototype.$cookies.set("yeyun_token", token,30);
     }
     return token;
 }

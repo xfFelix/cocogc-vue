@@ -2,15 +2,15 @@
     <div class="setUp">
         <header-top></header-top>
         <ul class="setUp-content">
-            <li class="one-bottom-px">
+            <li class="one-bottom-px" @click="addressJump()">
                 <div>
                     地址管理
                 </div>
                 <div>
-                    <span class="j1Png setUp-go" @click="$router.push('/addressMag')"></span>
+                    <span class="j1Png setUp-go"></span>
                 </div>
             </li>
-            <li class="one-bottom-px">
+            <li class="one-bottom-px" @click="certJump()">
                 <div>
                     实名认证
                 </div>
@@ -20,7 +20,7 @@
                     <span class="j1Png setUp-go"></span>
                 </div>
             </li>
-            <li class="one-bottom-px">
+            <li class="one-bottom-px" @click="cardsJump()">
                 <div>
                     信用卡管理
                 </div>
@@ -30,7 +30,7 @@
                     <span class="j1Png setUp-go"></span>
                 </div>
             </li>
-            <li class="one-bottom-px">
+            <li class="one-bottom-px" @click="passupJump()">
                 <div>
                     登录密码
                 </div>
@@ -40,7 +40,7 @@
             </li>
         </ul>
 
-        <p class="button setUp-goback">退出</p>
+        <p class="button setUp-goback" @click="loginOut()">退出</p>
     </div>
 </template>
 <script>
@@ -50,7 +50,7 @@ export default {
     data() {
         return {
             identFlag: true,
-            cardsFlag:true
+            cardsFlag: true
         };
     },
     mounted() {
@@ -62,6 +62,24 @@ export default {
         this.cards()
     },
     methods: {
+        addressJump() {
+            this.$router.push("/addressMag")
+        },
+        certJump() {
+            window.location.href = infoURl + "#!/cert?token=" + this.$cookies.get("yeyun_token")
+        },
+        cardsJump() {
+            window.location.href = infoURl + "#!/list?token=" + this.$cookies.get("yeyun_token")
+        },
+        passupJump() {
+            this.$router.push("/passSetUp")
+        },
+        loginOut(){
+            localStorage.removeItem("yeyun_token");
+            this.$cookies.remove("yeyun_token");
+            this.$router.push("/login")
+
+        },
         cards: function() {
             let _this = this;
             var token = localStorage.getItem("yeyun_token");
@@ -70,9 +88,9 @@ export default {
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                        if(data.data.length>0){
+                        if (data.data.length > 0) {
                             _this.cardsFlag = false;
-                        }else{
+                        } else {
                             _this.cardsFlag = true;
                         }
                     } else {
@@ -80,7 +98,7 @@ export default {
                     }
                 })
                 .catch((err) => {
-                   _this.cardsFlag = false;
+                    _this.cardsFlag = false;
                 })
         },
 
