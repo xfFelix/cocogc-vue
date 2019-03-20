@@ -38,7 +38,7 @@
                     <span>订单编号：</span>
                     <span>{{dataList.orderId}}</span>
                 </p>
-                <p class="od-numberCopy">复制</p>
+                <p class="od-numberCopy" @click="handleCopy(dataList.orderId, $event)">复制</p>
             </div>
             <div class="od-timeInfo">
                 <span>下单时间：</span>
@@ -51,10 +51,11 @@
             <div class="order-goodSW">
                 <div class="order-goodSInfo">
                     <div class="order-goodSIImg">
+                      <img :src="item.picUrl" alt="">
                     </div>
                     <div class="order-goodsDetail">
                         <p class="order-goodsDName">{{item.goodsName}}</p>
-                         <p class="order-goodsDType">类型没有</p> 
+                         <p class="order-goodsDType">类型没有</p>
                         <p class="order-goodsDType"></p>
                         <div class="order-goodsDPriceW">
                             <span class="order-goodsDPrice">{{item.buyPrice|toDecimal2(item.buyPrice)}}</span>
@@ -111,7 +112,7 @@
 
 import headerTop from "../../common/header.vue";
 import api from '../../service/api';
-
+import clip from '@/util/clipboard'
 
 export default {
     data() {
@@ -126,7 +127,7 @@ export default {
       console.log("1111")
     },
     methods: {
-        
+
          // 查找订单
         findOrder: function() {
             var token = localStorage.getItem("token");
@@ -144,7 +145,9 @@ export default {
 
                 })
         },
-
+        handleCopy(text, event) {
+            clip(text, event)
+        },
     },
     components: {
         "header-top": headerTop

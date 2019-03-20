@@ -1,9 +1,7 @@
 import axios from 'axios'
 import {
-  MessageBox,
   Indicator,
   Toast,
-  Spinner,
 } from "mint-ui";
 
 import { baseUrl } from '@/config'

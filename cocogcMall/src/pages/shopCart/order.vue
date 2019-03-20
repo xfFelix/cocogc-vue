@@ -30,7 +30,7 @@
                 <div class="order-bottom"></div>
             </div>
 
-            <div v-for="(dataItem,dataIndex) in dataList" :key="dataIndex">
+            <div v-for="(dataItem,dataIndex) in dataList" :key="dataIndex" style="margin-bottom: 70px;">
 
                 <!-- 多种商品 -->
                 <div v-if="dataItem.goodsList.length>1" class="order-goodsMW">
@@ -66,11 +66,11 @@
 
                     <p class="order-freight one-top-px">
                         <span>运费</span>
-                        <span>0.00</span>
+                        <span>{{dataItem.shippingFee}}</span>
                     </p>
                     <p class="order-priceAll">
                         <span>小计</span>
-                        <span>2054.00</span>
+                        <span style="color:#000;">{{dataItem.totalMoney}}</span>
                     </p>
                 </div>
 
@@ -131,7 +131,7 @@
                     </p>
                     <p>
                         <span>合计</span>
-                        <span>{{dataItem.totalMoney}}</span>
+                        <span style="color: #000;">{{dataItem.totalMoney}}</span>
                     </p>
                 </div>
             </div>
@@ -598,7 +598,7 @@ export default {
             color: #666666;
         }
         span:nth-of-type(2) {
-            color: #000000;
+            color: #fc5c5c;
         }
     }
 }

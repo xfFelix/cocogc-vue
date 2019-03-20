@@ -32,7 +32,7 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
                                         <div class="order-goodsList">
-                                            <img :src="itemGoods.imgsrc" alt="" />
+                                            <img :src="itemGoods.picUrl" alt="" />
                                             <!-- <img src="static/images/goos_01.png" alt="" /> -->
                                             <p>{{itemGoods.goodsName}}</p>
                                         </div>
