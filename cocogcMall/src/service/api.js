@@ -6,6 +6,10 @@ const forget = 'user/forget';   //忘记密码
 const sms = 'user/sms';   //忘记密码（短信）
 
 
+const info = 'user/info';   //信息
+const cards = 'user/cards';   //银行卡信息
+
+
 
 const categories = 'api/categories';
 const goodsInfo = 'api/goodsInfo';
@@ -33,6 +37,9 @@ const updateCart = 'api/updateCart'; //更新购物车商品
 const price = 'query/price'; //积分区间
 const salesVolume = 'query/salesVolume'; //销量排序
 const order = 'query/order'; //价格排序
+const guessLike = 'query/guessLike'; //猜你喜欢列表
+
+
 
 const keyword = 'query/keyword'; //商品列表查询
 const sendSms = 'api/sendSms' // 发送验证码
@@ -48,6 +55,7 @@ export default {
   login,
   forget,
   sms,
+  info,
   goodsGroups,
   categories,
   selectOrders,
@@ -68,8 +76,10 @@ export default {
   price,
   salesVolume,
   order,
-  keyword,
   sendSms,
   previewOrderByCart,
-  saveOrderByCart
+  saveOrderByCart,
+  keyword,
+  cards,
+  guessLike
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="account">
+    <div id="account">
         <div class="account-head">
             <div class="acc-headCSMW">
                 <div class="acc-headCSM">
@@ -13,7 +13,7 @@
                     <img class="acc-headImg" src="static/images/headImg.png" alt="" />
                 </div>
                 <div class="acc-headTG">
-                    <p class="acc-headTel">1234567900</p>
+                    <p class="acc-headTel">{{userName}}</p>
                     <p class="acc-headGrade">
                         <span class="acc-headChessI"></span>
                         <span class="acc-headChess">专业棋牌</span>
@@ -162,10 +162,12 @@ export default {
                 { bgImgClass: 'account-qImg03', name: '未完成', path: '/orderManage?status=1' },
                 { bgImgClass: 'account-qImg04', name: '已完成', path: '/orderManage?status=2' },
                 { bgImgClass: 'account-qImg05', name: '退换/售后', path: '/orderManage?status=3' },
-            ]
+            ],
+            userName:''
         };
     },
     mounted() {
+        this.userName = localStorage.getItem("userName")
         /*
              横幅 
            */

@@ -7,6 +7,7 @@ import goodsList from '@/pages/home/goodsList'; //列表页
 import searchPage from '@/pages/home/searchPage'; //列表页
 
 
+
 import classify from '@/pages/classify/classify';
 import shopMall from '@/pages/shopMall/shopMall';
 
@@ -30,12 +31,14 @@ import passSetUp from '@/pages/loginRegister/passSetUp';
 import passSetSucess from '@/pages/loginRegister/passSetSucess';
 import register from '@/pages/loginRegister/register';
 import registerSucess from '@/pages/loginRegister/registerSucess';
+
+
 import { homedir } from 'os';
 
 import Layout from '@/pages/layout/Layout'
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   // mode: 'history',
   routes: [
     {
@@ -63,13 +66,16 @@ export default new Router({
           path: 'shopCart',
           name: 'shopCart',
           component: shopCart,
-          meta: { title: '购物车' },
+          meta: { title: '购物车', requireAuth: true },
         },
         {
           path: 'account',
           name: 'account',
           component: account,
-          meta: { title: '账户' },
+          meta: {
+            title: '账户',
+            requireAuth: true
+          },
         },
         {
           path: 'classify',
@@ -95,13 +101,13 @@ export default new Router({
       path: '/addressMag',
       name: 'addressMag',
       component: addressMag,
-      meta: { title: '地址管理' },
+      meta: { title: '地址管理', requireAuth: true },
 
     },
     {
       path: '/addressEdit',
       component: addressEdit,
-      meta: { title: '编辑地址' },
+      meta: { title: '编辑地址', requireAuth: true },
       name: 'addressEdit',
 
     },
@@ -109,7 +115,7 @@ export default new Router({
       path: '/setUp',
       name: 'setUp',
       component: setUp,
-      meta: { title: '设置' },
+      meta: { title: '设置', requireAuth: true },
     },
     {
       path: '/goodsDetail/:goodId',
@@ -121,25 +127,25 @@ export default new Router({
       path: '/order',
       name: 'order',
       component: order,
-      meta: { title: '订单' },
+      meta: { title: '订单', requireAuth: true },
     },
     {
       path: '/orderManage',
       name: 'orderManage',
       component: orderManage,
-      meta: { title: '订单管理' },
+      meta: { title: '订单管理', requireAuth: true },
     },
     {
       path: '/logisticsDetail',
       name: 'logisticsDetail',
       component: logisticsDetail,
-      meta: { title: '物流详情' },
+      meta: { title: '物流详情', requireAuth: true },
     },
     {
       path: '/orderDetails/:orderId',
       name: 'orderDetails',
       component: orderDetails,
-      meta: { title: '订单详情' },
+      meta: { title: '订单详情', requireAuth: true },
     },
     {
       path: '/login',
@@ -171,6 +177,24 @@ export default new Router({
       component: registerSucess,
       meta: { title: '注册成功' },
     },
+
   ],
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) {// 判断是否需要登录权限
+    if (localStorage.getItem('token')) {// 判断是否登录
+      next()
+    } else {// 没登录则跳转到登录界面
+      // next({
+      //   path: '/login',
+      //   query: { redirect: to.fullPath }
+      // })
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

@@ -22,9 +22,9 @@ export default {
                 { title: '我的', path: 'account', icon: 'navGo05', iconGreen: 'navGo15', name: 'account' },
             ],
             isSelect: 'home',
-            screenHeight: document.body.clientHeight,// 这里是给到了一个默认值 （这个很重要），默认屏幕高度
-            originHeight: document.body.clientHeight,//默认高度在watch里拿来做比较，实时屏幕高度
-            hideShow: true  //显示或者隐藏footer
+            docmHeight: document.documentElement.clientHeight,  //默认屏幕高度
+            showHeight: document.documentElement.clientHeight,   //实时屏幕高度
+            hideShow:true
         }
     },
     created() {
@@ -32,25 +32,18 @@ export default {
     },
 
     watch: {
-        screenHeight(val) {
-            // this.screenHeight = val;
-            if (!this.timer) {
-                this.screenWidth = val
-                this.timer = true
-                let that = this
-                setTimeout(function() {
-                    // that.screenWidth = that.$store.state.canvasWidth
-                    console.log(that.screenWidth)
-                    // that.init()
-                    that.timer = false
-                }, 400)
-            }
-        },
+       showHeight:function() {
+        if(this.docmHeight > this.showHeight){
+            this.hideShow = false
+        }else{
+            this.hideShow = true
+        }
+    },
         '$route': {
-          handler(val) {
-            this.isSelect = val.name
-          },
-          immediate: true
+            handler(val) {
+                this.isSelect = val.name
+            },
+            immediate: true
         }
 
 
@@ -59,7 +52,7 @@ export default {
         selectNav(title) {
             var isThis = this;
             isThis.isSelect = title; //当点击或啥返回上一页时都可以获取当前的名称
-            sessionStorage.setItem('isSelect', this.isSelect); 
+            sessionStorage.setItem('isSelect', this.isSelect);
         },
     },
     components: {
@@ -71,13 +64,12 @@ export default {
         const that = this;
         window.onresize = () => {
             return (() => {
-                window.screenHeight = document.body.clientHeight;
-                that.screenHeight = window.screenHeight;
+                this.showHeight = document.body.clientHeight;
             })()
         }
-        this.isSelect = sessionStorage.getItem('isSelect'); 
-        if (this.$route.name == "index" || this.$route.name == 'shopMall' || this.$route.name == 'classify' || this.$route.name == 'shopCart' || this.$route.name == 'account') {
-            this.selectNav(this.$route.name); 
+        this.isSelect = sessionStorage.getItem('isSelect');
+        if (this.$route.name == "home" || this.$route.name == 'shopMall' || this.$route.name == 'classify' || this.$route.name == 'shopCart' || this.$route.name == 'account') {
+            this.selectNav(this.$route.name);
         }
     },
 }

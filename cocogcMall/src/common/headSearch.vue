@@ -46,7 +46,8 @@ export default {
     background: #fff;
     .home-search {
         width: 78%; //   background: rgba(0, 0, 0, 0.25);
-        border: 1px solid #dfdfdf;
+        // border: 1px solid #dfdfdf;
+        border: 1px solid rgba(0, 0, 0, 0.06);
         height: 0.6rem;
         border-radius: 0.6rem;
         display: flex;

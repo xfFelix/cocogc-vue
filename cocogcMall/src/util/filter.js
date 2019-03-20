@@ -48,7 +48,7 @@ let toDecimal2Ap = x => {
     return ap
 }
 
-//超出30个字省略号
+//超出20个字省略号
 let wordSize = x => {
     let removeSpace = x.replace(' ', '');
 

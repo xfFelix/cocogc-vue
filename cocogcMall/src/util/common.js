@@ -36,13 +36,15 @@ export const CheckPass = (s) => {
 
 //获取用户token
 export const getToken = () => {
-    var token = localStorage.getItem("token");
+    var token = localStorage.getItem("yeyun_token");
     if (IsEmpty(token)) {
         token = Vue.prototype.$cookies.get("yeyun_token");
         if (!IsEmpty(token)) {
-            localStorage.setItem("token", token);
+            localStorage.setItem("yeyun_token", token);
         }
     }
-
     return token;
 }
+
+
+

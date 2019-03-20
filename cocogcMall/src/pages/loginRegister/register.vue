@@ -105,11 +105,11 @@ export default {
           if (data.error_code == 0) {
             this.$router.push('/registerSucess');
           } else {
-             Toast(data.message)
+            this.Toast(data.message)
           }
         })
         .catch((data) => {
-           Toast(data.message)
+          this.Toast(data.message)
         })
     },
     /*
@@ -139,11 +139,11 @@ export default {
               }
             }, 1000)
           } else {
-             Toast(data.message)
+            this.Toast(data.message)
           }
         })
         .catch((data) => {
-           Toast(data.message)
+          this.Toast(data.message)
         })
     },
 
@@ -167,19 +167,19 @@ export default {
     */
     registerBnt: function() {
       if (IsEmpty(this.register.userName) || !IsMobile(this.register.userName)) {
-         MessageBox("手机号码错误", "请输入有效的11位手机号码。")
+        this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
         return false;
       }
       if (IsEmpty(this.register.captcha) || this.register.captcha.length < 4) {
-        MessageBox("验证码格式错误", "请输入正确的图片验证码。")
+        this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
         return false;
       }
       if (IsEmpty(this.register.msgValidate) || this.register.msgValidate.length < 4) {
-        MessageBox("短信验证码错误", "请输入有效的短信验证码。")
+        this.MessageBox("短信验证码错误", "请输入有效的短信验证码。")
         return false;
       }
       if (!CheckPass(this.register.inputPass)) {
-        MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
+        this.MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
         return false;
       }
       this.regist();
@@ -191,12 +191,12 @@ export default {
     validateCli: function() {
       var that = this;
       if (IsEmpty(this.register.userName) || !IsMobile(this.register.userName)) {
-        MessageBox("手机号码错误", "请输入有效的11位手机号码。")
+        this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
 
         return false;
       }
       if (IsEmpty(this.register.captcha) && this.register.captcha.length < 4) {
-        MessageBox("验证码格式错误", "请输入正确的图片验证码。")
+        this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
         return false;
       }
 
@@ -217,13 +217,12 @@ export default {
 
 <style lang="less">
 #register {
-  background: #fff;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  background: #fff; // position: absolute;
+  // bottom: 0;
+  // left: 0;
   width: 100%;
-  height: 100%;
-  z-index: 2;
+  height: 100%; // z-index: 2;
+  position: relative;
   head {
     background: url(/static/images/regist.png) no-repeat;
     width: 100%;
@@ -276,7 +275,7 @@ export default {
 }
 
 .loginUl {
-  padding: 1.25rem 1rem 0 1rem;
+  padding: 0.75rem 1rem 0 1rem;
   margin-bottom: 0.2rem;
 }
 
@@ -401,10 +400,7 @@ export default {
   text-align: center;
   font-size: 15px;
   color: #999999;
-  position: absolute;
-  bottom: 0.4rem;
-  left: 0;
-  right: 0;
+  margin: 0.5rem 0;
 }
 
 .forgetPass a {

@@ -55,6 +55,29 @@ html{height: 100%;width: 100%;}
 	transform: scaleY(0.5);
 }
 
+
+.four-px{
+      height: 0.46rem;
+      border:none;
+      text-align: center;
+      position: relative;
+    
+    }
+    .four-px:after{
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      border: 1px solid #cccccc;
+      border-radius: 1rem;
+      width: 200%;
+      height: 200%;
+      -webkit-transform: scale(0.5);
+      transform: scale(0.5);
+      -webkit-transform-origin: left top;
+      transform-origin: left top;
+    }
+
 /************************ iconfont ***********************/
 .iconfont {
   font-family: "iconfont" !important;
@@ -194,3 +217,11 @@ height: 45px;
     color: #cecece;
     font-size: 13px;
   }
+
+
+  /* #register,#login{
+    background: #fff;
+  }
+    #index{
+    background: #eef1f6;
+  } */

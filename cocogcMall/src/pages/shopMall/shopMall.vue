@@ -200,7 +200,7 @@ export default {
     .home-search {
       width: 88%;
       background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(0, 0, 0, 0);
+      border: 1px solid rgba(0, 0, 0, 0.06);
       height: 0.6rem;
       border-radius: 0.6rem;
       display: flex;
@@ -274,7 +274,7 @@ export default {
     z-index: 2;
     .home-search {
       background: #fff;
-      border: 1px solid #dfdfdf;
+      border: 1px solid rgba(0, 0, 0, 0.06);
       .home-searchL {
         background-position: -5.03rem -0.255rem;
       }

@@ -1,5 +1,10 @@
 import axios from 'axios'
-
+import {
+  MessageBox,
+  Indicator,
+  Toast,
+  Spinner,
+} from "mint-ui";
 
 import { baseUrl } from '@/config'
 axios.defaults.timeout = 10000;
@@ -7,6 +12,7 @@ axios.defaults.baseURL = baseUrl;
 axios.defaults.headers['Content-Type'] = 'application/json';
 
 //拦截器
+var _this = this;
 axios.interceptors.request.use(config => {
   Indicator.open('Loading...');
   return config;
@@ -17,9 +23,10 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(config => {
- Indicator.close()
+  Indicator.close()
   return config;
 }, error => {
+  Indicator.close()
   Toast("加载超时...")
   return Promise.reject(error)
 })
