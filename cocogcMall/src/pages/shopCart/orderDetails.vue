@@ -21,7 +21,7 @@
                         <span>{{dataList.userMobile}}</span>
                     </p>
                     <p class="order-addInfo">
-                       {{dataList.userAddress}}
+                        {{dataList.userAddress}}
                     </p>
                 </div>
                 <div>
@@ -47,14 +47,15 @@
             </div>
         </div>
 
-        <div v-for="(item,index) in dataList.goodsList" :key="index" >
+        <div v-for="(item,index) in dataList.goodsList" :key="index">
             <div class="order-goodSW">
                 <div class="order-goodSInfo">
                     <div class="order-goodSIImg">
+                        <img :src="item.picUrl" />
                     </div>
                     <div class="order-goodsDetail">
                         <p class="order-goodsDName">{{item.goodsName}}</p>
-                         <p class="order-goodsDType">类型没有</p> 
+                        <!-- <p class="order-goodsDType">类型没有</p> -->
                         <p class="order-goodsDType"></p>
                         <div class="order-goodsDPriceW">
                             <span class="order-goodsDPrice">{{item.buyPrice|toDecimal2(item.buyPrice)}}</span>
@@ -65,19 +66,22 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="od-goodSNumWrap one-top-px">
-                    <p class="od-goodSNum">
-                        <span class="od-goodSNumName">{{dataList.vendorId}}</span>
-                        <span>{{item.orderId}}</span>
-                    </p>
-                    <p class="od-logistic">
-                        <span>查看物流</span>
-                        <span class="od-goLogistics j1Png"></span>
-                    </p>
-                </div>
             </div>
         </div>
+        <div class="od-goodSNumWrap one-top-px">
+            <p class="od-goodSNum">
+                <span class="od-goodSNumName">{{dataList.vendorId}}</span>
+                <span>{{dataList.orderId}}</span>
+            </p>
+            <p class="od-logistic">
+                <router-link :to="{path:'/logisticsDetail',query:{orderId:dataList.orderId,logisticId:dataList.id}}">
+                    <span>查看物流</span>
+                    <span class="od-goLogistics j1Png"></span>
+                </router-link>
+            </p>
+        </div>
+
+        
 
         <div class="od-priceWrap">
             <ul class="od-priceUl one-bottom-px">
@@ -117,31 +121,34 @@ export default {
     data() {
         return {
             list: [],
-            dataList:{},
-            orderId:this.$route.params.orderId
+            dataList: {},
+            orderId: this.$route.params.orderId
         };
     },
     mounted() {
-      this.findOrder();
-      console.log("1111")
+        this.findOrder();
     },
     methods: {
-        
-         // 查找订单
+        logisticGo: function() {
+            this.$router.push('/logisticsDetail')
+        },
+        // 查找订单
         findOrder: function() {
-            var token = localStorage.getItem("token");
+            var token = localStorage.getItem("yeyun_token");
             let _this = this;
             this.axios(testUrl + api.findOrder, {
-                "token":token,
-                "code":this.orderId
+                "token": token,
+                "code": this.orderId
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.dataList = data.data;
+                    } else {
+                        _this.Toast(data.message)
                     }
                 })
                 .catch((err) => {
-
+                    _this.Toast(err.message)
                 })
         },
 
@@ -269,8 +276,9 @@ export default {
 
 .order-goodSW {
     background: #fff;
-    margin-top: 0.2rem;
-    padding: 0.2rem 0.37rem 0.2rem 0.32rem;
+    // margin-top: 0.2rem;
+    
+    padding: 0.2rem 0.37rem 0.2rem 0.32rem; // height: auto;
     .order-goodSInfo {
         display: flex;
         align-items: end; // padding: 0 0.39rem 0 0.32rem;
@@ -322,10 +330,13 @@ export default {
 .od-goodSNumWrap {
     display: flex;
     justify-content: space-between;
-    padding: 0.28rem 0 0.08rem 0;
+    padding: 0.28rem 0.3rem 0.08rem 0.3rem;
+    background: #fff;
     .od-goodSNum {
-        .od-goodSNumName {}
-        span:nth-of-type(2) {}
+        span{
+             display: block;
+             margin-bottom: 0.1rem;
+        }
     }
     .od-logistic {
         span:nth-of-type(1) {}

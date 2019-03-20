@@ -2,14 +2,13 @@
     <div class="logisticsDetail">
         <header-top></header-top>
 
-        <div v-for="(item,index) in list" :key="index" :class="item.goodStoreId">
+        <div>
             <!-- 多种商品 -->
-            <div v-if="item.goodsList.length>1" class="order-goodsMW">
-
+            <div v-if="orderList  &&  orderList.length > 1" class="order-goodsMW">
                 <div class="od-numberWrap">
                     <p class="od-number">
                         <span>订单编号：</span>
-                        <span>201803051548625</span>
+                        <span>{{list.orderId}}</span>
                     </p>
                     <p class="od-numberCopy">复制</p>
                 </div>
@@ -18,14 +17,13 @@
                     <div class="order-swipe">
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
+                                <div class="swiper-slide" v-for="(itemGoods,indexGoods) in orderList" :key="indexGoods">
                                     <div class="order-goodsList">
-                                        <img :src="itemGoods.imgsrc" alt="" />
+                                        <img :src="itemGoods.picUrl" alt="" />
                                     </div>
                                 </div>
                                 <div class="swiper-slide">
                                     <div class="order-goodsList">
-                                        <!-- <img src="static/images/goos_01.png" alt="" /> -->
                                     </div>
                                 </div>
                             </div>
@@ -47,28 +45,28 @@
             </div>
 
             <!-- 单种商品 -->
-            <div class="order-goodSW" v-else>
+            <div class="order-goodSW" v-else-if="orderList.length == 1">
 
                 <div class="od-numberWrap">
                     <p class="od-number">
                         <span>订单编号：</span>
-                        <span>201803051548625</span>
+                        <span>{{list.orderId}}</span>
                     </p>
                     <p class="od-numberCopy">复制</p>
                 </div>
 
-                <div class="order-goodSInfo one-bottom-px" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
+                <div class="order-goodSInfo one-bottom-px">
                     <div class="order-goodSIImg">
-                        <img :src="itemGoods.imgsrc" alt="" />
+                        <img :src="orderList[0].picUrl" alt="" />
                     </div>
                     <div class="order-goodsDetail">
-                        <p class="order-goodsDName">漫步者（EDIFIER） H210P 手机耳</p>
-                        <p class="order-goodsDType">黑色</p>
+                        <p class="order-goodsDName">{{orderList[0].goodsName}}</p>
+                        <!-- <p class="order-goodsDType">黑色</p> -->
                         <div class="order-goodsDPriceW">
-                            <span class="order-goodsDPrice">105.00</span>
+                            <span class="order-goodsDPrice">{{orderList[0].buyPrice}}</span>
                             <p class="order-goodsDNumW">
                                 <span class="order-goodsDNumI"></span>
-                                <span class="order-goodsDNum">2</span>
+                                <span class="order-goodsDNum">{{orderList[0].buyNum}}</span>
                             </p>
                         </div>
                     </div>
@@ -86,80 +84,61 @@
 
         <div class="ld-contentWrap">
             <ul class="ld-content">
-                <li class="ld-contenLi">
+                <li class="ld-contenLi" v-for="(item,index) in logisticList" :key="index">
                     <div class="ld-contenLeft">
                         <p class="ld-contenOrder">签</p>
                         <p class="ld-contentLine"></p>
                     </div>
                     <div class="ld-contenRight">
                         <p class="ld-contenAddress">
-                            您的订单已由便利店代收（已在配送员处采用无纸化方式签收本订单）。感谢您在京东购物，欢迎再次光临。参加评价还能赢取京豆哟。
+                            {{item.content}}
                         </p>
                         <p class="ld-contenTime">
-                            <span>2019-03-15</span>
-                            <span>17:45:32</span>
+                            <span>{{item.msgTime}}</span>
                         </p>
                     </div>
                 </li>
-                <li class="ld-contenLi">
-                    <div class="ld-contenLeft">
-                        <p class="ld-contenOrder">签</p>
-                        <p class="ld-contentLine"></p>
-                    </div>
-                    <div class="ld-contenRight">
-                        <p class="ld-contenAddress">
-                            您的订单已由便利店代收您的订单已由便利店代收您的订单已
-                        </p>
-                        <p class="ld-contenTime">
-                            <span>2019-03-15</span>
-                            <span>17:45:32</span>
-                        </p>
-                    </div>
-                </li>
-
             </ul>
         </div>
 
-        <div class="ld-logisFixed">
+        <div class="ld-logisFixed" v-show="logisClose">
             <div class="ld-logisWrap">
                 <div class="ld-logis">
                     <div class="ld-logisTitleW one-bottom-px">
                         <div class="ld-logisTitle ">
                             <p>商品清单</p>
                             <p>共(
-                                <span>10</span>)件</p>
+                                <span>{{goodsTotal}}</span>)件</p>
                         </div>
-                        <p class="j1Png ld-logisClose">
-
-                        </p>
+                        <p class="j1Png ld-logisClose" v-show="logisClose=false"></p>
 
                     </div>
 
                     <div class="order-goodSW">
-                        <div v-for="(item,index) in list" :key="index">
-                            <div class="order-goodSInfo" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
+                        <div>
+                            <div class="order-goodSInfo" v-for="(itemGoods,indexGoods) in list.goodsList" :key="indexGoods">
                                 <div class="order-goodSIImg">
-                                    <img :src="itemGoods.imgsrc" alt="" />
+                                    <img :src="itemGoods.picUrl" alt="" />
                                 </div>
                                 <div class="order-goodsDetail">
-                                    <p class="order-goodsDName">漫步者（EDIFIER） H210P 手机耳</p>
-                                    <p class="order-goodsDType">黑色</p>
+                                    <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
+                                    <!-- <p class="order-goodsDType">黑色</p> -->
                                     <div class="order-goodsDPriceW">
-                                        <span class="order-goodsDPrice">105.00</span>
+                                        <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
                                         <p class="order-goodsDNumW">
                                             <span class="order-goodsDNumI"></span>
-                                            <span class="order-goodsDNum">2</span>
+                                            <span class="order-goodsDNum">{{itemGoods.buyNum}}</span>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <p class="order-freight">
                                 <span>运费</span>
-                                <span>0.00</span>
+                                <span>{{list.shippingFee|toDecimal2(list.shippingFee)}}</span>
                             </p>
                             <p class="order-priceAll">
                                 <span>小计</span>
-                                <span>2054.00</span>
+                                <span>{{list.totalMoney|toDecimal2(list.totalMoney)}}</span>
                             </p>
                         </div>
                     </div>
@@ -173,104 +152,79 @@
 
 import headerTop from "../../common/header.vue";
 import Swiper from 'swiper';
+import api from '../../service/api';
 export default {
     data() {
         return {
-            list: [
-                {
-                    goodStore: "京东商品",
-                    AllFlag: false,
-                    goodStoreId: "aaa",
-                    goodsList: [{
-                        id: 1,
-                        name: "京东商品1阿迪斯发是手动阀手动阀京东商品1阿迪斯发是手动阀手动阀",
-                        price: 10,
-                        count: 5,
-                        Stotal: 180,
-                        sku: '001',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }, {
-
-                        id: 1,
-                        name: "京东商品22222222222222222222222222222222222222222222222是手动阀手动阀",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '002',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }]
-                },
-
-                {
-                    goodStore: "自营商品",
-                    AllFlag: false,
-                    goodStoreId: "ccc",
-                    goodsList: [{
-                        id: 3,
-                        name: "自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品自营商品11",
-                        price: 10,
-                        count: 1,
-                        Stotal: 180,
-                        sku: '003',
-                        check: false,
-                        imgsrc: "static/images/goos_01.png"
-                    }]
-                },
-            ],
+            list: {},
+            orderList: [],
+            goodsTotal: 0,
+            logisClose: false,
+            logisticList: []
         };
     },
     mounted() {
-        //多商品轮播图
-        this.list.forEach((res) => {
-            var goodsId = res.goodStoreId;
-            var classg = '.' + goodsId + ' .swiper-container';
-            var bnt = '.' + goodsId + ' .swiper-button-next';
-            new Swiper(classg, {
-                slidesPerView: 4,
-                slidesPerGroup: 1,
-                spaceBetween: 10,
-                navigation: {
-                    nextEl: bnt,
-                    // prevEl: '.swiper-button-prev',
-                },
-
-            })
-        });
+        this.findOrder()
+        this.queryOrderTrack()
 
     },
     methods: {
+        findOrder: function() {
+            var token = localStorage.getItem("yeyun_token");
+            let _this = this;
+            this.axios(testUrl + api.findOrder, {
+                "token": token,
+                "code": this.$route.query.orderId
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        _this.list = data.data;
+                        _this.orderList = data.data.goodsList
+                        _this.list.goodsList.forEach((res) => {
+                            _this.goodsTotal += res.buyNum;
+                        });
+                    } else {
+                        _this.Toast(data.message)
+                    }
+                }).then(res => {
+                    _this.$nextTick(function() {
+                        new Swiper('.swiper-container', {
+                            slidesPerView: 4,
+                            slidesPerGroup: 1,
+                            spaceBetween: 10,
+                            navigation: {
+                                nextEl: '.swiper-button-prev',
+                            },
+                        })
+                    })
+                })
+                .catch((err) => {
+                    _this.Toast(err.message)
+                })
+        },
+        queryOrderTrack: function() {
+            var token = localStorage.getItem("yeyun_token");
+            let _this = this;
+            this.axios(testUrl + api.queryOrderTrack, {
+                "token": token,
+                "id": this.$route.query.logisticId
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        if (data.data != null) {
+                            _this.logisticList = data.data;
+                        } else {
+                            _this.logisticList = data.message;
+                        }
+
+                    } else {
+                        _this.Toast(data.message)
+                    }
+                })
+                .catch((err) => {
+                    _this.Toast(err.message)
+                })
+        },
 
     },
     components: {
@@ -314,9 +268,7 @@ export default {
     background: #fff;
     margin-top: 0.2rem;
     padding: 0 0.37rem 0 0.32rem;
-    overflow: auto;
-    height: 8rem;
-
+    overflow: auto; // height: 8rem;
     .order-goodSInfo {
         display: flex;
         align-items: end; // padding: 0 0.39rem 0 0.32rem;

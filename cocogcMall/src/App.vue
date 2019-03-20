@@ -80,7 +80,7 @@ export default {
                 })
         },
 
-      
+
 
     },
     beforeMounted() {

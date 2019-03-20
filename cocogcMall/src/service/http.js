@@ -18,7 +18,6 @@ axios.interceptors.request.use(config => {
   return config;
 }, error => {
   Indicator.close()
-  Toast("加载超时...")
   return Promise.reject(error)
 })
 
@@ -27,7 +26,6 @@ axios.interceptors.response.use(config => {
   return config;
 }, error => {
   Indicator.close()
-  Toast("加载超时...")
   return Promise.reject(error)
 })
 

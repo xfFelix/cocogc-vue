@@ -19,7 +19,6 @@ export const IsMobile = mobile => {
 
 // 密码检测
 export const CheckPass = (s) => {
-
     if (s != 'undefined' || s != null) {
         if (s.length < 6 || s.length > 20) {
             return false;
