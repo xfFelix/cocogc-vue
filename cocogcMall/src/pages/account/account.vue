@@ -44,7 +44,7 @@
                                 <span class="acc-contentName">我的椰子分</span>
                                 <p class="acc-contentR">
                                     <span>积分余额：</span>
-                                    <span>19.01</span>
+                                    <span>{{score}}</span>
                                     <span class="acc-contentGo"></span>
                                 </p>
                             </div>
@@ -163,11 +163,13 @@ export default {
                 { bgImgClass: 'account-qImg04', name: '已完成', path: '/orderManage?status=2' },
                 { bgImgClass: 'account-qImg05', name: '退换/售后', path: '/orderManage?status=3' },
             ],
+            score:'',
             userName:''
         };
     },
     mounted() {
-        this.userName = localStorage.getItem("userName")
+        this.userName = localStorage.getItem("userName");
+        this.score = localStorage.getItem("score");
         /*
              横幅 
            */

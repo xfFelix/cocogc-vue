@@ -69,7 +69,7 @@
         <p>查看更多</p>
       </div>
       <div class="ihot-goodsW">
-        <div class="ihot-goods" v-for="(item,index) in goodsList" :key="index">
+        <div class="ihot-goods" v-for="(item,index) in goodsList.slice(0, 6)" :key="index">
           <router-link :to="{path:'/goodsDetail/'+item.id}">
           <div class="ihot-goodsImg">
             <img :src="item.picUrl" alt="" />

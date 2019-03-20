@@ -40,7 +40,8 @@ export default {
     methods: {
         guessLike: function() {
             let _this = this;
-            let name = ['龟牌', '清洁剂'];
+            let name = JSON.parse(localStorage.getItem("cartShop")) 
+            console.log(name)
             this.axios(jdTestUrl + api.guessLike, {
                 "name": name
             }, 'post')
@@ -72,10 +73,11 @@ export default {
         border-top: 1px solid transparent;
         margin-bottom: 0.8rem;
         .home-rHM {
+                margin:0;
             h3 {
                 font-size: 0.3rem;
                 font-weight: 100;
-                margin: 0.43rem 0 0.43rem 0.32rem;
+                margin: 0.43rem 0 0.23rem 0.32rem;
             }
         }
         .home-interWrap {

@@ -132,6 +132,14 @@ export default {
                     if (data.error_code == 0) {
                         if (callback)
                             callback(data.data);
+
+                            //传给猜你喜欢
+                            let cartShop = [];
+                            data.data.forEach((res)=>{
+                                cartShop.push(res.goods.name)
+                            })
+                            localStorage.setItem('cartShop',JSON.stringify(cartShop));
+                            console.log(JSON.stringify(cartShop))
                     }
                 })
                 .catch((err) => {
