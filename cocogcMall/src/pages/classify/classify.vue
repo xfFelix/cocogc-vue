@@ -13,7 +13,7 @@
                     搜索
                 </div>
             </div>
-            
+
             <!-- <div class="select-headBan">
                 <ul class="select-headUl">
                     <li>
@@ -41,7 +41,7 @@
                 <ul class="select-brand">
                     <li v-for="(item,index) in cateList" :key="index" class="select-brandLi" @click="activeIndexC(index,item.id)"  :style="(activeIndex==index ?' background: #fff':'background: #f3f4f6')">
                         <span class="activeGre" v-if="activeIndex==index"></span>
-                      
+
                         <span :style="(activeIndex==index ?'color: #30ce84':'color: #333')">{{item.name}}</span>
                     </li>
 
@@ -53,13 +53,13 @@
                     <div class="select-bGoodsT" v-for="(item,index) in cateTypeList" :key="index">
                         <h3 class="title">{{item.name}}</h3>
                         <ul>
-                         
+
                             <li v-for="(i,index) in item.childCategory" :key="index">
-                              
+
                                 <router-link :to="{path:'/goodsList',query:{classfyId: i.id}}">
                                     <p>
                                         <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
-                                   
+
                                         <span class="product-name">{{i.name}}</span>
                                     </p>
                                 </router-link>
@@ -94,15 +94,22 @@ export default
             //   this.showLoading();
             this.categories(this.cateId, function(data) {
                 if (data.length > 0) {
-                    console.log(data)
                     that.cateList = data;
                     let first = data[0].id;
                     that.categories(first, function(data) {
                         that.cateTypeList = data;
                         that.hideLoading();
                     });
+                    if (that.$route.query.id) {
+                      that.cateList.forEach((item,index) => {
+                        if (that.$route.query.id == item.id) {
+                          that.activeIndexC(index, that.$route.query.id)
+                        }
+                      })
+                    }
                 }
             });
+
         },
         methods: {
             seachClick() {
@@ -318,10 +325,10 @@ export default
                 display: block;
                 position: absolute;
                 background: #30ce84;
-            } 
+            }
         }
         .activeBand {
-            
+
         }
     }
     .select-bGoodsW {
@@ -335,7 +342,7 @@ export default
         ul {
             width: 100%;
             li {
-      
+
 
                 width: 24%;
                 margin: 0 4.66%;

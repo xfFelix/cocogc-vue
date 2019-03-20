@@ -12,9 +12,9 @@
 
                     <div class="swiper-slide" v-for="(item,index) in goodsList" :key="index">
                         <div class="home-hGoodsW">
-                            <router-link :to="{path:'goodsDetail/'+item.id}">
+                            <router-link :to="{path:'/goodsDetail/'+item.id}">
                                 <div class="home-hGoods">
-                                     <img :src="item.picUrl" alt="" /> 
+                                     <img :src="item.picUrl" alt="" />
                                       <!-- <img :src="item.picUrl" alt="" /> -->
                                     <span class="home-hSTags"></span>
                                 </div>
@@ -76,7 +76,6 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         this.goodsList = data.data.goodsList;
-                        console.log(data)
                         _this.$nextTick(function() {
                             _this.swiperRank = new Swiper('.home-rank .swiper-container', {
                                 // autoplay: {
@@ -163,6 +162,9 @@ export default {
             font-weight: bold;
             font-size: 0.22rem;
             margin: 0.25rem 0 0.17rem;
+            word-break: keep-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
     .home-hSmoneyW {

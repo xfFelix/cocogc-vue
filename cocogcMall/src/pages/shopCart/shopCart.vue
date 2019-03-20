@@ -28,7 +28,7 @@
                                 <span @click="selGoods(index,0,$event)" :class="!items.check?'shop-selectN':'shop-selectY'">
                                 </span>
                             </span>
-                            <span class="shop-selImg">
+                            <span class="shop-selImg" @click="$router.push('/goodsDetail/'+ items.goods.id)">
                                 <img :src="items.goods!=null?items.goods.picUrl:''" alt="" />
                             </span>
                             <div class="shop-selInfo">
@@ -199,7 +199,12 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         sessionStorage.setItem('buys', JSON.stringify(buys));
-                        that.$router.push('/order');
+                        that.$router.push({
+                          path: '/order',
+                          query: {
+                            cart: 'cart'
+                          }
+                        });
 
                     }
                 });

@@ -169,8 +169,8 @@ export default {
             if (data != null) {
                 that.setGoodsData(data);
             } else {
-                that.$toast("该商品不存在！");
-                that.$router.push('/');
+                that.Toast("该商品不存在！");
+                that.$router.back();
             }
         });
         that.getCarInfo(function(data) {
@@ -320,11 +320,8 @@ export default {
         async goPreview() {
           let buys = []
           buys.push({goodsId: this.goodsId, nums: this.buyNum})
-          let data = await this.axios(testUrl + api.updateCart,{token: getToken(),buys},'post')
-          if (data.error_code == 0) {
-            sessionStorage.setItem('buys', JSON.stringify(buys))
-            this.$router.push('/order');
-          }
+          sessionStorage.setItem('buys', JSON.stringify(buys))
+          this.$router.push('/order');
         }
     },
     components: {

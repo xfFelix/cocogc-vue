@@ -8,6 +8,7 @@ import * as filters from './util/filter.js';
 // import Swiper from 'swiper';
 import 'swiper/dist/css/swiper.css';
 import '../static/css/style.css';
+import '../static/css/animate.css';
 import VueCookie from 'vue-cookies';
 import VueLazyload from 'vue-lazyload';
 
@@ -27,10 +28,13 @@ import {
   Spinner,
 } from "mint-ui";
 
-import Vconsole from 'vconsole'
-new Vconsole();
+window.Toast= Toast;
+window.MessageBox= MessageBox;
+window.Indicator= Indicator;
 
 Vue.prototype.Toast = Toast;
+
+
 Vue.prototype.MessageBox = MessageBox;
 Vue.prototype.Indicator = Indicator;
 
