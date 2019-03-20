@@ -111,6 +111,13 @@ export default
             });
 
         },
+        beforeRouteLeave(to, from, next) {
+          if (to.path === '/goodsList') {
+            to.meta.keepAlive = false
+          }
+          console.log(this.$route)
+          next()
+        },
         methods: {
             seachClick() {
                 this.$router.push({ path: '/goodsList', query: { keyWord: this.searchWord } })
@@ -318,7 +325,7 @@ export default
             line-height: 0.7rem;
             position: relative;
             font-size: 0.24rem;
-           
+
             .activeGre {
                 width: 0.06rem;
                 height: 100%;

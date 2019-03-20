@@ -32,8 +32,8 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
                                         <div class="order-goodsList">
-                                            <img :src="itemGoods.picUrl" alt="" />
-                                        </div>
+                                           
+                                            <img :src="itemGoods.picUrl" alt="" />                                        </div>
                                     </div>
 
                                 </div>
@@ -70,6 +70,7 @@
                     </div>
                     <div class="oMGoodsCon one-bottom-px">
                         <div class="oMGoodsConImg">
+                     
                             <img :src="item.goodsList[0].picUrl" alt="" />
                         </div>
                         <div class="oMGoodsConInfo">
@@ -117,6 +118,7 @@ export default {
 
     },
     mounted() {
+       
         var token = localStorage.getItem("yeyun_token");
         this.pathStatus = this.$route.query.status;
         switch (this.pathStatus) {
@@ -145,6 +147,7 @@ export default {
     },
     methods: {
         headIndexCli(index) {
+           
             var token = localStorage.getItem("yeyun_token");
             this.headIndex = index;
             this.selectOrders(token, index);
@@ -236,10 +239,24 @@ export default {
         .oMGoodsConImg {
             width: 1.6rem;
             height: 1.6rem;
-            background: red;
             margin-right: 0.3rem;
             img {
                 width: 100%;
+                height: 100%;
+                position: relative;
+            }
+            img::after{
+              content: '';
+              display: block;
+              position: absolute;
+              background-image: url(http://img13.360buyimg.com/n1/jfs/t3082/361/4101110131/88917/3777047a/58006c0bNdeadd9a4.jpg);
+              background-size: cover;
+              background-repeat: no-repeat;
+              width: 100%;
+              height: 100%;
+              z-index: 2;
+              top: 0;
+              left: 0;
             }
         }
         .oMGoodsConInfo {

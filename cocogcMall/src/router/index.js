@@ -95,7 +95,7 @@ const router = new Router({
       path: '/goodsList',
       name: 'goodsList',
       component: goodsList,
-      meta: { title: '商品列表' },
+      meta: { title: '商品列表', keepAlive: true },
     },
     {
       path: '/addressMag',

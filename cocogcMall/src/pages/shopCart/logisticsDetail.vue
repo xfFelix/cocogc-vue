@@ -199,7 +199,7 @@ export default {
                     })
                 })
                 .catch((err) => {
-                    _this.Toast(err.message)
+                    _this.Toast(err.message);
                 })
         },
         queryOrderTrack: function() {
