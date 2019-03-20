@@ -21,7 +21,7 @@
 
         <div class="home-interWrap">
             <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index" @click="goDetail(item)">
-                <div class="home-iGoods">
+                <div class="home-iGoods one-bottom-px">
                     <img :src="item.image" alt="" />
                 </div>
                 <p class="home-iNmame">
@@ -208,7 +208,7 @@ export default {
             }
         }
         .iSelectNo {
-            border: 1px solid #ccc;
+            border: 1px solid rgba(0,0,0,0.06);
             color: #333333;
         }
         .iSelectCla {
@@ -231,7 +231,7 @@ export default {
         .home-iGoods {
             width: 100%;
             text-align: center;
-            border-bottom: 1px solid #e6e6e6; // height: 3.16rem;
+            // border-bottom: 1px solid #e6e6e6; // height: 3.16rem;
             position: relative;
             img {
                 width: 100%; // margin-top: 0.5rem;

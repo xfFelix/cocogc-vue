@@ -39,7 +39,7 @@
         <div class="view select-goodsW">
             <div class="aside select-brandW">
                 <ul class="select-brand">
-                    <li v-for="(item,index) in cateList" :key="index" class="select-brandLi" @click="activeIndexC(index,item.id)">
+                    <li v-for="(item,index) in cateList" :key="index" class="select-brandLi" @click="activeIndexC(index,item.id)"  :style="(activeIndex==index ?' background: #fff':'background: #f3f4f6')">
                         <span class="activeGre" v-if="activeIndex==index"></span>
                       
                         <span :style="(activeIndex==index ?'color: #30ce84':'color: #333')">{{item.name}}</span>
@@ -139,9 +139,7 @@ export default
 </script>
 
 <style lang="less">
-.title {
-  padding: 10px 0;
-}
+
 .product-name{
   font-size: 12px;
   display: block;
@@ -154,11 +152,11 @@ export default
 }
 .select-head {
     width: 100%;
-
-    height: 1.3rem;
+        border-bottom: 10px solid #f3f4f6;
+    height: 1rem;
     background: #fff;
     padding: 0.42rem 0 0.24rem 0;
-    box-shadow: 0.05rem 0.09rem 0.1rem 0px rgba(225, 235, 255, 0.3);
+    // box-shadow: 0.05rem 0.09rem 0.1rem 0px rgba(225, 235, 255, 0.3);
     .home-smWrap {
         display: flex;
         justify-content: space-between;
@@ -170,7 +168,7 @@ export default
             display: flex;
             align-items: center;
             margin-top: 0.09rem;
-            border: 1px solid #dfdfdf;
+            border: 1px solid rgba(0, 0, 0, 0.06);;
             .home-logo {
                 height: 0.38rem;
                 width: 0.42rem;
@@ -296,7 +294,7 @@ export default
 }
 
 .select-goodsW {
-    margin-bottom: 49px;
+    // margin-bottom: 49px;
     display: flex;
     position: relative;
     height: 100%;
@@ -313,7 +311,7 @@ export default
             line-height: 0.7rem;
             position: relative;
             font-size: 0.24rem;
-            background: #f3f4f6;
+           
             .activeGre {
                 width: 0.06rem;
                 height: 100%;

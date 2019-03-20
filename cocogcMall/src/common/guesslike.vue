@@ -5,95 +5,60 @@
                 <h3>猜你喜欢</h3>
             </div>
             <div class="home-interWrap">
-                <div class="home-iGoodsW">
-                    <div class="home-iGoods">
-                        <img src="static/images/goos_01.png" alt="" />
-                        <span class="home-iTags">
-                            <span class="iGoods"></span>
-                            <span class="iDrop">直降</span>
-                            <span class="iSelf">自营</span>
-                        </span>
-                    </div>
-                    <p class="home-iNmame">
-                        联想ThinkPad 14英寸轻 薄窄边框笔记本电脑新...
-                    </p>
-                    <div class="home-iMoneyW">
-                        <span class="home-iMoneyL"></span>
-                        <span class="home-iMoney">6848.00</span>
-                    </div>
+                <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
+                    <router-link :to="{path:'/goodsDetail/'+item.id}">
+                        <div class="home-iGoods" >
+                            <img :src="item.image" alt="" />
+                            <!-- <span class="home-iTags">
+                                <span class="iGoods"></span>    
+                                <span class="iDrop">直降</span>
+                                <span class="iSelf">自营</span>
+                            </span> -->
+                        </div>
+                        <p class="home-iNmame">
+                            {{item.name|wordSize(item.name)}}
+                        </p>
+                        <div class="home-iMoneyW">
+                            <span class="home-iMoneyL"></span>
+                            <span class="home-iMoney">  {{item.currentPrice}}</span>
+                        </div>
+                    </router-link>
                 </div>
 
-                <div class="home-iGoodsW">
-                    <div class="home-iGoods">
-                        <img src="static/images/goos_01.png" alt="" />
-                        <span class="home-iTags"></span>
-                    </div>
-                    <p class="home-iNmame">
-                        联想ThinkPad 14英寸轻 薄窄边框笔记本电脑新...
-                    </p>
-                    <div class="home-iMoneyW">
-                        <span class="home-iMoneyL"></span>
-                        <span class="home-iMoney">6848.00</span>
-                    </div>
-                </div>
-
-                <div class="home-iGoodsW">
-                    <div class="home-iGoods">
-                        <img src="static/images/goos_01.png" alt="" />
-                        <span class="home-iTags"></span>
-                    </div>
-                    <p class="home-iNmame">
-                        联想ThinkPad 14英寸轻 薄窄边框笔记本电脑新...
-                    </p>
-                    <div class="home-iMoneyW">
-                        <span class="home-iMoneyL"></span>
-                        <span class="home-iMoney">6848.00</span>
-                    </div>
-                </div>
-
-                <div class="home-iGoodsW">
-                    <div class="home-iGoods">
-                        <img src="static/images/goos_01.png" alt="" />
-                        <span class="home-iTags"></span>
-                    </div>
-                    <p class="home-iNmame">
-                        联想ThinkPad 14英寸轻 薄窄边框笔记本电脑新...
-                    </p>
-                    <div class="home-iMoneyW">
-                        <span class="home-iMoneyL"></span>
-                        <span class="home-iMoney">6848.00</span>
-                    </div>
-                </div>
-
-                <div class="home-iGoodsW">
-                    <div class="home-iGoods">
-                        <img src="static/images/goos_01.png" alt="" />
-                        <span class="home-iTags"></span>
-                    </div>
-                    <p class="home-iNmame">
-                        联想ThinkPad 14英寸轻 薄窄边框笔记本电脑新...
-                    </p>
-                    <div class="home-iMoneyW">
-                        <span class="home-iMoneyL"></span>
-                        <span class="home-iMoney">6848.00</span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+import api from "@/service/api";
 export default {
     data() {
         return {
-            
+            goodsList:[]
         }
     },
     methods: {
+        guessLike: function() {
+            let _this = this;
+            let name = ['龟牌', '清洁剂'];
+            this.axios(jdTestUrl + api.guessLike, {
+                "name": name
+            }, 'post')
+                .then((data) => {
+                    if (data.code == 0) {
+                        _this.goodsList = data.list;
 
+                    } else {
+                        _this.Toast(data.message);
+                    }
+                })
+                .catch((err) => {
+                    _this.Toast(data.message);
+                })
+        },
     },
     mounted() {
-
+        this.guessLike()
     }
 }
 </script>
@@ -110,18 +75,18 @@ export default {
             h3 {
                 font-size: 0.3rem;
                 font-weight: 100;
-                margin: 0.43rem 0 0.05rem 0.32rem;
+                margin: 0.43rem 0 0.43rem 0.32rem;
             }
         }
         .home-interWrap {
             width: 100%;
             overflow: auto;
-            padding-bottom: 80px;
+            padding-bottom: 0.4rem;
         }
         .home-iGoodsW {
             float: left;
             width: 50%;
-            padding: 0 0.32rem;
+            padding: 0.32rem;
             box-sizing: border-box;
             .home-iGoods {
                 width: 100%;

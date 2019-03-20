@@ -1,5 +1,5 @@
 <template>
-    <div class="addressEdit">
+    <div id="addressEdit">
         <header-top></header-top>
 
         <div class="addEdit-contentWrap">
@@ -28,7 +28,7 @@
                     <p>
                         <span>所在地区</span>
                         <span>
-                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @click="fixedShowC()">
+                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @click="fixedShowC()" readonly="">
                         </span>
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeAddressC">

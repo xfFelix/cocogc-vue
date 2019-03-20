@@ -7,7 +7,6 @@
                     <span></span>
                     <span></span>
                 </div>
-                <!-- <div></div> -->
                 <router-link class="register" to="/register">
                     注册
                 </router-link>
@@ -87,13 +86,13 @@ export default {
         // 登录
         login: function() {
             let _this = this;
-            this.axios(api.login, {
+            this.axios(infoURl+api.login, {
                 mobile: _this.loginForm.userName,
                 passwd: _this.loginForm.passWord,
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                        this.$router.push('/index');
+                        this.$router.push('/layout/home');
                         let token = data.data.token;
                         localStorage.setItem("yeyun_token", token);
                         this.$cookies.set("yeyun_token", token, 30)
@@ -130,13 +129,13 @@ export default {
 
 
         //登录按钮
-       loginBnt: function() {
+        loginBnt: function() {
             if (IsEmpty(this.loginForm.userName) || !IsMobile(this.loginForm.userName)) {
                 this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
                 return false;
             }
             if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
-                 this.MessageBox("密码错误", "请输入正确的密码。")
+                this.MessageBox("密码错误", "请输入正确的密码。")
                 return false;
             }
             this.login()
@@ -289,7 +288,7 @@ export default {
         }
     }
     li:nth-of-type(1) .loginLileft span {
-        background-position: -78px -3px;
+        background-position: -80px -3px;
     }
     li:nth-of-type(2) .loginLileft span {
         background-position: -52px -3px;
@@ -336,10 +335,7 @@ export default {
     text-align: center;
     font-size: 15px;
     color: #999999;
-    position: fixed;
-    bottom: 0.4rem;
-    left: 0;
-    right: 0;
+    margin: 0.5rem 0;
 }
 
 

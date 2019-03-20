@@ -27,14 +27,10 @@ import {
   Spinner,
 } from "mint-ui";
 
-// window.Toast= Toast;
-// window.MessageBox= MessageBox;
-// window.Indicator= Indicator;
-
+import Vconsole from 'vconsole'
+new Vconsole();
 
 Vue.prototype.Toast = Toast;
-
-
 Vue.prototype.MessageBox = MessageBox;
 Vue.prototype.Indicator = Indicator;
 

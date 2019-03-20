@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="index" id="index">
     <!-- 头部 -->
     <div class="index-head">
       <a href="https://mp.weixin.qq.com/s?__biz=MzU0NDkzNTM3NQ==&mid=100000020&idx=1&sn=127b63d967b7f6a7ca3a5c279143b1ea&chksm=7b75ddb44c0254a2df472ccc626784b2fe09f2b9cf77c1b910b91b8e83a12dae6b801a76e247&xtrack=1&scene=0&subscene=93&clicktime=1552877700&ascene=7&devicetype=android-26&version=2700033b&nettype=WIFI&abtest_cookie=BQABAAgACgALABIAEwAGAJ2GHgAjlx4AVpkeAMOZHgDZmR4A3JkeAAAA&lang=zh_CN&pass_ticket=oDj080h7pGe7HlMtp4xb3XrV7xaXUp9jeLO2aUdHmznoVOKjpo0L6C5vME3ddskV&wx_header=1">
@@ -13,10 +13,15 @@
       </a>
 
       <div class="ih-balanceW">
-        <div class="ih-balance">
-          <p class="ih-money">19.01</p>
+        <div class="ih-balance" v-if="loScore=='undefined' || loScore == 'null' || loScore==''">
+          <router-link :to="{path:'/login'}" class="ih-nologin">未登录</router-link>
+        </div>
+
+        <div class="ih-balance" v-else>
+          <p class="ih-money">{{loScore}}</p>
           <p class="ih-moneya">椰子分余额</p>
         </div>
+
         <a href="https://api.cocogc.cn/#!/charge">
           <div class="ih-recharge">
             去充值
@@ -64,15 +69,17 @@
         <p>查看更多</p>
       </div>
       <div class="ihot-goodsW">
-        <div class="ihot-goods" v-for="(item,index) in goodList" :key="index">
+        <div class="ihot-goods" v-for="(item,index) in goodsList" :key="index">
+          <router-link :to="{path:'/goodsDetail/'+item.id}">
           <div class="ihot-goodsImg">
-            <img :src="item.goodImg" alt="" />
+            <img :src="item.picUrl" alt="" />
           </div>
-          <p class="ihot-name">{{item.name}}</p>
+          <p class="ihot-name">{{item.name|wordSize(item.name)}}</p>
           <p class="ihot-moneyW">
             <span class="ihot-logo accountImg"></span>
-            <span class="ihot-money">{{item.money}}</span>
+            <span class="ihot-money">{{item.currentPrice}}</span>
           </p>
+          </router-link>
         </div>
       </div>
 
@@ -83,6 +90,8 @@
 <script>
 
 import Swiper from 'swiper';
+import api from '../../service/api';
+
 export default {
   name: 'index',
   data() {
@@ -101,14 +110,11 @@ export default {
         { id: 1, name: "每日优鲜", imgBg: 'ifa-imgBg11', path: '/huangjin' },
         { id: 1, name: "更多", imgBg: 'ifa-imgBg12', path: '/huangjin' },
       ],
-      goodList: [
-        { id: 1, goodImg: 'static/images/goods_03.jpg', name: "联想", money: '2222.00' },
-        { id: 1, goodImg: 'static/images/goods_03.jpg', name: "联想", money: '2222.00' },
-        { id: 1, goodImg: 'static/images/goods_03.jpg', name: "联想", money: '2222.00' },
-        { id: 1, goodImg: 'static/images/goods_03.jpg', name: "联想", money: '2222.00' },
-        { id: 1, goodImg: 'static/images/goods_03.jpg', name: "联想", money: '2222.00' },
-        { id: 1, goodImg: 'static/images/goods_03.jpg', name: "联想", money: '2222.00' }
-      ]
+      goodsList: [],
+      loginFlag: false,
+      loScore: ''
+
+
     }
   },
   created() {
@@ -125,12 +131,36 @@ export default {
         el: '.swiper-pagination',
       },
     })
+    this.rank();
+
+    this.loScore = localStorage.getItem('score');
+    // if(loScore){
+    //   this.loginFlag = true;
+    // }else{
+    //   this.loginFlag = false;
+    // }
   },
   components: {
     // LinkTab
   },
   methods: {
+    rank: function() {
+      let _this = this;
+      this.axios(testUrl + api.goodsGroups, {
+        "id": "e2a913cee8b84c97a9a9801375a6a1f7"
+      }, 'post')
+        .then((data) => {
+          if (data.error_code == 0) {
+            _this.goodsList = data.data.goodsList;
 
+          } else {
+            _this.Toast(data.message);
+          }
+        })
+        .catch((err) => {
+          _this.Toast(data.message);
+        })
+    },
   }
 }
 </script>
@@ -195,6 +225,12 @@ export default {
         color: #fff;
 
         text-align: center;
+      }
+      .ih-nologin {
+        margin: 0.1rem;
+        color: #fff;
+        display: block;
+        letter-spacing: 1px;
       }
     }
     .ih-recharge {
@@ -305,8 +341,9 @@ export default {
   .ihot-goodsW {
     height: 6.9rem;
     .ihot-goods {
-      width: 33.33%;
-      float: left;
+      width: 24%;
+      margin: 0 4.66%;
+      display: inline-block;
       text-align: center;
       margin-top: 0.11rem;
       .ihot-goodsImg {

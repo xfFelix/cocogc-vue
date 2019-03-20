@@ -68,8 +68,6 @@ export default {
 
     },
     methods: {
-
-
         rank: function() {
             let _this = this;
             this.axios(testUrl + api.goodsGroups, {
@@ -93,14 +91,12 @@ export default {
                                 freeMode: true,
                             });
                         })
-
                     } else {
-                        Toast(data.message)
+                        this.Toast(data.message);
                     }
                 })
                 .catch((err) => {
-
-
+                    this.Toast(data.message);
                 })
         },
 
