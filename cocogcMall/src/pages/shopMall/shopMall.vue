@@ -153,12 +153,16 @@ export default {
       } else {
         this.homeSmWrap = true;
       }
-    },
-
-
+    }
   },
   updated() {
- 
+
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.path === '/goodsList') {
+      to.meta.keepAlive = false
+    }
+    next()
   },
   components: {
     "v-shortcut": Shortcut,

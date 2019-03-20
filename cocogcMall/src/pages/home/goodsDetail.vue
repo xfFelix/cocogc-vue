@@ -176,6 +176,13 @@ export default {
         that.getCarInfo(function(data) {
             that.carTotal = data;
         });
+        window.scrollTo(0,0);
+    },
+    beforeRouteLeave (to, from, next) {
+      if (to.path === '/goodsList') {
+        to.meta.keepAlive = true
+      }
+      next()
     },
     methods: {
         fixedClose(e) {

@@ -68,9 +68,9 @@ new Vue({
   template: '<App/>'
 });
 
-router.afterEach((to,from,next) => {
-    window.scrollTo(0,0);
-});
+// router.afterEach((to,from,next) => {
+//     window.scrollTo(0,0);
+// });
 
 // router.beforeEach((to, from, next) => {
 //     // while (Vue.Cancel.length > 0) {
