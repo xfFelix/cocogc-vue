@@ -145,10 +145,12 @@ export default {
                 "isDefault": addressDef
             }, 'post')
                 .then((data) => {
-                    if (data.error_code == 1) {
-                        _this.addressList = data.data;
+                    if (data.error_code == 0) {
+                      _this.addressList = data.data;
+                      this.$router.push('/addressMag')
+                      localStorage.setItem('addressEdit', '');
                     } else {
-
+                      return this.Toast(data.message)
                     }
                 })
                 .catch((err) => {
@@ -183,8 +185,7 @@ export default {
                 } else {
                     this.updateAddress(0)
                 }
-                this.$router.push('/addressMag')
-                localStorage.setItem('addressEdit', '');
+
             }
         }
     },
