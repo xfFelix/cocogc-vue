@@ -5,7 +5,7 @@
             <p class="goodsD-hBack" @click="$router.go(-1)">
                 <span></span>
             </p>
-            <p class="circle">
+            <p class="circle" @click="">
                 <span></span>
                 <span></span>
                 <span></span>
