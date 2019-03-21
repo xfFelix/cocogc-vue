@@ -290,7 +290,7 @@ export default {
         }
     }
     .home-integralM {
-        padding: 0.33rem 0 1.3rem 0;
+        padding: 0.33rem 0;
         text-align: center;
         font-size: 0.3rem; // margin-bottom: 49px;
     }

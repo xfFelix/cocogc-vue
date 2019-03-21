@@ -129,7 +129,7 @@ export default {
         };
     },
     mounted() {
-
+        this.findOrder()
     },
     methods: {
 

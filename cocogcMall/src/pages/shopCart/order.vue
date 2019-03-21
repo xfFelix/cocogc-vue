@@ -101,14 +101,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <p class="order-freight">
-                                                                                <span>运费</span>
-                                                                                <span>0.00</span>
-                                                                            </p>
-                                                                            <p class="order-priceAll">
-                                                                                <span>小计</span>
-                                                                                <span>2054.00</span>
-                                                                            </p> -->
                 </div>
 
                 <!-- 费用 -->

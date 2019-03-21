@@ -132,10 +132,10 @@ export default {
         },
         //地址更新
         updateAddress: function(addressDef) {
-            var token = localStorage.getItem("token");
+           
             let _this = this;
             this.axios(testUrl + api.updateAddress, {
-                "token": token,
+                "token": _this.$cookies.get("yeyun_token"),
                 "name": _this.takeName,
                 "tel": _this.takeTel,
                 "code": _this.areaCode,

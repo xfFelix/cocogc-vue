@@ -5,6 +5,11 @@
             <p class="goodsD-hBack" @click="$router.go(-1)">
                 <span></span>
             </p>
+            <p class="circle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </p>
         </div>
 
         <div class="goodsD-headW">
@@ -18,15 +23,15 @@
                 </div>
 
             </div>
-            <div class="goodsD-hBM">
-                <p class="goodsD-hBack" @click="$router.go(-1)">
-                    <span></span>
-                </p>
-                <div class="home-message">
-                    <span class="home-msg"></span>
-                    <span class="home-msgNum">11</span>
-                </div>
-            </div>
+            <!-- <div class="goodsD-hBM">
+                    <p class="goodsD-hBack" @click="$router.go(-1)">
+                        <span></span>
+                    </p>
+                    <div class="home-message">
+                        <span class="home-msg"></span>
+                        <span class="home-msgNum">11</span>
+                    </div>
+                </div> -->
         </div>
 
         <div class="goodsD-priceAddress">
@@ -176,13 +181,13 @@ export default {
         that.getCarInfo(function(data) {
             that.carTotal = data;
         });
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     },
-    beforeRouteLeave (to, from, next) {
-      if (to.path === '/goodsList') {
-        to.meta.keepAlive = true
-      }
-      next()
+    beforeRouteLeave(to, from, next) {
+        if (to.path === '/goodsList') {
+            to.meta.keepAlive = true
+        }
+        next()
     },
     methods: {
         fixedClose(e) {
@@ -207,12 +212,12 @@ export default {
                 })
         },
         selectCart() {
-          this.fixedCloseFlag=true
-          this.isGo = 'cart'
+            this.fixedCloseFlag = true
+            this.isGo = 'cart'
         },
         selectOrder() {
-          this.fixedCloseFlag=true
-          this.isGo = 'order'
+            this.fixedCloseFlag = true
+            this.isGo = 'order'
         },
         getGoodsInfo(goodId, callback) {
             this.axios(testUrl + api.goodsDetailInfo,
@@ -325,10 +330,10 @@ export default {
                 })
         },
         async goPreview() {
-          let buys = []
-          buys.push({goodsId: this.goodsId, nums: this.buyNum})
-          sessionStorage.setItem('buys', JSON.stringify(buys))
-          this.$router.push('/order');
+            let buys = []
+            buys.push({ goodsId: this.goodsId, nums: this.buyNum })
+            sessionStorage.setItem('buys', JSON.stringify(buys))
+            this.$router.push('/order');
         }
     },
     components: {
@@ -344,10 +349,26 @@ export default {
     position: fixed;
     width: 100%;
     z-index: 12;
+    display: flex;
+    justify-content: space-between;
     .goodsD-headList {
         display: flex;
         justify-content: space-around;
     }
+    .circle {
+        display: flex;
+        align-items: center;
+        margin-right: 0.1rem;
+        span {
+            width: 4px;
+            height: 4px;
+            display: inline-block;
+            background: #666;
+            border-radius: 50%;
+            margin: 0 2px;
+        }
+    }
+
 
 
     .goodsD-hBack {
@@ -621,6 +642,13 @@ export default {
 .goodsD-imgW {
     background: #fff;
     .detailImg {
+        div {
+            width: 100%!important;
+            height: 100%!important;
+            position: relative!important;
+            line-height: auto!important;
+            background-size: 100% !important;
+        }
         font-size: 0px;
         img {
             width: 100%;

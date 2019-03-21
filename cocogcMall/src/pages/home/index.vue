@@ -321,13 +321,12 @@ export default {
       font-size: 0.3rem;
       font-weight: bold;
     }
-    p {
+    a {
       font-size: 0.24rem;
       color: #333333;
     }
   }
   .ihot-goodsW {
-    height: 6.9rem;
     .ihot-goods {
       width: 24%;
       margin: 0 4.66%;

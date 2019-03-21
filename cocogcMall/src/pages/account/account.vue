@@ -368,7 +368,7 @@ export default {
 
 .account-swipeW {
     height: 1.8rem;
-    margin: 0.5rem 0.53rem 1.8rem 0.53rem;
+    margin: 0.5rem 0.53rem 0.5rem 0.53rem;
     .account-swipe {
         height: 100%;
         .swiper-container-horizontal>.swiper-pagination-bullets {
