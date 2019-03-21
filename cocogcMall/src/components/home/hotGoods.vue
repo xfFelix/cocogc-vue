@@ -14,7 +14,7 @@
                                 <div class="home-hGoods">
                                      <img :src="item.picUrl" alt="" />
                                       <!-- <img :src="item.picUrl" alt="" /> -->
-                                    <span class="home-hSTags"></span>
+                                    <!-- <span class="home-hSTags"></span> -->
                                 </div>
                                 <p class="home-boder"></p>
                                 <p class="home-hSNmame">
@@ -141,9 +141,13 @@ export default {
             font-weight: bold;
             font-size: 0.22rem;
             margin: 0.25rem 0 0.17rem;
-            word-break: keep-all;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
             overflow: hidden;
             text-overflow: ellipsis;
+            word-wrap: break-word;
+            word-break: break-all;
         }
     }
     .home-hSmoneyW {

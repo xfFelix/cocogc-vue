@@ -42,9 +42,10 @@
                     </li>
                     <li class="addList" v-for="(v,k,i) in showDistrictList" @click="getDistrictId(v, k, i)" v-show="showDistrict" :key="k">
 
-                        <span v-if="levelShow==false" :class="v[0] == District ? 'active' : ''">{{v[0]}}</span>
-                        <span v-if="levelShow" :class="v == District ? 'active' : ''">{{v}}</span>
-
+                        <!-- <span v-if="levelShow==false" :class="v[0] == District ? 'active' : ''">{{v[0]}}</span>
+                        <span v-if="levelShow" :class="v == District ? 'active' : ''">{{v}}</span> -->
+                        <span v-if="typeof (v)=='object'">{{v[0]}}</span>
+                        <span v-else>{{v}}</span>
                     </li>
 
                     <li class="addList" v-for="(v,k) in showTownList" @click="getTownId(v,k)" v-show="showTown" :class="v == Town ? 'active' : ''" :key="k">
@@ -149,12 +150,12 @@ export default {
                         var citiecList = []
                         citiecList = data.data.cities;
                         _this.showCityList = citiecList;
-
+                    }else{
+                        _this.Toast(data.message)
                     }
                 })
                 .catch((err) => {
-
-                    console.log('2222222222222222222')
+                    _this.Toast(err.message)
                 })
         },
 
@@ -189,13 +190,15 @@ export default {
 
             var disValue = {};
             disValue = value[1];
+
+           
             for (const key in disValue) {
-                let DisType = typeof (disValue[key])
+                
+                let DisType = typeof (disValue[key]);
                 if (DisType == 'object') {
                     this.levelShow = false;
                 } else {
                     this.levelShow = true;
-
                 }
                 this.showDistrictList = disValue
                 return
@@ -210,7 +213,6 @@ export default {
             this.district = key;
             if (typeof (value) == 'object') {
                 this.District = value[0];
-
             } else {
                 this.District = value;
                 // this.District = false;
@@ -222,8 +224,6 @@ export default {
 
                 this.areaAddressId = this.province + ',' + this.city + ',' + this.district  + ',0';
                 this.$emit('childAddressId', this.areaAddressId);
-
-
                 return
             }
 
