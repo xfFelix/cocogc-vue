@@ -24,9 +24,9 @@
                        {{dataList.userAddress}}
                     </p>
                 </div>
-                <div>
+                <!-- <div>
                     <span class="goTo"></span>
-                </div>
+                </div> -->
             </div>
 
             <div class="order-bottom"></div>
@@ -50,7 +50,7 @@
 
         <div v-for="(item,index) in dataList.goodsList" :key="index">
             <div class="order-goodSW">
-              <router-link :to="{path: '/goodsDetail/'+ item.id}">
+              <router-link :to="{path: '/goodsDetail/'+ item.goodsId}">
                 <div class="order-goodSInfo">
                     <div class="order-goodSIImg">
                       <img :src="item.picUrl" alt="">

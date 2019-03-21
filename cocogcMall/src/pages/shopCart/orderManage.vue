@@ -51,7 +51,7 @@
                         <p>共
                             <span>2</span>件商品</p>
                         <p>合计：
-                            <span>{{item.sellMoney}}</span>
+                            <span>{{item.totalMoney}}</span>
                         </p>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                         <p>共
                             <span>{{item.goodsList[0].buyNum}}</span>件商品</p>
                         <p>合计：
-                            <span>{{item.sellMoney}}</span>
+                            <span>{{item.totalMoney}}</span>
                         </p>
                     </div>
                 </div>
