@@ -1,5 +1,5 @@
 <template>
-    <div class="select page">
+    <div class="select page" style="padding-bottom:0px">
         <div class="select-head">
             <div class="home-smWrap">
                 <div class="home-search">

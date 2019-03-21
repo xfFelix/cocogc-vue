@@ -1,5 +1,5 @@
 <template>
-    <div class="logisticsDetail">
+    <div id="logisticsDetail">
         <header-top></header-top>
 
         <div>
@@ -29,8 +29,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="swipe-bntWrap">
-                        <div class="swiper-button-next swiper-button-black"></div>
+                    <div class="swipe-bntWrap j1Png" @click="showDetail()">
+
                     </div>
                 </div>
 
@@ -46,7 +46,6 @@
 
             <!-- 单种商品 -->
             <div class="order-goodSW" v-else-if="orderList.length == 1">
-
                 <div class="od-numberWrap">
                     <p class="od-number">
                         <span>订单编号：</span>
@@ -85,11 +84,17 @@
         <div class="ld-contentWrap">
             <ul class="ld-content">
                 <li class="ld-contenLi" v-for="(item,index) in logisticList" :key="index">
-                    <div class="ld-contenLeft">
-                        <p class="ld-contenOrder">签</p>
-                        <p class="ld-contentLine"></p>
+                    <div class="ld-contenLeft" v-if="index==0">
+                        <p class="ld-contenOrder"></p>
+                        <p class="ld-contentLine" v-if="index != logisticList.length-1"></p>
                     </div>
-                    <div class="ld-contenRight">
+
+                    <div class="ld-contenLeft" v-else>
+                        <p class="ld-contenOrderGray"></p>
+                        <p class="ld-contentLineGray" v-if="index != logisticList.length-1"></p>
+                    </div>
+
+                    <div class="ld-contenRight" :style="(index==0?'color:#30ce84':'color:#000')">
                         <p class="ld-contenAddress">
                             {{item.content}}
                         </p>
@@ -101,50 +106,50 @@
             </ul>
         </div>
 
-        <div class="ld-logisFixed" v-show="logisClose">
-            <div class="ld-logisWrap">
-                <div class="ld-logis">
-                    <div class="ld-logisTitleW one-bottom-px">
-                        <div class="ld-logisTitle ">
-                            <p>商品清单</p>
-                            <p>共(
-                                <span>{{goodsTotal}}</span>)件</p>
-                        </div>
-                        <p class="j1Png ld-logisClose" v-show="logisClose=false"></p>
+        <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
 
+            <div class="ld-logis" v-if="showSendCode">
+                <div class="ld-logisTitleW one-bottom-px">
+                    <div class="ld-logisTitle ">
+                        <p>商品清单</p>
+                        <p>共(
+                            <span>{{goodsTotal}}</span>)件</p>
                     </div>
-
-                    <div class="order-goodSW">
-                        <div>
-                            <div class="order-goodSInfo" v-for="(itemGoods,indexGoods) in list.goodsList" :key="indexGoods">
-                                <div class="order-goodSIImg">
-                                    <img :src="itemGoods.picUrl" alt="" />
-                                </div>
-                                <div class="order-goodsDetail">
-                                    <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
-                                    <!-- <p class="order-goodsDType">黑色</p> -->
-                                    <div class="order-goodsDPriceW">
-                                        <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
-                                        <p class="order-goodsDNumW">
-                                            <span class="order-goodsDNumI"></span>
-                                            <span class="order-goodsDNum">{{itemGoods.buyNum}}</span>
-                                        </p>
-                                    </div>
+                    <p class="j1Png ld-logisClose" @click="showSendCode = false"></p>
+                </div>
+                <div class="order-goodSW">
+                    <div>
+                        <div class="order-goodSInfo" v-for="(itemGoods,indexGoods) in list.goodsList" :key="indexGoods">
+                            <div class="order-goodSIImg">
+                                <img :src="itemGoods.picUrl" alt="" />
+                            </div>
+                            <div class="order-goodsDetail">
+                                <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
+                                <div class="order-goodsDPriceW">
+                                    <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
+                                    <p class="order-goodsDNumW">
+                                        <span class="order-goodsDNumI"></span>
+                                        <span class="order-goodsDNum">{{itemGoods.buyNum}}</span>
+                                    </p>
                                 </div>
                             </div>
-                            <p class="order-freight">
-                                <span>运费</span>
-                                <span>{{list.shippingFee|toDecimal2(list.shippingFee)}}</span>
-                            </p>
-                            <p class="order-priceAll">
-                                <span>小计</span>
-                                <span>{{list.totalMoney|toDecimal2(list.totalMoney)}}</span>
-                            </p>
                         </div>
+                        <p class="order-freight">
+                            <span>运费</span>
+                            <span>{{list.shippingFee|toDecimal2(list.shippingFee)}}</span>
+                        </p>
+                        <p class="order-priceAll">
+                            <span>小计</span>
+                            <span>{{list.totalMoney|toDecimal2(list.totalMoney)}}</span>
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
+        </transition>
+
+        <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <bg-mask v-model="showSendCode"></bg-mask>
+        </transition>
 
     </div>
 </template>
@@ -153,7 +158,8 @@
 import headerTop from "../../common/header.vue";
 import Swiper from 'swiper';
 import api from '../../service/api';
-import clip from '@/util/clipboard'
+import clip from '@/util/clipboard';
+import BgMask from "@/common/BgMask"
 export default {
     data() {
         return {
@@ -161,13 +167,13 @@ export default {
             orderList: [],
             goodsTotal: 0,
             logisClose: false,
-            logisticList: []
+            logisticList: [],
+            showSendCode: false
         };
     },
     mounted() {
         this.findOrder()
         this.queryOrderTrack()
-
     },
     methods: {
         findOrder: function() {
@@ -193,9 +199,6 @@ export default {
                             slidesPerView: 4,
                             slidesPerGroup: 1,
                             spaceBetween: 10,
-                            navigation: {
-                                nextEl: '.swiper-button-prev',
-                            },
                         })
                     })
                 })
@@ -213,7 +216,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         if (data.data != null) {
-                            _this.logisticList = data.data;
+                            _this.logisticList = data.data.reverse();
                         } else {
                             _this.logisticList = data.message;
                         }
@@ -228,10 +231,14 @@ export default {
         },
         handleCopy(text, event) {
             clip(text, event)
-        }
+        },
+        showDetail() {
+            this.showSendCode = true;
+        },
     },
     components: {
-        "header-top": headerTop
+        "header-top": headerTop,
+        BgMask
     }
 };
 </script>
@@ -256,6 +263,11 @@ export default {
         .order-swipe {
             width: 93%;
         }
+        .swipe-bntWrap {
+            width: 0.22rem;
+            height: 0.38rem;
+            background-position: -0.2rem -0.74rem;
+        }
     }
     .swiper-button-next.swiper-button-black,
     .swiper-container-rtl .swiper-button-prev.swiper-button-black {
@@ -267,59 +279,63 @@ export default {
     }
 }
 
-.order-goodSW {
-    background: #fff;
-    margin-top: 0.2rem;
-    padding: 0 0.37rem 0 0.32rem;
-    overflow: auto; // height: 8rem;
-    .order-goodSInfo {
-        display: flex;
-        align-items: end; // padding: 0 0.39rem 0 0.32rem;
-        // border-bottom: 1px solid #dfdfdf;
-        padding-bottom: 0.28rem;
-        margin-bottom: 0.11rem;
-        .order-goodSIImg {
-            width: 2.11rem;
-            height: 2.11rem;
-            margin-right: 0.76rem;
-            img {
-                width: 100%;
+#logisticsDetail {
+    .order-goodSW {
+        background: #fff;
+        margin-top: 0.2rem;
+        padding: 0 0.37rem 0 0.32rem;
+        overflow: auto;
+        height: 8rem;
+        .order-goodSInfo {
+            display: flex;
+            align-items: end; // padding: 0 0.39rem 0 0.32rem;
+            // border-bottom: 1px solid #dfdfdf;
+            padding-bottom: 0.28rem;
+            margin-bottom: 0.11rem;
+            .order-goodSIImg {
+                width: 2.11rem;
+                height: 2.11rem;
+                margin-right: 0.76rem;
+                img {
+                    width: 100%;
+                }
             }
-        }
-        .order-goodsDetail {
-            width: 4.2rem;
-            .order-goodsDName {
-                line-height: 0.4rem;
-                color: #333;
-                font-size: 0.3rem;
-                margin-bottom: 0.06rem;
-            }
-            .order-goodsDType {
-                color: #999999;
-                font-size: 0.3rem;
-            }
-            .order-goodsDPriceW {
-                display: flex;
-                justify-content: space-between;
-                font-size: 0.3rem;
-                margin-top: 0.48rem;
-                .order-goodsDPrice {}
-                .order-goodsDNumW {
-                    .order-goodsDNumI {
-                        width: 0.36rem;
-                        height: 0.3rem;
-                        background-image: url(/static/images/jl.png);
-                        background-repeat: no-repeat;
-                        background-size: 5.8rem 1.86rem;
-                        background-position: -0.42rem -0.66rem;
-                        display: inline-block;
+            .order-goodsDetail {
+                width: 4.2rem;
+                .order-goodsDName {
+                    line-height: 0.4rem;
+                    color: #333;
+                    font-size: 0.3rem;
+                    margin-bottom: 0.06rem;
+                }
+                .order-goodsDType {
+                    color: #999999;
+                    font-size: 0.3rem;
+                }
+                .order-goodsDPriceW {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 0.3rem;
+                    margin-top: 0.48rem;
+                    .order-goodsDPrice {}
+                    .order-goodsDNumW {
+                        .order-goodsDNumI {
+                            width: 0.36rem;
+                            height: 0.3rem;
+                            background-image: url(/static/images/jl.png);
+                            background-repeat: no-repeat;
+                            background-size: 5.8rem 1.86rem;
+                            background-position: -0.42rem -0.66rem;
+                            display: inline-block;
+                        }
+                        .order-goodsDNum {}
                     }
-                    .order-goodsDNum {}
                 }
             }
         }
     }
 }
+
 
 .od-numberWrap {
     display: flex;
@@ -378,17 +394,24 @@ export default {
             .ld-contenLeft {
                 margin-right: 0.16rem;
                 .ld-contenOrder {
-                    width: 0.4rem;
-                    height: 0.4rem;
+                    width: 0.2rem;
+                    height: 0.2rem;
                     background: #30ce84;
-                    color: #fff;
                     border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 0.22rem;
                 }
                 .ld-contentLine {
+                    height: 1.26rem;
+                    width: 1px;
+                    background: linear-gradient(#30ce84, #c2fdd6);
+                    margin: 0.05rem auto;
+                }
+                .ld-contenOrderGray {
+                    width: 0.2rem;
+                    height: 0.2rem;
+                    background: #ccc;
+                    border-radius: 50%;
+                }
+                .ld-contentLineGray {
                     height: 1.26rem;
                     width: 1px;
                     background: linear-gradient(#aaaaaa, #fff);
@@ -403,51 +426,40 @@ export default {
     }
 }
 
-.ld-logisFixed {
-    position: fixed;
-    top: 0;
-    background: rgba(0, 0, 0, 0.5);
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    .ld-logisWrap {
-        position: fixed;
-        bottom: 0;
-        background: #fff;
-        width: 100%;
-        .ld-logis {
-            position: relative;
-            .order-goodSIImg {
-                margin: 0;
-            }
-            .ld-logisTitleW {
-                p {
-                    display: inline-block;
-                }
-                .ld-logisTitle {
-                    padding: 0.36rem 0 0.36rem 0.32rem;
-                    p:nth-of-type(1) {
-                        font-weight: bold;
-                    }
-                }
-                .ld-logisClose {
-                    width: 0.3rem;
-                    height: 0.3rem;
-                    background-position: -4.85rem -1.52rem;
-                    position: absolute;
-                    top: 0.4rem;
-                    right: 0.26rem;
-                }
-            }
 
-            .order-goodSInfo {
-                padding: 0.2rem 0;
-                margin: 0;
-                display: flex;
-                justify-content: space-between;
+.ld-logis {
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    z-index: 101;
+    .order-goodSIImg {
+        margin: 0;
+    }
+    .ld-logisTitleW {
+        p {
+            display: inline-block;
+        }
+        .ld-logisTitle {
+            padding: 0.36rem 0 0.36rem 0.32rem;
+            p:nth-of-type(1) {
+                font-weight: bold;
             }
         }
+        .ld-logisClose {
+            width: 0.3rem;
+            height: 0.3rem;
+            background-position: -4.85rem -1.52rem;
+            position: absolute;
+            top: 0.4rem;
+            right: 0.5rem;
+        }
+    }
+
+    .order-goodSInfo {
+        padding: 0.2rem 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
     }
 }
 </style>
