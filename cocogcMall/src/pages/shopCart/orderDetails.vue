@@ -50,6 +50,7 @@
 
         <div v-for="(item,index) in dataList.goodsList" :key="index">
             <div class="order-goodSW">
+              <router-link :to="{path: '/goodsDetail/'+ item.id}">
                 <div class="order-goodSInfo">
                     <div class="order-goodSIImg">
                       <img :src="item.picUrl" alt="">
@@ -67,6 +68,7 @@
                         </div>
                     </div>
                 </div>
+              </router-link>
 
             </div>
         </div>

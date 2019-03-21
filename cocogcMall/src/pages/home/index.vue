@@ -75,7 +75,7 @@
             </div>
             <p class="ihot-name">{{item.name|wordSize(item.name)}}</p>
             <p class="ihot-moneyW">
-              <span class="ihot-logo accountImg"></span>
+              <span class="ihot-logo"></span>
               <span class="ihot-money">{{item.currentPrice}}</span>
             </p>
           </router-link>
@@ -311,6 +311,7 @@ export default {
 
 .index-hotGoods {
   background: #fff;
+  padding-bottom: 30px;
   .ihot-title {
     padding: 0 0.4rem 0 0.33rem;
     display: flex;
@@ -350,6 +351,14 @@ export default {
       font-size: 0.22rem;
       font-weight: bold;
       margin-top: 0.12rem;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      word-wrap: break-word;
+      text-align: center;
     }
     .ihot-moneyW {
       display: flex;
@@ -360,11 +369,14 @@ export default {
       .ihot-logo {
         width: 0.28rem;
         height: 0.28rem;
-        background-position: -2.17rem -1.08rem;
+        background-position: -2.57rem -0.78rem;
+        background-size: 5.8rem 1.86rem;
+        background-repeat: no-repeat;
+        background-image: url(/static/images/jl.png);
       }
       .ihot-money {
         font-size: 0.24rem;
-        color: #30ce84;
+        color: #333;
       }
     }
   }

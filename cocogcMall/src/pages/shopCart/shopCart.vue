@@ -39,7 +39,7 @@
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
                                         <span @click="numDecrease(index) " :class="items.num>1?'decNum':'decNoNum'"></span>
-                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" /></span>
+                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1"/></span>
                                         <!-- 是否需要有货和没货？+号颜色是否要变 -->
                                         <span @click="numIncrease(index)"></span>
                                     </p>
