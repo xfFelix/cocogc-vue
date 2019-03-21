@@ -46,7 +46,7 @@
             </ul>
             <div class="address-operW">
                 <div class="address-def" @click="addressDef=!addressDef">
-                    <span class="j1Png " :class="addressDef?'address-defImgNo':'address-defImg'"></span>
+                    <span class="j1Png " :class="addressDef?'address-defImg':'address-defImgNo'"></span>
                     <span class="address-defAddress">
                         <span>设为默认地址</span>
                     </span>
@@ -75,9 +75,9 @@ export default {
             takeAddress: '',
             takeAddressId: '',
             takeDAddress: '',
-            addressDef: true,
+            addressDef: false,
             fixedShow: false,
-            areaCode: ''
+            areaCode: '',
         };
     },
     mounted() {
@@ -90,6 +90,8 @@ export default {
             this.takeDAddress = item.address;
             this.takeAddressId = item.id;
             this.areaCode = item.areaCode;  //编辑页面传来的areacode
+            this.addressDef = item.isDefault; 
+            
         }
     },
     created() {
@@ -132,10 +134,9 @@ export default {
         },
         //地址更新
         updateAddress: function(addressDef) {
-           
             let _this = this;
             this.axios(testUrl + api.updateAddress, {
-                "token": _this.$cookies.get("yeyun_token"),
+                "token": localStorage.getItem("yeyun_token"),
                 "name": _this.takeName,
                 "tel": _this.takeTel,
                 "code": _this.areaCode,
@@ -179,9 +180,9 @@ export default {
                 return false;
             } else {
                 if (this.addressDef == false) {
-                    this.updateAddress(1)
-                } else {
                     this.updateAddress(0)
+                } else {
+                    this.updateAddress(1)
                 }
                 this.$router.push('/addressMag')
                 localStorage.setItem('addressEdit', '');

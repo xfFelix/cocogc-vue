@@ -16,7 +16,7 @@
                 <div  v-if="item.goodsList.length>1" class="order-goodsMW">
                     <div class="oMGoodsTit">
                         <p class="oMGoodsTitLeft">
-                            <span>自营</span>
+                            <span>{{item.vendorId}}</span>
                             <span>订单号：</span>
                             <span>{{item.orderId}}</span>
                         </p>
@@ -32,7 +32,7 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
                                         <div class="order-goodsList">
-                                           
+
                                             <img :src="itemGoods.picUrl" alt="" />                                        </div>
                                     </div>
 
@@ -60,7 +60,7 @@
                 <div class="oMGoodsW" v-else>
                     <div class="oMGoodsTit">
                         <p class="oMGoodsTitLeft">
-                            <span>自营</span>
+                            <span>{{item.vendorId}}</span>
                             <span>订单号：</span>
                             <span>{{item.orderId}}</span>
                         </p>
@@ -70,8 +70,8 @@
                     </div>
                     <div class="oMGoodsCon one-bottom-px">
                         <div class="oMGoodsConImg">
-                     
-                            <img :src="item.goodsList[0].picUrl" alt="" />
+
+                            <img :src="item.goodsList[0].picUrl || ''" alt="" />
                         </div>
                         <div class="oMGoodsConInfo">
                             <div class="oMGoodsConName">
@@ -118,7 +118,7 @@ export default {
 
     },
     mounted() {
-       
+
         var token = localStorage.getItem("yeyun_token");
         this.pathStatus = this.$route.query.status;
         switch (this.pathStatus) {
@@ -147,7 +147,7 @@ export default {
     },
     methods: {
         headIndexCli(index) {
-           
+
             var token = localStorage.getItem("yeyun_token");
             this.headIndex = index;
             this.selectOrders(token, index);

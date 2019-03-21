@@ -13,7 +13,7 @@
                     </div>
                     <div class="address-operW">
                         <div class="address-def">
-                            
+
                             <span class="j1Png" :class="item.isDefault==1?'address-defImg':'address-defImgNo'"></span>
 
                             <span class="address-defAddress">
@@ -61,8 +61,8 @@ export default {
         return {
             addressList: [],
             fixedshow: false,
-            delIndex:'',
-            delId:''
+            delIndex: '',
+            delId: ''
         };
     },
     mounted() {
@@ -74,7 +74,7 @@ export default {
             localStorage.setItem('addressEdit', editItem);
             this.$router.push('addressEdit')
         },
-        delAddress(item,index) {
+        delAddress(item, index) {
             this.fixedshow = true;
             this.delIndex = index;
             this.delId = item.id;
@@ -87,7 +87,7 @@ export default {
         delConfirm() {
             this.fixedshow = false;
             this.removeAddress()
-            
+
         },
         colseFixed() {
             this.fixedshow = false;
@@ -96,37 +96,37 @@ export default {
         //地址列表
         addressMag: function(token) {
             let _this = this;
-            var token = localStorage.getItem("yeyun_token");
             this.axios(testUrl + api.selectAddresses, {
-                "token": token
+                "token": localStorage.getItem("yeyun_token")
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.addressList = data.data;
                     } else {
-
+                        _this.Toast(data.message)
                     }
                 })
                 .catch((err) => {
+                    _this.Toast(err.message)
                 })
         },
 
         //删除地址
         removeAddress: function(token, id) {
             let _this = this;
-            var token = localStorage.getItem("token");
             this.axios(testUrl + api.removeAddress, {
-                "token": token,
+                "token": localStorage.getItem("yeyun_token"),
                 "id": _this.delId
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                        _this.addressList.splice(this.delIndex,1)
+                        _this.addressList.splice(this.delIndex, 1)
                     } else {
-
+                        _this.Toast(data.message)
                     }
                 })
                 .catch((err) => {
+                    _this.Toast(err.message)
                 })
         },
 

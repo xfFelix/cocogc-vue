@@ -6,9 +6,9 @@
                 <span class="j1Png od-titleInfoImg"></span>
                 <span class="od-titleInfo">待发货</span>
             </p>
-            <p class="od-service">
+            <!-- <p class="od-service">
                 申请售后
-            </p>
+            </p> -->
 
         </div>
 
@@ -42,21 +42,21 @@
             </div>
             <div class="od-timeInfo">
                 <span>下单时间：</span>
-                <span>20190305</span>
-                <span>15:01:24</span>
+                <span>{{dataList.addTime}}</span>
             </div>
         </div>
 
 
         <div v-for="(item,index) in dataList.goodsList" :key="index">
             <div class="order-goodSW">
+              <router-link :to="{path: '/goodsDetail/'+ item.id}">
                 <div class="order-goodSInfo">
                     <div class="order-goodSIImg">
                       <img :src="item.picUrl" alt="">
                     </div>
                     <div class="order-goodsDetail">
                         <p class="order-goodsDName">{{item.goodsName}}</p>
-                      
+
                         <p class="order-goodsDType"></p>
                         <div class="order-goodsDPriceW">
                             <span class="order-goodsDPrice">{{item.buyPrice|toDecimal2(item.buyPrice)}}</span>
@@ -67,7 +67,8 @@
                         </div>
                     </div>
                 </div>
-                
+              </router-link>
+
             </div>
         </div>
         <div class="od-goodSNumWrap one-top-px">
@@ -83,7 +84,7 @@
             </p>
         </div>
 
-        
+
 
         <div class="od-priceWrap">
             <ul class="od-priceUl one-bottom-px">
@@ -123,13 +124,13 @@ export default {
     data() {
         return {
             list: [],
-           
+
             dataList: {},
             orderId: this.$route.params.orderId
         };
     },
     mounted() {
-        this.findOrder()
+      this.findOrder()
     },
     methods: {
 
@@ -285,7 +286,7 @@ export default {
 .order-goodSW {
     background: #fff;
     // margin-top: 0.2rem;
-    
+
     padding: 0.2rem 0.37rem 0.2rem 0.32rem; // height: auto;
     .order-goodSInfo {
         display: flex;

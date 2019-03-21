@@ -95,17 +95,18 @@ export default
             this.categories(this.cateId, function(data) {
                 if (data.length > 0) {
                     that.cateList = data;
-                    let first = data[0].id;
-                    that.categories(first, function(data) {
-                        that.cateTypeList = data;
-                        that.hideLoading();
-                    });
                     if (that.$route.query.id) {
                       that.cateList.forEach((item,index) => {
                         if (that.$route.query.id == item.id) {
                           that.activeIndexC(index, that.$route.query.id)
                         }
                       })
+                    } else {
+                      let first = data[0].id;
+                      that.categories(first, function(data) {
+                          that.cateTypeList = data;
+                          that.hideLoading();
+                      });
                     }
                 }
             });
@@ -115,7 +116,6 @@ export default
           if (to.path === '/goodsList') {
             to.meta.keepAlive = false
           }
-          console.log(this.$route)
           next()
         },
         methods: {
