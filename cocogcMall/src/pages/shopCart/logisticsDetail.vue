@@ -10,7 +10,7 @@
                         <span>订单编号：</span>
                         <span>{{list.orderId}}</span>
                     </p>
-                    <p class="od-numberCopy">复制</p>
+                    <p class="od-numberCopy" @click="handleCopy(list.orderId,$event)">复制</p>
                 </div>
 
                 <div class="order-swipeW">
@@ -153,6 +153,7 @@
 import headerTop from "../../common/header.vue";
 import Swiper from 'swiper';
 import api from '../../service/api';
+import clip from '@/util/clipboard'
 export default {
     data() {
         return {
@@ -225,7 +226,9 @@ export default {
                     _this.Toast(err.message)
                 })
         },
-
+        handleCopy(text, event) {
+            clip(text, event)
+        }
     },
     components: {
         "header-top": headerTop
