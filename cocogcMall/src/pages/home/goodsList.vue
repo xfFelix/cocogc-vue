@@ -199,6 +199,9 @@ export default {
             this.price = this.$route.query.integra;
             this.brandId = this.$route.query.classfyId;
             this.keyWord = this.$route.query.keyWord;
+            this.salesVolume = this.$route.query.salesVolume;
+            
+          
 
             if (this.$route.query.integra == undefined) {
                 this.price = ""
@@ -208,6 +211,9 @@ export default {
             }
             if (this.$route.query.keyWord == undefined) {
                 this.keyWord = ""
+            }
+            if (this.$route.query.salesVolume == undefined) {
+                this.salesVolume = ""
             }
             this.goodsListSearch(this.offsetRows)
         },

@@ -65,7 +65,7 @@
     <div class="index-hotGoods">
       <div class="ihot-title">
         <h3>热门爆款</h3>
-        <p>查看更多</p>
+        <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}">查看更多</router-link>
       </div>
       <div class="ihot-goodsW">
         <div class="ihot-goods" v-for="(item,index) in goodsList.slice(0, 6)" :key="index">
@@ -147,7 +147,7 @@ export default {
         })
     },
     recharge() {
-      window.location = infoURl + '#!/charge?token='+this.$cookies.get("yeyun_token")
+      window.location = infoURl + '#!/charge?token=' + this.$cookies.get("yeyun_token")
     }
   }
 }

@@ -2,14 +2,12 @@
     <div class="home-rank">
         <div class="home-rHM">
             <h3>热门爆款</h3>
-            <span class="home-rMore" @click="$router.push('/goodsList')"></span>
+             <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}" class="home-rMore"></router-link>
         </div>
         <p class="home-hSE">BEST SELLERS EXPLOSIVE MONEY</p>
         <div class="home-rGoodsW">
-
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-
                     <div class="swiper-slide" v-for="(item,index) in goodsList" :key="index">
                         <div class="home-hGoodsW">
                             <router-link :to="{path:'/goodsDetail/'+item.id}">
@@ -27,13 +25,8 @@
                                     <span class="home-hSmoney">{{item.marketPrice|toDecimal2(item.marketPrice)}}</span>
                                 </div>
                             </router-link>
-
                         </div>
-
                     </div>
-
-
-
                 </div>
             </div>
 
@@ -51,21 +44,7 @@ export default {
         }
     },
     mounted() {
-        // var swiperRank = new Swiper('.home-rank .swiper-container', {
-        //     // autoplay: {
-        //     //   delay: 1000,
-        //     //   stopOnLastSlide: false,
-        //     //   disableOnInteraction: false,
-        //     // },
-        //     // loop: true,
-        //     slidesPerView: 'auto',
-        //     slidesPerGroup: 4,
-        //     spaceBetween: 20,
-        //     // slidesOffsetAfter : 10,
-        //     freeMode: true,
-        // })
         this.rank()
-
     },
     methods: {
         rank: function() {
