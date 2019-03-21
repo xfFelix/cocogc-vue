@@ -142,7 +142,9 @@ export default {
             font-size: 0.22rem;
             margin: 0.25rem 0 0.17rem;
             display: -webkit-box;
+            /* autoprefixer: off */
             -webkit-box-orient: vertical;
+            /* autoprefixer: on */
             -webkit-line-clamp: 2;
             overflow: hidden;
             text-overflow: ellipsis;

@@ -32,10 +32,10 @@ import passSetSucess from '@/pages/loginRegister/passSetSucess';
 import register from '@/pages/loginRegister/register';
 import registerSucess from '@/pages/loginRegister/registerSucess';
 
-
 import { homedir } from 'os';
 
 import Layout from '@/pages/layout/Layout'
+import getInfo from './hook/getInfo';
 Vue.use(Router)
 
 const router = new Router({
@@ -181,20 +181,20 @@ const router = new Router({
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) {// 判断是否需要登录权限
-    if (localStorage.getItem('token')) {// 判断是否登录
-      next()
-    } else {// 没登录则跳转到登录界面
-      // next({
-      //   path: '/login',
-      //   query: { redirect: to.fullPath }
-      // })
-      next()
-    }
-  } else {
-    next()
-  }
-})
-
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requireAuth) {// 判断是否需要登录权限
+//     console.log(to)
+//     if (getToken()) {// 判断是否登录
+//       next()
+//     } else {// 没登录则跳转到登录界面
+//       next({
+//         redirect: '/login',
+//         query: { redirect: to.fullPath }
+//       })
+//     }
+//   } else {
+//     next()
+//   }
+// })
+getInfo(router)
 export default router

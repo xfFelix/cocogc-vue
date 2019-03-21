@@ -10,6 +10,7 @@
 <script>
 import { IsEmpty, getToken } from "@/util/common";
 import api from '@/service/api';
+import { mapActions } from 'vuex';
 
 
 export default {
@@ -24,15 +25,15 @@ export default {
 
     },
     methods: {
-        getToken: function() {
-            let _this = this;
-            var token = getToken();
-            if (IsEmpty(token)) {
-                this.$router.push('/login');
-            } else {
-                _this.info()
-            }
-        },
+        // getToken: function() {
+        //     let _this = this;
+        //     var token = getToken();
+        //     if (IsEmpty(token)) {
+        //         this.$router.push('/login');
+        //     } else {
+        //         _this.info()
+        //     }
+        // },
 
         //地址列表，拿地址id
         addressMag: function(token) {
@@ -53,7 +54,25 @@ export default {
                     this.Toast(err.message)
                 })
         },
-
+        ...mapActions({
+          setNum: 'cart/setNum'
+        }),
+        getCarInfo(callback) {
+            this.axios(testUrl + api.totalCarts,
+                {
+                    token: getToken()
+                },
+                'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        if (callback)
+                            callback(data.data);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        },
 
         info: function() {
             let _this = this;
@@ -90,7 +109,10 @@ export default {
 
     },
     mounted() {
-        this.getToken();
+        // this.getToken();
+        this.getCarInfo(data => {
+          this.setNum(data)
+        })
     }
 }
 

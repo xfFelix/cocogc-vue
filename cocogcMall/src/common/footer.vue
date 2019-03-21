@@ -6,11 +6,13 @@
                 <span :class="isSelect == item.name ? 'active' : ''">
                     {{item.title}}
                 </span>
+                <span v-if="item.name === 'shopCart'" class="num">{{num}}</span>
             </router-link>
         </div>
     </footer>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 export default {
     data() {
         return {
@@ -30,23 +32,25 @@ export default {
     created() {
 
     },
-
-    watch: {
-       showHeight:function() {
-        if(this.docmHeight > this.showHeight){
-            this.hideShow = false
-        }else{
-            this.hideShow = true
-        }
+    computed: {
+      ...mapGetters({
+        num: 'cart/getNum'
+      })
     },
-        '$route': {
-            handler(val) {
-                this.isSelect = val.name
-            },
-            immediate: true
-        }
-
-
+    watch: {
+      showHeight:function() {
+          if(this.docmHeight > this.showHeight){
+              this.hideShow = false
+          }else{
+              this.hideShow = true
+          }
+      },
+      '$route': {
+          handler(val) {
+              this.isSelect = val.name
+          },
+          immediate: true
+      }
     },
     methods: {
         selectNav(title) {
@@ -97,7 +101,7 @@ export default {
             justify-content: center;
             width: 100%;
             height: 100%;
-
+            position: relative;
             .navImg {
                 width: 0.42rem;
                 height: 0.42rem;
@@ -108,6 +112,15 @@ export default {
                 position: relative;
                 color: #000000; // border: 1px solid #000;
                 margin: 0 auto;
+            }
+            .num {
+              position: absolute;
+              right: 15px;top: 1px;
+              padding: 2px 5px;
+              background: #fb5c5c;
+              color: #fff;
+              border-radius: 50%;
+              font-size: 12px;
             }
             .navGo01 {
                 background-position: -0.1rem -0.73rem;
