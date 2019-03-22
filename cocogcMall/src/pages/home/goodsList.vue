@@ -351,7 +351,7 @@ export default {
         .home-iNmame {
             color: #333333;
             font-size: 0.26rem;
-            height: 0.64rem;
+            height: 0.65rem;
             font-weight: bold;
             margin-top: 0.12rem;
             display: -webkit-box;

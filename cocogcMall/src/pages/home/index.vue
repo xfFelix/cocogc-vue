@@ -22,9 +22,6 @@
           <p class="ih-moneya">椰子分余额</p>
         </div>
 
-        <div class="ih-recharge" @click="recharge()">
-          去充值
-        </div>
 
       </div>
     </div>
@@ -32,7 +29,7 @@
     <!-- 导航 -->
     <ul class="index-fastNav">
       <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
-        <a :href='item.path+"?token="+ $cookies.get("yeyun_token")'>
+        <a :href='item.path'>
           <p class="navImg imgBg" :class="item.imgBg"></p>
           <p class="ifa-name">{{item.name}}</p>
         </a>
@@ -98,10 +95,14 @@ export default {
   data() {
     return {
       fastList: [
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange' },
-        { id: 1, name: "话费兑换", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill' },
-        { id: 1, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay' },
-        { id: 1, name: "兑换商城", imgBg: 'ifa-imgBg09', path: '/huangjin' },
+        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + this.$cookies.get("yeyun_token")},
+        { id: 2, name: "话费兑换", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + this.$cookies.get("yeyun_token")},
+        { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay&token=' + this.$cookies.get("yeyun_token")},
+        { id: 4, name: "兑换商城", imgBg: 'ifa-imgBg09', path: '/' },
+        { id: 5, name: "卡密充值", imgBg: 'ifa-imgBg05', path: infoURl + '#!/charge?token=' + this.$cookies.get("yeyun_token") },
+        { id: 6, name: "加油卡兑换", imgBg: 'ifa-imgBg12', path: 'javascript:;'},
+         { id: 7, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;'},
+          
       ],
       goodsList: [],
       loginFlag: false,
@@ -144,9 +145,7 @@ export default {
           _this.Toast(data.message);
         })
     },
-    recharge() {
-      window.location = infoURl + '#!/charge?token=' + this.$cookies.get("yeyun_token")
-    }
+ 
   }
 }
 </script>
@@ -221,17 +220,7 @@ export default {
         text-decoration: underline;
       }
     }
-    .ih-recharge {
-      font-size: 0.24rem;
-      color: #fff;
-      border: 1px solid #fff;
-      border-radius: 40px;
-      height: 0.34rem;
-      line-height: 0.34rem;
-      margin-right: 0.2rem;
-      width: 1.1rem;
-      text-align: center;
-    }
+    
   }
 }
 

@@ -44,7 +44,7 @@ export default {
     data() {
         return {
             homeSel: [
-                { id: 0, integral: "我要兑换", homeSelShow: true },
+                { id: 0, integral: "我能兑换", homeSelShow: true },
                 { id: 1, integral: "0~50", homeSelShow: true },
                 { id: 2, integral: "51~200", homeSelShow: true },
                 { id: 3, integral: "201~500", homeSelShow: true },
