@@ -58,7 +58,6 @@ export default {
         if (isRealCert) {
             this.identFlag = false;
         }
-
         this.cards()
     },
     methods: {
@@ -66,13 +65,13 @@ export default {
             this.$router.push("/addressMag")
         },
         certJump() {
-            window.location.href = infoURl + "#!/cert?token=" + this.$cookies.get("yeyun_token")
+            window.location.href = infoURl + "#!/cert?token=" + this.$cookies.get("yeyun_token");
         },
         cardsJump() {
-            window.location.href = infoURl + "#!/list?token=" + this.$cookies.get("yeyun_token")
+           
         },
         passupJump() {
-            this.$router.push("/passSetUp")
+             window.location.href = infoURl + "#!/changePwd?token=" + this.$cookies.get("yeyun_token");
         },
         loginOut(){
             localStorage.removeItem("yeyun_token");

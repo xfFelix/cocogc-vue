@@ -99,15 +99,7 @@ export default {
         { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange' },
         { id: 1, name: "话费兑换", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill' },
         { id: 1, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay' },
-        { id: 1, name: "机票酒店", imgBg: 'ifa-imgBg04', path: '/huangjin' },
-        { id: 1, name: "加油卡兑换", imgBg: 'ifa-imgBg05', path: '/huangjin' },
-        { id: 1, name: "生活缴费", imgBg: 'ifa-imgBg06', path: '/huangjin' },
-        { id: 1, name: "会员卡券", imgBg: 'ifa-imgBg07', path: '/huangjin' },
-        { id: 1, name: "保险服务", imgBg: 'ifa-imgBg08', path: '/huangjin' },
         { id: 1, name: "兑换商城", imgBg: 'ifa-imgBg09', path: '/huangjin' },
-        { id: 1, name: "小米有品", imgBg: 'ifa-imgBg10', path: '/huangjin' },
-        { id: 1, name: "每日优鲜", imgBg: 'ifa-imgBg11', path: '/huangjin' },
-        { id: 1, name: "更多", imgBg: 'ifa-imgBg12', path: '/huangjin' },
       ],
       goodsList: [],
       loginFlag: false,
@@ -238,15 +230,14 @@ export default {
 .index-fastNav {
   font-size: 0.24rem;
   color: #000;
-  padding: 0 0.3rem;
-  height: 4.84rem;
+  padding: 0 0.3rem 0.2rem 0.3rem;
   margin-bottom: 0.2rem;
   background: #fff;
   .ifa-fastNavLi {
     width: 25%;
     text-align: center;
     margin: 0.34rem 0 0.1rem 0;
-    float: left;
+    display: inline-block;
     .imgBg {
       width: 0.5rem;
       height: 0.5rem;
@@ -313,7 +304,7 @@ export default {
   background: #fff;
   padding-bottom: 30px;
   .ihot-title {
-    padding: 0 0.4rem 0 0.33rem;
+    padding: 0 0.4rem 0.2rem 0.33rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -354,7 +345,8 @@ export default {
       /* autoprefixer: off */
       -webkit-box-orient: vertical;
       /* autoprefixer: on */
-      -webkit-line-clamp: 2;
+      // -webkit-line-clamp: 2;
+      height: 0.64rem;
       overflow: hidden;
       text-overflow: ellipsis;
       word-break: break-all;

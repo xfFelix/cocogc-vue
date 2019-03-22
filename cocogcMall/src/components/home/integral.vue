@@ -14,7 +14,7 @@
 
             <span class="home-iMore" @click="integraM()">
                 <!-- <span class="home-iMoreGob j1Png"></span> -->
-                 <span class="home-iMoreGo j1Png" :class="homeSelFlag?'home-iMoreGob':'home-iMoreGoa'"></span> 
+                <span class="home-iMoreGo j1Png" :class="homeSelFlag?'home-iMoreGob':'home-iMoreGoa'"></span>
             </span>
         </div>
 
@@ -191,8 +191,7 @@ export default {
             border-radius: 1rem; // margin-right: 0.09rem;
             text-align: center;
             .home-iMoreGo {
-                background-position: -3.24rem -0.76rem;
-                // transform: rotate(90deg);
+                background-position: -3.24rem -0.76rem; // transform: rotate(90deg);
                 width: 0.25rem;
                 height: 0.25rem;
                 display: inline-block;
@@ -205,7 +204,6 @@ export default {
             .home-iMoreGob {
                 transform: rotate(-90deg);
             }
-
         }
         .iSelectNo {
             border: 1px solid rgba(0, 0, 0, 0.06);
@@ -272,23 +270,22 @@ export default {
         .home-iNmame {
             color: #333333;
             font-size: 0.26rem;
-
-
-
-    font-weight: bold;
-    margin-top: 0.12rem;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-all;
-    word-wrap: break-word;
-    text-align: center;
+            font-weight: bold;
+            margin-top: 0.12rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical; // -webkit-line-clamp: 2;
+            overflow: hidden;
+            height: 0.64rem;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            word-wrap: break-word;
+            text-align: center;
         }
         .home-iMoneyW {
             display: flex;
             align-items: center;
+            justify-content: center;
+            margin: 0.1rem 0;
             .home-iMoneyL {
                 width: 0.26rem;
                 height: 0.28rem;

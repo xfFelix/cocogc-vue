@@ -3,7 +3,6 @@
         <div class="account-head">
             <div class="acc-headCSMW">
                 <div class="acc-headCSM">
-                    <span class="acc-headCrown"></span>
                     <span class="acc-headSet" @click="$router.push('/setUp')"></span>
                 </div>
             </div>
@@ -14,9 +13,11 @@
                 <div class="acc-headTG">
                     <p class="acc-headTel">{{userName}}</p>
                     <p class="acc-headGrade">
-                        <span class="acc-headChessI"></span>
-                        <span class="acc-headChess">专业棋牌</span>
-                        <span class="acc-headChessN">IV</span>
+                        <span class="acc-headChess">专业选手</span>
+                        <span class="acc-headChess">非专业选手</span>
+
+
+
                     </p>
                 </div>
             </div>
@@ -106,10 +107,10 @@ export default {
             score: '',
             userName: '',
             jumpList: [
-                { name: '我的椰子分', scoreShow: true, path: infoURl + "#!/goldChange?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog01" },
-                { name: '信用卡还款', scoreShow: false, path: infoURl + "#!/goldChange?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog02" },
+                { name: '我的椰子分', scoreShow: true, path: infoURl + "#!/slogs?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog01" },
+                { name: '信用卡还款', scoreShow: false, path: infoURl + "#!/pay?back=pay&token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog02" },
                 { name: '黄金兑换', scoreShow: false, path: infoURl + "#!/goldChange?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog03" },
-                { name: '话费充值', scoreShow: false, path: infoURl + "#!/goldChange?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog04" },
+                { name: '话费充值', scoreShow: false, path: infoURl + "#!/phoneBill?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog04" },
             ],
             helpList: [
                 { name: '帮助中心', path: 'https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q', bgImg: "acc-contentLog05" },
@@ -197,6 +198,7 @@ export default {
                 color: #fff;
                 font-weight: bold;
                 margin-top: 0.18rem;
+                    text-shadow: 0px 0 8px #666;
             }
             .acc-headGrade {
                 background: linear-gradient(to right, #ebc99d, #d5b587);

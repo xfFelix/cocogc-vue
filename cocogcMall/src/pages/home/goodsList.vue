@@ -97,8 +97,8 @@ export default {
             keyWord: '',//关键字
             priceRange: '', //判断价格的高低
             priceRangeFlag: true,  //判断价格的高低
-            salesVolume: "" ,//销量排序
-            productTypeId:""
+            salesVolume: "",//销量排序
+            productTypeId: ""
         };
     },
     mounted() {
@@ -122,7 +122,7 @@ export default {
         this.urlParams()
 
 
-},
+    },
     methods: {
         //搜索框
         parentChild(val) {
@@ -221,7 +221,7 @@ export default {
                 this.productTypeId = ""
             }
 
-            
+
             this.goodsListSearch(this.offsetRows)
         },
 
@@ -236,7 +236,7 @@ export default {
                 "rows": 10,
                 "salesVolume": _this.salesVolume,
                 "timeSort": "",
-                "productTypeId":_this.productTypeId
+                "productTypeId": _this.productTypeId
             }, 'post')
                 .then((data) => {
                     if (data.code == 0) {
@@ -254,9 +254,9 @@ export default {
                     _this.Toast(err.message);
                 })
         },
-},
-components: {
-    "head-search": headSearch,
+    },
+    components: {
+        "head-search": headSearch,
         // "v-loading": Loading,
     }
 
@@ -351,22 +351,21 @@ components: {
         .home-iNmame {
             color: #333333;
             font-size: 0.26rem;
-
-
-    font-weight: bold;
-    margin-top: 0.12rem;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-all;
-    word-wrap: break-word;
-    text-align: center;
+            height: 0.64rem;
+            font-weight: bold;
+            margin-top: 0.12rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical; // -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            word-wrap: break-word;
+            text-align: center;
         }
         .home-iMoneyW {
             display: flex;
             align-items: center;
+            margin: 0.1rem;
             .home-iMoneyL {
                 width: 0.26rem;
                 height: 0.28rem;

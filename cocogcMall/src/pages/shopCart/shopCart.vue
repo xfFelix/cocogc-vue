@@ -39,7 +39,7 @@
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
                                         <span @click="numDecrease(index) " :class="items.num>1?'decNum':'decNoNum'"></span>
-                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1"/></span>
+                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1" /></span>
                                         <!-- 是否需要有货和没货？+号颜色是否要变 -->
                                         <span @click="numIncrease(index)"></span>
                                     </p>
@@ -81,23 +81,14 @@
             <div class="shop-cPN" v-if="!deitDelFlag">
                 <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum1':'shop-cartNum0'">
                     <span class="shop-carNumI" @click="delGoods">
-                        删除(<span class="shop-cartNum">{{selectAllGoods}}</span>)
+                        删除(
+                        <span class="shop-cartNum">{{selectAllGoods}}</span>)
                     </span>
                 </p>
             </div>
         </div>
 
-
-        <div class="changeSuccessW"> 
-            <div>
-                <p></p>
-                <p>兑换成功</p>
-                <p>122.00</p>
-                <p>订单详情</p>
-                <p>返回首页</p>
-                <p>3秒后自动进入首页</p>
-            </div>
-        </div>
+        
     </div>
 </template>
 <script>
@@ -120,22 +111,22 @@ export default {
         };
     },
     computed: {
-      async countNum() {
-        let num = 0
-        if (this.list) {
-          let buys = []
-          let total = this.list.reduce((state, item) =>{
-            state.num = item.num + state.num
-            buys.push({goodsId: item.goodsId, nums: item.num})
-            return state
-          },{num: 0})
-          let cart = await this.axios(testUrl + api.updateCart, {token: getToken(),buys: buys}, 'post')
-          this.setNum(total.num)
-          return total.num
-        } else {
-          return 0
+        async countNum() {
+            let num = 0
+            if (this.list) {
+                let buys = []
+                let total = this.list.reduce((state, item) => {
+                    state.num = item.num + state.num
+                    buys.push({ goodsId: item.goodsId, nums: item.num })
+                    return state
+                }, { num: 0 })
+                let cart = await this.axios(testUrl + api.updateCart, { token: getToken(), buys: buys }, 'post')
+                this.setNum(total.num)
+                return total.num
+            } else {
+                return 0
+            }
         }
-      }
     },
     mounted() {
         var that = this;
@@ -150,26 +141,26 @@ export default {
 
     },
     methods: {
-      ...mapActions({
-        setNum: 'cart/setNum'
-      }),
+        ...mapActions({
+            setNum: 'cart/setNum'
+        }),
         getCartGoodsList(callback) {
             let _this = this;
-            this.axios(testUrl + api.selectCarts,{
-                    token: getToken()
-                },
+            this.axios(testUrl + api.selectCarts, {
+                token: getToken()
+            },
                 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
                         if (callback)
                             callback(data.data);
-                            //传给猜你喜欢
-                            let cartShop = [];
-                            data.data.forEach((res)=>{
-                                cartShop.push(res.goods.name)
-                            })
-                            localStorage.setItem('cartShop',JSON.stringify(cartShop));
-                    }else{
+                        //传给猜你喜欢
+                        let cartShop = [];
+                        data.data.forEach((res) => {
+                            cartShop.push(res.goods.name)
+                        })
+                        localStorage.setItem('cartShop', JSON.stringify(cartShop));
+                    } else {
                         _this.Toast(data.message)
                     }
                 })
@@ -217,10 +208,10 @@ export default {
             var that = this;
             var buys = [];
             if (!JSON.parse(localStorage.isRealCert)) {
-              return this.Toast({
-                message: '请先实名认证',
-                duration: 1000
-              })
+                return this.Toast({
+                    message: '请先实名认证',
+                    duration: 1000
+                })
             }
             that.list.forEach(function(v) {
                 if (v.check) {
@@ -245,10 +236,10 @@ export default {
                     if (data.error_code == 0) {
                         sessionStorage.setItem('buys', JSON.stringify(buys));
                         that.$router.push({
-                          path: '/order',
-                          query: {
-                            cart: 'cart'
-                          }
+                            path: '/order',
+                            query: {
+                                cart: 'cart'
+                            }
                         });
 
                     }
@@ -269,7 +260,7 @@ export default {
             this.selectAllPrice = 0;
             this.selectAllGoods = 0;
             this.list.forEach((res) => {
-                if (res.check == true && res.goods!=null) {
+                if (res.check == true && res.goods != null) {
                     that.selectAllPrice += res.num * res.goods.currentPrice;
                     that.selectAllGoods++;
                 }
@@ -284,7 +275,7 @@ export default {
         },
         //增加
         numIncrease(index) {
-            if (this.list[index].goods!=null && this.list[index].num < this.list[index].goods.stocks) {
+            if (this.list[index].goods != null && this.list[index].num < this.list[index].goods.stocks) {
                 this.list[index].num++;
                 this.computeTotal();
             }
@@ -641,4 +632,6 @@ export default {
     background: #fff;
     font-size: 0.38rem;
 }
+
+
 </style>

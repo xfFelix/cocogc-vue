@@ -160,7 +160,7 @@
           <bg-mask v-model="showSendCode"></bg-mask>
         </transition>
 
-
+        <exchange-su v-if="exchangeShow" v-bind:chOrderId ='parOrderId' v-bind:chMessage="message"></exchange-su>
     </div>
 </template>
 
@@ -169,6 +169,7 @@ import headerTop from "../../common/header.vue"
 import BgMask from "@/common/BgMask"
 import Swiper from 'swiper';
 import api from '../../service/api';
+import ExchangeSu from "@/components/shopCart/ExchangeSu"
 
 export default {
     data() {
@@ -179,7 +180,8 @@ export default {
             validate: "获取验证码",
             validateFlag: 1,
             showSendCode: false,
-            smsCode: undefined
+            smsCode: undefined,
+            exchangeShow:false
         };
     },
     mounted() {
@@ -308,6 +310,8 @@ export default {
                         this.Toast('下单成功')
                         this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
 
+                        this.exchangeShow = true;
+                        this.parOrderId = orderId;
                     }
                 })
                 .catch((err) => {
@@ -329,6 +333,9 @@ export default {
                         var orderId = data.data[0].orderId;
                         this.Toast('下单成功')
                         this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
+
+                        this.exchangeShow = true;
+                        this.parOrderId = orderId;
                     } else {
                       this.Toast(data.message)
                     }
@@ -365,7 +372,8 @@ export default {
     },
     components: {
         "header-top": headerTop,
-        BgMask
+        BgMask,
+        ExchangeSu
     }
 
 }
