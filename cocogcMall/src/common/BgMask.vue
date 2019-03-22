@@ -1,5 +1,5 @@
 <template>
-  <div v-if="open" class="mask" @click="$emit('click', false)"></div>
+  <div v-if="open" class="mask" @click="$emit('click', false)" :style="{'background-color':color}"></div>
 </template>
 
 <script>
@@ -12,6 +12,10 @@ export default {
     open: {
       type: Boolean,
       default: false
+    },
+    color: {
+      type: String,
+      default: 'rgba(0,0,0,0.6)'
     }
   }
 }
@@ -24,7 +28,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.6);
+  /* background-color: rgba(0,0,0,0.6); */
   z-index: 100;
 }
 </style>

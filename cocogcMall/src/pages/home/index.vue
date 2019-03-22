@@ -22,9 +22,9 @@
           <p class="ih-moneya">椰子分余额</p>
         </div>
 
-        <div class="ih-recharge" @click="recharge()">
+        <!-- <div class="ih-recharge" @click="recharge()">
           去充值
-        </div>
+        </div> -->
 
       </div>
     </div>
@@ -45,15 +45,10 @@
         <div class="swiper-container">
           <!-- 页面 -->
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="static/images/indexBan.jpg" alt="">
+            <div class="swiper-slide" v-for="item of banner" :key="item">
+              <img :src="item" alt="">
             </div>
-            <div class="swiper-slide">
-              <img src="static/images/indexBan.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="static/images/indexBan.jpg" alt="">
-            </div>
+
           </div>
           <!-- 分页器 -->
           <div class="swiper-pagination"></div>
@@ -113,7 +108,8 @@ export default {
       ],
       goodsList: [],
       loginFlag: false,
-      token: getToken()
+      token: getToken(),
+      banner: []
     }
   },
   created() {
@@ -124,17 +120,27 @@ export default {
     })
   },
   mounted() {
-    var swiperBan = new Swiper('.index-swipe .swiper-container', {
-      loop: true,
-      pagination: {
-        el: '.swiper-pagination',
-      },
-    })
+    this.getBanner()
     this.rank();
   },
   components: {
   },
   methods: {
+    async getBanner () {
+      let banner = await this.axios(testUrl + api.goodsGroups, {
+        "id": "a10a220f9aa94dc49c960c77cd783d11"
+      }, 'post')
+      this.banner = banner.data.data[0]
+      this.$nextTick(() => {
+        var swiperBan = new Swiper('.index-swipe .swiper-container', {
+          loop: true,
+          autoplay: true,
+          pagination: {
+            el: '.swiper-pagination',
+          },
+        })
+      })
+    },
     rank: function() {
       let _this = this;
       this.axios(testUrl + api.goodsGroups, {
@@ -204,6 +210,12 @@ export default {
     justify-content: space-between;
     margin-top: 0.45rem;
     .ih-balance {
+      p {
+        // margin-top: -0.1rem;
+        color: #fff;
+
+        text-align: center;
+      }
       .ih-money {
         font-size: 0.48rem;
         font-weight: bold;
@@ -213,13 +225,9 @@ export default {
         font-size: 0.24rem;
         font-weight: bold;
         margin-top: -0.05rem;
+        text-align: left;
       }
-      p {
-        // margin-top: -0.1rem;
-        color: #fff;
 
-        text-align: center;
-      }
       .ih-nologin {
         margin: 0.1rem;
         color: #fff;

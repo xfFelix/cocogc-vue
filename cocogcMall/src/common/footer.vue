@@ -6,7 +6,7 @@
                 <span :class="isSelect == item.name ? 'active' : ''">
                     {{item.title}}
                 </span>
-                <span v-if="item.name === 'shopCart'" class="num">{{num}}</span>
+                <span v-if="item.name === 'shopCart' && num" class="num">{{num}}</span>
             </router-link>
         </div>
     </footer>
