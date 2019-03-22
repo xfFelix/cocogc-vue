@@ -22,6 +22,21 @@
                 </div>
             </div>
         </div>
+        <div class="banner">
+            <div class="account-swipe">
+                <div class="swiper-container">
+                    <!-- 页面 -->
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" v-for="item of top" :key="item">
+                            <img :src="item" alt="" style="width: 100%"/>
+                        </div>
+
+                    </div>
+                    <!-- 分页器 -->
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
 
         <div class="account-quickW">
             <ul class="account-quickUl">
@@ -75,15 +90,10 @@
                 <div class="swiper-container">
                     <!-- 页面 -->
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="static/images/acc-banner.jpg" alt="" />
+                        <div class="swiper-slide" v-for="item of end" :key="item">
+                            <img :src="item" alt="" style="width: 100%"/>
                         </div>
-                        <div class="swiper-slide">
-                            <img src="static/images/acc-banner.jpg" alt="" />
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="static/images/acc-banner.jpg" alt="" />
-                        </div>
+
                     </div>
                     <!-- 分页器 -->
                     <div class="swiper-pagination"></div>
@@ -94,7 +104,8 @@
 </template>
 <script>
 import Swiper from 'swiper';
-import Footer from '../../common/footer.vue'
+import api from '@/service/api'
+
 export default {
     data() {
         return {
@@ -116,44 +127,72 @@ export default {
                 { name: '帮助中心', path: 'https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q', bgImg: "acc-contentLog05" },
                 { name: '联系客服', path: infoURl + "#!/contact?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog06" },
                 { name: '商务合作', path: infoURl + "#!/cooperation?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog07" },
-            ]
+            ],
+            top: [],
+            end: []
         };
     },
     mounted() {
         this.userName = localStorage.getItem("userName");
         this.score = localStorage.getItem("score");
-        /*
-             横幅 
-           */
-        var swiperBan = new Swiper('.account-swipe .swiper-container', {
+        this.getSwiper()
+
+
+    },
+    methods: {
+      async getSwiper() {
+        const [top, end] = await Promise.all([
+          this.getBanner('1ffcda7e7555460399096529c68a7a2a'),
+          this.getBanner('eaccd32767844f78b3e94923ff6ae899')
+        ])
+        this.end = end
+        this.top = top
+        this.$nextTick(() => {
+          var swiperBan = new Swiper('.account-swipe .swiper-container', {
             // autoplay: {
             //   delay: 1000,
             //   stopOnLastSlide: false,
             //   disableOnInteraction: false,
             // },
+            autoplay: true,
             loop: true,
             pagination: {
                 el: '.swiper-pagination',
             },
+          })
         })
-
-    },
-    methods: {
-
-    },
-    components: {
-        "v-footer": Footer
+      },
+      getBanner (id) {
+        let promise = new Promise(async (resolve, reject) => {
+          let banner = await this.axios(testUrl + api.goodsGroups, {"id": id}, 'post')
+          if (!banner.error_code) {
+            resolve(banner.data.data[0])
+          }
+        })
+        return promise
+      },
     }
 };
 </script>
 
 <style lang="less">
-.account-head {
-    background-image: url("../../../static/images/head.jpg");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+#account{
+  position: relative;
+  .banner{
     width: 100%;
     height: 3.6rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 11;
+  }
+}
+.account-head {
+    background: transparent;
+    width: 100%;
+    height: 3.6rem;
+    position: relative;
+    z-index: 22;
     .acc-headCSMW {
         border-top: 1px solid transparent;
         .acc-headCSM {
@@ -232,9 +271,11 @@ export default {
 }
 
 .account-quickW {
-    margin-top: -0.94rem;
+    margin-top: -0.64rem;
     height: 1.78rem;
     width: 100%;
+    position: relative;
+    z-index: 22;
     .account-quickUl {
         display: flex;
         margin: 0 auto;

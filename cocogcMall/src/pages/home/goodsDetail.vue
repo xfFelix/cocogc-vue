@@ -5,7 +5,7 @@
             <p class="goodsD-hBack" @click="$router.go(-1)">
                 <span></span>
             </p>
-            <p class="circle">
+            <p class="circle" @click="showDialog = true">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -126,6 +126,7 @@
                             </p>
                         </div>
                     </div>
+                    <div style="margin-top:0.5rem;">数量</div>
                     <div class="goodDetail-selectNumW">
                         <span class="goodDetail-selectDec" @click="setBuyNum(0)">-</span>
                         <span class="goodDetail-selectNum"><input type="number" :value="buyNum"></span>
@@ -137,7 +138,17 @@
             </div>
 
         </div>
-
+        <div class="dialog-container" v-if="showDialog">
+          <div class="arrow-top"></div>
+          <div class="dialog-content">
+            <router-link :to="{path: '/layout/home'}"><div class="link">首页</div></router-link>
+            <router-link :to="{path: '/layout/account'}"><div class="link">我的</div></router-link>
+            <router-link :to="{path: '/layout/shopCart'}"><div class="link">购物车</div></router-link>
+            <router-link :to="{path: '/layout/classify'}"><div class="link">分类</div></router-link>
+            <router-link :to="{path: '/layout/shopMall'}"><div class="link">商城</div></router-link>
+          </div>
+        </div>
+        <bg-mask v-model="showDialog" color="transparent"></bg-mask>
     </div>
 </template>
 
@@ -147,6 +158,7 @@ import { IsEmpty, getToken } from "@/util/common";
 import Swiper from 'swiper';
 import api from '../../service/api';
 import { mapGetters } from 'vuex';
+import BgMask from '@/common/BgMask'
 
 export default {
     data() {
@@ -161,7 +173,8 @@ export default {
             attrs: [],
             buyNum: 1,
             carTotal: 0,
-            isGo: 'cart'
+            isGo: 'cart',
+            showDialog: false
         };
     },
     computed: {
@@ -169,6 +182,7 @@ export default {
         userinfo: 'userinfo/getUserInfo'
       })
     },
+
     mounted() {
         var that = this;
         //图片轮播
@@ -193,6 +207,9 @@ export default {
             to.meta.keepAlive = true
         }
         next()
+    },
+    beforeDestroy() {
+      this.showDialog = false
     },
     methods: {
         fixedClose(e) {
@@ -345,13 +362,47 @@ export default {
         }
     },
     components: {
-
+      BgMask
     }
 };
 </script>
 
 
 <style lang="less">
+.goodsDetail{
+  position: relative;
+  .dialog-container{
+    position: absolute;
+    top: 0.78rem;
+    right: 8px;
+    z-index: 102;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    .arrow-top{
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 7px solid #ccc;
+      transform: translateX(-50%);
+      margin-top: -7px;
+      margin-left: 80px;
+      width: 0;
+      height: 0;
+    }
+    .dialog-content{
+      .link{
+        background: #fff;
+        padding:5px 0;
+        border-bottom: 1px solid #ccc;
+        width: 1.84rem;
+        display: flex;
+        justify-content: center;
+        &:last-of-type{
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
 .goodsD-headListW {
     background: #fff;
     position: fixed;
@@ -862,7 +913,7 @@ export default {
             }
             .goodDetail-selectNumW {
                 height: 0.45rem;
-                margin-top: 0.5rem;
+                margin-top: 0.1rem;
                 span {
                     float: left;
                     background: #f1f1f1;
