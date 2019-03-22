@@ -318,6 +318,9 @@ export default
         overflow: scroll;
     }
     .select-brand {
+        li:last-of-type{
+           padding-bottom: 50px;
+        }
         flex: 0 0 1.58rem;
         width: 1.58rem;
         .select-brandLi {
@@ -370,6 +373,11 @@ export default
         }
         .select-bGoodsT:nth-of-type(1){
             margin-top: 0.34rem;
+        }
+        .select-bGoods{
+            .select-bGoodsT:last-of-type{
+                padding-bottom: 50px;
+            }
         }
     }
 }
