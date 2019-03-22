@@ -92,8 +92,12 @@ export default {
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                        this.$router.push('/layout/home');
-                        let token = data.data.token;
+                      if (this.$route.query.redirect) {
+                        this.$router.replace(this.$route.query.redirect)
+                      } else {
+                        this.$router.replace('/layout/home');
+                      }
+                        this.token = data.data.token;
                         localStorage.setItem("yeyun_token", token);
                         this.$cookies.set("yeyun_token",token[30])
                     } else {
@@ -104,7 +108,6 @@ export default {
                     this.tipBgShow = true;
                 })
         },
-
         //眼睛和清空
         eyeImgClose: function() {
             this.eyeImgState = false;
@@ -152,7 +155,6 @@ export default {
         },
     },
     mounted() {
-
     },
     components: {
 

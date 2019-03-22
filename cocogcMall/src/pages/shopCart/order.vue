@@ -93,7 +93,7 @@
                             <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
                             <p class="order-goodsDType">类型没有</p>
                             <div class="order-goodsDPriceW">
-                                <span class="order-goodsDPrice">￥{{itemGoods.buyPrice}}</span>
+                                <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
                                 <p class="order-goodsDNumW">
                                     <span class="order-goodsDNumI"></span>
                                     <span class="order-goodsDNum">{{itemGoods.buyNum}}</span>
@@ -130,7 +130,7 @@
         </div>
         <div class="order-sumitW">
             <div class="order-sumitP">
-                ￥
+
                 <span class="shop-cPriceInt">{{message|toDecimal2Fp(message)}}.</span>
                 <span class="shop-cPriceFloat">{{message|toDecimal2Ap(message)}}</span>
             </div>
@@ -197,7 +197,7 @@ export default {
         },
         // 订单预览
         previewOrder: function() {
-            var token = localStorage.getItem("token");
+            var token = localStorage.getItem("yeyun_token");
             var buys = JSON.parse(sessionStorage.getItem('buys'))
             var addressId = localStorage.getItem("addressId");
             let _this = this;
@@ -244,7 +244,7 @@ export default {
         },
         // 通过购物车进来
         previewOrderByCart: function() {
-            var token = localStorage.getItem("token");
+            var token = localStorage.getItem("yeyun_token");
             var addressId = localStorage.getItem("addressId");
             let _this = this;
             this.axios(testUrl + api.previewOrderByCart, {
@@ -289,7 +289,7 @@ export default {
         },
         //下单
         saveOrder: function() {
-            var token = localStorage.getItem("token");
+            var token = localStorage.getItem("yeyun_token");
             var buys = JSON.parse(sessionStorage.getItem('buys'));
             var addressId = localStorage.getItem("addressId");
 
@@ -313,7 +313,7 @@ export default {
         },
         // 通过购物车下单
         saveOrderByCart: function() {
-            var token = localStorage.getItem("token");
+            var token = localStorage.getItem("yeyun_token");
             var addressId = localStorage.getItem("addressId");
             let _this = this;
             this.axios(testUrl + api.saveOrderByCart, {
@@ -337,7 +337,7 @@ export default {
         //定时
         async sendPhoneSms() {
             if (this.validateFlag == 1) {
-                let data = await this.axios(testUrl + api.sendSms, {token: localStorage.getItem('token')}, 'post')
+                let data = await this.axios(testUrl + api.sendSms, {token: localStorage.getItem('yeyun_token')}, 'post')
                 if (data.error_code) {
                   return this.Toast(data.message)
                 }

@@ -351,7 +351,9 @@ export default {
       font-weight: bold;
       margin-top: 0.12rem;
       display: -webkit-box;
+      /* autoprefixer: off */
       -webkit-box-orient: vertical;
+      /* autoprefixer: on */
       -webkit-line-clamp: 2;
       overflow: hidden;
       text-overflow: ellipsis;

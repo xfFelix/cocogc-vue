@@ -60,15 +60,13 @@
         <!-- 猜你喜欢 -->
         <guess-like></guess-like>
 
-        <div class="shop-cartBot one-top-px" v-if="list.length != 0">
+        <div class="shop-cartBot" v-if="list.length != 0">
             <p class="shop-cSelectW">
                 <span @click="selectAll()" :class="!selectAllFlag?'shop-selectN':'shop-selectY'"></span>
                 <span>全选</span>
             </p>
-
             <div class="shop-cPN" v-if="deitDelFlag">
                 <p class="shop-cPriceW">
-                    <span style="display: flex;align-items: flex-end;margin-bottom: 1px;">￥</span>
                     <span class="shop-cPriceInt">{{selectAllPrice|toDecimal2Fp(selectAllPrice)}}.</span>
                     <span class="shop-cPriceFloat">{{selectAllPrice|toDecimal2Ap(selectAllPrice)}}</span>
                 </p>
@@ -143,7 +141,7 @@ export default {
                     }
                 })
                 .catch((err) => {
-                    _this.Toast(err.message)
+                    // _this.Toast(err.message)
                 })
         },
         // 删除

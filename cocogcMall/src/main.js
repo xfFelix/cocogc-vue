@@ -11,7 +11,7 @@ import '../static/css/style.css';
 import '../static/css/animate.css';
 import VueCookie from 'vue-cookies';
 import VueLazyload from 'vue-lazyload';
-
+import store from './store/index.js'
 import Tips from './common/tips'
 
 Vue.component(Spinner.name, Spinner)
@@ -62,6 +62,7 @@ Object.keys(filters).forEach(key => {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 });
