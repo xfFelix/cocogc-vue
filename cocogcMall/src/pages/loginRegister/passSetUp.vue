@@ -3,8 +3,7 @@
 
         <head>
             <div class="registHead" @click="$router.back(-1)">
-                <span class="triangleUp"></span>
-                <span class="triangleDown"></span>
+               
             </div>
         </head>
 
@@ -79,7 +78,7 @@ export default {
         // 忘记密码接口
         passSetUp: function() {
             let _this = this;
-            this.axios(api.forget, {
+            this.axios(infoURl+api.forget, {
                 mobile: _this.passSet.userName,
                 passwd: _this.passSet.passWord,
                 confirm_passwd: _this.passSet.passConfirm,
@@ -87,7 +86,7 @@ export default {
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                        this.$router.push('/passSetUp')
+                        this.$router.push('/passSetSucess')
                     } else {
                         this.MessageBox("提示", data.message)
                     }
@@ -99,13 +98,13 @@ export default {
         // 忘记密码短信接口
         sms: function() {
             let _this = this;
-            this.axios(api.forget, {
+            this.axios(infoURl+api.sms, {
                 mobile: _this.passSet.userName,
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
                         this.validateFlag = 0;
-                        this.validate = "120s 重新获取"
+                        this.validate = "120s 重新获取";
                         let _this = this;
                         let timeInit = 120;
                         let countDown = setInterval(function() {
@@ -204,9 +203,17 @@ export default {
 
 
 .registHead {
+    width: 0.22rem;
+    height: 0.38rem;
+    background-image: url(/static/images/jl.png);
+    background-repeat: no-repeat;
+    background-size: 5.8rem 1.86rem;
+    background-position: -0.2rem -0.74rem;
     position: absolute;
-    left: 0.5rem;
-    top: 0.7rem;
+    left: 0.32rem;
+    top: 0.56rem;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .loginUl {

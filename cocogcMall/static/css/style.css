@@ -219,9 +219,8 @@ height: 45px;
   }
 
 
-  /* #register,#login{
-    background: #fff;
-  }
-    #index{
-    background: #eef1f6;
-  } */
+
+.mint-msgbox-wrapper .mint-msgbox .mint-msgbox-confirm{
+  font-size: 0.32rem;
+  color: #19ad6a;
+}

@@ -159,6 +159,8 @@
                     leave-active-class="animated fadeOut">
           <bg-mask v-model="showSendCode"></bg-mask>
         </transition>
+
+
     </div>
 </template>
 

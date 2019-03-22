@@ -32,7 +32,7 @@
             </li>
             <li class="one-bottom-px" @click="passupJump()">
                 <div>
-                    登录密码
+                    修改密码
                 </div>
                 <div>
                     <span class="j1Png setUp-go"></span>

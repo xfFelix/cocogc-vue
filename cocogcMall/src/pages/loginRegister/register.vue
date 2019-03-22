@@ -69,7 +69,7 @@
 <script>
 import api from "@/service/api";
 import { IsEmpty, IsMobile, CheckPass } from "@/util/common"
-var baseUrl = "http://yzmall.dev.legendpoker.cn/user/"
+
 
 
 export default {
@@ -94,7 +94,7 @@ export default {
     */
     regist: function() {
       let _this = this;
-      this.axios(api.register, {
+      this.axios(infoURl+api.register, {
         mobile: this.register.userName,
         passwd: this.register.inputPass,
         confirm_passwd: this.register.inputPass,
@@ -117,7 +117,7 @@ export default {
     */
     regsms: function() {
       let _this = this;
-      this.axios(api.regsms, {
+      this.axios(infoURl+api.regsms, {
         mobile: this.register.userName,
         captcha: this.register.captcha,
       }, 'post')
@@ -149,7 +149,7 @@ export default {
 
     // 图片验证码
     validateImgClick: function() {
-      this.validateImgSrc = baseUrl + 'captcha?' + (new Date());
+      this.validateImgSrc = infoURl + 'user/captcha?' + (new Date());
     },
 
     eyeImgClose: function() {
@@ -206,7 +206,7 @@ export default {
     }
   },
   mounted() {
-    this.validateImgSrc = baseUrl + 'captcha?' + (new Date());
+    this.validateImgSrc = infoURl + 'user/captcha?' + (new Date());
   },
   components: {
 

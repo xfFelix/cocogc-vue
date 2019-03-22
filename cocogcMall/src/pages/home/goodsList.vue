@@ -27,7 +27,6 @@
                 </li>
                 <li>
                     <p @click="intervalCli">积分区间</p>
-
                 </li>
             </ul>
 
@@ -48,7 +47,7 @@
                         <img :src="item.image" alt="" />
                     </div>
                     <p class="home-iNmame">
-                        {{item.name|wordSize(item.name)}}
+                        {{item.name}}
                     </p>
                     <div class="home-iMoneyW">
                         <span class="home-iMoneyL"></span>
@@ -68,7 +67,6 @@
 </template>
 <script>
 import headSearch from "../../common/headSearch.vue";
-// import Loading from "../../common/loading.vue";
 
 import api from '../../service/api';
 
@@ -79,11 +77,11 @@ export default {
             searchCont: '',
             homeSel: [
 
-                { id: 0, integral: "0~50", homeSelShow: true },
-                { id: 1, integral: "51~200", homeSelShow: true },
-                { id: 2, integral: "201~500", homeSelShow: true },
-                { id: 3, integral: "501~1000", homeSelShow: true },
-                { id: 4, integral: "1001~2000", homeSelShow: true },
+                { id: 1, integral: "0~50", homeSelShow: true },
+                { id: 2, integral: "51~200", homeSelShow: true },
+                { id: 3, integral: "201~500", homeSelShow: true },
+                { id: 4, integral: "501~1000", homeSelShow: true },
+                { id: 5, integral: "1001~2000", homeSelShow: true },
             ],
             iSelectAct: '',
             intervalFlag: false,
@@ -99,10 +97,12 @@ export default {
             keyWord: '',//关键字
             priceRange: '', //判断价格的高低
             priceRangeFlag: true,  //判断价格的高低
-            salesVolume: "" //销量排序
+            salesVolume: "" ,//销量排序
+            productTypeId:""
         };
     },
     mounted() {
+
         // 观察是否到了底部
         this.observer = new IntersectionObserver(
             function(entries) {
@@ -120,7 +120,9 @@ export default {
         );
 
         this.urlParams()
-    },
+
+
+},
     methods: {
         //搜索框
         parentChild(val) {
@@ -164,7 +166,7 @@ export default {
             this.priceRange = "";
             this.salesVolume = "";
 
-            this.iSelectAct = index; //改变积分颜色
+            this.iSelectAct = index + 1; //改变积分颜色
             this.intervalFlag = false;
 
             this.price = item.integral;
@@ -200,8 +202,8 @@ export default {
             this.brandId = this.$route.query.classfyId;
             this.keyWord = this.$route.query.keyWord;
             this.salesVolume = this.$route.query.salesVolume;
-            
-          
+
+            this.productTypeId = this.$route.query.quickItem;
 
             if (this.$route.query.integra == undefined) {
                 this.price = ""
@@ -215,6 +217,11 @@ export default {
             if (this.$route.query.salesVolume == undefined) {
                 this.salesVolume = ""
             }
+            if (this.productTypeId == undefined) {
+                this.productTypeId = ""
+            }
+
+            
             this.goodsListSearch(this.offsetRows)
         },
 
@@ -229,6 +236,7 @@ export default {
                 "rows": 10,
                 "salesVolume": _this.salesVolume,
                 "timeSort": "",
+                "productTypeId":_this.productTypeId
             }, 'post')
                 .then((data) => {
                     if (data.code == 0) {
@@ -239,17 +247,16 @@ export default {
                             _this.moreShow = false;
                         }
                     } else {
-
+                        _this.Toast(data.message);
                     }
                 })
                 .catch((err) => {
-
-
+                    _this.Toast(err.message);
                 })
-        }
-    },
-    components: {
-        "head-search": headSearch,
+        },
+},
+components: {
+    "head-search": headSearch,
         // "v-loading": Loading,
     }
 
@@ -344,9 +351,18 @@ export default {
         .home-iNmame {
             color: #333333;
             font-size: 0.26rem;
-            line-height: 0.36rem;
-            margin-top: 0.12rem;
-            width: 100%; // height: 0.75rem;
+
+
+    font-weight: bold;
+    margin-top: 0.12rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    text-align: center;
         }
         .home-iMoneyW {
             display: flex;
