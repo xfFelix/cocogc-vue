@@ -303,6 +303,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         var orderId = data.data[0].orderId;
+                        this.Toast('下单成功')
                         this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
 
                     }
@@ -324,6 +325,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         var orderId = data.data[0].orderId;
+                        this.Toast('下单成功')
                         this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
                     } else {
                       this.Toast(data.message)

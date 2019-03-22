@@ -73,7 +73,7 @@
                 <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum1':'shop-cartNum0'">
                     <span class="shop-carNumI" @click="settleGoods">
                         去结算(
-                        <span class="shop-cartNum">{{selectAllGoods}}</span>)
+                        <span class="shop-cartNum">{{countNum}}</span>)
                     </span>
                 </p>
             </div>
@@ -93,6 +93,7 @@
 import Guesslike from "../../common/guesslike.vue";
 import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -107,6 +108,24 @@ export default {
 
         };
     },
+    computed: {
+      async countNum() {
+        let num = 0
+        if (this.list) {
+          let buys = []
+          let total = this.list.reduce((state, item) =>{
+            state.num = item.num + state.num
+            buys.push({goodsId: item.goodsId, nums: item.num})
+            return state
+          },{num: 0})
+          let cart = await this.axios(testUrl + api.updateCart, {token: getToken(),buys: buys}, 'post')
+          this.setNum(total.num)
+          return total.num
+        } else {
+          return 0
+        }
+      }
+    },
     mounted() {
         var that = this;
         this.getCartGoodsList(function(data) {
@@ -120,6 +139,9 @@ export default {
 
     },
     methods: {
+      ...mapActions({
+        setNum: 'cart/setNum'
+      }),
         getCartGoodsList(callback) {
             let _this = this;
             this.axios(testUrl + api.selectCarts,{
@@ -183,6 +205,12 @@ export default {
         settleGoods() {
             var that = this;
             var buys = [];
+            if (!JSON.parse(localStorage.isRealCert)) {
+              return this.Toast({
+                message: '请先实名认证',
+                duration: 1000
+              })
+            }
             that.list.forEach(function(v) {
                 if (v.check) {
                     var buy = {};
@@ -251,7 +279,7 @@ export default {
             }
         },
         //输入的数量
-        storeMoney(e, index) {
+        async storeMoney(e, index) {
             this.list[index].num = e;
             this.computeTotal();
         },
