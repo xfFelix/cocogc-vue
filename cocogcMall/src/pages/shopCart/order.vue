@@ -80,8 +80,7 @@
                         <span class="shop-dNameImg"></span>
                         <span>{{dataItem.vendorId}}</span>
                         <p>
-                            (共
-                            <span>1</span>件)
+                            (共<span>1</span>件)
                         </p>
                     </div>
 
@@ -146,7 +145,7 @@
                     <span class="phonePay-tName">确认兑换</span>
                 </p>
                 <p class="phonePay-telW hide">短信验证码已发送至手机
-                    <span class="phonePay-tel"></span>
+                    <span class="phonePay-tel">{{userinfo.userName | formatPhone}}</span>
                 </p>
                 <p class="phonePay-inpW">
                     <input class="phonePay-msg" type="number" placeholder="请输入短信验证码" v-model="smsCode"/>
@@ -170,6 +169,7 @@ import BgMask from "@/common/BgMask"
 import Swiper from 'swiper';
 import api from '../../service/api';
 import ExchangeSu from "@/components/shopCart/ExchangeSu"
+import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -190,6 +190,11 @@ export default {
       } else {
         this.previewOrder()
       }
+    },
+    computed: {
+      ...mapGetters({
+        userinfo: 'userinfo/getUserInfo'
+      })
     },
     methods: {
         sumitOrder() {
@@ -368,7 +373,7 @@ export default {
                     }
                 }, 1000)
             }
-        },
+        }
     },
     components: {
         "header-top": headerTop,
@@ -495,7 +500,7 @@ export default {
                 font-size: 0.3rem;
                 margin-top: 0.48rem;
                 .order-goodsDPrice {
-                  color: #F56C6C;
+                  color: #30ce84;
                 }
                 .order-goodsDNumW {
                     .order-goodsDNumI {
@@ -602,7 +607,7 @@ export default {
             color: #666666;
         }
         span:nth-of-type(2) {
-            color: #fc5c5c;
+            color: #30ce84;
         }
     }
 }
@@ -621,7 +626,7 @@ export default {
     left: 0;
     .order-sumitP {
       font-weight: 500;
-      color: #F56C6C;
+      color: #30ce84;
         span:nth-of-type(1) {
             font-size: 0.48rem;
         }

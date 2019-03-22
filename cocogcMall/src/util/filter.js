@@ -58,9 +58,10 @@ let wordSize = x => {
     } else {
         return x
     }
+  }
 
+  let formatPhone = phone => {
+    return phone.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
+  }
 
-
-}
-
-export { formatMoney, toDecimal2, toDecimal2Fp, toDecimal2Ap, wordSize }
+export { formatMoney, toDecimal2, toDecimal2Fp, toDecimal2Ap, wordSize, formatPhone }

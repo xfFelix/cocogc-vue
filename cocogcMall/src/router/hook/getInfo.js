@@ -15,9 +15,11 @@ export default (router) => {
         localStorage.setItem('userName', info.data.userName);
         localStorage.setItem('score', info.data.score);
         localStorage.setItem('isRealCert', info.data.isRealCert);
-        localStorage.setItem('addressId', address.data.id);
+        if (address.data) {
+          localStorage.setItem('addressId', address.data.id);
+          store.dispatch('userinfo/setAddress', address.data)
+        }
         store.dispatch('userinfo/setUserInfo', info.data)
-        store.dispatch('userinfo/setAddress', address.data)
         store.dispatch('cart/setNum', cart.data)
         next()
       } else {
