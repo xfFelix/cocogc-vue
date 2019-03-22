@@ -21,7 +21,7 @@
         <p class="realNameBnt" @click="show()">
             立即实名认证
         </p>
-        <p class="lookPersonBnt">
+        <p class="lookPersonBnt" @click="jumpAccount()">
             查看个人中心
         </p>
     </div>
@@ -29,17 +29,18 @@
 
 
 <script>
-// import api from "@/service/urlApi";
 
 export default {
     data() {
         return {
-
         };
     },
     methods: {
         show() {
-            this.$router.push('/certified')
+             window.location.href = infoURl + "#!/cert?token=" + this.$cookies.get("yeyun_token");
+        },
+        jumpAccount(){
+            this.$router.push('/layout/account')
         }
     },
     mounted() {

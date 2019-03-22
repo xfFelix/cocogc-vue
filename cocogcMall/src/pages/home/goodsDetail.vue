@@ -5,7 +5,7 @@
             <p class="goodsD-hBack" @click="$router.go(-1)">
                 <span></span>
             </p>
-            <p class="circle" @click="">
+            <p class="circle">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -24,14 +24,14 @@
 
             </div>
             <!-- <div class="goodsD-hBM">
-                    <p class="goodsD-hBack" @click="$router.go(-1)">
-                        <span></span>
-                    </p>
-                    <div class="home-message">
-                        <span class="home-msg"></span>
-                        <span class="home-msgNum">11</span>
-                    </div>
-                </div> -->
+                            <p class="goodsD-hBack" @click="$router.go(-1)">
+                                <span></span>
+                            </p>
+                            <div class="home-message">
+                                <span class="home-msg"></span>
+                                <span class="home-msgNum">11</span>
+                            </div>
+                        </div> -->
         </div>
 
         <div class="goodsD-priceAddress">
@@ -56,15 +56,14 @@
                         <span>选择地区</span>
                         <span class="j1Png goodsD-addressGO"></span>
                     </p>
-                    <p>由京东发货，并提供售后服务，服务电话4006-066-866</p>
+                    <p>{{goodsInfo.services}}</p>
                 </div>
             </div>
         </div>
 
         <div class="goodsD-info">
-            <h3>商品简介</h3>
-            <div>
-                {{goodsInfo.brief}}
+            <h3>规格与包装</h3>
+            <div v-html="goodsInfo.brief" class="goodsD-infoCon">
             </div>
 
         </div>
@@ -396,6 +395,7 @@ export default {
 
 
 .goodsD-headW {
+    padding-top: 0.7rem;
     .goodsD-headImg {
         height: 7.5rem;
         img {
@@ -555,9 +555,40 @@ export default {
     margin-bottom: 0.22rem;
     padding: 0.22rem 0.24rem;
     background: #fff;
+    .goodsD-infoCon {
+        border-collapse: collapse;
+        margin: 0.2rem 0;
+        table {
+            border: 0;
+            margin: 0;
+            border-collapse: collapse;
+            border-spacing: 0;
+            tbody {
+                tr {
+                    th {
+                        font-size: 1.1em;
+                        text-align: left;
+                        padding-top: 5px;
+                        padding-bottom: 4px;
+                        color: #000;
+                        font-size: 1em;
+                        border: 1px solid #dadada;
+                        padding: 0.2rem;
+                    }
+                    td {
+                        color: #000000;
+                        // background-color: #EAF2D3;
+                        font-size: 0.26rem;
+                        border: 1px solid #dadada;
+                        padding: 3px 7px 2px 7px;
+                        padding: 0.1rem 0.2rem;
+                    }
+                }
+            }
+        }
+    }
     h3 {
-
-        // font-size: 0.3rem;
+        font-size: 0.3rem;
         color: #000000;
     }
     p {

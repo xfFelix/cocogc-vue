@@ -99,7 +99,7 @@ export default {
                       }
                         this.token = data.data.token;
                         localStorage.setItem("yeyun_token", token);
-                        this.$cookies.set("yeyun_token",token[30])
+                        this.$cookies.set("yeyun_token",token,30)
                     } else {
                         this.tipBgShow = true;
                     }
@@ -138,7 +138,7 @@ export default {
                 return false;
             }
             if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
-                this.MessageBox("密码错误", "请输入正确的密码。")
+                this.MessageBox("密码错误", "用户名或密码错误")
                 return false;
             }
             this.login()

@@ -13,9 +13,8 @@
             </ul>
 
             <span class="home-iMore" @click="integraM()">
-                <span class="home-iMoreGo">
-
-                </span>
+                <!-- <span class="home-iMoreGob j1Png"></span> -->
+                 <span class="home-iMoreGo j1Png" :class="homeSelFlag?'home-iMoreGob':'home-iMoreGoa'"></span> 
             </span>
         </div>
 
@@ -25,7 +24,7 @@
                     <img :src="item.image" alt="" />
                 </div>
                 <p class="home-iNmame">
-                    {{item.name|wordSize(item.name)}}
+                    {{item.name}}
                 </p>
                 <div class="home-iMoneyW">
                     <span class="home-iMoneyL"></span>
@@ -54,7 +53,7 @@ export default {
             ],
             homeSelFlag: 0,
             iSelectAct: '',
-            iSintegra:'',
+            iSintegra: '',
             goodsList: [],
         }
     },
@@ -70,7 +69,7 @@ export default {
     methods: {
         //带积分到列表页
         toGoodsList() {
-            this.$router.push({path:'/goodsList',query:{integra:this.iSintegra}})
+            this.$router.push({ path: '/goodsList', query: { integra: this.iSintegra } })
         },
         // 积分区间
         integraM() {
@@ -90,10 +89,10 @@ export default {
                 this.homeSelFlag = 0
             }
         },
-        goDetail (item) {
-          this.$router.push({
-            path: '/goodsDetail/' + item.id
-          })
+        goDetail(item) {
+            this.$router.push({
+                path: '/goodsDetail/' + item.id
+            })
         },
         iSelect(item, index) {
             this.iSelectAct = index;
@@ -144,7 +143,7 @@ export default {
                     if (data.code == 0) {
                         if (data.list.length > 0) {
                             _this.goodsList = data.list;
-                        }else{
+                        } else {
 
                         }
                     } else {
@@ -191,22 +190,25 @@ export default {
             border: 1px solid #dfdfdf;
             border-radius: 1rem; // margin-right: 0.09rem;
             text-align: center;
-
             .home-iMoreGo {
-                background-image: url(/static/images/jl.png);
-                background-repeat: no-repeat;
                 background-position: -3.24rem -0.76rem;
-                background-size: 5.8rem 1.86rem;
-                -webkit-transform: rotate(45deg);
-                transform: rotate(90deg);
+                // transform: rotate(90deg);
                 width: 0.25rem;
                 height: 0.25rem;
                 display: inline-block;
                 margin: 0.18rem auto;
+                transition: all 0.4s;
             }
+            .home-iMoreGoa {
+                transform: rotate(90deg);
+            }
+            .home-iMoreGob {
+                transform: rotate(-90deg);
+            }
+
         }
         .iSelectNo {
-            border: 1px solid rgba(0,0,0,0.06);
+            border: 1px solid rgba(0, 0, 0, 0.06);
             color: #333333;
         }
         .iSelectCla {
@@ -228,8 +230,7 @@ export default {
         margin: 0.2rem 0;
         .home-iGoods {
             width: 100%;
-            text-align: center;
-            // border-bottom: 1px solid #e6e6e6; // height: 3.16rem;
+            text-align: center; // border-bottom: 1px solid #e6e6e6; // height: 3.16rem;
             position: relative;
             img {
                 width: 100%; // margin-top: 0.5rem;
@@ -271,8 +272,19 @@ export default {
         .home-iNmame {
             color: #333333;
             font-size: 0.26rem;
-            line-height: 0.36rem;
-            margin-top: 0.12rem;
+
+
+
+    font-weight: bold;
+    margin-top: 0.12rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    text-align: center;
         }
         .home-iMoneyW {
             display: flex;

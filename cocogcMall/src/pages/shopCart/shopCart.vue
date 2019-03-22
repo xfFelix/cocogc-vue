@@ -87,6 +87,17 @@
             </div>
         </div>
 
+
+        <div class="changeSuccessW"> 
+            <div>
+                <p></p>
+                <p>兑换成功</p>
+                <p>122.00</p>
+                <p>订单详情</p>
+                <p>返回首页</p>
+                <p>3秒后自动进入首页</p>
+            </div>
+        </div>
     </div>
 </template>
 <script>

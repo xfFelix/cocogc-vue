@@ -6,9 +6,14 @@
                 <!-- 页面 -->
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" v-for="(item,index) in quickList" :key="index">
-                        <router-link :to="{path: quickItem.path, query: {id: quickItem.id}}" class="home-quickA" v-for="(quickItem,quickIndex) in item" :key="quickIndex">
+                        <!-- <router-link :to="{path: quickItem.path, query: {id: quickItem.id}}" class="home-quickA" v-for="(quickItem,quickIndex) in item" :key="quickIndex">
+                                    <p class="navImg home-qImg" :class="quickItem.imgBg">
+                                    </p>
+                                    <p class="home-qName">{{quickItem.name}}</p>
+                                </router-link> -->
+
+                        <router-link :to="{path:'/goodsList',query:{quickItem:quickItem.id}}" class="home-quickA" v-for="(quickItem,quickIndex) in item" :key="quickIndex">
                             <p class="navImg home-qImg" :class="quickItem.imgBg">
-                                <!-- <span class="home-qIde">HOT</span> -->
                             </p>
                             <p class="home-qName">{{quickItem.name}}</p>
                         </router-link>
@@ -27,10 +32,10 @@ export default {
         return {
             quickList: [
                 [
-                    { name: "日用超市", path: 'classify', imgBg: 'home-qImg01', id: '1620' },
-                    { name: "手机数码", path: 'classify', imgBg: 'home-qImg02', id: '9987' },
-                    { name: "家用电器", path: 'classify', imgBg: 'home-qImg03', id: '737' },
-                    { name: "美妆护肤", path: 'classify', imgBg: 'home-qImg04', id: '1316' },
+                    { name: "日用超市", imgBg: 'home-qImg01', id: '1620' },
+                    { name: "手机数码", imgBg: 'home-qImg02', id: '9987' },
+                    { name: "家用电器", imgBg: 'home-qImg03', id: '737' },
+                    { name: "美妆护肤", imgBg: 'home-qImg04', id: '1316' },
                 ],
             ]
         }
