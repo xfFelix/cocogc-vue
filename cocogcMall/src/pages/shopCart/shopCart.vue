@@ -109,17 +109,22 @@ export default {
         };
     },
     computed: {
-      async countNum() {
+      countNum() {
         let num = 0
         if (this.list) {
           let buys = []
           let total = this.list.reduce((state, item) =>{
-            state.num = item.num + state.num
             buys.push({goodsId: item.goodsId, nums: item.num})
+            if (item.check) {
+              state.num = item.num + state.num
+              num ++
+            }
             return state
           },{num: 0})
-          let cart = await this.axios(testUrl + api.updateCart, {token: getToken(),buys: buys}, 'post')
-          this.setNum(total.num)
+          if (num === this.list.length) {
+            this.selectAllFlag = true
+          }
+          this.axios(testUrl + api.updateCart, {token: getToken(),buys: buys}, 'post')
           return total.num
         } else {
           return 0

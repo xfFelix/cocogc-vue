@@ -13,12 +13,12 @@
       </a>
 
       <div class="ih-balanceW">
-        <div class="ih-balance" v-if="loScore=='undefined' || loScore == 'null' || loScore==''">
-          <router-link :to="{path:'/login'}" class="ih-nologin">未登录</router-link>
+        <div class="ih-balance" v-if="!token">
+          <router-link :to="{path:'/login'}" class="ih-nologin">登录查看</router-link>
         </div>
 
-        <div class="ih-balance" v-else>
-          <p class="ih-money">{{loScore}}</p>
+        <div class="ih-balance" v-else-if="token">
+          <p class="ih-money">{{loScore.score}}</p>
           <p class="ih-moneya">椰子分余额</p>
         </div>
 
@@ -90,6 +90,8 @@
 
 import Swiper from 'swiper';
 import api from '../../service/api';
+import { mapGetters } from 'vuex';
+import {getToken} from '@/util/common'
 
 export default {
   name: 'index',
@@ -111,10 +113,15 @@ export default {
       ],
       goodsList: [],
       loginFlag: false,
-      loScore: ''
+      token: getToken()
     }
   },
   created() {
+  },
+  computed: {
+    ...mapGetters({
+      loScore: 'userinfo/getUserInfo'
+    })
   },
   mounted() {
     var swiperBan = new Swiper('.index-swipe .swiper-container', {
@@ -124,7 +131,6 @@ export default {
       },
     })
     this.rank();
-    this.loScore = localStorage.getItem('score');
   },
   components: {
   },
@@ -219,6 +225,8 @@ export default {
         color: #fff;
         display: block;
         letter-spacing: 1px;
+        cursor: pointer;
+        text-decoration: underline;
       }
     }
     .ih-recharge {

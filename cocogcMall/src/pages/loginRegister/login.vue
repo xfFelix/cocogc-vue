@@ -91,21 +91,22 @@ export default {
                 passwd: _this.loginForm.passWord,
             }, 'post')
                 .then((data) => {
-                    if (data.error_code == 0) {
-                      if (this.$route.query.redirect) {
-                        this.$router.replace(this.$route.query.redirect)
-                      } else {
-                        this.$router.replace('/layout/home');
-                      }
+                  if (data.error_code == 0) {
+                  console.log(data.error_code)
                         this.token = data.data.token;
-                        localStorage.setItem("yeyun_token", token);
-                        this.$cookies.set("yeyun_token",token[30])
+                        localStorage.setItem("yeyun_token", this.token);
+                        this.$cookies.set("yeyun_token",this.token,30)
+                        if (this.$route.query.redirect) {
+                          this.$router.replace(this.$route.query.redirect)
+                        } else {
+                          this.$router.replace('/layout/home');
+                        }
                     } else {
                         this.tipBgShow = true;
                     }
                 })
                 .catch((err) => {
-                    this.tipBgShow = true;
+                    // this.tipBgShow = true;
                 })
         },
         //眼睛和清空
