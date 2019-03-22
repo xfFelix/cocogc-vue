@@ -9,13 +9,11 @@
                             <span>{{item.name}}</span>
                             <span>{{item.tel}}</span>
                         </p>
-                        <p class="address-address">{{item.address}}</p>
+                        <p class="address-address">{{item.area}}{{item.address}}</p>
                     </div>
                     <div class="address-operW">
                         <div class="address-def">
-
-                            <span class="j1Png" :class="item.isDefault==1?'address-defImg':'address-defImgNo'"></span>
-
+                            <span class="j1Png" :class="item.isDefault==1?'address-defImg':'address-defImgNo'" @click="addDef(item,index)"></span>
                             <span class="address-defAddress">
                                 <span>设为默认地址</span>
                             </span>
@@ -129,6 +127,10 @@ export default {
                     _this.Toast(err.message)
                 })
         },
+        addDef(item,index){
+            console.log(item);
+             console.log(index)
+        }
 
     },
     components: {

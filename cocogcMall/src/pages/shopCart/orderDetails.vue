@@ -2,10 +2,10 @@
     <div class="orderDetails">
         <header-top></header-top>
         <div class="od-titleWrap">
-            <p class="od-titleInfoWrap">
+            <!-- <p class="od-titleInfoWrap">
                 <span class="j1Png od-titleInfoImg"></span>
                 <span class="od-titleInfo">待发货</span>
-            </p>
+            </p> -->
             <!-- <p class="od-service">
                 申请售后
             </p> -->
@@ -170,7 +170,8 @@ export default {
 <style lang="less">
 .od-titleWrap {
     padding: 0.4rem 0.3rem 0 0.3rem;
-    height: 1.26rem;
+    // height: 1.26rem;
+    height: 0.5rem;
     background: #30ce84;
     color: #fff;
     font-size: 0.3rem;

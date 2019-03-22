@@ -51,7 +51,7 @@
                         <span>订单编号：</span>
                         <span>{{list.orderId}}</span>
                     </p>
-                    <p class="od-numberCopy">复制</p>
+                    <p class="od-numberCopy"  @click="handleCopy(list.orderId, $event)">复制</p>
                 </div>
 
                 <div class="order-goodSInfo one-bottom-px">
@@ -117,7 +117,7 @@
                     </div>
                     <p class="j1Png ld-logisClose" @click="showSendCode = false"></p>
                 </div>
-                <div class="order-goodSW">
+                <div class="order-goodSWa">
                     <div>
                         <div class="order-goodSInfo" v-for="(itemGoods,indexGoods) in list.goodsList" :key="indexGoods">
                             <div class="order-goodSIImg">
@@ -235,6 +235,9 @@ export default {
         showDetail() {
             this.showSendCode = true;
         },
+        handleCopy(text, event) {
+            clip(text, event)
+        },
     },
     components: {
         "header-top": headerTop,
@@ -280,7 +283,7 @@ export default {
 }
 
 #logisticsDetail {
-    .order-goodSW {
+    .order-goodSWa {
         background: #fff;
         margin-top: 0.2rem;
         padding: 0 0.37rem 0 0.32rem;

@@ -109,7 +109,7 @@ export default {
     data() {
         return {
             list: [],
-            headList: ['全部', '未完成', '已完成', '退换/售后'],
+            headList: ['全部', '已完成', '未完成', '退换/售后'],
             headIndex: 0,
             pathStatus: ''
         }
@@ -127,7 +127,6 @@ export default {
                 break;
             case '1':
                 this.headIndex = 1;
-
                 break;
             case '2':
                 this.headIndex = 2;
