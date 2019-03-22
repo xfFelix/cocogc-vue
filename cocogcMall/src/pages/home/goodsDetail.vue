@@ -85,7 +85,7 @@
 
             <div class="goodDetail-buyCO">
                 <div class="goodDetail-buyCard">
-                    <router-link :to="{path: '/layout/shopCart'}">
+                    <router-link :to="{path: '/layout/shopCart'}" style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
                         <p class="navImg goodDetail-bcImg">
                             <span>{{carTotal}}</span>
                         </p>
@@ -146,6 +146,7 @@
 import { IsEmpty, getToken } from "@/util/common";
 import Swiper from 'swiper';
 import api from '../../service/api';
+import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -162,6 +163,11 @@ export default {
             carTotal: 0,
             isGo: 'cart'
         };
+    },
+    computed: {
+      ...mapGetters({
+        userinfo: 'userinfo/getUserInfo'
+      })
     },
     mounted() {
         var that = this;
@@ -329,6 +335,9 @@ export default {
                 })
         },
         async goPreview() {
+            if (!this.userinfo.isRealCert) {
+              return this.Toast('请先完成实名注册')
+            }
             let buys = []
             buys.push({ goodsId: this.goodsId, nums: this.buyNum })
             sessionStorage.setItem('buys', JSON.stringify(buys))

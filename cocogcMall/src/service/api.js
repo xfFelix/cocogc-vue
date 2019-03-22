@@ -47,6 +47,7 @@ const keyword = 'query/keyword'; //商品列表查询
 const sendSms = 'api/sendSms' // 发送验证码
 const previewOrderByCart = 'api/previewOrderByCart' // 通过购物车进入预览订单
 const saveOrderByCart = 'api/saveOrderByCart' // 通过购物车下单
+const selectDefaultAddresses = 'api/selectDefaultAddresses' // 获取默认地址
 
 
 
@@ -85,4 +86,5 @@ export default {
   cards,
   guessLike,
   queryOrderTrack,
+  selectDefaultAddresses
 }

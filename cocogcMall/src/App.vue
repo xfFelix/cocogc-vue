@@ -110,9 +110,9 @@ export default {
     },
     mounted() {
         // this.getToken();
-        this.getCarInfo(data => {
-          this.setNum(data)
-        })
+        // this.getCarInfo(data => {
+        //   this.setNum(data)
+        // })
     }
 }
 
