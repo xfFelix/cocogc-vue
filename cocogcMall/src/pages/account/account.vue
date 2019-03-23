@@ -27,8 +27,10 @@
                 <div class="swiper-container">
                     <!-- 页面 -->
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide" v-for="item of top" :key="item">
-                            <img :src="item" alt="" style="width: 100%"/>
+                        <div class="swiper-slide" v-for="item of top" :key="item.title">
+                          <a href="item.url">
+                            <img :src="item.src" alt=""/>
+                          </a>
                         </div>
 
                     </div>
@@ -90,8 +92,10 @@
                 <div class="swiper-container">
                     <!-- 页面 -->
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide" v-for="item of end" :key="item">
-                            <img :src="item" alt="" style="width: 100%"/>
+                        <div class="swiper-slide" v-for="item of end" :key="item.title">
+                          <a href="item.url">
+                            <img :src="item.src" alt=""/>
+                          </a>
                         </div>
 
                     </div>
@@ -166,7 +170,7 @@ export default {
         let promise = new Promise(async (resolve, reject) => {
           let banner = await this.axios(testUrl + api.goodsGroups, {"id": id}, 'post')
           if (!banner.error_code) {
-            resolve(banner.data.data[0])
+            resolve(banner.data.data)
           }
         })
         return promise

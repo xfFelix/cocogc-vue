@@ -2,7 +2,7 @@
     <div class="home-rank">
         <div class="home-rHM">
             <h3>热门爆款</h3>
-             <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}" class="home-rMore"></router-link>
+             <!-- <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}" class="home-rMore"></router-link> -->
         </div>
         <p class="home-hSE">BEST SELLERS EXPLOSIVE MONEY</p>
         <div class="home-rGoodsW">
@@ -57,15 +57,13 @@ export default {
                         this.goodsList = data.data.goodsList;
                         _this.$nextTick(function() {
                             _this.swiperRank = new Swiper('.home-rank .swiper-container', {
-                                // autoplay: {
-                                //   delay: 2000,
-                                //   stopOnLastSlide: false,
-                                //   disableOnInteraction: false,
-                                // },
-                                slidesPerView: 'auto',
-                                slidesPerGroup: 4,
-                                spaceBetween: 20,
-                                // slidesOffsetAfter : 10,
+                                autoplay: {
+                                  delay: 2000,
+                                  stopOnLastSlide: false,
+                                  disableOnInteraction: false,
+                                },
+                                loop: true,
+                                slidesPerView : 3,
                                 freeMode: true,
                             });
                         })
@@ -99,6 +97,7 @@ export default {
             width: 1.77rem;
             height: 1.77rem;
             // background: #f8f8f8;
+            margin: auto;
             text-align: center;
             position: relative;
             img {
@@ -141,16 +140,20 @@ export default {
             font-weight: bold;
             font-size: 0.22rem;
             margin: 0.25rem 0 0.17rem;
-            display: -webkit-box;
-            /* autoprefixer: off */
-            -webkit-box-orient: vertical;
-            /* autoprefixer: on */
-            // -webkit-line-clamp: 2;
-            height: 0.64rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            word-wrap: break-word;
+            position:relative;
+            line-height:1.5em;
+            height:3em;
+            overflow:hidden;
             word-break: break-all;
+            word-wrap: break-word;
+            &::after{
+              content:"";
+              position:absolute;
+              bottom:0;
+              right:0;
+              padding: 0 5px;
+              background-color: #fff;
+            }
         }
     }
     .home-hSmoneyW {

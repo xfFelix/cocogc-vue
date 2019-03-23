@@ -2,7 +2,7 @@
     <div class="home-integralW">
         <div class="home-rHM">
             <h3>积分区间</h3>
-            <span class="home-rMore" @click="$router.push('/goodsList')"></span>
+            <!-- <span class="home-rMore" @click="$router.push('/goodsList')"></span> -->
         </div>
         <p class="home-hSE">INTEGRAL DIMENSION</p>
         <div class="home-iSelectW">
@@ -272,14 +272,20 @@ export default {
             font-size: 0.26rem;
             font-weight: bold;
             margin-top: 0.12rem;
-            display: -webkit-box;
-            -webkit-box-orient: vertical; // -webkit-line-clamp: 2;
-            overflow: hidden;
-            height: 0.64rem;
-            text-overflow: ellipsis;
+            position:relative;
+            line-height:1.5em;
+            height:3em;
+            overflow:hidden;
             word-break: break-all;
             word-wrap: break-word;
-            text-align: center;
+            &::after{
+              content:"";
+              position:absolute;
+              bottom:0;
+              right:0;
+              padding: 0 5px;
+              background-color: #fff;
+            }
         }
         .home-iMoneyW {
             display: flex;

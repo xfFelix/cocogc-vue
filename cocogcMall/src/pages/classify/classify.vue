@@ -55,14 +55,22 @@
                         <ul>
 
                             <li v-for="(i,index) in item.childCategory" :key="index">
-
+                              <span v-if="i.content != '' && i.content != null">
+                                <a :href="i.content" >
+                                    <p>
+                                        <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
+                                        <span class="product-name">{{i.name}}</span>
+                                    </p>
+                                </a>
+                              </span>
+                              <span v-else>
                                 <router-link :to="{path:'/goodsList',query:{classfyId: i.id}}">
                                     <p>
                                         <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
-
                                         <span class="product-name">{{i.name}}</span>
                                     </p>
                                 </router-link>
+                              </span>
                             </li>
 
                         </ul>

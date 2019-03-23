@@ -6,8 +6,9 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-         
-              <marquee  style="color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">{{item.noticeTitle}}</marquee> 
+              <marquee  style="width: 100%;color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
+                <a :href="item.url">{{item.noticeTitle}}</a>
+              </marquee>
           </div>
           <span class="ih-goImg j1Png"></span>
         </div>
@@ -46,13 +47,13 @@
     </ul>
 
     <!-- 图片 -->
-    <div class="index-swipeW">
+    <div class="index-swipeW" style="height: 116px;">
       <div class="index-swipe">
         <div class="swiper-container">
           <!-- 页面 -->
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item of banner" :key="item">
-              <img :src="item" alt="">
+            <div class="swiper-slide" v-for="(item,index) in banner" :key="index">
+              <img :src="item.src" alt="">
             </div>
           </div>
           <!-- 分页器 -->
@@ -133,7 +134,7 @@ export default {
       let banner = await this.axios(testUrl + api.goodsGroups, {
         "id": "a10a220f9aa94dc49c960c77cd783d11"
       }, 'post')
-      this.banner = banner.data.data[0]
+      this.banner = banner.data.data;
       this.$nextTick(() => {
         var swiperBan = new Swiper('.index-swipe .swiper-container', {
           loop: true,
@@ -374,17 +375,20 @@ export default {
       font-size: 0.22rem;
       font-weight: bold;
       margin-top: 0.12rem;
-      display: -webkit-box;
-      /* autoprefixer: off */
-      -webkit-box-orient: vertical;
-      /* autoprefixer: on */
-      // -webkit-line-clamp: 2;
-      height: 0.64rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      position:relative;
+      line-height:1.5em;
+      height:3em;
+      overflow:hidden;
       word-break: break-all;
       word-wrap: break-word;
-      text-align: center;
+      &::after{
+        content:"";
+				position:absolute;
+				bottom:0;
+				right:0;
+				padding: 0 5px;
+				background-color: #fff;
+      }
     }
     .ihot-moneyW {
       display: flex;
