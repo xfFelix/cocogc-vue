@@ -6,16 +6,13 @@
         <!-- 页面 -->
         <div class="swiper-wrapper">
           <div class="swiper-slide banner-slide" v-for="(item,index) in banList" :key="index">
-            <a :href="item[2]" class="banner-slidea">
-              <img :src="item[0]" alt="" class="">
-              <!-- <img src="http://thyrsi.com/t6/676/1551775957x2890174375.jpg" alt="" /> -->
+            <a :href="item.url" class="banner-slidea">
+              <img :src="item.src" alt="" class="">
             </a>
           </div>
         </div>
         <!-- 分页器 -->
-
         <div class="swiper-pagination"></div>
-
       </div>
 
       <div class="home-smWrap" v-if="homeSmWrap==false">

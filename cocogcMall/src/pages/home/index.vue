@@ -6,8 +6,8 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-         
-              <marquee  style="color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">{{item.noticeTitle}}</marquee> 
+
+              <marquee  style="color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">{{item.noticeTitle}}</marquee>
           </div>
           <span class="ih-goImg j1Png"></span>
         </div>
@@ -46,13 +46,13 @@
     </ul>
 
     <!-- 图片 -->
-    <div class="index-swipeW">
+    <div class="index-swipeW" style="height: 116px;">
       <div class="index-swipe">
         <div class="swiper-container">
           <!-- 页面 -->
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="item of banner" :key="item">
-              <img :src="item" alt="">
+              <img :src="item.src" alt="">
             </div>
           </div>
           <!-- 分页器 -->
@@ -133,7 +133,7 @@ export default {
       let banner = await this.axios(testUrl + api.goodsGroups, {
         "id": "a10a220f9aa94dc49c960c77cd783d11"
       }, 'post')
-      this.banner = banner.data.data[0]
+      this.banner = banner.data.data;
       this.$nextTick(() => {
         var swiperBan = new Swiper('.index-swipe .swiper-container', {
           loop: true,
@@ -379,7 +379,7 @@ export default {
       -webkit-box-orient: vertical;
       /* autoprefixer: on */
       // -webkit-line-clamp: 2;
-      height: 0.65rem;
+      height: 0.63rem;
       overflow: hidden;
       text-overflow: ellipsis;
       word-break: break-all;
