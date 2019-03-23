@@ -40,7 +40,7 @@
       <div class="home-noticeW">
           <div class="home-notice">
             <span class="home-horn"></span>
-            <span>椰云公告：</span>
+            <span style="white-space: nowrap;">椰云公告：</span>
             <marquee  style="width: 265px;" loop="infinite" v-for="(item,index) in newsList" :key="index">
               <a :href="item.url">
                 <span class="home-hotCont">{{item.noticeTitle}}</span>
@@ -114,11 +114,11 @@ export default {
             _this.$nextTick(function() {
 
               _this.swiperBan = new Swiper('.home-head .swiper-container', {
-                // autoplay: {
-                //   delay: 2000,
-                //   stopOnLastSlide: false,
-                //   disableOnInteraction: false,
-                // },
+                autoplay: {
+                  delay: 2000,
+                  stopOnLastSlide: false,
+                  disableOnInteraction: false,
+                },
                 loop: true,
                 pagination: {
                   el: '.swiper-pagination',

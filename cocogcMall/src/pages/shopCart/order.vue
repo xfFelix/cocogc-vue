@@ -129,11 +129,10 @@
         </div>
         <div class="order-sumitW">
             <div class="order-sumitP">
-
-                <span class="shop-cPriceInt">{{message|toDecimal2Fp(message)}}.</span>
-                <span class="shop-cPriceFloat">{{message|toDecimal2Ap(message)}}</span>
+                <span class="shop-cPriceInt">{{other|toDecimal2Fp}}.</span>
+                <span class="shop-cPriceFloat">{{other|toDecimal2Ap}}</span>
             </div>
-            <div class="order-sumit" @click="showSendCode = true">提交订单</div>
+            <div class="order-sumit" @click="dialogCode">提交订单</div>
         </div>
         <transition enter-active-class="animated slideInUp"
                     leave-active-class="animated slideOutDown">
@@ -159,7 +158,7 @@
           <bg-mask v-model="showSendCode"></bg-mask>
         </transition>
 
-        <exchange-su v-if="exchangeShow" v-bind:chOrderId ='parOrderId' v-bind:chMessage="message"></exchange-su>
+        <exchange-su v-if="exchangeShow" v-bind:chOrderId ='parOrderId' v-bind:chMessage="other"></exchange-su>
     </div>
 </template>
 
@@ -182,7 +181,8 @@ export default {
             showSendCode: false,
             smsCode: undefined,
             exchangeShow:false,
-            isSmsCode: false
+            isSmsCode: false,
+            other: 0
         };
     },
     mounted() {
@@ -198,6 +198,13 @@ export default {
       })
     },
     methods: {
+        dialogCode() {
+          if (this.userinfo.score > this.other) {
+            this.showSendCode = true
+          } else {
+            this.Toast(this.message)
+          }
+        },
         sumitOrder() {
           if (this.$route.query.cart) {
             this.saveOrderByCart()
@@ -217,8 +224,9 @@ export default {
                 "buys": buys
             }, 'post')
                 .then((data) => {
-                    if (data.error_code == 0) {
+                    if (data.error_code == 0 || data.error_code == 7) {
                         _this.message = data.message;
+                        _this.other = data.other
                         _this.dataList = data.data;
                         _this.dataAddress = data.data[0];
                         //多商品轮播图
@@ -243,9 +251,6 @@ export default {
                         //地址存到localStorage
                         var editItem = JSON.stringify(_this.dataAddress);
                         localStorage.setItem('addressEdit', editItem);
-                    } else {
-                      this.Toast(data.message)
-                      this.$router.back()
                     }
                 })
                 .catch((err) => {
@@ -262,8 +267,9 @@ export default {
                 "id": addressId,
             }, 'post')
                 .then((data) => {
-                    if (data.error_code == 0) {
+                    if (data.error_code == 0 || data.error_code == 7) {
                         _this.message = data.message;
+                        _this.other = data.other
                         _this.dataList = data.data;
                         _this.dataAddress = data.data[0];
                         //多商品轮播图
@@ -289,8 +295,7 @@ export default {
                         var editItem = JSON.stringify(_this.dataAddress);
                         localStorage.setItem('addressEdit', editItem);
                     } else {
-                      this.Toast(data.message)
-                      this.$router.back()
+                      // this.Toast(data.message)
                     }
                 })
                 .catch((err) => {

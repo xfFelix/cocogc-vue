@@ -6,7 +6,7 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-              <marquee  style="width: 100%;color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
+              <marquee  style="width: 100%;color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index.title">
                 <a :href="item.url">{{item.noticeTitle}}</a>
               </marquee>
           </div>
@@ -52,7 +52,7 @@
         <div class="swiper-container">
           <!-- 页面 -->
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item of banner" :key="item">
+            <div class="swiper-slide" v-for="item of banner" :key="item.title">
               <img :src="item.src" alt="">
             </div>
           </div>
