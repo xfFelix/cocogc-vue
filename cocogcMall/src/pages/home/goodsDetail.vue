@@ -353,7 +353,14 @@ export default {
         },
         async goPreview() {
             if (!this.userinfo.isRealCert) {
-              return this.Toast('请先完成实名注册')
+                this.Toast({
+                    message: '请先实名认证',
+                    duration: 1000
+                })
+                setTimeout(() => {
+                  this.$router.push(infoURl+ '#!/cert?token=f7512935295b36d9b469e672c531d4c8')
+                }, 1000)
+                return
             }
             let buys = []
             buys.push({ goodsId: this.goodsId, nums: this.buyNum })
