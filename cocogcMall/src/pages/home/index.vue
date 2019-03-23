@@ -52,7 +52,7 @@
         <div class="swiper-container">
           <!-- 页面 -->
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item of banner" :key="item">
+            <div class="swiper-slide" v-for="(item,index) in banner" :key="index">
               <img :src="item.src" alt="">
             </div>
           </div>

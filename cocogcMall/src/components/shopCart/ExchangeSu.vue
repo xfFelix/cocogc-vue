@@ -7,7 +7,7 @@
             <p class="cs-info">兑换成功</p>
             <p class="cs-money">{{chMessage}}</p>
             <router-link :to="{ name: 'orderDetails', params: { orderId: chOrderId } }" class="cs-bntGoDe">订单详情</router-link>
-            <router-link to="/layout/index" class="cs-bntGoIndex">返回首页</router-link>
+            <router-link to="/layout/home" class="cs-bntGoIndex">返回首页</router-link>
             <p class="cs-jumpIndex">{{this.numDown}}秒后自动进入首页</p>
         </div>
     </div>
@@ -27,7 +27,7 @@ export default {
         let countDown =  setInterval(()=>{
             this.numDown = this.numDown-1
             if(this.numDown<2){
-                this.$router.push('/layout/index');
+                this.$router.push('/layout/home');
                 clearInterval(countDown)
             }
         },1000)
