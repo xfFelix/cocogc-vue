@@ -2,7 +2,7 @@
     <div class="home-integralW">
         <div class="home-rHM">
             <h3>积分区间</h3>
-            <span class="home-rMore" @click="$router.push('/goodsList')"></span>
+            <!-- <span class="home-rMore" @click="$router.push('/goodsList')"></span> -->
         </div>
         <p class="home-hSE">INTEGRAL DIMENSION</p>
         <div class="home-iSelectW">

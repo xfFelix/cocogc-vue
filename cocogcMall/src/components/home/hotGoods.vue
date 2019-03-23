@@ -2,7 +2,7 @@
     <div class="home-rank">
         <div class="home-rHM">
             <h3>热门爆款</h3>
-             <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}" class="home-rMore"></router-link>
+             <!-- <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}" class="home-rMore"></router-link> -->
         </div>
         <p class="home-hSE">BEST SELLERS EXPLOSIVE MONEY</p>
         <div class="home-rGoodsW">

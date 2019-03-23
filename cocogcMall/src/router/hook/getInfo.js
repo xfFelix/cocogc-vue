@@ -7,20 +7,22 @@ export default (router) => {
   router.beforeEach(async(to, from, next) => {
     if (to.meta.requireAuth) {// 判断是否需要登录权限
       if (getToken()) {// 判断是否登录
-        const [info, address, cart] = await Promise.all([
-          axios(infoURl + api.info, {token: getToken()}, 'post'),
-          axios(testUrl + api.selectDefaultAddresses, {token: getToken()}, 'post'),
-          axios(testUrl + api.totalCarts,{token: getToken()},'post')
-        ])
+        const info = await axios(infoURl + api.info, {token: getToken()}, 'post')
+        if (/^\/layout/.test(to.path)) {
+          const [address, cart] = await Promise.all([
+            axios(testUrl + api.selectDefaultAddresses, {token: getToken()}, 'post'),
+            axios(testUrl + api.totalCarts,{token: getToken()},'post')
+          ])
+          if (address.data) {
+            localStorage.setItem('addressId', address.data.id);
+            store.dispatch('userinfo/setAddress', address.data)
+          }
+          store.dispatch('cart/setNum', cart.data)
+        }
         localStorage.setItem('userName', info.data.userName);
         localStorage.setItem('score', info.data.score);
         localStorage.setItem('isRealCert', info.data.isRealCert);
-        if (address.data) {
-          localStorage.setItem('addressId', address.data.id);
-          store.dispatch('userinfo/setAddress', address.data)
-        }
         store.dispatch('userinfo/setUserInfo', info.data)
-        store.dispatch('cart/setNum', cart.data)
         next()
       } else {
         next({
