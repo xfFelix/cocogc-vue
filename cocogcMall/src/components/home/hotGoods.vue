@@ -146,7 +146,7 @@ export default {
             -webkit-box-orient: vertical;
             /* autoprefixer: on */
             // -webkit-line-clamp: 2;
-            height: 0.65rem;
+            height: 0.64rem;
             overflow: hidden;
             text-overflow: ellipsis;
             word-wrap: break-word;
