@@ -6,7 +6,7 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-              <marquee  style="color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
+              <marquee  style="width: 100%;color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
                 <a :href="item.url">{{item.noticeTitle}}</a>
               </marquee>
           </div>
@@ -375,17 +375,20 @@ export default {
       font-size: 0.22rem;
       font-weight: bold;
       margin-top: 0.12rem;
-      display: -webkit-box;
-      /* autoprefixer: off */
-      -webkit-box-orient: vertical;
-      /* autoprefixer: on */
-      // -webkit-line-clamp: 2;
-      height: 0.63rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      position:relative;
+      line-height:1.5em;
+      height:3em;
+      overflow:hidden;
       word-break: break-all;
       word-wrap: break-word;
-      text-align: center;
+      &::after{
+        content:"";
+				position:absolute;
+				bottom:0;
+				right:0;
+				padding: 0 5px;
+				background-color: #fff;
+      }
     }
     .ihot-moneyW {
       display: flex;
