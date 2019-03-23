@@ -48,14 +48,14 @@
 
             <div class="goodsD-addressInfo">
                 <div class="goodsD-address">
-                    <p>送至</p>
+                    <!-- <p>送至</p> -->
                     <p>服务</p>
                 </div>
                 <div class="goodsD-serve">
-                    <p>
+                    <!-- <p>
                         <span>选择地区</span>
                         <span class="j1Png goodsD-addressGO"></span>
-                    </p>
+                    </p> -->
                     <p>{{goodsInfo.services}}</p>
                 </div>
             </div>
@@ -740,17 +740,19 @@ export default {
 .goodsD-imgW {
     background: #fff;
     .detailImg {
-        div {
+        background: #fff;
+        div,table{
             width: 100%!important;
             height: 100%!important;
             position: relative!important;
             line-height: auto!important;
             background-size: 100% !important;
+            left: 0!important;
         }
         font-size: 0px;
         img {
-            width: 100%;
-            height: 100%;
+            width: 100% !important;
+            height: 100% !important;
         }
     }
 
