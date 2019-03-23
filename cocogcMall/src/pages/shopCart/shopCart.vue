@@ -138,6 +138,7 @@ export default {
         this.getCartGoodsList(function(data) {
             if (data == null) {
                 that.list = [];
+                that.setNum(0)
             } else {
                 that.list = data;
             }
@@ -446,6 +447,7 @@ export default {
                     }
                 }
                 .shop-selInfo {
+                    flex: 1;
                     .shop-selGoodsT {
                         width: 3.8rem;
                         font-size: 0.3rem;
@@ -474,6 +476,7 @@ export default {
                             height: 0.48rem;
                             line-height: 0.48rem;
                             border: 1px solid #dfdfdf;
+                            margin-right: 0.22rem;
                             input {
                                 border: none;
                                 padding: 0 0.02rem;

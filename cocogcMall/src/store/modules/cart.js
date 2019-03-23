@@ -13,7 +13,7 @@ const getters = {
 
 // actions
 const actions = {
-  setNum ({state, commit}, num) {
+  setNum ({commit}, num) {
     commit('setNum', num)
   }
 }
