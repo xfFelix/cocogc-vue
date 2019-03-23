@@ -1,6 +1,6 @@
 <template>
     <div class="home-sm">
-        <div class="j1Png home-back" @click="$router.go(-1)"></div>
+        <div class="j1Png home-back" @click="$router.back()"></div>
         <div class="home-search">
             <div class="home-smInput">
                 <span class="j1Png home-logo"></span>

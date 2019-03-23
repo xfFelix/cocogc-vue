@@ -9,12 +9,12 @@
                 <router-link class="order-addressW" to="/addressMag">
                     <div class="order-address">
                         <p class="order-addPerson">
-                            <span>默认</span>
-                            <span>{{dataAddress.userName}}</span>
-                            <span>{{dataAddress.userMobile}}</span>
+                            <span></span>
+                            <span>{{addressDef.name}}</span>
+                            <span>{{addressDef.tel}}</span>
                         </p>
                         <p class="order-addInfo">
-                            {{dataAddress.userAddress}}
+                            {{addressDef.userAddress}}
                         </p>
                     </div>
                     <div>
@@ -88,7 +88,7 @@
                         <div class="order-goodSIImg">
                             <img :src="itemGoods.picUrl" alt="" />
                         </div>
-                        <div class="order-goodsDetail" >
+                        <div class="order-goodsDetail">
                             <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
                             <p class="order-goodsDType">类型没有</p>
                             <div class="order-goodsDPriceW">
@@ -135,8 +135,7 @@
             </div>
             <div class="order-sumit" @click="showSendCode = true">提交订单</div>
         </div>
-        <transition enter-active-class="animated slideInUp"
-                    leave-active-class="animated slideOutDown">
+        <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
             <div class="phonePay-bg" id="phonePay-sms" v-if="showSendCode">
                 <p class="phonePay-title">
                     <span class="phoneChe-backW" @click="showSendCode = false">
@@ -148,18 +147,17 @@
                     <span class="phonePay-tel">{{userinfo.userName | formatPhone}}</span>
                 </p>
                 <p class="phonePay-inpW">
-                    <input class="phonePay-msg" type="number" placeholder="请输入短信验证码" v-model="smsCode"/>
+                    <input class="phonePay-msg" type="number" placeholder="请输入短信验证码" v-model="smsCode" />
                     <span class="sendPhoneSms" style="background: green;" @click="sendPhoneSms()">{{validate}}</span>
                 </p>
                 <p class="phonePay-confirm phonePay-conA" :class="smsCode?'light': ''" @click="sumitOrder">确认兑换</p>
             </div>
         </transition>
-        <transition enter-active-class="animated fadeIn"
-                    leave-active-class="animated fadeOut">
-          <bg-mask v-model="showSendCode"></bg-mask>
+        <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <bg-mask v-model="showSendCode"></bg-mask>
         </transition>
 
-        <exchange-su v-if="exchangeShow" v-bind:chOrderId ='parOrderId' v-bind:chMessage="message"></exchange-su>
+        <exchange-su v-if="exchangeShow" v-bind:chOrderId='parOrderId' v-bind:chMessage="message"></exchange-su>
     </div>
 </template>
 
@@ -181,29 +179,35 @@ export default {
             validateFlag: 1,
             showSendCode: false,
             smsCode: undefined,
-            exchangeShow:false,
+            exchangeShow: false,
+            addressDef: {
+                name: '',
+                userAddress: '',
+                tel: ''
+            },
             isSmsCode: false
         };
     },
     mounted() {
-      if (this.$route.query.cart) {
-        this.previewOrderByCart()
-      } else {
-        this.previewOrder()
-      }
+        if (this.$route.query.cart) {
+            this.previewOrderByCart()
+        } else {
+            this.previewOrder()
+        }
+        sessionStorage.setItem('fromOrder',false);
     },
     computed: {
-      ...mapGetters({
-        userinfo: 'userinfo/getUserInfo'
-      })
+        ...mapGetters({
+            userinfo: 'userinfo/getUserInfo'
+        })
     },
     methods: {
         sumitOrder() {
-          if (this.$route.query.cart) {
-            this.saveOrderByCart()
-          } else {
-            this.saveOrder();
-          }
+            if (this.$route.query.cart) {
+                this.saveOrderByCart()
+            } else {
+                this.saveOrder();
+            }
         },
         // 订单预览
         previewOrder: function() {
@@ -221,6 +225,17 @@ export default {
                         _this.message = data.message;
                         _this.dataList = data.data;
                         _this.dataAddress = data.data[0];
+                        if (localStorage.getItem('orderAddress')=='' || localStorage.getItem('orderAddress')==null) {
+                            _this.addressDef.name = data.data[0].userName;
+                            _this.addressDef.userAddress = data.data[0].userAddress;
+                            _this.addressDef.tel = data.data[0].userMobile;
+                            localStorage.setItem('orderAddress',JSON.stringify(_this.addressDef))
+                        }else{
+                            let orderAddress = JSON.parse(localStorage.getItem('orderAddress'));
+                            _this.addressDef.name = orderAddress.name;
+                            _this.addressDef.userAddress = orderAddress.userAddress;
+                            _this.addressDef.tel = orderAddress.tel;
+                        }
                         //多商品轮播图
                         _this.dataList.forEach((res, index) => {
                             if (res.goodsList.length > 1) {
@@ -244,8 +259,8 @@ export default {
                         var editItem = JSON.stringify(_this.dataAddress);
                         localStorage.setItem('addressEdit', editItem);
                     } else {
-                      this.Toast(data.message)
-                      this.$router.back()
+                        this.Toast(data.message)
+                        this.$router.back()
                     }
                 })
                 .catch((err) => {
@@ -266,6 +281,17 @@ export default {
                         _this.message = data.message;
                         _this.dataList = data.data;
                         _this.dataAddress = data.data[0];
+                         if (localStorage.getItem('orderAddress')=='' || localStorage.getItem('orderAddress')==null) {
+                            _this.addressDef.name = data.data[0].userName;
+                            _this.addressDef.userAddress = data.data[0].userAddress;
+                            _this.addressDef.tel = data.data[0].userMobile;
+                            localStorage.setItem('orderAddress',JSON.stringify(_this.addressDef))
+                        }else{
+                            let orderAddress = JSON.parse(localStorage.getItem('orderAddress'));
+                            _this.addressDef.name = orderAddress.name;
+                            _this.addressDef.userAddress = orderAddress.userAddress;
+                            _this.addressDef.tel = orderAddress.tel;
+                        }
                         //多商品轮播图
                         _this.dataList.forEach((res, index) => {
                             if (res.goodsList.length > 1) {
@@ -289,8 +315,8 @@ export default {
                         var editItem = JSON.stringify(_this.dataAddress);
                         localStorage.setItem('addressEdit', editItem);
                     } else {
-                      this.Toast(data.message)
-                      this.$router.back()
+                        this.Toast(data.message)
+                        this.$router.back()
                     }
                 })
                 .catch((err) => {
@@ -339,11 +365,10 @@ export default {
                         var orderId = data.data[0].orderId;
                         // this.Toast('下单成功')
                         // this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
-
                         this.exchangeShow = true;
                         this.parOrderId = orderId;
                     } else {
-                      this.Toast(data.message)
+                        this.Toast(data.message)
                     }
                 })
                 .catch((err) => {
@@ -354,9 +379,9 @@ export default {
         //定时
         async sendPhoneSms() {
             if (this.validateFlag == 1) {
-                let data = await this.axios(testUrl + api.sendSms, {token: localStorage.getItem('yeyun_token')}, 'post')
+                let data = await this.axios(testUrl + api.sendSms, { token: localStorage.getItem('yeyun_token') }, 'post')
                 if (data.error_code) {
-                  return this.Toast(data.message)
+                    return this.Toast(data.message)
                 }
                 this.isSmsCode = true
                 this.validate = "120s 重新获取"
@@ -381,8 +406,7 @@ export default {
         "header-top": headerTop,
         BgMask,
         ExchangeSu
-    }
-
+    },
 }
 </script>
 
@@ -432,14 +456,13 @@ export default {
         .order-address {
             width: 4.9rem;
             .order-addPerson {
-                margin-bottom: 0.33rem;
-                span:nth-of-type(1) {
-                    background: #30ce84;
-                    color: #fff;
-                    font-size: 0.24rem;
-                    border-radius: 0.4rem;
-                    padding: 0.1rem;
-                }
+                margin-bottom: 0.33rem; // span:nth-of-type(1) {
+                //     background: #30ce84;
+                //     color: #fff;
+                //     font-size: 0.24rem;
+                //     border-radius: 0.4rem;
+                //     padding: 0.1rem;
+                // }
                 span:nth-of-type(2),
                 span:nth-of-type(3) {
                     color: #000;
@@ -502,7 +525,7 @@ export default {
                 font-size: 0.3rem;
                 margin-top: 0.48rem;
                 .order-goodsDPrice {
-                  color: #30ce84;
+                    color: #30ce84;
                 }
                 .order-goodsDNumW {
                     .order-goodsDNumI {
@@ -624,15 +647,14 @@ export default {
     line-height: 1.2rem;
     display: flex;
     justify-content: space-between;
-    padding-left: 0.27rem;
-    // margin-bottom: 48px;
+    padding-left: 0.27rem; // margin-bottom: 48px;
     position: fixed;
     width: 100%;
     bottom: -1px;
     left: 0;
     .order-sumitP {
-      font-weight: 500;
-      color: #30ce84;
+        font-weight: 500;
+        color: #30ce84;
         span:nth-of-type(1) {
             font-size: 0.48rem;
         }
@@ -652,100 +674,101 @@ export default {
 
 
 
-        .phonePay-bg {
-            position: fixed;
-            left: 0;
-            width: 100%;
-            bottom: 0; // border-radius: 5px;
-            margin: 0 auto;
-            right: 0;
-            z-index: 101;
-            background: #F3F4F6;
-            input {
-                width: 65%;
-                height: 23px;
-                line-height: 23px;
-                padding-left: 11px;
-                font-size: 18px;
-                color: #333;
-                position: absolute;
-                top: 10px;
-                left: 0;
-                z-index: 1;
-            }
-            .phonePay-title {
-                background: #fff;
-                text-align: center;
-                height: 45px;
-                line-height: 45px;
-                /* border-bottom: 1px solid #dfdfdf; */
-                color: #333333;
-                font-size: 15px;
-                position: relative;
-                .phoneChe-backW {
-                    width: 0.22rem;
-                    height: 0.38rem;
-                    background-image: url(/static/images/jl.png);
-                    background-repeat: no-repeat;
-                    background-size: 5.8rem 1.86rem;
-                    background-position: -0.2rem -0.74rem;
-                    position: absolute;
-                    left: 0.32rem;
-                    top: 0.26rem;
-                    -webkit-transform: rotate(180deg);
-                    transform: rotate(180deg);
-                }
-            }
-        }
-
-
-    .phonePay-telW {
-        //   width: 5.67rem;
-        max-width: 339px;
-        margin: 23px auto 0 auto;
+.phonePay-bg {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    bottom: 0; // border-radius: 5px;
+    margin: 0 auto;
+    right: 0;
+    z-index: 101;
+    background: #F3F4F6;
+    input {
+        width: 65%;
+        height: 23px;
+        line-height: 23px;
+        padding-left: 11px;
+        font-size: 18px;
         color: #333;
-        font-size: 13px;
-    }
-    .phonePay-inpW {
-        /* border: 1px solid #dfdfdf;  */
-        height: 44px; // width: 5.67rem;
-        max-width: 339px;
-        display: flex;
-        justify-content: space-between;
-        margin: 16px auto;
-        position: relative;
-        /* box-shadow:0px 0px 0px 1px #ccc; */
-        background: #fff;
-    }
-
-    .phonePay-inpW span {
-        display: inline-block;
-        width: 30%;
-        background: #999999;
-        height: 45px;
-        line-height: 44px;
-        text-align: center;
-        color: #fff;
         position: absolute;
-        right: -1px;
+        top: 10px;
+        left: 0;
         z-index: 1;
     }
-
-    .phonePay-confirm {
-        margin: 0 auto;
-        line-height: 45px;
-        height: 45px;
+    .phonePay-title {
+        background: #fff;
         text-align: center;
-        color: #ffffff;
+        height: 45px;
+        line-height: 45px;
+        /* border-bottom: 1px solid #dfdfdf; */
+        color: #333333;
         font-size: 15px;
-        box-shadow: 0px 0px 10px 0px rgba(135, 248, 199, 0.4);
-        border-radius: 50px;
-        background: #91efb1;
-        width: 90%;
-        margin-bottom: 1rem;
+        position: relative;
+        .phoneChe-backW {
+            width: 0.22rem;
+            height: 0.38rem;
+            background-image: url(/static/images/jl.png);
+            background-repeat: no-repeat;
+            background-size: 5.8rem 1.86rem;
+            background-position: -0.2rem -0.74rem;
+            position: absolute;
+            left: 0.32rem;
+            top: 0.26rem;
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
     }
-    .light{
-      background-color: #27bd5a;
-    }
+}
 
+
+.phonePay-telW {
+    //   width: 5.67rem;
+    max-width: 339px;
+    margin: 23px auto 0 auto;
+    color: #333;
+    font-size: 13px;
+}
+
+.phonePay-inpW {
+    /* border: 1px solid #dfdfdf;  */
+    height: 44px; // width: 5.67rem;
+    max-width: 339px;
+    display: flex;
+    justify-content: space-between;
+    margin: 16px auto;
+    position: relative;
+    /* box-shadow:0px 0px 0px 1px #ccc; */
+    background: #fff;
+}
+
+.phonePay-inpW span {
+    display: inline-block;
+    width: 30%;
+    background: #999999;
+    height: 45px;
+    line-height: 44px;
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    right: -1px;
+    z-index: 1;
+}
+
+.phonePay-confirm {
+    margin: 0 auto;
+    line-height: 45px;
+    height: 45px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 15px;
+    box-shadow: 0px 0px 10px 0px rgba(135, 248, 199, 0.4);
+    border-radius: 50px;
+    background: #91efb1;
+    width: 90%;
+    margin-bottom: 1rem;
+}
+
+.light {
+    background-color: #27bd5a;
+}
 </style>

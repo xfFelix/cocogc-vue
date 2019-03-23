@@ -1,7 +1,6 @@
 <template>
     <div id="addressEdit">
         <header-top></header-top>
-
         <div class="addEdit-contentWrap">
             <ul class="addEdit-content">
                 <li class="one-bottom-px">
@@ -94,7 +93,6 @@ export default {
             this.takeAddressId = item.id;
             this.areaCode = item.areaCode;  //编辑页面传来的areacode
             this.addressDef = item.isDefault;
-
         }
     },
     created() {
@@ -151,7 +149,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.addressList = data.data;
-                        this.$router.push('/addressMag')
+                        this.$router.replace('/addressMag')
                         localStorage.setItem('addressEdit', '');
                     } else {
                         return this.Toast(data.message)

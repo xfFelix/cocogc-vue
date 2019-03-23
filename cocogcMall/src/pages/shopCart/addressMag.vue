@@ -2,8 +2,8 @@
     <div class="addressMag">
         <header-top></header-top>
         <div class="address-contentW">
-            <ul class="address-content" @click="jumpAddress()">
-                <li v-for="(item,index) in addressList" :key="index">
+            <ul class="address-content" >
+                <li v-for="(item,index) in addressList" :key="index" @click.prevent="jumpAddress(item)">
                     <div class="address-infoW one-bottom-px">
                         <p class="address-nameTel">
                             <span>{{item.name}}</span>
@@ -18,7 +18,7 @@
                             </span>
                         </div>
                         <div class="address-editDel">
-                            <p class="address-edit" @click="addressEditC(item,index)">
+                            <p class="address-edit" @click.stop="addressEditC(item,index)">
                                 <span class="j1Png address-editImg"></span>
                                 <span>编辑</span>
                             </p>
@@ -59,7 +59,8 @@ export default {
             addressList: [],
             fixedshow: false,
             delIndex: '',
-            delId: ''
+            delId: '',
+            fromPath:''
         };
     },
     mounted() {
@@ -127,9 +128,24 @@ export default {
                     _this.Toast(err.message)
                 })
         },
-        jumpAddress() {
-
+        jumpAddress(item) {
+            if(sessionStorage.getItem('fromOrder') == 'true'){
+                let area = {};
+                area.name = item.name;
+                area.tel = item.tel;
+                area.userAddress = item.area + ' ' + item.address
+                localStorage.setItem('orderAddress',JSON.stringify(area));
+                this.$router.push('/order');
+            }
         }
+    },
+    beforeRouteEnter(to, from, next){     
+         next(vm=>{
+            vm.fromPath = from.name;
+            if(from.name == 'order'){
+                sessionStorage.setItem('fromOrder',true);
+            }
+        })
     },
     components: {
         "header-top": headerTop

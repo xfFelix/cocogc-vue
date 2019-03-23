@@ -80,7 +80,7 @@ export default {
 .successInfo {
     display: flex;
     justify-content: center;
-    margin-top: 0.65rem;
+    margin-top: 0.64rem;
     align-items: center
 }
 
