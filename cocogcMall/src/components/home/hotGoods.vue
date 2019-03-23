@@ -92,6 +92,7 @@ export default {
         width: 100%;
         font-size: 0.22rem;
         color: #333;
+        margin: 0 20px;
         .home-hGoods {
             // width: 2rem;
             width: 1.77rem;
@@ -146,6 +147,7 @@ export default {
             overflow:hidden;
             word-break: break-all;
             word-wrap: break-word;
+            padding: 0 0.22rem;
             &::after{
               content:"";
               position:absolute;

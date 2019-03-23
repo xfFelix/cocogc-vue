@@ -122,7 +122,7 @@
                     </p>
                     <p>
                         <span>合计</span>
-                        <span style="color: #000;">{{dataItem.totalMoney}}</span>
+                        <span style="color: #30ce84;">{{dataItem.totalMoney}}</span>
                     </p>
                 </div>
             </div>
@@ -637,12 +637,7 @@ export default {
         display: flex;
         justify-content: space-between;
         line-height: 0.6rem;
-        span:nth-of-type(1) {
-            color: #666666;
-        }
-        span:nth-of-type(2) {
-            color: #30ce84;
-        }
+        color: #000;
     }
 }
 
