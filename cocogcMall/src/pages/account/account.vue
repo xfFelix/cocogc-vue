@@ -57,7 +57,7 @@
                             <div class="acc-contentInfo">
                                 <span class="acc-contentName">{{item.name}}</span>
                                 <p class="acc-contentR">
-                                    <span v-if="item.scoreShow">积分余额：</span>
+                                    <span v-if="item.scoreShow">椰子分余额：</span>
                                     <span v-if="item.scoreShow">{{score}}</span>
                                     <span class="acc-contentGo"></span>
                                 </p>

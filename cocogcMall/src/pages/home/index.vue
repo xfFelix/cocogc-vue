@@ -6,8 +6,8 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-              <marquee  style="width: 100%;color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index.title">
-                <a :href="item.url">{{item.noticeTitle}}</a>
+              <marquee  style="width: 100%;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index.title">
+                <a :href="item.url" style="color:rgb(255,255,255);">{{item.noticeTitle}}</a>
               </marquee>
           </div>
           <span class="ih-goImg j1Png"></span>
@@ -66,7 +66,7 @@
     <div class="index-hotGoods">
       <div class="ihot-title">
         <h3>热门爆款</h3>
-        <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}">查看更多</router-link>
+        <!-- <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}">查看更多</router-link> -->
       </div>
       <div class="ihot-goodsW">
         <div class="ihot-goods" v-for="(item,index) in goodsList.slice(0, 6)" :key="index">

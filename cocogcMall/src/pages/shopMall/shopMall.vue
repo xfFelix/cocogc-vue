@@ -24,6 +24,7 @@
           </p>
         </div>
         <span @click="seachClick()" class="seachBnt">搜索</span>
+        <!-- div. -->
       </div>
 
       <div class="home-smWrapA" v-if="homeSmWrap==true">
@@ -41,7 +42,7 @@
           <div class="home-notice">
             <span class="home-horn"></span>
             <span style="white-space: nowrap;">椰云公告：</span>
-            <marquee  style="width: 265px;" loop="infinite" v-for="(item,index) in newsList" :key="index">
+            <marquee  style="margin-right:0.65rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
               <a :href="item.url">
                 <span class="home-hotCont">{{item.noticeTitle}}</span>
               </a>
