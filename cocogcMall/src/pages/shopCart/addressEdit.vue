@@ -18,7 +18,7 @@
                     <p>
                         <span>手机号码</span>
                         <span>
-                            <input type="number" placeholder="请填写收货人手机号" v-model="takeTel">
+                            <input type="number" placeholder="请填写收货人手机号" v-model="takeTel" pattern="\d*">
                         </span>
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeTelC">
@@ -80,6 +80,9 @@ export default {
             areaCode: '',
         };
     },
+    watch: {
+
+    },
     mounted() {
         var adEdit = localStorage.getItem('addressEdit');
         if (adEdit) {
@@ -90,8 +93,8 @@ export default {
             this.takeDAddress = item.address;
             this.takeAddressId = item.id;
             this.areaCode = item.areaCode;  //编辑页面传来的areacode
-            this.addressDef = item.isDefault; 
-            
+            this.addressDef = item.isDefault;
+
         }
     },
     created() {
@@ -147,11 +150,11 @@ export default {
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                      _this.addressList = data.data;
-                      this.$router.push('/addressMag')
-                      localStorage.setItem('addressEdit', '');
+                        _this.addressList = data.data;
+                        this.$router.push('/addressMag')
+                        localStorage.setItem('addressEdit', '');
                     } else {
-                      return this.Toast(data.message)
+                        return this.Toast(data.message)
                     }
                 })
                 .catch((err) => {

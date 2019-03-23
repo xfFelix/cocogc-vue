@@ -2,7 +2,7 @@
     <div class="addressMag">
         <header-top></header-top>
         <div class="address-contentW">
-            <ul class="address-content">
+            <ul class="address-content" @click="jumpAddress()">
                 <li v-for="(item,index) in addressList" :key="index">
                     <div class="address-infoW one-bottom-px">
                         <p class="address-nameTel">
@@ -13,9 +13,8 @@
                     </div>
                     <div class="address-operW">
                         <div class="address-def">
-                            <span class="j1Png" :class="item.isDefault==1?'address-defImg':'address-defImgNo'" @click="addDef(item,index)"></span>
-                            <span class="address-defAddress">
-                                <span>设为默认地址</span>
+                            <span v-if="item.isDefault==1" class="address-defSpan">
+                                默认
                             </span>
                         </div>
                         <div class="address-editDel">
@@ -66,6 +65,7 @@ export default {
     mounted() {
         this.addressMag()
     },
+
     methods: {
         addressEditC(item, index) {
             var editItem = JSON.stringify(item);
@@ -127,11 +127,9 @@ export default {
                     _this.Toast(err.message)
                 })
         },
-        addDef(item,index){
-            console.log(item);
-             console.log(index)
-        }
+        jumpAddress() {
 
+        }
     },
     components: {
         "header-top": headerTop
@@ -169,16 +167,11 @@ export default {
             .address-def {
                 display: flex;
                 align-items: center;
-                .address-defImg,
-                .address-defImgNo {
-                    width: 0.34rem;
-                    height: 0.34rem;
-                }
-                .address-defImg {
-                    background-position: -1.87rem -1.52rem;
-                }
-                .address-defImgNo {
-                    background-position: -2.94rem -1.52rem;
+                .address-defSpan {
+                    background: #30ce84;
+                    border-radius: 44px;
+                    color: #fff;
+                    padding: 2px 5px;
                 }
                 .address-defAddress {
                     color: #999999;

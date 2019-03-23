@@ -38,8 +38,8 @@ const price = 'query/price'; //积分区间
 const salesVolume = 'query/salesVolume'; //销量排序
 const order = 'query/order'; //价格排序
 const guessLike = 'query/guessLike'; //猜你喜欢列表
-const queryOrderTrack = 'api/queryOrderTrack'; //猜你喜欢列表
-
+const queryOrderTrack = 'api/queryOrderTrack'; //物流地址
+const newsList = 'news/newsList'; //新闻列表
 
 
 
@@ -86,5 +86,6 @@ export default {
   cards,
   guessLike,
   queryOrderTrack,
-  selectDefaultAddresses
+  selectDefaultAddresses,
+  newsList
 }

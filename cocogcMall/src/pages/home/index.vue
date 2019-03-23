@@ -6,7 +6,8 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-            <p>椰云公告：应税务局要求缴税规则调整....</p>
+         
+              <marquee  style="color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">{{item.noticeTitle}}</marquee> 
           </div>
           <span class="ih-goImg j1Png"></span>
         </div>
@@ -19,12 +20,12 @@
 
         <div class="ih-balance" v-else-if="token">
           <p class="ih-money">{{loScore.score}}</p>
-          <p class="ih-moneya">椰子分余额</p>
+          <p class="ih-moneya">椰子分</p>
         </div>
 
         <!-- <div class="ih-recharge" @click="recharge()">
-          去充值
-        </div> -->
+                去充值
+              </div> -->
 
       </div>
     </div>
@@ -32,10 +33,15 @@
     <!-- 导航 -->
     <ul class="index-fastNav">
       <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
-        <a :href='item.path'>
+        <router-link :to="item.path" v-if="item.id==4">
+          <p class="navImg imgBg" :class="item.imgBg"></p>
+          <p class="ifa-name">{{item.name}}</p>
+        </router-link>
+        <a :href='item.path' :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" v-else>
           <p class="navImg imgBg" :class="item.imgBg"></p>
           <p class="ifa-name">{{item.name}}</p>
         </a>
+
       </li>
     </ul>
 
@@ -48,7 +54,6 @@
             <div class="swiper-slide" v-for="item of banner" :key="item">
               <img :src="item" alt="">
             </div>
-
           </div>
           <!-- 分页器 -->
           <div class="swiper-pagination"></div>
@@ -68,7 +73,7 @@
             <div class="ihot-goodsImg">
               <img :src="item.picUrl" alt="" />
             </div>
-            <p class="ihot-name">{{item.name|wordSize(item.name)}}</p>
+            <p class="ihot-name">{{item.name}}</p>
             <p class="ihot-moneyW">
               <span class="ihot-logo"></span>
               <span class="ihot-money">{{item.currentPrice}}</span>
@@ -86,26 +91,27 @@
 import Swiper from 'swiper';
 import api from '../../service/api';
 import { mapGetters } from 'vuex';
-import {getToken} from '@/util/common'
+import { getToken } from '@/util/common'
 
 export default {
   name: 'index',
   data() {
     return {
       fastList: [
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + this.$cookies.get("yeyun_token")},
-        { id: 2, name: "话费兑换", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + this.$cookies.get("yeyun_token")},
-        { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay&token=' + this.$cookies.get("yeyun_token")},
-        { id: 4, name: "兑换商城", imgBg: 'ifa-imgBg09', path: '/' },
+        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + this.$cookies.get("yeyun_token") },
+        { id: 2, name: "话费兑换", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + this.$cookies.get("yeyun_token") },
+        { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay&token=' + this.$cookies.get("yeyun_token") },
+        { id: 4, name: "兑换商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall' },
         { id: 5, name: "卡密充值", imgBg: 'ifa-imgBg05', path: infoURl + '#!/charge?token=' + this.$cookies.get("yeyun_token") },
-        { id: 6, name: "加油卡兑换", imgBg: 'ifa-imgBg12', path: 'javascript:;'},
-         { id: 7, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;'},
-          
+        { id: 6, name: "加油卡兑换", imgBg: 'ifa-imgBg12', path: 'javascript:;' },
+        { id: 7, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;' },
+
       ],
       goodsList: [],
       loginFlag: false,
       token: getToken(),
-      banner: []
+      banner: [],
+      newsList:[]
     }
   },
   created() {
@@ -118,11 +124,12 @@ export default {
   mounted() {
     this.getBanner()
     this.rank();
+    this.getNews();
   },
   components: {
   },
   methods: {
-    async getBanner () {
+    async getBanner() {
       let banner = await this.axios(testUrl + api.goodsGroups, {
         "id": "a10a220f9aa94dc49c960c77cd783d11"
       }, 'post')
@@ -154,7 +161,25 @@ export default {
           _this.Toast(data.message);
         })
     },
- 
+    async getNews() {
+
+      let newsList = await this.axios(infoURl + api.newsList, {
+        "catId": 206,
+        "startNum": 0,
+        "num": 3
+      }, 'post')
+        .then((data) => {
+          if (data.resultCode == 0) {
+            this.newsList = data.data;
+          } else {
+            this.Toast(data.message);
+          }
+        })
+        .catch((err) => {
+          this.Toast(data.message);
+        })
+    },
+
   }
 }
 </script>
@@ -175,6 +200,7 @@ export default {
     margin: 0 auto;
     line-height: 0.6rem;
     .ih-notice {
+       width: 100%;
       display: flex;
       align-items: center;
       .ih-hormImg {
@@ -219,7 +245,7 @@ export default {
         font-size: 0.24rem;
         font-weight: bold;
         margin-top: -0.05rem;
-        text-align: left;
+        text-align: center;
       }
 
       .ih-nologin {
@@ -231,7 +257,6 @@ export default {
         text-decoration: underline;
       }
     }
-    
   }
 }
 
