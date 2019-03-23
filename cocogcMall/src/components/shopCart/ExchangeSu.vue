@@ -20,7 +20,7 @@ export default {
     },
     data() {
         return {
-            numDown:3
+            numDown:5
         };
     },
     mounted() {
