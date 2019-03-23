@@ -88,7 +88,7 @@
             </div>
         </div>
 
-        
+
     </div>
 </template>
 <script>
@@ -213,10 +213,14 @@ export default {
             var that = this;
             var buys = [];
             if (!JSON.parse(localStorage.isRealCert)) {
-                return this.Toast({
+                this.Toast({
                     message: '请先实名认证',
                     duration: 1000
                 })
+                setTimeout(() => {
+                  this.$router.push(infoURl+ '#!/cert?token=f7512935295b36d9b469e672c531d4c8')
+                }, 1000)
+                return
             }
             that.list.forEach(function(v) {
                 if (v.check) {
