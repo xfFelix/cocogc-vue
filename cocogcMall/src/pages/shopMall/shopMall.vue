@@ -5,9 +5,9 @@
       <div class="swiper-container">
         <!-- 页面 -->
         <div class="swiper-wrapper">
-          <div class="swiper-slide banner-slide" v-for="(item,index) in banList" :key="index">
-            <a :href="item[2]" class="banner-slidea">
-              <img :src="item[0]" alt="" class="">
+          <div class="swiper-slide banner-slide" v-for="item in banList" :key="item.title">
+            <a :href="item.url" class="banner-slidea">
+              <img :src="item.src" alt="" class="">
               <!-- <img src="http://thyrsi.com/t6/676/1551775957x2890174375.jpg" alt="" /> -->
             </a>
           </div>
@@ -111,15 +111,10 @@ export default {
         .then((data) => {
           if (data.error_code == 0) {
             _this.banList = data.data.data;
-
             _this.$nextTick(function() {
 
               _this.swiperBan = new Swiper('.home-head .swiper-container', {
-                // autoplay: {
-                //   delay: 2000,
-                //   stopOnLastSlide: false,
-                //   disableOnInteraction: false,
-                // },
+                autoplay: true,
                 loop: true,
                 pagination: {
                   el: '.swiper-pagination',
@@ -385,6 +380,7 @@ export default {
     border-radius: 40px;
   }
   .swiper-container {
+    width: 100%;
     .swiper-pagination {
       .swiper-pagination-bullet {
         width: 0.06rem;

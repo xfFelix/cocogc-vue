@@ -45,10 +45,9 @@
         <div class="swiper-container">
           <!-- 页面 -->
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item of banner" :key="item">
-              <img :src="item" alt="">
+            <div class="swiper-slide" v-for="item of banner" :key="item.title">
+              <a :href="item.url"><img :src="item.src" alt=""></a>
             </div>
-
           </div>
           <!-- 分页器 -->
           <div class="swiper-pagination"></div>
@@ -100,7 +99,7 @@ export default {
         { id: 5, name: "卡密充值", imgBg: 'ifa-imgBg05', path: infoURl + '#!/charge?token=' + this.$cookies.get("yeyun_token") },
         { id: 6, name: "加油卡兑换", imgBg: 'ifa-imgBg12', path: 'javascript:;'},
          { id: 7, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;'},
-          
+
       ],
       goodsList: [],
       loginFlag: false,
@@ -126,7 +125,7 @@ export default {
       let banner = await this.axios(testUrl + api.goodsGroups, {
         "id": "a10a220f9aa94dc49c960c77cd783d11"
       }, 'post')
-      this.banner = banner.data.data[0]
+      this.banner = banner.data.data
       this.$nextTick(() => {
         var swiperBan = new Swiper('.index-swipe .swiper-container', {
           loop: true,
@@ -154,7 +153,7 @@ export default {
           _this.Toast(data.message);
         })
     },
- 
+
   }
 }
 </script>
@@ -231,7 +230,7 @@ export default {
         text-decoration: underline;
       }
     }
-    
+
   }
 }
 
@@ -303,8 +302,9 @@ export default {
 
 .index-swipeW {
   margin-bottom: 0.1rem;
-  img {
+  .swiper-container{
     width: 100%;
+    height: 100px;
   }
 }
 

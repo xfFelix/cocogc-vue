@@ -194,6 +194,7 @@ export default {
                             that.getCartGoodsList(function(data) {
                                 if (data == null) {
                                     that.list = [];
+                                    that.setNum(0)
                                 } else {
                                     that.list = data;
                                 }

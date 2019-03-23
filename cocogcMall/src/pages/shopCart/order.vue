@@ -30,7 +30,7 @@
                 <div class="order-bottom"></div>
             </div>
 
-            <div v-for="(dataItem,dataIndex) in dataList" :key="dataIndex" style="margin-bottom: 70px;">
+            <div v-for="(dataItem,dataIndex) in dataList" :key="dataIndex" class="product-container">
 
                 <!-- 多种商品 -->
                 <div v-if="dataItem.goodsList.length>1" class="order-goodsMW">
@@ -144,7 +144,7 @@
                     </span>
                     <span class="phonePay-tName">确认兑换</span>
                 </p>
-                <p class="phonePay-telW hide">短信验证码已发送至手机
+                <p class="phonePay-telW hide" v-show="isSmsCode">短信验证码已发送至手机
                     <span class="phonePay-tel">{{userinfo.userName | formatPhone}}</span>
                 </p>
                 <p class="phonePay-inpW">
@@ -181,7 +181,8 @@ export default {
             validateFlag: 1,
             showSendCode: false,
             smsCode: undefined,
-            exchangeShow:false
+            exchangeShow:false,
+            isSmsCode: false
         };
     },
     mounted() {
@@ -357,6 +358,7 @@ export default {
                 if (data.error_code) {
                   return this.Toast(data.message)
                 }
+                this.isSmsCode = true
                 this.validate = "120s 重新获取"
                 let _this = this;
                 let timeInit = 120;
@@ -518,7 +520,11 @@ export default {
         }
     }
 }
-
+.product-container{
+  &:last-of-type{
+    margin-bottom: 70px;
+  }
+}
 .order-freight,
 .order-priceAll {
     line-height: 0.6rem;

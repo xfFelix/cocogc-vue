@@ -87,7 +87,7 @@
                 <div class="goodDetail-buyCard">
                     <router-link :to="{path: '/layout/shopCart'}" style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
                         <p class="navImg goodDetail-bcImg">
-                            <span>{{carTotal}}</span>
+                            <span v-show="carTotal">{{carTotal}}</span>
                         </p>
                         <p class="goodDetail-bcName">购物车</p>
                     </router-link>
@@ -126,7 +126,7 @@
                             </p>
                         </div>
                     </div>
-                    <div style="margin-top:0.5rem;">数量</div>
+                    <div style="margin-top:0.5rem;font-size:0.24rem;color: #999;">数量</div>
                     <div class="goodDetail-selectNumW">
                         <span class="goodDetail-selectDec" @click="setBuyNum(0)">-</span>
                         <span class="goodDetail-selectNum"><input type="number" :value="buyNum"></span>
@@ -803,8 +803,8 @@ export default {
                 margin: 0 auto;
                 span {
                     position: absolute;
-                    top: -5px;
-                    left: 50%;
+                    top: -2px;
+                    right: -4px;
                     background: #f73130;
                     font-size: 0.18rem;
                     color: #fff;
