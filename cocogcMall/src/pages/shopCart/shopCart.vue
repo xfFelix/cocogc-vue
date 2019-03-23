@@ -512,7 +512,7 @@ export default {
                             span:nth-of-type(odd) {
                                 display: inline-block;
                                 height: 100%;
-                                width: 0.46rem;
+                                width: 0.42rem;
                                 text-align: center;
                                 background-image: url(/static/images/jl.png);
                                 background-repeat: no-repeat;

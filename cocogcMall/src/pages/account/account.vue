@@ -15,9 +15,6 @@
                     <p class="acc-headGrade">
                         <span class="acc-headChess">专业选手</span>
                         <span class="acc-headChess">非专业选手</span>
-
-
-
                     </p>
                 </div>
             </div>
