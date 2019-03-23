@@ -38,15 +38,16 @@
       </div>
 
       <div class="home-noticeW">
-        <a href="https://mp.weixin.qq.com/s?__biz=MzU0NDkzNTM3NQ==&mid=100000020&idx=1&sn=127b63d967b7f6a7ca3a5c279143b1ea&chksm=7b75ddb44c0254a2df472ccc626784b2fe09f2b9cf77c1b910b91b8e83a12dae6b801a76e247&xtrack=1&scene=0&subscene=93&clicktime=1552877700&ascene=7&devicetype=android-26&version=2700033b&nettype=WIFI&abtest_cookie=BQABAAgACgALABIAEwAGAJ2GHgAjlx4AVpkeAMOZHgDZmR4A3JkeAAAA&lang=zh_CN&pass_ticket=oDj080h7pGe7HlMtp4xb3XrV7xaXUp9jeLO2aUdHmznoVOKjpo0L6C5vME3ddskV&wx_header=1">
           <div class="home-notice">
             <span class="home-horn"></span>
             <span>椰云公告：</span>
-            <span class="home-hot">HOT&nbsp;&nbsp;</span>
-            <span class="home-hotCont">应税务局要求缴税规则调整....</span>
+            <marquee  style="width: 265px;" loop="infinite" v-for="(item,index) in newsList" :key="index">
+              <a :href="item.url">
+                <span class="home-hotCont">{{item.noticeTitle}}</span>
+              </a>
+            </marquee>
             <span class="home-noticeGo"></span>
           </div>
-        </a>
       </div>
 
     </div>
@@ -82,7 +83,8 @@ export default {
       homeSmWrap: false,
       searchCont: '',
       banList: [],
-      swiperBan: ''
+      swiperBan: '',
+      newsList:[]
     };
   },
   watch: {
@@ -95,7 +97,7 @@ export default {
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
     this.banner()
-
+    this.getNews();
 
   },
   methods: {
@@ -150,6 +152,24 @@ export default {
       } else {
         this.homeSmWrap = true;
       }
+    },
+    async getNews() {
+
+      let newsList = await this.axios(infoURl + api.newsList, {
+        "catId": 206,
+        "startNum": 0,
+        "num": 3
+      }, 'post')
+        .then((data) => {
+          if (data.resultCode == 0) {
+            this.newsList = data.data;
+          } else {
+            this.Toast(data.message);
+          }
+        })
+        .catch((err) => {
+          this.Toast(data.message);
+        })
     }
   },
   updated() {

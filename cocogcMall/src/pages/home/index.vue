@@ -6,8 +6,9 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-
-              <marquee  style="color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">{{item.noticeTitle}}</marquee>
+              <marquee  style="color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
+                <a :href="item.url">{{item.noticeTitle}}</a>
+              </marquee>
           </div>
           <span class="ih-goImg j1Png"></span>
         </div>
