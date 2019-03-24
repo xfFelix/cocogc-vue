@@ -15,19 +15,13 @@
       </a>
 
       <div class="ih-balanceW">
-        <div class="ih-balance" v-if="!token">
-          <router-link :to="{path:'/login'}" class="ih-nologin">登录查看</router-link>
-        </div>
-
-        <div class="ih-balance" v-else-if="token">
+        <div class="ih-balance" v-if="$store.state.userinfo.userinfo">
           <p class="ih-money">{{loScore.score}}</p>
           <p class="ih-moneya">椰子分</p>
         </div>
-
-        <!-- <div class="ih-recharge" @click="recharge()">
-                去充值
-              </div> -->
-
+        <div class="ih-balance" v-else>
+          <router-link :to="{path:'/login'}" class="ih-nologin">登录查看</router-link>
+        </div>
       </div>
     </div>
 
