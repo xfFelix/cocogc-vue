@@ -63,8 +63,7 @@
 import headerTop from "../../common/header.vue";
 import addressSelect from "../../components/shopCart/addressSelect.vue";
 import api from '../../service/api';
-import { IsEmpty, IsMobile, CheckPass } from "@/util/common";
-
+import { IsEmpty, IsMobile, CheckPass,getToken } from "@/util/common";
 
 export default {
     data() {
@@ -77,15 +76,15 @@ export default {
             addressDef: false,
             fixedShow: false,
             areaCode: '',
+            fromPath: this.$route.query.cart ? "?cart=" + this.$route.query.cart : ""
         };
     },
     watch: {
 
     },
     mounted() {
-        var adEdit = localStorage.getItem('addressEdit');
-        if (adEdit) {
-            var item = JSON.parse(adEdit);
+        var item = window.addressEdit;
+        if (item) {
             this.takeName = item.name;
             this.takeTel = item.tel;
             this.takeAddress = item.area;
@@ -93,11 +92,13 @@ export default {
             this.takeAddressId = item.id;
             this.areaCode = item.areaCode;  //编辑页面传来的areacode
             this.addressDef = item.isDefault;
+        }else{
+          this.$router.back(-1);
         }
     },
     created() {
-        var adEdit = localStorage.getItem('addressEdit');
-        if (adEdit) {
+        var item = window.addressEdit;
+        if (item) {
             this.$route.meta.title = "编辑地址"
         } else {
             this.$route.meta.title = "添加地址";
@@ -137,7 +138,7 @@ export default {
         updateAddress: function(addressDef) {
             let _this = this;
             this.axios(testUrl + api.updateAddress, {
-                "token": localStorage.getItem("yeyun_token"),
+                "token": getToken(),
                 "name": _this.takeName,
                 "tel": _this.takeTel,
                 "code": _this.areaCode,
@@ -149,8 +150,9 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.addressList = data.data;
-                        this.$router.replace('/addressMag?cart=' + this.$route.query.cart);
-                        localStorage.setItem('addressEdit', '');
+                        window.addressEdit = null;
+                        this.$router.replace('/addressMag' + this.fromPath);
+                        //localStorage.setItem('addressEdit', '');
                     } else {
                         return this.Toast(data.message)
                     }

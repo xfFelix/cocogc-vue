@@ -61,7 +61,7 @@ export default {
             fixedshow: false,
             delIndex: '',
             delId: '',
-            fromPath:''
+            fromPath:this.$route.query.cart ? "?cart=" + this.$route.query.cart:""
         };
     },
     mounted() {
@@ -70,9 +70,10 @@ export default {
 
     methods: {
         addressEditC(item, index) {
-            var editItem = JSON.stringify(item);
-            localStorage.setItem('addressEdit', editItem);
-            this.$router.push('addressEdit?cart=' + this.$route.query.cart);
+            //var editItem = JSON.stringify(item);
+            //localStorage.setItem('addressEdit', editItem);
+            window.addressEdit = item;
+            this.$router.push('addressEdit' + this.fromPath);
         },
         delAddress(item, index) {
             this.fixedshow = true;
@@ -80,8 +81,8 @@ export default {
             this.delId = item.id;
         },
         goAddressEdit() {
-            this.$router.push('addressEdit');
-            localStorage.setItem('addressEdit', '');
+            this.$router.push('addressEdit' + this.fromPath);
+            //localStorage.setItem('addressEdit', '');
         },
         //确定删除
         delConfirm() {
@@ -130,28 +131,18 @@ export default {
                 })
         },
         jumpAddress(item) {
-            if(this.$route.query.cart == "cart"){
-                // let area = {};
-                // area.name = item.name;
-                // area.tel = item.tel;
-                // area.userAddress = item.area + ' ' + item.address
-                // localStorage.setItem('orderAddress',JSON.stringify(area));
-                window.chooseAddress = item;
-                this.$router.push('/order?cart=cart');
-            }else if(this.$route.query.cart == "direct"){
-               window.chooseAddress = item;
-               this.$router.push('/order?cart=direct');
-            }
+          window.chooseAddress = item;
+          this.$router.push('/order' + this.fromPath);
         }
     },
-    beforeRouteEnter(to, from, next){
-         next(vm=>{
-            vm.fromPath = from.name;
-            if(from.name == 'order'){
-                sessionStorage.setItem('fromOrder',true);
-            }
-        })
-    },
+    // beforeRouteEnter(to, from, next){
+    //      next(vm=>{
+    //         vm.fromPath = from.name;
+    //         if(from.name == 'order'){
+    //             sessionStorage.setItem('fromOrder',true);
+    //         }
+    //     })
+    // },
     components: {
         "header-top": headerTop
 

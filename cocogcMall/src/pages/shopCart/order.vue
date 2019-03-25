@@ -6,7 +6,7 @@
         <div>
             <div class="order-addressWN" addressMag>
                 <div v-if="addressDef != null">
-                  <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart:this.$route.query.cart}}">
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
                       <div class="order-address">
                           <p class="order-addPerson">
                               <span></span>
@@ -23,7 +23,7 @@
                   </router-link>
                 </div>
                 <div v-else>
-                  <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart:this.$route.query.cart}}">
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
                     <div class="order-addressN" style="display: block;">
                           <span class="order-addNImg"></span>
                           <p>您还没有收货地址，点击添加</p>
@@ -186,7 +186,8 @@ export default {
             exchangeShow: false,
             addressDef: null,
             isSmsCode: false,
-            other: 0
+            other: 0,
+            fromPath: this.$route.query.cart ? {cart:this.$route.query.cart} : {}
         };
     },
     mounted() {
@@ -230,9 +231,9 @@ export default {
             var token = getToken();
             var buys = window.buys;
             if(!buys){
-              this.$router.push({
-                path: '/layout/shopCart'
-              });
+                this.Toast("购买商品不能为空！");
+                this.$router.back(-1);
+                return ;
             }
             if(window.chooseAddress)
             {
@@ -388,6 +389,7 @@ export default {
             if(!buys)
             {
               this.Toast("购买商品不能为空！");
+              this.$router.back(-1);
               return ;
             }
 
