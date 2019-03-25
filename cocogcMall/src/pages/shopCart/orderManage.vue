@@ -97,6 +97,7 @@
                 </div>
             </router-link>
         </div>
+        <no-data :data="list"></no-data>
 
     </div>
 </template>
@@ -230,7 +231,9 @@ export default {
     margin: 0.2rem 0;
     background: #fff;
     padding: 0 0.37rem;
-
+    &:first-of-type{
+      margin-top: 0;
+    }
     .oMGoodsCon {
         display: flex;
         padding-bottom: 0.3rem;
@@ -320,6 +323,7 @@ export default {
 }
 
 .orderManage {
+    padding-top: 2.25rem;
     .order-goodsMW {
         background: #fff;
         margin-top: 0.2rem;
@@ -359,7 +363,4 @@ export default {
     }
 }
 
-.orderContent {
-    margin-top: 2.21rem;
-}
 </style>

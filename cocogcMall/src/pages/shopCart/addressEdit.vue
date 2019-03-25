@@ -16,9 +16,7 @@
                 <li class="one-bottom-px">
                     <p>
                         <span>手机号码</span>
-                        <span>
-                            <input type="number" placeholder="请填写收货人手机号" v-model="takeTel" pattern="\d*">
-                        </span>
+                        <input type="number" placeholder="请填写收货人手机号" v-model="takeTel" pattern="\d*">
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeTelC">
                     </p>
@@ -207,13 +205,19 @@ export default {
         li {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 0.36rem 0 0.16rem 0;
             p:nth-of-type(1) {
                 width: 90%;
                 display: flex;
+                align-items: center;
                 span:nth-of-type(1) {
                     width: 24%;
                     display: inline-block;
+                }
+                input{
+                  display: block;
+                  height: 100%;
                 }
             }
 

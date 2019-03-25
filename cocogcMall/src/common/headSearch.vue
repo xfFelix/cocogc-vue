@@ -12,10 +12,11 @@
                       :fetch-suggestions="querySearchAsync"
                       placeholder="请输入要搜索的内容"
                       @select="handleSelect"
+                      :trigger-on-focus="false"
                     ></el-autocomplete>
                 </p>
             </div>
-            <span class="home-smdel" @click="cleanInp">
+            <span class="home-smdel" @click="cleanInp" v-if="searchCont">
                 <span class="j1Png home-smdelImg"></span>
             </span>
         </div>
@@ -107,7 +108,8 @@ export default {
             .home-searchI {
                 height: 100%;
                 width: 80%;
-                display: inherit;
+                display: flex;
+                align-items: center;
                 padding-left: 0.1rem;
                 input {
                     width: 100%;

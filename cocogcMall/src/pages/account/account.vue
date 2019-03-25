@@ -22,11 +22,11 @@
         </div>
         <div class="banner">
             <div class="account-swipe">
-                <div class="swiper-container">
+                <div class="swiper-container" ref="topSwiper">
                     <!-- 页面 -->
                     <div class="swiper-wrapper">
                         <div class="swiper-slide" v-for="item of top" :key="item.title">
-                          <a href="item.url">
+                          <a :href="item.url">
                             <img :src="item.src" alt=""/>
                           </a>
                         </div>
@@ -87,11 +87,11 @@
 
         <div class="account-swipeW">
             <div class="account-swipe">
-                <div class="swiper-container">
+                <div class="swiper-container" ref="endSwiper">
                     <!-- 页面 -->
                     <div class="swiper-wrapper">
                         <div class="swiper-slide" v-for="item of end" :key="item.title">
-                          <a href="item.url">
+                          <a :href="item.url">
                             <img :src="item.src" alt=""/>
                           </a>
                         </div>
@@ -159,19 +159,30 @@ export default {
         ])
         this.end = end
         this.top = top
+        this.checkLength(this.top, 'topSwiper')
+        this.checkLength(this.end, 'endSwiper')
+      },
+      checkLength(list, el) {
         this.$nextTick(() => {
-          var swiperBan = new Swiper('.account-swipe .swiper-container', {
-            // autoplay: {
-            //   delay: 1000,
-            //   stopOnLastSlide: false,
-            //   disableOnInteraction: false,
-            // },
-            autoplay: true,
-            loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-            },
-          })
+          if (list.length > 1) {
+            this.setSwiper(this.$refs[el],true)
+          } else {
+            this.setSwiper(this.$refs[el],false)
+          }
+        })
+      },
+      setSwiper(el, autoplay){
+        var swiperBan = new Swiper(el, {
+          // autoplay: {
+          //   delay: 1000,
+          //   stopOnLastSlide: false,
+          //   disableOnInteraction: false,
+          // },
+          autoplay: autoplay,
+          loop: true,
+          pagination: {
+              el: '.swiper-pagination',
+          },
         })
       },
       getBanner (id) {

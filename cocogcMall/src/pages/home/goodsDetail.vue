@@ -383,6 +383,7 @@ export default {
 <style lang="less">
 .goodsDetail{
   position: relative;
+  padding-bottom: 0.4rem;
   .dialog-container{
     position: absolute;
     top: 0.78rem;

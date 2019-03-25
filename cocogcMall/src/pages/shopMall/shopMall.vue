@@ -26,6 +26,7 @@
               :fetch-suggestions="querySearchAsync"
               placeholder="请输入要搜索的内容"
               @select="handleSelect"
+              :trigger-on-focus="false"
             ></el-autocomplete>
           </div>
         </div>
@@ -43,6 +44,7 @@
               :fetch-suggestions="querySearchAsync"
               placeholder="请输入要搜索的内容"
               @select="handleSelect"
+              :trigger-on-focus="false"
             ></el-autocomplete>
           </p>
         </div>
@@ -221,12 +223,6 @@ export default {
 
 
 <style lang="less">
-.el-input{
-  height: 100%;
-  input{
-    height: 100%;
-  }
-}
 .link-url{
   margin-right: 100px;
   &:last-of-type{
@@ -291,7 +287,8 @@ export default {
       .home-searchI {
         height: 100%;
         width: 80%;
-        display: inherit;
+        display: flex;
+        align-items: center;
         padding-left: 0.1rem;
         position: relative;
         .search-hint{

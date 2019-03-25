@@ -149,7 +149,9 @@ export default {
     },
     methods: {
         ...mapActions({
-            setNum: 'cart/setNum'
+            setNum: 'cart/setNum',
+            incrementNum: 'cart/incrementNum',
+            decrementNum: 'cart/decrementNum'
         }),
         getCartGoodsList(callback) {
             let _this = this;
@@ -292,6 +294,7 @@ export default {
           if (this.list[index].num > 1) {
                 this.list[index].check = true
                 this.list[index].num--;
+                this.decrementNum()
                 this.computeTotal();
             }
         },
@@ -300,6 +303,7 @@ export default {
             this.list[index].check = true
             if (this.list[index].goods != null && this.list[index].num < this.list[index].goods.stocks) {
                 this.list[index].num++;
+                this.incrementNum()
                 this.computeTotal();
             }
         },
@@ -348,6 +352,9 @@ export default {
 </script>
 
 <style lang="less">
+.shop{
+  padding-bottom: 1.4rem;
+}
 .shop-headW {
     background: #fff;
     position: relative;
