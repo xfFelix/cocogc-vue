@@ -34,10 +34,10 @@
                     </div>
                 </div>
 
-                <div class="order-freight">
+                <!-- <div class="order-freight">
                     <span>运单号</span>
                     <span>va156564165156</span>
-                </div>
+                </div> -->
                 <div class="order-priceAll">
                     <span>快递</span>
                     <span>京东快递</span>

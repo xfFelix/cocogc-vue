@@ -1,15 +1,33 @@
 <template>
     <div class="goodsDetail">
 
-        <div class="goodsD-headListW">
-            <p class="goodsD-hBack" @click="$router.go(-1)">
-                <span></span>
-            </p>
-            <p class="circle" @click="showDialog = true">
-                <span></span>
-                <span></span>
-                <span></span>
-            </p>
+        <div v-if="headShow">
+            <div class="goodsD-headListW">
+                <p class="goodsD-hBack" @click="$router.back()">
+                    <span class="j1Png"></span>
+                </p>
+                <p class="circle" @click="showDialog = true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="backImgCir" v-if="!headShow">
+            <div class="backImgW" @click="$router.back()">
+                <span class="j1Png backImg"></span>
+            </div>
+            <!-- <div class="backImgW" @click="showDialog = true">
+                <p class="circle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </p>
+            </div> -->
+        </div>
+
+        <div class="goTop" @click="goTop(500)" v-if="headShow">
         </div>
 
         <div class="goodsD-headW">
@@ -24,14 +42,14 @@
 
             </div>
             <!-- <div class="goodsD-hBM">
-                            <p class="goodsD-hBack" @click="$router.go(-1)">
-                                <span></span>
-                            </p>
-                            <div class="home-message">
-                                <span class="home-msg"></span>
-                                <span class="home-msgNum">11</span>
-                            </div>
-                        </div> -->
+                <p class="goodsD-hBack" @click="$router.go(-1)">
+                    <span></span>
+                </p>
+                <div class="home-message">
+                    <span class="home-msg"></span>
+                    <span class="home-msgNum">11</span>
+                </div>
+            </div> -->
         </div>
 
         <div class="goodsD-priceAddress">
@@ -65,7 +83,6 @@
             <h3>规格与包装</h3>
             <div v-html="goodsInfo.brief" class="goodsD-infoCon">
             </div>
-
         </div>
 
         <div class="goodsD-imgW">
@@ -141,14 +158,24 @@
 
         </div>
         <div class="dialog-container" v-if="showDialog">
-          <div class="arrow-top"></div>
-          <div class="dialog-content">
-            <router-link :to="{path: '/layout/home'}"><div class="link">首页</div></router-link>
-            <router-link :to="{path: '/layout/account'}"><div class="link">我的</div></router-link>
-            <router-link :to="{path: '/layout/shopCart'}"><div class="link">购物车</div></router-link>
-            <router-link :to="{path: '/layout/classify'}"><div class="link">分类</div></router-link>
-            <router-link :to="{path: '/layout/shopMall'}"><div class="link">商城</div></router-link>
-          </div>
+            <div class="arrow-top"></div>
+            <div class="dialog-content">
+                <router-link :to="{path: '/layout/home'}">
+                    <div class="link">首页</div>
+                </router-link>
+                <router-link :to="{path: '/layout/account'}">
+                    <div class="link">我的</div>
+                </router-link>
+                <router-link :to="{path: '/layout/shopCart'}">
+                    <div class="link">购物车</div>
+                </router-link>
+                <router-link :to="{path: '/layout/classify'}">
+                    <div class="link">分类</div>
+                </router-link>
+                <router-link :to="{path: '/layout/shopMall'}">
+                    <div class="link">商城</div>
+                </router-link>
+            </div>
         </div>
         <bg-mask v-model="showDialog" color="transparent"></bg-mask>
     </div>
@@ -177,19 +204,20 @@ export default {
             buyNum: 1,
             carTotal: 0,
             isGo: 'cart',
-            showDialog: false
+            showDialog: false,
+            headShow: false
         };
     },
     computed: {
-      ...mapGetters({
-        userinfo: 'userinfo/getUserInfo'
-      })
+        ...mapGetters({
+            userinfo: 'userinfo/getUserInfo'
+        })
     },
-
+ 
     mounted() {
-        var that = this;
-        //图片轮播
+        window.addEventListener('scroll', this.handleScroll);
 
+        var that = this;
         //获取商品信息
         that.goodsId = this.$route.params.goodId;
         that.getGoodsInfo(that.goodsId, function(data) {
@@ -212,9 +240,28 @@ export default {
         next()
     },
     beforeDestroy() {
-      this.showDialog = false
+        this.showDialog = false;
+        window.removeEventListener('scroll', this.handleScroll); 
     },
     methods: {
+        //滚动出现
+        handleScroll () {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            if(scrollTop>0){
+                this.headShow = true;
+            }else{
+                this.headShow = false;
+            }
+        },
+        goTop(i){
+                //参数i控制速度
+                document.documentElement.scrollTop-=i;
+                if (document.documentElement.scrollTop>0) {
+                    var c=setTimeout(()=>this.goTop(i),16);
+                }else {
+                    clearTimeout(c);
+                }
+        },
         fixedClose(e) {
             if (e.target.className.indexOf('goodDetail-sClose') != -1 || e.target.className.indexOf('goodDetail-selectFixed') != -1) {
                 this.fixedCloseFlag = false;
@@ -361,7 +408,7 @@ export default {
                     duration: 1000
                 })
                 setTimeout(() => {
-                  window.location.href = infoURl+ '#!/cert?token=' + getToken();
+                    window.location.href = infoURl + '#!/cert?token=' + getToken();
                 }, 1000)
                 return
             }
@@ -381,40 +428,42 @@ export default {
 
 
 <style lang="less">
-.goodsDetail{
-  position: relative;
-  .dialog-container{
-    position: absolute;
-    top: 0.78rem;
-    right: 8px;
-    z-index: 102;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    .arrow-top{
-      border-left: 7px solid transparent;
-      border-right: 7px solid transparent;
-      border-bottom: 7px solid #ccc;
-      transform: translateX(-50%);
-      margin-top: -7px;
-      margin-left: 80px;
-      width: 0;
-      height: 0;
-    }
-    .dialog-content{
-      .link{
-        background: #fff;
-        padding:5px 0;
-        border-bottom: 1px solid #ccc;
-        width: 1.84rem;
-        display: flex;
-        justify-content: center;
-        &:last-of-type{
-          margin-bottom: 0;
+.goodsDetail {
+    position: relative;
+    transition: all 0.4s;
+    .dialog-container {
+        position: absolute;
+        top: 0.78rem;
+        right: 8px;
+        z-index: 102;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        .arrow-top {
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid #ccc;
+            transform: translateX(-50%);
+            margin-top: -7px;
+            margin-left: 80px;
+            width: 0;
+            height: 0;
         }
-      }
+        .dialog-content {
+            .link {
+                background: #fff;
+                padding: 5px 0;
+                border-bottom: 1px solid #ccc;
+                width: 1.84rem;
+                display: flex;
+                justify-content: center;
+                &:last-of-type {
+                    margin-bottom: 0;
+                }
+            }
+        }
     }
-  }
 }
+
 .goodsD-headListW {
     background: #fff;
     position: fixed;
@@ -445,7 +494,7 @@ export default {
     .goodsD-hBack {
         display: flex;
         width: 0.78rem;
-        height: 0.78rem;
+        height: 1rem;
         justify-content: center;
         align-items: center;
         position: relative;
@@ -453,11 +502,7 @@ export default {
         span {
             width: 0.22rem;
             height: 0.4rem;
-            display: inline-block;
-            background-image: url(/static/images/jl.png);
-            background-repeat: no-repeat;
             background-position: -0.2rem -0.74rem;
-            background-size: 5.8rem 1.86rem;
             margin-top: -0.04rem;
             margin-right: 0.1rem;
             transform: rotate(180deg)
@@ -465,9 +510,47 @@ export default {
     }
 }
 
+.backImgCir {
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+    padding: 0.42rem 0.2rem;
+    top: 0;
+    z-index: 11;
+    width: 100%;
+    box-sizing: border-box;
+    .backImgW {
+        width: 0.78rem;
+        height: 0.78rem;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .backImg {
+            width: 0.22rem;
+            height: 0.4rem;
+            background-position: -3.79rem -1.24rem;
+        }
+        .circle {
+            display: flex;
+            align-items: center;
+            span {
+                width: 4px;
+                height: 4px;
+                display: inline-block;
+                background: #fff;
+                border-radius: 50%;
+                margin: 0 2px;
+            }
+        }
+    }
+}
+
+
 
 .goodsD-headW {
-    padding-top: 0.7rem;
+    // padding-top: 0.7rem;
     .goodsD-headImg {
         height: 7.5rem;
         img {
@@ -648,8 +731,7 @@ export default {
                         padding: 0.2rem;
                     }
                     td {
-                        color: #000000;
-                        // background-color: #EAF2D3;
+                        color: #000000; // background-color: #EAF2D3;
                         font-size: 0.26rem;
                         border: 1px solid #dadada;
                         padding: 3px 7px 2px 7px;
@@ -746,7 +828,8 @@ export default {
     background: #fff;
     .detailImg {
         background: #fff;
-        div,table{
+        div,
+        table {
             width: 100%!important;
             height: 100%!important;
             position: relative!important;
@@ -967,6 +1050,25 @@ export default {
     }
     .goodsDetailBnt {
         background: #30ce84;
+    }
+}
+.goTop{
+position: fixed;
+    bottom: 1.3rem;
+    z-index: 11;
+    background: rgba(0,0,0,0.5);
+    width: 0.8rem;
+    height: 0.8rem;
+    right: 0.2rem;
+     &::after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-image: url(/static/images/goTop.png);
+    background-size: 25px
     }
 }
 </style>
