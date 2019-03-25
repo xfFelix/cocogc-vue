@@ -89,7 +89,7 @@
                         </div>
                         <div class="order-goodsDetail">
                             <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
-                             <p class="order-goodsDType">&nbsp;</p> 
+                             <p class="order-goodsDType">&nbsp;</p>
                             <div class="order-goodsDPriceW">
                                 <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
                                 <p class="order-goodsDNumW">
@@ -238,7 +238,6 @@ export default {
             }else{
               //选区默认地址
               await this.getUserAddress();
-
             }
             var addressId = 0;
             if(this.addressDef)
@@ -525,7 +524,7 @@ export default {
         .order-address {
             width: 4.9rem;
             .order-addPerson {
-                margin-bottom: 0.33rem; 
+                margin-bottom: 0.33rem;
                 span:nth-of-type(1),
                 span:nth-of-type(2) {
                     color: #000;
