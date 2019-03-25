@@ -149,7 +149,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.addressList = data.data;
-                        this.$router.replace('/addressMag')
+                        this.$router.replace('/addressMag?cart=' + this.$route.query.cart);
                         localStorage.setItem('addressEdit', '');
                     } else {
                         return this.Toast(data.message)

@@ -97,6 +97,7 @@ import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
 import { mapActions } from 'vuex';
 
+
 export default {
     data() {
         return {
@@ -228,7 +229,7 @@ export default {
                     duration: 1000
                 })
                 setTimeout(() => {
-                   window.location.href = infoURl+ '#!/cert?token=f7512935295b36d9b469e672c531d4c8';
+                   window.location.href = infoURl+ '#!/cert?token=' + getToken();
                 }, 1000)
                 return
             }
@@ -253,7 +254,8 @@ export default {
                 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                        sessionStorage.setItem('buys', JSON.stringify(buys));
+                        //sessionStorage.setItem('buys', JSON.stringify(buys));
+                        window.buys = buys;
                         that.$router.push({
                             path: '/order',
                             query: {

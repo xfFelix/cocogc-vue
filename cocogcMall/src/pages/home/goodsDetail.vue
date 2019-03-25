@@ -363,9 +363,10 @@ export default {
                 return
             }
             let buys = []
-            buys.push({ goodsId: this.goodsId, nums: this.buyNum })
-            sessionStorage.setItem('buys', JSON.stringify(buys))
-            this.$router.push('/order');
+            buys.push({ goodsId: this.goodsId, nums: this.buyNum });
+            //sessionStorage.setItem('buys', JSON.stringify(buys))
+            window.buys = buys;
+            this.$router.push('/order?cart=direct');
         }
     },
     components: {

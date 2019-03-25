@@ -52,6 +52,7 @@
 <script>
 import headerTop from "../../common/header.vue";
 import api from '../../service/api';
+import { IsEmpty, getToken } from "@/util/common";
 
 export default {
     data() {
@@ -71,7 +72,7 @@ export default {
         addressEditC(item, index) {
             var editItem = JSON.stringify(item);
             localStorage.setItem('addressEdit', editItem);
-            this.$router.push('addressEdit')
+            this.$router.push('addressEdit?cart=' + this.$route.query.cart);
         },
         delAddress(item, index) {
             this.fixedshow = true;
@@ -96,9 +97,8 @@ export default {
         addressMag: function(token) {
             let _this = this;
             this.axios(testUrl + api.selectAddresses, {
-                "token": localStorage.getItem("yeyun_token")
-            }, 'post')
-                .then((data) => {
+                "token": getToken()
+            }, 'post').then((data) => {
                     if (data.error_code == 0) {
                         _this.addressList = data.data;
                     } else {
@@ -130,17 +130,21 @@ export default {
                 })
         },
         jumpAddress(item) {
-            if(sessionStorage.getItem('fromOrder') == 'true'){
-                let area = {};
-                area.name = item.name;
-                area.tel = item.tel;
-                area.userAddress = item.area + ' ' + item.address
-                localStorage.setItem('orderAddress',JSON.stringify(area));
-                this.$router.push('/order');
+            if(this.$route.query.cart == "cart"){
+                // let area = {};
+                // area.name = item.name;
+                // area.tel = item.tel;
+                // area.userAddress = item.area + ' ' + item.address
+                // localStorage.setItem('orderAddress',JSON.stringify(area));
+                window.chooseAddress = item;
+                this.$router.push('/order?cart=cart');
+            }else if(this.$route.query.cart == "direct"){
+               window.chooseAddress = item;
+               this.$router.push('/order?cart=direct');
             }
         }
     },
-    beforeRouteEnter(to, from, next){     
+    beforeRouteEnter(to, from, next){
          next(vm=>{
             vm.fromPath = from.name;
             if(from.name == 'order'){
