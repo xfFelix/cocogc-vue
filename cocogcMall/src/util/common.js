@@ -58,3 +58,8 @@ export const setToken = (token) => {
   }
 }
 
+export const delToken = () => {
+  localStorage.removeItem("yeyun_token");
+  Vue.prototype.$cookies.remove("yeyun_token");
+}
+

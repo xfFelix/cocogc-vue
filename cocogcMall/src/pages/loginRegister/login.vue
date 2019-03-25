@@ -61,7 +61,7 @@
 
 <script>
 import api from "@/service/api";
-import { IsEmpty, IsMobile, CheckPass } from "@/util/common";
+import { IsEmpty, IsMobile, CheckPass,setToken } from "@/util/common";
 
 export default {
     data() {
@@ -93,8 +93,7 @@ export default {
                 .then((data) => {
                   if (data.error_code == 0) {
                         this.token = data.data.token;
-                        localStorage.setItem("yeyun_token", this.token);
-                        this.$cookies.set("yeyun_token",this.token,30)
+                        setToken(this.token);
                         if (this.$route.query.redirect) {
                           this.$router.replace(this.$route.query.redirect)
                         } else {

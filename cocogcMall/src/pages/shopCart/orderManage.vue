@@ -104,6 +104,7 @@
 import headerTop from "../../common/header.vue";
 import Swiper from 'swiper';
 import api from '../../service/api';
+import { IsEmpty, getToken } from "@/util/common";
 
 export default {
     data() {
@@ -119,7 +120,7 @@ export default {
     },
     mounted() {
 
-        var token = localStorage.getItem("yeyun_token");
+        var token = getToken();
         this.pathStatus = this.$route.query.status;
         switch (this.pathStatus) {
             case '0':
@@ -147,7 +148,7 @@ export default {
     methods: {
         headIndexCli(index) {
 
-            var token = localStorage.getItem("yeyun_token");
+            var token = getToken();
             this.headIndex = index;
             this.selectOrders(token, index);
         },
