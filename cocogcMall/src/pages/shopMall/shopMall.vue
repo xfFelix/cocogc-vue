@@ -24,6 +24,7 @@
           </p>
         </div>
         <span @click="seachClick()" class="seachBnt">搜索</span>
+        <!-- div. -->
       </div>
 
       <div class="home-smWrapA" v-if="homeSmWrap==true">
@@ -40,8 +41,8 @@
       <div class="home-noticeW">
           <div class="home-notice">
             <span class="home-horn"></span>
-            <span>椰云公告：</span>
-            <marquee  style="width: 68%;" loop="infinite" v-for="(item,index) in newsList" :key="index">
+            <span style="white-space: nowrap;">椰云公告：</span>
+            <marquee  style="margin-right:0.65rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
               <a :href="item.url">
                 <span class="home-hotCont">{{item.noticeTitle}}</span>
               </a>
@@ -109,11 +110,11 @@ export default {
             _this.$nextTick(function() {
 
               _this.swiperBan = new Swiper('.home-head .swiper-container', {
-                // autoplay: {
-                //   delay: 2000,
-                //   stopOnLastSlide: false,
-                //   disableOnInteraction: false,
-                // },
+                autoplay: {
+                  delay: 2000,
+                  stopOnLastSlide: false,
+                  disableOnInteraction: false,
+                },
                 loop: true,
                 pagination: {
                   el: '.swiper-pagination',

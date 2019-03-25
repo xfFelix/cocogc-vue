@@ -358,7 +358,7 @@ export default {
                     duration: 1000
                 })
                 setTimeout(() => {
-                  window.location.href = infoURl+ '#!/cert?token=f7512935295b36d9b469e672c531d4c8';
+                  window.location.href = infoURl+ '#!/cert?token=' + getToken();
                 }, 1000)
                 return
             }

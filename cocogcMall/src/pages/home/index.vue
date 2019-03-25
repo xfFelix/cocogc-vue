@@ -6,8 +6,8 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-              <marquee  style="width: 100%;color:#fff;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
-                <a :href="item.url">{{item.noticeTitle}}</a>
+              <marquee  style="width: 100%;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index.title">
+                <a :href="item.url" style="color:rgb(255,255,255);">{{item.noticeTitle}}</a>
               </marquee>
           </div>
           <span class="ih-goImg j1Png"></span>
@@ -15,19 +15,13 @@
       </a>
 
       <div class="ih-balanceW">
-        <div class="ih-balance" v-if="!token">
-          <router-link :to="{path:'/login'}" class="ih-nologin">登录查看</router-link>
-        </div>
-
-        <div class="ih-balance" v-else-if="token">
+        <div class="ih-balance" v-if="$store.state.userinfo.userinfo">
           <p class="ih-money">{{loScore.score}}</p>
           <p class="ih-moneya">椰子分</p>
         </div>
-
-        <!-- <div class="ih-recharge" @click="recharge()">
-                去充值
-              </div> -->
-
+        <div class="ih-balance" v-else>
+          <router-link :to="{path:'/login'}" class="ih-nologin">登录查看</router-link>
+        </div>
       </div>
     </div>
 
@@ -52,7 +46,7 @@
         <div class="swiper-container">
           <!-- 页面 -->
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(item,index) in banner" :key="index">
+            <div class="swiper-slide" v-for="item of banner" :key="item.title">
               <img :src="item.src" alt="">
             </div>
           </div>
@@ -66,7 +60,7 @@
     <div class="index-hotGoods">
       <div class="ihot-title">
         <h3>热门爆款</h3>
-        <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}">查看更多</router-link>
+        <!-- <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}">查看更多</router-link> -->
       </div>
       <div class="ihot-goodsW">
         <div class="ihot-goods" v-for="(item,index) in goodsList.slice(0, 6)" :key="index">

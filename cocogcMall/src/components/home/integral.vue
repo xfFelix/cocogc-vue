@@ -54,7 +54,7 @@ export default {
                 { id: 4, integral: "501~1000", homeSelShow: true, integralInfo: '501~1000' },
                 { id: 5, integral: "1001~2000", homeSelShow: true, integralInfo: '1001~2000' },
             ],
-            homeSelFlag: 0,
+            homeSelFlag: 1,
             iSelectAct: '',
             iSintegra: '',
             goodsList: [],

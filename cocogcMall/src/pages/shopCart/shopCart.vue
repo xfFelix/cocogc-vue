@@ -25,7 +25,7 @@
                     <ul class="shop-contentUl">
                         <li>
                             <span class="shop-selectW">
-                                <span @click="selGoods(index,0,$event)" :class="!items.check?'shop-selectN':'shop-selectY'">
+                                <span @click="selGoods(index,0,$event, items)" :class="!items.check?'shop-selectN':'shop-selectY'">
                                 </span>
                             </span>
                             <span class="shop-selImg" @click="$router.push('/goodsDetail/'+ items.goods.id)">
@@ -116,8 +116,8 @@ export default {
         if (this.list) {
           let buys = []
           let total = this.list.reduce((state, item) =>{
-            buys.push({goodsId: item.goodsId, nums: item.num})
             if (item.check) {
+              buys.push({goodsId: item.goodsId, nums: item.num})
               state.num = item.num + state.num
               num ++
             }
@@ -176,39 +176,47 @@ export default {
         },
         // 删除
         delGoods() {
-            var that = this;
-            var ids = [];
-            that.list.forEach((res) => {
-                if (res.check == true) {
-                    ids.push(res.id);
+            this.MessageBox.confirm('是否删除？').then(
+              confirm => {
+                var that = this;
+                var ids = [];
+                that.list.forEach((res) => {
+                    if (res.check == true) {
+                        ids.push(res.id);
+                    }
+                });
+                if (ids.length > 0) {
+                    that.axios(testUrl + api.removeCarts,
+                        {
+                            token: getToken(),
+                            id: ids.join(",")
+                        },
+                        'post')
+                        .then((data) => {
+                            if (data.error_code == 0) {
+                                that.getCartGoodsList(function(data) {
+                                    if (data == null) {
+                                        that.list = [];
+                                        that.setNum(0)
+                                    } else {
+                                        that.list = data;
+                                    }
+                                    that.deitDelFlag = false;
+                                    that.selectAllPrice = 0;
+                                    that.selectAllGoods = 0;
+                                });
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
                 }
-            });
-            if (ids.length > 0) {
-                that.axios(testUrl + api.removeCarts,
-                    {
-                        token: getToken(),
-                        id: ids.join(",")
-                    },
-                    'post')
-                    .then((data) => {
-                        if (data.error_code == 0) {
-                            that.getCartGoodsList(function(data) {
-                                if (data == null) {
-                                    that.list = [];
-                                    that.setNum(0)
-                                } else {
-                                    that.list = data;
-                                }
-                                that.deitDelFlag = false;
-                                that.selectAllPrice = 0;
-                                that.selectAllGoods = 0;
-                            });
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    })
-            }
+              },
+              cancel => {
+                return console.log('cancel')
+              }
+            )
+
         },
         //结算
         settleGoods() {
@@ -279,13 +287,15 @@ export default {
         },
         // 数量减小
         numDecrease(index) {
-            if (this.list[index].num > 1) {
+          if (this.list[index].num > 1) {
+                this.list[index].check = true
                 this.list[index].num--;
                 this.computeTotal();
             }
         },
         //增加
         numIncrease(index) {
+            this.list[index].check = true
             if (this.list[index].goods != null && this.list[index].num < this.list[index].goods.stocks) {
                 this.list[index].num++;
                 this.computeTotal();
@@ -512,7 +522,7 @@ export default {
                             span:nth-of-type(odd) {
                                 display: inline-block;
                                 height: 100%;
-                                width: 0.46rem;
+                                width: 0.42rem;
                                 text-align: center;
                                 background-image: url(/static/images/jl.png);
                                 background-repeat: no-repeat;

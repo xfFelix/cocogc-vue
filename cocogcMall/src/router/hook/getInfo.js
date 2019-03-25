@@ -1,50 +1,59 @@
-import {getToken} from '@/util/common'
+import {getToken, setToken} from '@/util/common'
 import api from '@/service/api'
 import axios from '@/service/http'
 import store from '@/store/index'
-
+import qs from 'qs'
 export default (router) => {
   router.beforeEach(async(to, from, next) => {
-    if (to.meta.requireAuth) {// 判断是否需要登录权限
-      if (getToken()) {// 判断是否登录
-        const info = await axios(infoURl + api.info, {token: getToken()}, 'post')
-        localStorage.setItem('userName', info.data.userName);
-        localStorage.setItem('score', info.data.score);
-        localStorage.setItem('isRealCert', info.data.isRealCert);
-        store.dispatch('userinfo/setUserInfo', info.data)
-        if (/\/layout/.test(to.path)) {
-          const cart = await axios(testUrl + api.totalCarts,{token: getToken()},'post')
-          store.dispatch('cart/setNum', cart.data)
-          if (/^\/layout\/shopCart$/.test(to.path)) {
-            const address = await axios(testUrl + api.selectDefaultAddresses, {token: getToken()}, 'post')
-            if (address.data) {
-              localStorage.setItem('addressId', address.data.id);
-              store.dispatch('userinfo/setAddress', address.data)
-            }
-          }
-        }
-        next()
-      } else {
-        next({
-          path: '/login',
-          query: { redirect: to.fullPath }
-        })
-      }
-    } else {
-      if (/\/layout/.test(to.path)) {
-        if (getToken()) {// 判断是否登录
-          const [info, cart] = await Promise.all([
-            axios(infoURl + api.info, {token: getToken()}, 'post'),
-            axios(testUrl + api.totalCarts,{token: getToken()},'post')
-          ])
-          localStorage.setItem('userName', info.data.userName);
-          localStorage.setItem('score', info.data.score);
-          localStorage.setItem('isRealCert', info.data.isRealCert);
-          store.dispatch('userinfo/setUserInfo', info.data)
-          store.dispatch('cart/setNum', cart.data)
+    if (location.href.indexOf('?') != -1) {
+      const param = qs.parse(location.href.split('?')[1])
+      if (param.token)
+      {
+        const user = await axios(infoURl + api.info, {token: param.token}, 'post');
+        if(user.error_code == 0)
+        {
+          setToken(param.token);
+          store.dispatch('userinfo/setUserInfo', user.data)
         }
       }
-      next()
     }
-  })
+
+    var _token = getToken();
+    const info = await axios(infoURl + api.info, {token: _token}, 'post');
+    if(info.error_code == 0)
+    {
+      localStorage.setItem('userName', info.data.userName);
+      localStorage.setItem('score', info.data.score);
+      localStorage.setItem('isRealCert', info.data.isRealCert);
+      store.dispatch('userinfo/setUserInfo', info.data);
+
+      //获取购物车数据
+      const cart = await axios(testUrl + api.totalCarts,{token: _token},'post');
+      if(cart.error_code == 0 && cart.data)
+        store.dispatch('cart/setNum', cart.data);
+    }
+
+    if (to.meta.requireAuth && info.error_code == 0)
+    {
+      //需要登录且已经登录
+      //获取地址
+      if (/^\/layout\/shopCart$/.test(to.path))
+      {
+        const address = await axios(testUrl + api.selectDefaultAddresses, {token: _token}, 'post');
+        if (address.error_code == 0 && address.data)
+        {
+          localStorage.setItem('addressId', address.data.id);
+          store.dispatch('userinfo/setAddress', address.data)
+        }
+      }
+    }else if(to.meta.requireAuth && info.error_code != 0){
+      //需要登录且未登录，跳转登录
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      });
+      return ;
+    }
+    next()
+  });
 }

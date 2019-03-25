@@ -1,5 +1,6 @@
 import Vue from 'vue';
-
+import api from '@/service/api'
+import axios from '@/service/http'
 /*
     是否为空
 */
@@ -47,5 +48,13 @@ export const getToken = () => {
     return token;
 }
 
-
+//获取用户token
+export const setToken = (token) => {
+  if (token) {
+    Vue.prototype.$cookies.set("yeyun_token", token,30);
+    localStorage.setItem("yeyun_token", token);
+  } else {
+    console.error('token为空')
+  }
+}
 

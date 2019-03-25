@@ -10,7 +10,7 @@
                         <div class="home-iGoods" >
                             <img :src="item.image" alt="" />
                             <!-- <span class="home-iTags">
-                                <span class="iGoods"></span>    
+                                <span class="iGoods"></span>
                                 <span class="iDrop">直降</span>
                                 <span class="iSelf">自营</span>
                             </span> -->
@@ -24,8 +24,8 @@
                         </div>
                     </router-link>
                 </div>
-
             </div>
+            <p class="no-more">没有更多了</p>
         </div>
     </div>
 </template>
@@ -82,7 +82,11 @@ export default {
         .home-interWrap {
             width: 100%;
             overflow: auto;
-            padding-bottom: 0.4rem;
+        }
+        .no-more{
+          padding-bottom: 0.5rem;
+          text-align: center;
+          font-style: italic;
         }
         .home-iGoodsW {
             float: left;
