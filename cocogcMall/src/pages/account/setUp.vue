@@ -46,6 +46,8 @@
 <script>
 import headerTop from "../../common/header.vue";
 import api from "@/service/api";
+import { IsEmpty, getToken,delToken } from "@/util/common";
+
 export default {
     data() {
         return {
@@ -65,23 +67,22 @@ export default {
             this.$router.push("/addressMag")
         },
         certJump() {
-            window.location.href = infoURl + "#!/cert?token=" + this.$cookies.get("yeyun_token");
+            window.location.href = infoURl + "#!/cert?token=" + getToken();
         },
         cardsJump() {
-           
+
         },
         passupJump() {
-             window.location.href = infoURl + "#!/changePwd?token=" + this.$cookies.get("yeyun_token");
+             window.location.href = infoURl + "#!/changePwd?token=" + getToken();
         },
         loginOut(){
-            localStorage.removeItem("yeyun_token");
-            this.$cookies.remove("yeyun_token");
+            delToken();
             this.$router.push("/login")
 
         },
         cards: function() {
             let _this = this;
-            var token = localStorage.getItem("yeyun_token");
+            var token = getToken();
             this.axios(infoURl + api.cards, {
                 "token": token
             }, 'post')

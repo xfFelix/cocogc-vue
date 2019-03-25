@@ -33,11 +33,6 @@
 
                     </div>
                 </div>
-
-                <div class="order-freight">
-                    <span>运单号</span>
-                    <span>va156564165156</span>
-                </div>
                 <div class="order-priceAll">
                     <span>快递</span>
                     <span>京东快递</span>
@@ -160,6 +155,8 @@ import Swiper from 'swiper';
 import api from '../../service/api';
 import clip from '@/util/clipboard';
 import BgMask from "@/common/BgMask"
+import { IsEmpty, getToken } from "@/util/common";
+
 export default {
     data() {
         return {
@@ -177,7 +174,7 @@ export default {
     },
     methods: {
         findOrder: function() {
-            var token = localStorage.getItem("yeyun_token");
+            var token = getToken();
             let _this = this;
             this.axios(testUrl + api.findOrder, {
                 "token": token,
@@ -207,7 +204,7 @@ export default {
                 })
         },
         queryOrderTrack: function() {
-            var token = localStorage.getItem("yeyun_token");
+            var token = getToken();
             let _this = this;
             this.axios(testUrl + api.queryOrderTrack, {
                 "token": token,

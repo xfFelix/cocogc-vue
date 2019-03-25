@@ -1,15 +1,13 @@
 <template>
     <div class="order">
         <header-top></header-top>
-
         <!-- 地址 -->
         <div>
             <div class="order-addressWN" addressMag>
                 <div v-if="addressDef != null">
-                  <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart:this.$route.query.cart}}">
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
                       <div class="order-address">
                           <p class="order-addPerson">
-                              <span></span>
                               <span>{{addressDef.name}}</span>
                               <span>{{addressDef.tel}}</span>
                           </p>
@@ -23,7 +21,7 @@
                   </router-link>
                 </div>
                 <div v-else>
-                  <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart:this.$route.query.cart}}">
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
                     <div class="order-addressN" style="display: block;">
                           <span class="order-addNImg"></span>
                           <p>您还没有收货地址，点击添加</p>
@@ -53,8 +51,6 @@
                                     <div class="swiper-slide" v-for="(itemGoods,indexGoods) in dataItem.goodsList" :key="indexGoods">
                                         <div class="order-goodsList">
                                             <img :src="itemGoods.picUrl" alt="" />
-                                            <!-- <img src="static/images/goos_01.png" alt="" /> -->
-                                            <!-- {{itemGoods.goodsName}} -->
                                         </div>
                                     </div>
 
@@ -93,7 +89,7 @@
                         </div>
                         <div class="order-goodsDetail">
                             <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
-                            <p class="order-goodsDType">类型没有</p>
+                             <p class="order-goodsDType">&nbsp;</p>
                             <div class="order-goodsDPriceW">
                                 <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
                                 <p class="order-goodsDNumW">
@@ -109,23 +105,23 @@
                 <div class="order-priceDetail one-bottom-px">
                     <p>
                         <span>商品</span>
-                        <span>{{dataItem.sellMoney}}</span>
+                        <span>{{dataItem.sellMoney|toDecimal2}}</span>
                     </p>
                     <p>
                         <span>运费</span>
-                        <span>{{dataItem.shippingFee}}</span>
+                        <span>{{dataItem.shippingFee|toDecimal2}}</span>
                     </p>
                     <p>
                         <span>服务费</span>
-                        <span>{{dataItem.serviceMoney}}</span>
+                        <span>{{dataItem.serviceMoney|toDecimal2}}</span>
                     </p>
                     <p>
                         <span>税费</span>
-                        <span>{{dataItem.taxFee}}</span>
+                        <span>{{dataItem.taxFee|toDecimal2}}</span>
                     </p>
                     <p>
                         <span>合计</span>
-                        <span style="color: #30ce84;">{{dataItem.totalMoney}}</span>
+                        <span style="color: #30ce84;">{{dataItem.totalMoney|toDecimal2}}</span>
                     </p>
                 </div>
             </div>
@@ -186,7 +182,8 @@ export default {
             exchangeShow: false,
             addressDef: null,
             isSmsCode: false,
-            other: 0
+            other: 0,
+            fromPath: this.$route.query.cart ? {cart:this.$route.query.cart} : {}
         };
     },
     mounted() {
@@ -218,28 +215,29 @@ export default {
             }
         },
         async getUserAddress() {
+          var that = this;
           var _token = getToken();
           var address = await axios(testUrl + api.selectDefaultAddresses, {token: _token}, 'post');
           if (address.error_code == 0 && address.data)
           {
-            this.addressDef = address.data;
-          };
+            that.addressDef = address.data;
+          }
         },
         // 订单预览
-        previewOrder: function() {
+      async previewOrder() {
             var token = getToken();
             var buys = window.buys;
             if(!buys){
-              this.$router.push({
-                path: '/layout/shopCart'
-              });
+                this.Toast("购买商品不能为空！");
+                this.$router.back(-1);
+                return ;
             }
             if(window.chooseAddress)
             {
               this.addressDef = window.chooseAddress;
             }else{
               //选区默认地址
-              this.getUserAddress();
+              await this.getUserAddress();
             }
             var addressId = 0;
             if(this.addressDef)
@@ -304,15 +302,14 @@ export default {
                 })
         },
         // 通过购物车进来
-        previewOrderByCart: function() {
+      async previewOrderByCart() {
             var token = getToken();
-            console.log(window.chooseAddress);
             if(window.chooseAddress)
             {
               this.addressDef = window.chooseAddress;
             }else{
               //选区默认地址
-              this.getUserAddress();
+              await this.getUserAddress();
             }
             var addressId = 0;
             if(this.addressDef)
@@ -388,6 +385,7 @@ export default {
             if(!buys)
             {
               this.Toast("购买商品不能为空！");
+              this.$router.back(-1);
               return ;
             }
 
@@ -449,7 +447,7 @@ export default {
         //定时
         async sendPhoneSms() {
             if (this.validateFlag == 1) {
-                let data = await this.axios(testUrl + api.sendSms, { token: localStorage.getItem('yeyun_token') }, 'post')
+                let data = await this.axios(testUrl + api.sendSms, { token: getToken() }, 'post')
                 if (data.error_code) {
                     return this.Toast(data.message)
                 }
@@ -526,15 +524,9 @@ export default {
         .order-address {
             width: 4.9rem;
             .order-addPerson {
-                margin-bottom: 0.33rem; // span:nth-of-type(1) {
-                //     background: #30ce84;
-                //     color: #fff;
-                //     font-size: 0.24rem;
-                //     border-radius: 0.4rem;
-                //     padding: 0.1rem;
-                // }
-                span:nth-of-type(2),
-                span:nth-of-type(3) {
+                margin-bottom: 0.33rem;
+                span:nth-of-type(1),
+                span:nth-of-type(2) {
                     color: #000;
                     font-size: 0.3rem;
                 }

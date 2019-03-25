@@ -7,37 +7,39 @@
                     <p>
                         <span>收货人</span>
                         <span>
-                            <input type="text" placeholder="请填写收货人姓名" v-model="takeName">
+                            <input type="text" placeholder="请填写收货人姓名" v-model.trim="takeName">
                         </span>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeNameC">
+                    <p class="j1Png addEdid-delInp" @click="takeNameC" v-if="takeName.length>0">
                     </p>
                 </li>
                 <li class="one-bottom-px">
                     <p>
                         <span>手机号码</span>
-                        <input type="number" placeholder="请填写收货人手机号" v-model="takeTel" pattern="\d*">
+                        <span>
+                            <input type="number" placeholder="请填写收货人手机号" v-model.trim="takeTel" pattern="\d*">
+                        </span>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeTelC">
+                    <p class="j1Png addEdid-delInp" @click="takeTelC" v-if="takeTel.length>0">
                     </p>
                 </li>
                 <li class="one-bottom-px">
                     <p>
                         <span>所在地区</span>
                         <span>
-                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @click="fixedShowC()" readonly="">
+                            <input type="text" placeholder="省市区县、乡镇等" v-model.trim="takeAddress" @click="fixedShowC()" readonly="">
                         </span>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeAddressC">
+                    <p class="j1Png addEdid-delInp" @click="takeAddressC" v-if="takeAddress.length>0">
                     </p>
                 </li>
                 <li class="one-bottom-px">
                     <p>
                         <span>详细地区</span>
-                        <textarea type="text" placeholder="街道、楼牌号等" v-model="takeDAddress">
+                        <textarea type="text" placeholder="街道、楼牌号等" v-model.trim="takeDAddress">
                         </textarea>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeDAddressC">
+                    <p class="j1Png addEdid-delInp" @click="takeDAddressC" v-if="takeDAddress.length>0">
                     </p>
                 </li>
             </ul>
@@ -61,8 +63,7 @@
 import headerTop from "../../common/header.vue";
 import addressSelect from "../../components/shopCart/addressSelect.vue";
 import api from '../../service/api';
-import { IsEmpty, IsMobile, CheckPass } from "@/util/common";
-
+import { IsEmpty, IsMobile, CheckPass,getToken } from "@/util/common";
 
 export default {
     data() {
@@ -75,15 +76,15 @@ export default {
             addressDef: false,
             fixedShow: false,
             areaCode: '',
+            fromPath: this.$route.query.cart ? "?cart=" + this.$route.query.cart : ""
         };
     },
     watch: {
 
     },
     mounted() {
-        var adEdit = localStorage.getItem('addressEdit');
-        if (adEdit) {
-            var item = JSON.parse(adEdit);
+        var item = window.addressEdit;
+        if (item) {
             this.takeName = item.name;
             this.takeTel = item.tel;
             this.takeAddress = item.area;
@@ -91,11 +92,13 @@ export default {
             this.takeAddressId = item.id;
             this.areaCode = item.areaCode;  //编辑页面传来的areacode
             this.addressDef = item.isDefault;
+        }else{
+          this.$router.back(-1);
         }
     },
     created() {
-        var adEdit = localStorage.getItem('addressEdit');
-        if (adEdit) {
+        var item = window.addressEdit;
+        if (item) {
             this.$route.meta.title = "编辑地址"
         } else {
             this.$route.meta.title = "添加地址";
@@ -135,7 +138,7 @@ export default {
         updateAddress: function(addressDef) {
             let _this = this;
             this.axios(testUrl + api.updateAddress, {
-                "token": localStorage.getItem("yeyun_token"),
+                "token": getToken(),
                 "name": _this.takeName,
                 "tel": _this.takeTel,
                 "code": _this.areaCode,
@@ -147,8 +150,8 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.addressList = data.data;
-                        this.$router.replace('/addressMag?cart=' + this.$route.query.cart);
-                        localStorage.setItem('addressEdit', '');
+                        window.addressEdit = null;
+                        this.$router.replace('/addressMag' + this.fromPath);
                     } else {
                         return this.Toast(data.message)
                     }
@@ -261,6 +264,17 @@ export default {
                 background-position: -4.78rem -1.44rem;
             }
         }
+        li:nth-of-type(1),
+        li:nth-of-type(2),
+        li:nth-of-type(3) {
+            height: 0.46rem;
+            p:nth-of-type(1) {
+                span:nth-of-type(1) {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
     }
 }
 
@@ -310,6 +324,7 @@ textarea {
     color: #000;
     width: 70%;
     height: 1.38rem;
+    margin-top: 0.05rem;
 }
 </style>
 

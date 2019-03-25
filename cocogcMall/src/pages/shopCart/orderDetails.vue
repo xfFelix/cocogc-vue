@@ -16,7 +16,6 @@
             <div class="order-addressW">
                 <div class="order-address">
                     <p class="order-addPerson">
-                        <span>默认</span>
                         <span>{{dataList.userName}}</span>
                         <span>{{dataList.userMobile}}</span>
                     </p>
@@ -119,6 +118,7 @@
 import headerTop from "../../common/header.vue";
 import api from '../../service/api';
 import clip from '@/util/clipboard'
+import { IsEmpty, getToken } from "@/util/common";
 
 export default {
     data() {
@@ -140,7 +140,7 @@ export default {
         // 查找订单
         findOrder: function() {
 
-            var token = localStorage.getItem("yeyun_token");
+            var token = getToken();
             let _this = this;
             this.axios(testUrl + api.findOrder, {
 
@@ -213,15 +213,9 @@ export default {
             width: 4.9rem;
             .order-addPerson {
                 margin-bottom: 0.33rem;
-                span:nth-of-type(1) {
-                    background: #30ce84;
-                    color: #fff;
-                    font-size: 0.24rem;
-                    border-radius: 0.4rem;
-                    padding: 0.1rem;
-                }
-                span:nth-of-type(2),
-                span:nth-of-type(3) {
+
+                span:nth-of-type(1),
+                span:nth-of-type(2) {
                     color: #000;
                     font-size: 0.3rem;
                 }

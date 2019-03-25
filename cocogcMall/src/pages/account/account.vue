@@ -108,6 +108,7 @@
 import Swiper from 'swiper';
 import api from '@/service/api'
 import {mapGetters} from 'vuex';
+import { IsEmpty, getToken } from "@/util/common";
 
 export default {
     data() {
@@ -121,15 +122,15 @@ export default {
             score: '',
             userName: '',
             jumpList: [
-                { name: '我的椰子分', scoreShow: true, path: infoURl + "#!/slogs?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog01" },
-                { name: '信用卡还款', scoreShow: false, path: infoURl + "#!/pay?back=pay&token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog02" },
-                { name: '黄金兑换', scoreShow: false, path: infoURl + "#!/goldChange?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog03" },
-                { name: '话费充值', scoreShow: false, path: infoURl + "#!/phoneBill?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog04" },
+                { name: '我的椰子分', scoreShow: true, path: infoURl + "#!/slogs?token=" + getToken(), bgImg: "acc-contentLog01" },
+                { name: '信用卡还款', scoreShow: false, path: infoURl + "#!/pay?back=pay&token=" + getToken(), bgImg: "acc-contentLog02" },
+                { name: '黄金兑换', scoreShow: false, path: infoURl + "#!/goldChange?token=" + getToken(), bgImg: "acc-contentLog03" },
+                { name: '话费充值', scoreShow: false, path: infoURl + "#!/phoneBill?token=" + getToken(), bgImg: "acc-contentLog04" },
             ],
             helpList: [
                 { name: '帮助中心', path: 'https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q', bgImg: "acc-contentLog05" },
-                { name: '联系客服', path: infoURl + "#!/contact?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog06" },
-                { name: '商务合作', path: infoURl + "#!/cooperation?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog07" },
+                { name: '联系客服', path: infoURl + "#!/contact?token=" + getToken(), bgImg: "acc-contentLog06" },
+                { name: '商务合作', path: infoURl + "#!/cooperation?token=" + getToken(), bgImg: "acc-contentLog07" },
             ],
             top: [],
             end: [],
@@ -198,7 +199,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 #account{
   position: relative;
   .banner{
@@ -246,6 +247,7 @@ export default {
         display: flex;
         .acc-headImgW {
             width: 1.1rem;
+            height: 1.1rem;
             margin-left: 0.66rem;
             margin-top: 0.1rem;
             margin-right: 0.36rem;
@@ -254,6 +256,7 @@ export default {
             }
         }
         .acc-headTG {
+                width: 27%;
             .acc-headTel {
                 margin-bottom: 0.13rem;
                 font-size: 0.3rem;

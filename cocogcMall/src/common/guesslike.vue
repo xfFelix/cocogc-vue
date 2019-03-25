@@ -5,15 +5,11 @@
                 <h3>猜你喜欢</h3>
             </div>
             <div class="home-interWrap">
-                <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
+                <div v-for="(item,index) in goodsList" :key="index">
+                  <div class="home-iGoodsW">
                     <router-link :to="{path:'/goodsDetail/'+item.id}">
                         <div class="home-iGoods" >
                             <img :src="item.image" alt="" />
-                            <!-- <span class="home-iTags">
-                                <span class="iGoods"></span>
-                                <span class="iDrop">直降</span>
-                                <span class="iSelf">自营</span>
-                            </span> -->
                         </div>
                         <p class="home-iNmame">
                             {{item.name|wordSize(item.name)}}
@@ -23,6 +19,7 @@
                             <span class="home-iMoney">  {{item.currentPrice}}</span>
                         </div>
                     </router-link>
+                  </div>
                 </div>
             </div>
             <p  style="text-align: center;padding: 0.2rem;color: #666;">已经到底了噢~~</p>
@@ -31,6 +28,7 @@
 </template>
 <script>
 import api from "@/service/api";
+import { arrayContains } from "@/util/common";
 export default {
     data() {
         return {
@@ -38,16 +36,28 @@ export default {
         }
     },
     methods: {
+        parseGuessLike(list){
+          if(window.userLikeId)
+          {
+            for(var k=0;k<list.length;k++)
+            {
+              if(arrayContains(window.userLikeId,list[k].id)){
+                list.splice(k,1);
+              }
+            }
+          }
+          return list;
+        },
         guessLike: function() {
             let _this = this;
-            let name = JSON.parse(localStorage.getItem("cartShop")) ;
+            let name = window.userLikeName ;
+            //console.log(name);
             this.axios(jdTestUrl + api.guessLike, {
                 "name": name
             }, 'post')
                 .then((data) => {
                     if (data.code == 0) {
-                        _this.goodsList = data.list;
-
+                        _this.goodsList = _this.parseGuessLike(data.list);
                     } else {
                         _this.Toast(data.message);
                     }
@@ -58,7 +68,10 @@ export default {
         },
     },
     mounted() {
-        this.guessLike()
+      var that = this;
+      setTimeout(function () {
+        that.guessLike()
+      },2000);
     }
 }
 </script>
