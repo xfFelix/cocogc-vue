@@ -19,12 +19,17 @@
         <div class="home-search">
           <span class="home-logo"></span>
           <span class="home-searchL"></span>
-          <p class="home-searchI">
-            <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" />
-          </p>
+          <div class="home-searchI">
+            <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" @input="searchHint($event)"/>
+            <!-- <div class="search-hint">
+              <p class="hint">这是提示</p>
+              <p class="hint">这是提示</p>
+              <p class="hint">这是提示</p>
+              <p class="hint">这是提示</p>
+            </div> -->
+          </div>
         </div>
         <span @click="seachClick()" class="seachBnt">搜索</span>
-        <!-- div. -->
       </div>
 
       <div class="home-smWrapA" v-if="homeSmWrap==true">
@@ -97,6 +102,16 @@ export default {
 
   },
   methods: {
+    searchHint (e) {
+      let value = e.target.value
+      let timeout = 0
+      if (value) {
+        clearTimeout(timeout)
+        timeout = setTimeout(async()=> {
+          let hint = await this.axios(testUrl + api.searchHint, {keyword: this.searchCont}, 'get')
+        }, 1000)
+      }
+    },
     // banner
     banner: function() {
       let _this = this;
@@ -247,6 +262,17 @@ export default {
         width: 80%;
         display: inherit;
         padding-left: 0.1rem;
+        position: relative;
+        .search-hint{
+          position: absolute;
+          background: #fff;
+          width: 100%;
+          top: 0.61rem;
+          border-radius: 5px;
+          .hint{
+            padding: 0.05rem 0.15rem ;
+          }
+        }
         input {
           width: 100%;
           font-size: 0.26rem;
