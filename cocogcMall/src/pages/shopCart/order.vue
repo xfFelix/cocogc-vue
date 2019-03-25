@@ -1,7 +1,6 @@
 <template>
     <div class="order">
         <header-top></header-top>
-
         <!-- 地址 -->
         <div>
             <div class="order-addressWN" addressMag>
@@ -9,7 +8,6 @@
                   <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
                       <div class="order-address">
                           <p class="order-addPerson">
-                              <span></span>
                               <span>{{addressDef.name}}</span>
                               <span>{{addressDef.tel}}</span>
                           </p>
@@ -53,8 +51,6 @@
                                     <div class="swiper-slide" v-for="(itemGoods,indexGoods) in dataItem.goodsList" :key="indexGoods">
                                         <div class="order-goodsList">
                                             <img :src="itemGoods.picUrl" alt="" />
-                                            <!-- <img src="static/images/goos_01.png" alt="" /> -->
-                                            <!-- {{itemGoods.goodsName}} -->
                                         </div>
                                     </div>
 
@@ -529,15 +525,9 @@ export default {
         .order-address {
             width: 4.9rem;
             .order-addPerson {
-                margin-bottom: 0.33rem; // span:nth-of-type(1) {
-                //     background: #30ce84;
-                //     color: #fff;
-                //     font-size: 0.24rem;
-                //     border-radius: 0.4rem;
-                //     padding: 0.1rem;
-                // }
-                span:nth-of-type(2),
-                span:nth-of-type(3) {
+                margin-bottom: 0.33rem; 
+                span:nth-of-type(1),
+                span:nth-of-type(2) {
                     color: #000;
                     font-size: 0.3rem;
                 }

@@ -152,7 +152,6 @@ export default {
                         _this.addressList = data.data;
                         window.addressEdit = null;
                         this.$router.replace('/addressMag' + this.fromPath);
-                        //localStorage.setItem('addressEdit', '');
                     } else {
                         return this.Toast(data.message)
                     }
