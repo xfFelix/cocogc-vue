@@ -1,8 +1,8 @@
 // initial state
 // shape: [{ id, quantity }]
 const state = {
-  userinfo: {},
-  address: {}
+  userinfo: '',
+  address: ''
 }
 
 // getters

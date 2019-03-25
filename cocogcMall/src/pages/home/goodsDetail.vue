@@ -213,7 +213,7 @@ export default {
             userinfo: 'userinfo/getUserInfo'
         })
     },
- 
+
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
 
@@ -241,7 +241,7 @@ export default {
     },
     beforeDestroy() {
         this.showDialog = false;
-        window.removeEventListener('scroll', this.handleScroll); 
+        window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
         //滚动出现

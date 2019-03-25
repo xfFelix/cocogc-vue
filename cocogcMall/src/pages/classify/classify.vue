@@ -12,6 +12,7 @@
                           :fetch-suggestions="querySearchAsync"
                           placeholder="请输入要搜索的内容"
                           @select="handleSelect"
+                          :trigger-on-focus="false"
                         ></el-autocomplete>
                     </p>
                 </div>
@@ -298,7 +299,8 @@ export default
             .home-searchI {
                 height: 0.32rem;
                 width: 5rem;
-                display: inherit;
+                display: flex;
+                align-items: center;
                 padding-left: 0.1rem;
                 input {
                     width: 4.5rem;
