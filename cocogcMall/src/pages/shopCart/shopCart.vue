@@ -163,10 +163,14 @@ export default {
                             callback(data.data);
                         //传给猜你喜欢
                         let cartShop = [];
+                        let ids = [];
                         data.data.forEach((res) => {
-                            cartShop.push(res.goods.name)
+                            cartShop.push(res.goods.name);
+                            ids.push(res.goods.id);
                         })
-                        localStorage.setItem('cartShop', JSON.stringify(cartShop));
+                        window.userLikeName = cartShop;
+                        window.userLikeId = ids;
+                        //localStorage.setItem('cartShop', JSON.stringify(cartShop));
                     } else {
                         _this.Toast(data.message)
                     }
@@ -223,7 +227,7 @@ export default {
         settleGoods() {
             var that = this;
             var buys = [];
-            if (!JSON.parse(localStorage.isRealCert)) {
+            if ($store.state.userinfo.userinfo.isRealCert == 0) {
                 this.Toast({
                     message: '请先实名认证',
                     duration: 1000

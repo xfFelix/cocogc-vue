@@ -215,15 +215,16 @@ export default {
             }
         },
         async getUserAddress() {
+          var that = this;
           var _token = getToken();
           var address = await axios(testUrl + api.selectDefaultAddresses, {token: _token}, 'post');
           if (address.error_code == 0 && address.data)
           {
-            this.addressDef = address.data;
-          };
+            that.addressDef = address.data;
+          }
         },
         // 订单预览
-        previewOrder: function() {
+      async previewOrder() {
             var token = getToken();
             var buys = window.buys;
             if(!buys){
@@ -236,7 +237,8 @@ export default {
               this.addressDef = window.chooseAddress;
             }else{
               //选区默认地址
-              this.getUserAddress();
+              await this.getUserAddress();
+
             }
             var addressId = 0;
             if(this.addressDef)
@@ -301,15 +303,14 @@ export default {
                 })
         },
         // 通过购物车进来
-        previewOrderByCart: function() {
+      async previewOrderByCart() {
             var token = getToken();
-            console.log(window.chooseAddress);
             if(window.chooseAddress)
             {
               this.addressDef = window.chooseAddress;
             }else{
               //选区默认地址
-              this.getUserAddress();
+              await this.getUserAddress();
             }
             var addressId = 0;
             if(this.addressDef)
@@ -447,7 +448,7 @@ export default {
         //定时
         async sendPhoneSms() {
             if (this.validateFlag == 1) {
-                let data = await this.axios(testUrl + api.sendSms, { token: localStorage.getItem('yeyun_token') }, 'post')
+                let data = await this.axios(testUrl + api.sendSms, { token: getToken() }, 'post')
                 if (data.error_code) {
                     return this.Toast(data.message)
                 }

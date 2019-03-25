@@ -155,6 +155,8 @@ import Swiper from 'swiper';
 import api from '../../service/api';
 import clip from '@/util/clipboard';
 import BgMask from "@/common/BgMask"
+import { IsEmpty, getToken } from "@/util/common";
+
 export default {
     data() {
         return {
@@ -172,7 +174,7 @@ export default {
     },
     methods: {
         findOrder: function() {
-            var token = localStorage.getItem("yeyun_token");
+            var token = getToken();
             let _this = this;
             this.axios(testUrl + api.findOrder, {
                 "token": token,
@@ -202,7 +204,7 @@ export default {
                 })
         },
         queryOrderTrack: function() {
-            var token = localStorage.getItem("yeyun_token");
+            var token = getToken();
             let _this = this;
             this.axios(testUrl + api.queryOrderTrack, {
                 "token": token,

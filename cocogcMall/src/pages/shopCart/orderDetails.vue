@@ -118,6 +118,7 @@
 import headerTop from "../../common/header.vue";
 import api from '../../service/api';
 import clip from '@/util/clipboard'
+import { IsEmpty, getToken } from "@/util/common";
 
 export default {
     data() {
@@ -139,7 +140,7 @@ export default {
         // 查找订单
         findOrder: function() {
 
-            var token = localStorage.getItem("yeyun_token");
+            var token = getToken();
             let _this = this;
             this.axios(testUrl + api.findOrder, {
 

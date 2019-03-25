@@ -29,7 +29,7 @@
 
 
 <script>
-
+  import { IsEmpty, getToken } from "@/util/common";
 export default {
     data() {
         return {
@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         show() {
-             window.location.href = infoURl + "#!/cert?token=" + this.$cookies.get("yeyun_token");
+             window.location.href = infoURl + "#!/cert?token=" + getToken();
         },
         jumpAccount(){
             this.$router.push('/layout/account')

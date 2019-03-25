@@ -95,11 +95,11 @@ export default {
   data() {
     return {
       fastList: [
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + this.$cookies.get("yeyun_token") },
-        { id: 2, name: "话费兑换", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + this.$cookies.get("yeyun_token") },
-        { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay&token=' + this.$cookies.get("yeyun_token") },
+        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + getToken() },
+        { id: 2, name: "话费兑换", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
+        { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay&token=' + getToken() },
         { id: 4, name: "兑换商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall' },
-        { id: 5, name: "卡密充值", imgBg: 'ifa-imgBg05', path: infoURl + '#!/charge?token=' + this.$cookies.get("yeyun_token") },
+        { id: 5, name: "卡密充值", imgBg: 'ifa-imgBg05', path: infoURl + '#!/charge?token=' + getToken() },
         { id: 6, name: "加油卡兑换", imgBg: 'ifa-imgBg12', path: 'javascript:;' },
         { id: 7, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;' },
       ],

@@ -115,7 +115,7 @@ export default {
         removeAddress: function(token, id) {
             let _this = this;
             this.axios(testUrl + api.removeAddress, {
-                "token": localStorage.getItem("yeyun_token"),
+                "token": getToken(),
                 "id": _this.delId
             }, 'post')
                 .then((data) => {
