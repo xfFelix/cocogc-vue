@@ -25,7 +25,7 @@
                     </router-link>
                 </div>
             </div>
-            <p class="no-more">没有更多了</p>
+            <p  style="text-align: center;padding: 0.2rem;color: #666;">已经到底了噢~~</p>
         </div>
     </div>
 </template>
