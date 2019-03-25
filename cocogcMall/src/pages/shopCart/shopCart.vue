@@ -227,7 +227,7 @@ export default {
         settleGoods() {
             var that = this;
             var buys = [];
-            if ($store.state.userinfo.userinfo.isRealCert == 0) {
+            if (this.$store.state.userinfo.userinfo.isRealCert == 0) {
                 this.Toast({
                     message: '请先实名认证',
                     duration: 1000
