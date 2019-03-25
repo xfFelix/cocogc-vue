@@ -106,7 +106,6 @@ export default {
         { id: 5, name: "卡密充值", imgBg: 'ifa-imgBg05', path: infoURl + '#!/charge?token=' + this.$cookies.get("yeyun_token") },
         { id: 6, name: "加油卡兑换", imgBg: 'ifa-imgBg12', path: 'javascript:;' },
         { id: 7, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;' },
-
       ],
       goodsList: [],
       loginFlag: false,

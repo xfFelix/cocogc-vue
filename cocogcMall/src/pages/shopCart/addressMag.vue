@@ -120,6 +120,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.addressList.splice(this.delIndex, 1)
+                        _this.Toast('删除成功')
                     } else {
                         _this.Toast(data.message)
                     }

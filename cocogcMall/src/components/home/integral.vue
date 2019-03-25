@@ -7,8 +7,8 @@
         <p class="home-hSE">INTEGRAL DIMENSION</p>
         <div class="home-iSelectW">
             <ul class="home-iSelect">
-                <li v-for="(item,index) in homeSel" :key="index" v-if="item.homeSelShow" @click="iSelect(item,index)" :class="item.id==iSelectAct?'iSelectCla':'iSelectNo'">
-                    {{item.integral}}
+                <li v-for="(item,index) in homeSel" :key="index" v-show="item.homeSelShow" @click="iSelect(item,index)" :class="item.id==iSelectAct?'iSelectCla':'iSelectNo'">
+                    {{item.integralInfo}}
                 </li>
             </ul>
 
@@ -40,22 +40,31 @@
 <script>
 import Swiper from 'swiper';
 import api from '../../service/api';
+import { mapGetters } from 'vuex';
+import { getToken } from '@/util/common'
+
 export default {
     data() {
         return {
             homeSel: [
-                { id: 0, integral: "我能兑换", homeSelShow: true },
-                { id: 1, integral: "0~50", homeSelShow: true },
-                { id: 2, integral: "51~200", homeSelShow: true },
-                { id: 3, integral: "201~500", homeSelShow: true },
-                { id: 4, integral: "501~1000", homeSelShow: true },
-                { id: 5, integral: "1001~2000", homeSelShow: true },
+                { id: 0, integral: '0~' + parseInt(this.$store.getters['userinfo/getUserInfo'].score), homeSelShow: true, integralInfo: '我能兑换' },
+                { id: 1, integral: "0~50", homeSelShow: true, integralInfo: '0~50' },
+                { id: 2, integral: "51~200", homeSelShow: true, integralInfo: '51~200' },
+                { id: 3, integral: "201~500", homeSelShow: true, integralInfo: '201~500' },
+                { id: 4, integral: "501~1000", homeSelShow: true, integralInfo: '501~1000' },
+                { id: 5, integral: "1001~2000", homeSelShow: true, integralInfo: '1001~2000' },
             ],
             homeSelFlag: 0,
             iSelectAct: '',
             iSintegra: '',
             goodsList: [],
+            token: getToken(),
         }
+    },
+    computed: {
+        ...mapGetters({
+            userinfo: 'userinfo/getUserInfo'
+        })
     },
     mounted() {
         //积分列表展示
@@ -64,7 +73,14 @@ export default {
                 item.homeSelShow = false
             }
         })
-        this.goodsAll()
+
+        if (this.$store.getters['userinfo/getUserInfo'].score) {
+            this.price(this.homeSel[0].integral);
+        } else {
+            this.iSelectAct = 1
+            this.price(this.homeSel[1].integral);
+        }
+
     },
     methods: {
         //带积分到列表页
@@ -86,7 +102,7 @@ export default {
                         item.homeSelShow = false;
                     }
                 })
-                this.homeSelFlag = 0
+                this.homeSelFlag = 0;
             }
         },
         goDetail(item) {
@@ -95,66 +111,36 @@ export default {
             })
         },
         iSelect(item, index) {
-            this.iSelectAct = index;
-            if (item.id != 0) {
-                this.price(item.integral);
-                this.iSintegra = item.integral.replace('~', '-');
-            } else {
-                this.goodsAll()
-                this.iSintegra = "";
+            if(item.integral == '0~NaN'){   
+                this.Toast('未登录');
+                return
+            }else{
+                this.iSelectAct = index;
+                 this.price(item.integral);
+                 this.iSintegra = item.integral.replace('~', '-');
             }
         },
         price: function(integral) {
             let integrals = integral.replace('~', '-');
-            var token = localStorage.getItem("token");
             let _this = this;
             this.axios(jdTestUrl + api.price, {
                 "price": integrals,
                 "offset": 0,
-                "rows": 16
+                "rows": 10
             }, 'get')
                 .then((data) => {
                     if (data.code == 0) {
                         _this.goodsList = data.list;
-
                     } else {
-
+                        _this.Toast(data.message)
                     }
                 })
                 .catch((err) => {
 
-
                 })
         },
 
-        goodsAll: function() {
-            let _this = this;
-            this.axios(jdTestUrl + api.keyword, {
-                "offset": 1,
-                "rows": 10,
-                "keyWord": "",
-                "brandId": "",
-                "timeSort": "",
-                "salesVolume": "",
-                "priceRange": "",
-                "price": "",
-            }, 'post')
-                .then((data) => {
-                    if (data.code == 0) {
-                        if (data.list.length > 0) {
-                            _this.goodsList = data.list;
-                        } else {
 
-                        }
-                    } else {
-                        this.Toast(data.message)
-                    }
-                })
-                .catch((err) => {
-                    this.Toast(err.message)
-
-                })
-        },
     }
 
 }
@@ -272,19 +258,19 @@ export default {
             font-size: 0.26rem;
             font-weight: bold;
             margin-top: 0.12rem;
-            position:relative;
-            line-height:1.5em;
-            height:3em;
-            overflow:hidden;
+            position: relative;
+            line-height: 1.5em;
+            height: 3em;
+            overflow: hidden;
             word-break: break-all;
             word-wrap: break-word;
-            &::after{
-              content:"";
-              position:absolute;
-              bottom:0;
-              right:0;
-              padding: 0 5px;
-              background-color: #fff;
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                padding: 0 5px;
+                background-color: #fff;
             }
         }
         .home-iMoneyW {

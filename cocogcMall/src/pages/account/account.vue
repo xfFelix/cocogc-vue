@@ -11,13 +11,11 @@
                     <img class="acc-headImg" src="static/images/headImg.png" alt="" />
                 </div>
                 <div class="acc-headTG">
-                    <p class="acc-headTel">{{userName}}</p>
+                    <p class="acc-headTel">{{userName|formatPhone}}</p>
                     <p class="acc-headGrade">
-                        <span class="acc-headChess">专业选手</span>
-                        <span class="acc-headChess">非专业选手</span>
-
-
-
+                        <span class="acc-headChessI"></span>
+                        <span class="acc-headChess" v-if="levelFlag">专业选手</span>
+                        <span class="acc-headChess" v-else>非专业选手</span>
                     </p>
                 </div>
             </div>
@@ -109,6 +107,7 @@
 <script>
 import Swiper from 'swiper';
 import api from '@/service/api'
+import {mapGetters} from 'vuex';
 
 export default {
     data() {
@@ -133,15 +132,24 @@ export default {
                 { name: '商务合作', path: infoURl + "#!/cooperation?token=" + this.$cookies.get("yeyun_token"), bgImg: "acc-contentLog07" },
             ],
             top: [],
-            end: []
+            end: [],
+            levelFlag:false
         };
+    },
+    computed: {
+        ...mapGetters({
+            userinfo: 'userinfo/getUserInfo'
+        })
     },
     mounted() {
         this.userName = localStorage.getItem("userName");
         this.score = localStorage.getItem("score");
         this.getSwiper()
-
-
+        if(this.userinfo.level == 0){
+            this.levelFlag = false;
+        }else{
+            this.levelFlag = true;
+        }
     },
     methods: {
       async getSwiper() {
@@ -251,11 +259,12 @@ export default {
                 border-radius: 50px;
                 color: #fff;
                 position: relative;
+                width: 85%;
                 .acc-headChessI {
                     width: 0.28rem;
                     height: 0.28rem;
                     display: inline-block;
-                    background-image: url(/static/img/account.a1f2774.png);
+                    background-image: url(/static/images/account.png);
                     background-repeat: no-repeat;
                     background-size: 3.12rem 2.95rem;
                     background-position: -1.78rem -1.09rem;

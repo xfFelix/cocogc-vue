@@ -41,7 +41,7 @@
           <div class="home-notice">
             <span class="home-horn"></span>
             <span>椰云公告：</span>
-            <marquee  style="width: 265px;" loop="infinite" v-for="(item,index) in newsList" :key="index">
+            <marquee  style="width: 68%;" loop="infinite" v-for="(item,index) in newsList" :key="index">
               <a :href="item.url">
                 <span class="home-hotCont">{{item.noticeTitle}}</span>
               </a>
@@ -88,11 +88,6 @@ export default {
     };
   },
   watch: {
-    // arr: function() {
-    //   // this.$nextTick(function(){
-    //   //   /*现在数据已经渲染完毕*/
-    //   // })
-    // }
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
