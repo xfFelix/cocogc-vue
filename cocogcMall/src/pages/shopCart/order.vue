@@ -90,7 +90,7 @@
                         </div>
                         <div class="order-goodsDetail">
                             <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
-                            <p class="order-goodsDType">类型没有</p>
+                             <p class="order-goodsDType">&nbsp;</p> 
                             <div class="order-goodsDPriceW">
                                 <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
                                 <p class="order-goodsDNumW">
@@ -106,23 +106,23 @@
                 <div class="order-priceDetail one-bottom-px">
                     <p>
                         <span>商品</span>
-                        <span>{{dataItem.sellMoney}}</span>
+                        <span>{{dataItem.sellMoney|toDecimal2}}</span>
                     </p>
                     <p>
                         <span>运费</span>
-                        <span>{{dataItem.shippingFee}}</span>
+                        <span>{{dataItem.shippingFee|toDecimal2}}</span>
                     </p>
                     <p>
                         <span>服务费</span>
-                        <span>{{dataItem.serviceMoney}}</span>
+                        <span>{{dataItem.serviceMoney|toDecimal2}}</span>
                     </p>
                     <p>
                         <span>税费</span>
-                        <span>{{dataItem.taxFee}}</span>
+                        <span>{{dataItem.taxFee|toDecimal2}}</span>
                     </p>
                     <p>
                         <span>合计</span>
-                        <span style="color: #30ce84;">{{dataItem.totalMoney}}</span>
+                        <span style="color: #30ce84;">{{dataItem.totalMoney|toDecimal2}}</span>
                     </p>
                 </div>
             </div>

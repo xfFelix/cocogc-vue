@@ -13,7 +13,6 @@
             </ul>
 
             <span class="home-iMore" @click="integraM()">
-                <!-- <span class="home-iMoreGob j1Png"></span> -->
                 <span class="home-iMoreGo j1Png" :class="homeSelFlag?'home-iMoreGob':'home-iMoreGoa'"></span>
             </span>
         </div>
@@ -50,11 +49,11 @@ export default {
                 { id: 0, integral: '0~' + parseInt(this.$store.getters['userinfo/getUserInfo'].score), homeSelShow: true, integralInfo: '我能兑换' },
                 { id: 1, integral: "0~50", homeSelShow: true, integralInfo: '0~50' },
                 { id: 2, integral: "51~200", homeSelShow: true, integralInfo: '51~200' },
-                { id: 3, integral: "201~500", homeSelShow: true, integralInfo: '201~500' },
-                { id: 4, integral: "501~1000", homeSelShow: true, integralInfo: '501~1000' },
-                { id: 5, integral: "1001~2000", homeSelShow: true, integralInfo: '1001~2000' },
+                { id: 3, integral: "201~1000", homeSelShow: true, integralInfo: '201~1000' },
+                { id: 4, integral: "1001~5000", homeSelShow: true, integralInfo: '1001~5000' },
+                { id: 5, integral: "5001~*", homeSelShow: true, integralInfo: '5000以上' },
             ],
-            homeSelFlag: 1,
+            homeSelFlag: 0,
             iSelectAct: '',
             iSintegra: '',
             goodsList: [],
@@ -76,10 +75,13 @@ export default {
 
         if (this.$store.getters['userinfo/getUserInfo'].score) {
             this.price(this.homeSel[0].integral);
+            this.iSintegra = this.homeSel[0].integral.replace('~', '-');
         } else {
             this.iSelectAct = 1
             this.price(this.homeSel[1].integral);
+            this.iSintegra = this.homeSel[1].integral.replace('~', '-');
         }
+
 
     },
     methods: {

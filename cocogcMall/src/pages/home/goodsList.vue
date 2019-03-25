@@ -33,7 +33,7 @@
             <div class="home-iSelectW" v-if="intervalFlag">
                 <ul class="home-iSelect">
                     <li v-for="(item,index) in homeSel" :key="index" v-if="item.homeSelShow" @click="iSelect(item,index)" :class="item.id==iSelectAct?'iSelectCla':'iSelectNo'">
-                        {{item.integral}}
+                        {{item.integralInfo}}
                     </li>
                 </ul>
             </div>
@@ -67,8 +67,9 @@
 </template>
 <script>
 import headSearch from "../../common/headSearch.vue";
-
+import { mapGetters } from 'vuex';
 import api from '../../service/api';
+import { getToken } from '@/util/common'
 
 export default {
     data() {
@@ -76,14 +77,15 @@ export default {
             observer: null,
             searchCont: '',
             homeSel: [
-
-                { id: 1, integral: "0~50", homeSelShow: true },
-                { id: 2, integral: "51~200", homeSelShow: true },
-                { id: 3, integral: "201~500", homeSelShow: true },
-                { id: 4, integral: "501~1000", homeSelShow: true },
-                { id: 5, integral: "1001~2000", homeSelShow: true },
+                { id: 0, integral: '0~' + parseInt(this.$store.getters['userinfo/getUserInfo'].score), homeSelShow: true, integralInfo: '我能兑换' },
+                {id: 1, integral: "0~*", homeSelShow: true, integralInfo: '全部' },
+                { id: 2, integral: "0~50", homeSelShow: true, integralInfo: '0~50' },
+                { id: 3, integral: "51~200", homeSelShow: true, integralInfo: '51~200' },
+                { id: 4, integral: "201~1000", homeSelShow: true, integralInfo: '201~1000' },
+                { id: 5, integral: "1001~5000", homeSelShow: true, integralInfo: '1001~5000' },
+                { id: 6, integral: "5001~*", homeSelShow: true, integralInfo: '5000以上' },
             ],
-            iSelectAct: '',
+            iSelectAct: 0,
             intervalFlag: false,
             goodsList: [],
             pages: 1, //页数
@@ -92,14 +94,19 @@ export default {
 
             price: '', //判断点击的积分区间
             moreShow: false,
-            price: '', //价格区间
             brandId: '', //分类id
             keyWord: '',//关键字
             priceRange: '', //判断价格的高低
             priceRangeFlag: true,  //判断价格的高低
             salesVolume: "",//销量排序
-            productTypeId: ""
+            productTypeId: "",
+            token: getToken(),
         };
+    },
+    computed: {
+        ...mapGetters({
+            userinfo: 'userinfo/getUserInfo'
+        })
     },
     mounted() {
 
@@ -119,7 +126,7 @@ export default {
             document.querySelector('#moreMsg')
         );
 
-        this.urlParams()
+        this.urlParams();
 
 
     },
@@ -149,7 +156,7 @@ export default {
             this.pages = 1;
             this.offsetRows = 1;
             this.goodsList = [];
-            this.price = "";
+            this.price = "0~*"
             this.salesVolume = "";
 
             this.goodsListSearch(1)
@@ -160,17 +167,24 @@ export default {
             this.intervalFlag = !this.intervalFlag;
         },
         iSelect(item, index) {
-            this.pages = 1;
-            this.offsetRows = 1;
-            this.goodsList = [];
-            this.priceRange = "";
-            this.salesVolume = "";
+             if(item.integral == '0~NaN'){   
+                this.Toast('未登录');
+                return
+            }else{
+                this.pages = 1;
+                this.offsetRows = 1;
+                this.goodsList = [];
+                this.priceRange = "";
+                this.salesVolume = "";
 
-            this.iSelectAct = index + 1; //改变积分颜色
-            this.intervalFlag = false;
+                this.iSelectAct = index; //改变积分颜色
+                this.intervalFlag = false;
 
-            this.price = item.integral;
-            this.goodsListSearch(1)
+                this.price = item.integral;
+                this.goodsListSearch(1)
+            }
+
+          
 
         },
 
@@ -179,7 +193,7 @@ export default {
             this.pages = 1;
             this.offsetRows = 1;
             this.goodsList = [];
-            this.price = "";
+            this.price = "0~*"
             this.priceRange = "";
             this.salesVolume = "";
             this.goodsListSearch(1);
@@ -190,7 +204,7 @@ export default {
             this.pages = 1;
             this.offsetRows = 1;
             this.goodsList = [];
-            this.price = "";
+            this.price = "0~*"
             this.priceRange = "";
             this.salesVolume = "y";
             this.goodsListSearch(1);
@@ -205,9 +219,38 @@ export default {
 
             this.productTypeId = this.$route.query.quickItem;
 
-            if (this.$route.query.integra == undefined) {
-                this.price = ""
+
+            switch (this.$route.query.integra){
+                case "0-*":
+                    this.iSelectAct = 1;
+                    break;
+                case "0-50":
+                    this.iSelectAct = 2;
+                    break;
+                case "51-200":
+                    this.iSelectAct = 3;
+                    break;
+                case "201-1000":
+                    this.iSelectAct = 4;
+                    break;
+                case "1001-5000":
+                    this.iSelectAct = 5;
+                    break;
+                case "5001-*":
+                    this.iSelectAct = 6;
+                    break;
+                default:
+                    this.iSelectAct = 0;
+                    break;
             }
+            if(this.price == undefined){
+                this.price = "0~*";
+                 if(!this.token){
+                    this.iSelectAct =1;
+                }
+            }
+           
+            
             if (this.$route.query.classfyId == undefined) {
                 this.brandId = ""
             }
@@ -257,7 +300,6 @@ export default {
     },
     components: {
         "head-search": headSearch,
-        // "v-loading": Loading,
     }
 
 }
@@ -396,7 +438,7 @@ export default {
     padding-bottom: 0.15rem;
 
     .home-iSelect {
-        width: 6.90rem;
+            width: 94%;
         li {
             width: 19%;
             height: 0.58rem;

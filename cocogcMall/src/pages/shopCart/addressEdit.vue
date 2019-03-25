@@ -7,39 +7,39 @@
                     <p>
                         <span>收货人</span>
                         <span>
-                            <input type="text" placeholder="请填写收货人姓名" v-model="takeName">
+                            <input type="text" placeholder="请填写收货人姓名" v-model.trim="takeName">
                         </span>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeNameC">
+                    <p class="j1Png addEdid-delInp" @click="takeNameC" v-if="takeName.length>0">
                     </p>
                 </li>
                 <li class="one-bottom-px">
                     <p>
                         <span>手机号码</span>
                         <span>
-                            <input type="number" placeholder="请填写收货人手机号" v-model="takeTel" pattern="\d*">
+                            <input type="number" placeholder="请填写收货人手机号" v-model.trim="takeTel" pattern="\d*">
                         </span>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeTelC">
+                    <p class="j1Png addEdid-delInp" @click="takeTelC" v-if="takeTel.length>0">
                     </p>
                 </li>
                 <li class="one-bottom-px">
                     <p>
                         <span>所在地区</span>
                         <span>
-                            <input type="text" placeholder="省市区县、乡镇等" v-model="takeAddress" @click="fixedShowC()" readonly="">
+                            <input type="text" placeholder="省市区县、乡镇等" v-model.trim="takeAddress" @click="fixedShowC()" readonly="">
                         </span>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeAddressC">
+                    <p class="j1Png addEdid-delInp" @click="takeAddressC" v-if="takeAddress.length>0">
                     </p>
                 </li>
                 <li class="one-bottom-px">
                     <p>
                         <span>详细地区</span>
-                        <textarea type="text" placeholder="街道、楼牌号等" v-model="takeDAddress">
+                        <textarea type="text" placeholder="街道、楼牌号等" v-model.trim="takeDAddress">
                         </textarea>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeDAddressC">
+                    <p class="j1Png addEdid-delInp" @click="takeDAddressC" v-if="takeDAddress.length>0">
                     </p>
                 </li>
             </ul>
@@ -257,6 +257,17 @@ export default {
                 background-position: -4.78rem -1.44rem;
             }
         }
+        li:nth-of-type(1),
+        li:nth-of-type(2),
+        li:nth-of-type(3) {
+            height: 0.46rem;
+            p:nth-of-type(1) {
+                span:nth-of-type(1) {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
     }
 }
 
@@ -306,6 +317,7 @@ textarea {
     color: #000;
     width: 70%;
     height: 1.38rem;
+    margin-top: 0.05rem;
 }
 </style>
 
