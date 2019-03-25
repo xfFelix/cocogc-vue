@@ -6,8 +6,10 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-              <marquee  style="width: 100%;font-size:0.26rem;" loop="infinite" v-for="(item,index) in newsList" :key="index.title">
-                <a :href="item.url" style="color:rgb(255,255,255);">{{item.noticeTitle}}</a>
+              <marquee  style="width: 100%;font-size:0.26rem;" loop="infinite">
+                  <div style="display:flex;" >
+                    <a :href="item.url" class="link-url" v-for="(item,index) in newsList" :key="index.title">{{item.noticeTitle}}</a>
+                  </div>
               </marquee>
           </div>
           <span class="ih-goImg j1Png"></span>
@@ -179,6 +181,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.link-url{
+  color:rgb(255,255,255);
+  margin-right:100px;
+  &:last-of-type{
+    margin-right: 0;
+  }
+}
 .index-head {
   background: url("/static/images/indexBg.jpg") no-repeat;
   background-size: 100% 100%;

@@ -42,10 +42,12 @@
           <div class="home-notice">
             <span class="home-horn"></span>
             <span style="white-space: nowrap;">椰云公告：</span>
-            <marquee  style="margin-right:0.65rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
-              <a :href="item.url">
-                <span class="home-hotCont">{{item.noticeTitle}}</span>
-              </a>
+            <marquee  style="margin-right:0.65rem;" loop="infinite" >
+              <div style="display:flex;">
+                <a :href="item.url" v-for="(item,index) in newsList" :key="index" class="link-url">
+                  <span class="home-hotCont">{{item.noticeTitle}}</span>
+                </a>
+              </div>
             </marquee>
             <span class="home-noticeGo"></span>
           </div>
@@ -187,6 +189,12 @@ export default {
 
 
 <style lang="less">
+.link-url{
+  margin-right: 100px;
+  &:last-of-type{
+    margin-right: 0;
+  }
+}
 .banner-slide {
   img {
     width: 100%;
