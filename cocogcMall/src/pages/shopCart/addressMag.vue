@@ -24,7 +24,7 @@
                             </p>
                             <p class="address-del">
                                 <span class="j1Png address-delImg"></span>
-                                <span @click="delAddress(item,index)">删除</span>
+                                <span @click.stop="delAddress(item,index)">删除</span>
                             </p>
                         </div>
                     </div>

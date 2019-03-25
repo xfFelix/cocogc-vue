@@ -244,6 +244,7 @@ export default {
                             _this.addressDef.userAddress = orderAddress.userAddress;
                             _this.addressDef.tel = orderAddress.tel;
                         }
+
                         //多商品轮播图
                         _this.dataList.forEach((res, index) => {
                             if (res.goodsList.length > 1) {
@@ -321,7 +322,7 @@ export default {
                         var editItem = JSON.stringify(_this.dataAddress);
                         localStorage.setItem('addressEdit', editItem);
                     } else {
-                      // this.Toast(data.message)
+                      this.Toast(data.message)
                     }
                 })
                 .catch((err) => {

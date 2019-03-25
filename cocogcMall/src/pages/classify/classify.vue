@@ -13,33 +13,12 @@
                     搜索
                 </div>
             </div>
-
-            <!-- <div class="select-headBan">
-                <ul class="select-headUl">
-                    <li>
-                        <p class="select-headImg01"></p>
-                        <p>全部</p>
-                    </li>
-                    <li>
-                        <p class="select-headImg02"></p>
-                        <p>折扣中</p>
-                    </li>
-                    <li>
-                        <p class="select-headImg03"></p>
-                        <p>新品上架</p>
-                    </li>
-                    <li>
-                        <p class="select-headImg04"></p>
-                        <p>热门推荐</p>
-                    </li>
-                </ul>
-            </div> -->
         </div>
 
         <div class="view select-goodsW">
             <div class="aside select-brandW">
                 <ul class="select-brand">
-                    <li v-for="(item,index) in cateList" :key="index" class="select-brandLi" @click="activeIndexC(index,item.id)"  :style="(activeIndex==index ?' background: #fff':'background: #f3f4f6')">
+                    <li v-for="(item,index) in cateList" :key="index" class="select-brandLi" @click="activeIndexC(index,item.id)" :style="(activeIndex==index ?' background: #fff':'background: #f3f4f6')">
                         <span class="activeGre" v-if="activeIndex==index"></span>
 
                         <span :style="(activeIndex==index ?'color: #30ce84':'color: #333')">{{item.name}}</span>
@@ -50,27 +29,46 @@
 
             <div class="main select-bGoodsW">
                 <div class="select-bGoods">
+                    
+                        <div class="classify-swipeW">
+                            <div class="classify-swipe">
+                                <div class="swiper-container">
+                                    <!-- 页面 -->
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide" v-for="item of banner" :key="item.title">
+                                            <a :href="item.url">
+                                                <img :src="item.src" alt="" />
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <!-- 分页器 -->
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+               
+
                     <div class="select-bGoodsT" v-for="(item,index) in cateTypeList" :key="index">
                         <h3 class="title">{{item.name}}</h3>
                         <ul>
-
                             <li v-for="(i,index) in item.childCategory" :key="index">
-                              <span v-if="i.content != '' && i.content != null">
-                                <a :href="i.content" >
-                                    <p>
-                                        <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
-                                        <span class="product-name">{{i.name}}</span>
-                                    </p>
-                                </a>
-                              </span>
-                              <span v-else>
-                                <router-link :to="{path:'/goodsList',query:{classfyId: i.id}}">
-                                    <p>
-                                        <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
-                                        <span class="product-name">{{i.name}}</span>
-                                    </p>
-                                </router-link>
-                              </span>
+                                <span v-if="i.content != '' && i.content != null">
+                                    <a :href="i.content">
+                                        <p>
+                                            <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
+                                            <span class="product-name">{{i.name}}</span>
+                                        </p>
+                                    </a>
+                                </span>
+                                <span v-else>
+                                    <router-link :to="{path:'/goodsList',query:{classfyId: i.id}}">
+                                        <p>
+                                            <img v-bind:src="i.picUrl" v-bind:title="i.name" v-if="i.picUrl != null && i.picUrl!=''" />
+                                            <span class="product-name">{{i.name}}</span>
+                                        </p>
+                                    </router-link>
+                                </span>
                             </li>
 
                         </ul>
@@ -84,7 +82,7 @@
 
 <script>
 import api from '../../service/api';
-
+import Swiper from 'swiper';
 export default
     {
         data() {
@@ -94,7 +92,8 @@ export default
                 activeIndex: 0,
                 cateTypeList: [],
                 cateGoodsList: [],
-                searchWord: ''
+                searchWord: '',
+                banner: [],
             };
         },
         mounted() {
@@ -104,27 +103,29 @@ export default
                 if (data.length > 0) {
                     that.cateList = data;
                     if (that.$route.query.id) {
-                      that.cateList.forEach((item,index) => {
-                        if (that.$route.query.id == item.id) {
-                          that.activeIndexC(index, that.$route.query.id)
-                        }
-                      })
+                        that.cateList.forEach((item, index) => {
+                            if (that.$route.query.id == item.id) {
+                                that.activeIndexC(index, that.$route.query.id)
+                            }
+                        })
                     } else {
-                      let first = data[0].id;
-                      that.categories(first, function(data) {
-                          that.cateTypeList = data;
-                          that.hideLoading();
-                      });
+                        let first = data[0].id;
+                        that.categories(first, function(data) {
+                            that.cateTypeList = data;
+                            that.hideLoading();
+                        });
                     }
                 }
             });
 
+            this.getBanner();
+
         },
         beforeRouteLeave(to, from, next) {
-          if (to.path === '/goodsList') {
-            to.meta.keepAlive = false
-          }
-          next()
+            if (to.path === '/goodsList') {
+                to.meta.keepAlive = false
+            }
+            next()
         },
         methods: {
             seachClick() {
@@ -153,7 +154,24 @@ export default
                     that.cateTypeList = data;
                     that.hideLoading();
                 });
-            }
+            },
+
+            //轮播图
+            async getBanner() {
+                let banner = await this.axios(testUrl + api.goodsGroups, {
+                    "id": "13bb01753dc84759820aafdfd8a4520d"
+                }, 'post')
+                this.banner = banner.data.data;
+                this.$nextTick(() => {
+                    var swiperBan = new Swiper('.classify-swipeW .swiper-container', {
+                        loop: true,
+                        autoplay: true,
+                        pagination: {
+                            el: '.swiper-pagination',
+                        },
+                    })
+                })
+            },
 
 
         }
@@ -161,24 +179,56 @@ export default
 </script>
 
 <style lang="less">
-
-.product-name{
-  font-size: 12px;
-  display: block;
-  text-align: center;
-  padding: 2px 0 ;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: keep-all;
-  white-space: nowrap;
+.product-name {
+    font-size: 12px;
+    display: block;
+    text-align: center;
+    padding: 2px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+    white-space: nowrap;
 }
+
+.classify-swipeW {
+    height: 1.8rem;
+    margin: 0.22rem 0.19rem 0.18rem 0.19rem;
+    .classify-swipe {
+        height: 100%;
+        .swiper-container-horizontal>.swiper-pagination-bullets {
+            bottom: 0px;
+        }
+        .swiper-container {
+            height: 100%;
+            .swiper-wrapper {
+                .swiper-slide {
+                    img {
+                        height: 1.8rem;
+                    }
+                }
+            }
+        }
+        .swiper-pagination {
+            .swiper-pagination-bullet {
+                width: 0.06rem;
+                height: 0.06rem;
+                border: 0.02rem solid #fff;
+                border-radius: inherit;
+                background: transparent;
+            }
+            .swiper-pagination-bullet-active {
+                background: #fff;
+            }
+        }
+    }
+}
+
 .select-head {
     width: 100%;
-        border-bottom: 10px solid #f3f4f6;
+    border-bottom: 10px solid #f3f4f6;
     height: 1rem;
     background: #fff;
-    padding: 0.42rem 0 0.24rem 0;
-    // box-shadow: 0.05rem 0.09rem 0.1rem 0px rgba(225, 235, 255, 0.3);
+    padding: 0.42rem 0 0.24rem 0; // box-shadow: 0.05rem 0.09rem 0.1rem 0px rgba(225, 235, 255, 0.3);
     .home-smWrap {
         display: flex;
         justify-content: space-between;
@@ -190,7 +240,8 @@ export default
             display: flex;
             align-items: center;
             margin-top: 0.09rem;
-            border: 1px solid rgba(0, 0, 0, 0.06);;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            ;
             .home-logo {
                 height: 0.38rem;
                 width: 0.42rem;
@@ -278,9 +329,7 @@ export default
                 color: #fff;
             }
         }
-    }
-
-    // .select-headBan {
+    } // .select-headBan {
     //     .select-headUl {
     //         display: flex;
     //         justify-content: space-around;
@@ -326,8 +375,8 @@ export default
         overflow: scroll;
     }
     .select-brand {
-        li:last-of-type{
-           padding-bottom: 50px;
+        li:last-of-type {
+            padding-bottom: 50px;
         }
         flex: 0 0 1.58rem;
         width: 1.58rem;
@@ -345,13 +394,11 @@ export default
                 background: #30ce84;
             }
         }
-        .activeBand {
-
-        }
+        .activeBand {}
     }
     .select-bGoodsW {
         width: 100%;
-        h3{
+        h3 {
             font-size: 0.24rem;
             color: #333;
             text-align: center;
@@ -372,18 +419,18 @@ export default
                     img {
                         width: 100%;
                     }
-                    span{
-                            white-space: nowrap;
+                    span {
+                        white-space: nowrap;
                     }
                 }
                 margin-bottom: 0.38rem;
             }
         }
-        .select-bGoodsT:nth-of-type(1){
+        .select-bGoodsT:nth-of-type(1) {
             margin-top: 0.34rem;
         }
-        .select-bGoods{
-            .select-bGoodsT:last-of-type{
+        .select-bGoods {
+            .select-bGoodsT:last-of-type {
                 padding-bottom: 50px;
             }
         }
