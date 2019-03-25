@@ -48,6 +48,7 @@ const sendSms = 'api/sendSms' // 发送验证码
 const previewOrderByCart = 'api/previewOrderByCart' // 通过购物车进入预览订单
 const saveOrderByCart = 'api/saveOrderByCart' // 通过购物车下单
 const selectDefaultAddresses = 'api/selectDefaultAddresses' // 获取默认地址
+const searchHint = '/query/type/keyword' // 搜索提示
 
 
 
@@ -87,5 +88,6 @@ export default {
   guessLike,
   queryOrderTrack,
   selectDefaultAddresses,
-  newsList
+  newsList,
+  searchHint
 }

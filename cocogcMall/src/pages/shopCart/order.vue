@@ -5,28 +5,31 @@
         <!-- 地址 -->
         <div>
             <div class="order-addressWN" addressMag>
-
-                <router-link class="order-addressW" to="/addressMag">
-                    <div class="order-address">
-                        <p class="order-addPerson">
-                            <span></span>
-                            <span>{{addressDef.name}}</span>
-                            <span>{{addressDef.tel}}</span>
-                        </p>
-                        <p class="order-addInfo">
-                            {{addressDef.userAddress}}
-                        </p>
-                    </div>
-                    <div>
-                        <span class="goTo" @click="$router.push('/addressEdit')"></span>
-                    </div>
-                </router-link>
-
-                <div class="order-addressN">
-                    <span class="order-addNImg"></span>
-                    <p>您还没有收货地址，点击添加</p>
+                <div v-if="addressDef != null">
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
+                      <div class="order-address">
+                          <p class="order-addPerson">
+                              <span></span>
+                              <span>{{addressDef.name}}</span>
+                              <span>{{addressDef.tel}}</span>
+                          </p>
+                          <p class="order-addInfo">
+                              {{addressDef.area}} {{addressDef.address}}
+                          </p>
+                      </div>
+                      <div>
+                          <span class="goTo" @click="$router.push('/addressEdit')"></span>
+                      </div>
+                  </router-link>
                 </div>
-
+                <div v-else>
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
+                    <div class="order-addressN" style="display: block;">
+                          <span class="order-addNImg"></span>
+                          <p>您还没有收货地址，点击添加</p>
+                    </div>
+                  </router-link>
+                </div>
                 <div class="order-bottom"></div>
             </div>
 
@@ -167,6 +170,8 @@ import Swiper from 'swiper';
 import api from '../../service/api';
 import ExchangeSu from "@/components/shopCart/ExchangeSu"
 import { mapGetters } from 'vuex';
+import { IsEmpty, getToken } from "@/util/common";
+import axios from '@/service/http'
 
 export default {
     data() {
@@ -179,17 +184,14 @@ export default {
             showSendCode: false,
             smsCode: undefined,
             exchangeShow: false,
-            addressDef: {
-                name: '',
-                userAddress: '',
-                tel: ''
-            },
+            addressDef: null,
             isSmsCode: false,
-            other: 0
+            other: 0,
+            fromPath: this.$route.query.cart ? {cart:this.$route.query.cart} : {}
         };
     },
     mounted() {
-        if (this.$route.query.cart) {
+        if (this.$route.query.cart == 'cart') {
             this.previewOrderByCart()
         } else {
             this.previewOrder()
@@ -210,17 +212,39 @@ export default {
           }
         },
         sumitOrder() {
-            if (this.$route.query.cart) {
+            if (this.$route.query.cart == 'cart') {
                 this.saveOrderByCart()
             } else {
                 this.saveOrder();
             }
         },
+        async getUserAddress() {
+          var _token = getToken();
+          var address = await axios(testUrl + api.selectDefaultAddresses, {token: _token}, 'post');
+          if (address.error_code == 0 && address.data)
+          {
+            this.addressDef = address.data;
+          };
+        },
         // 订单预览
         previewOrder: function() {
-            var token = localStorage.getItem("yeyun_token");
-            var buys = JSON.parse(sessionStorage.getItem('buys'))
-            var addressId = localStorage.getItem("addressId");
+            var token = getToken();
+            var buys = window.buys;
+            if(!buys){
+                this.Toast("购买商品不能为空！");
+                this.$router.back(-1);
+                return ;
+            }
+            if(window.chooseAddress)
+            {
+              this.addressDef = window.chooseAddress;
+            }else{
+              //选区默认地址
+              this.getUserAddress();
+            }
+            var addressId = 0;
+            if(this.addressDef)
+             addressId = this.addressDef.id;
             let _this = this;
             this.axios(testUrl + api.previewOrder, {
                 "token": token,
@@ -233,17 +257,17 @@ export default {
                         _this.other = data.other
                         _this.dataList = data.data;
                         _this.dataAddress = data.data[0];
-                        if (localStorage.getItem('orderAddress')=='' || localStorage.getItem('orderAddress')==null) {
-                            _this.addressDef.name = data.data[0].userName;
-                            _this.addressDef.userAddress = data.data[0].userAddress;
-                            _this.addressDef.tel = data.data[0].userMobile;
-                            localStorage.setItem('orderAddress',JSON.stringify(_this.addressDef))
-                        }else{
-                            let orderAddress = JSON.parse(localStorage.getItem('orderAddress'));
-                            _this.addressDef.name = orderAddress.name;
-                            _this.addressDef.userAddress = orderAddress.userAddress;
-                            _this.addressDef.tel = orderAddress.tel;
-                        }
+                        // if (localStorage.getItem('orderAddress')=='' || localStorage.getItem('orderAddress')==null) {
+                        //     _this.addressDef.name = data.data[0].userName;
+                        //     _this.addressDef.userAddress = data.data[0].userAddress;
+                        //     _this.addressDef.tel = data.data[0].userMobile;
+                        //     localStorage.setItem('orderAddress',JSON.stringify(_this.addressDef))
+                        // }else{
+                        //     let orderAddress = JSON.parse(localStorage.getItem('orderAddress'));
+                        //     _this.addressDef.name = orderAddress.name;
+                        //     _this.addressDef.userAddress = orderAddress.userAddress;
+                        //     _this.addressDef.tel = orderAddress.tel;
+                        // }
 
                         //多商品轮播图
                         _this.dataList.forEach((res, index) => {
@@ -265,8 +289,15 @@ export default {
                             }
                         });
                         //地址存到localStorage
-                        var editItem = JSON.stringify(_this.dataAddress);
-                        localStorage.setItem('addressEdit', editItem);
+                        // var editItem = JSON.stringify(_this.dataAddress);
+                        // localStorage.setItem('addressEdit', editItem);
+                    }else if(data.error_code == 3){
+                      this.Toast(data.msg);
+                      setTimeout(function () {
+                        _this.$router.push({
+                          path: '/'
+                        });
+                      },1000);
                     }
                 })
                 .catch((err) => {
@@ -275,54 +306,70 @@ export default {
         },
         // 通过购物车进来
         previewOrderByCart: function() {
-            var token = localStorage.getItem("yeyun_token");
-            var addressId = localStorage.getItem("addressId");
+            var token = getToken();
+            console.log(window.chooseAddress);
+            if(window.chooseAddress)
+            {
+              this.addressDef = window.chooseAddress;
+            }else{
+              //选区默认地址
+              this.getUserAddress();
+            }
+            var addressId = 0;
+            if(this.addressDef)
+              addressId = this.addressDef.id;
             let _this = this;
             this.axios(testUrl + api.previewOrderByCart, {
                 "token": token,
                 "id": addressId,
             }, 'post')
                 .then((data) => {
-                    if (data.error_code == 0 || data.error_code == 7) {
-                        _this.message = data.message;
-                        _this.other = data.other
-                        _this.dataList = data.data;
-                        _this.dataAddress = data.data[0];
-                         if (localStorage.getItem('orderAddress')=='' || localStorage.getItem('orderAddress')==null) {
-                            _this.addressDef.name = data.data[0].userName;
-                            _this.addressDef.userAddress = data.data[0].userAddress;
-                            _this.addressDef.tel = data.data[0].userMobile;
-                            localStorage.setItem('orderAddress',JSON.stringify(_this.addressDef))
-                        }else{
-                            let orderAddress = JSON.parse(localStorage.getItem('orderAddress'));
-                            _this.addressDef.name = orderAddress.name;
-                            _this.addressDef.userAddress = orderAddress.userAddress;
-                            _this.addressDef.tel = orderAddress.tel;
+                    if (data.error_code == 0 || data.error_code == 7)
+                    {
+                      _this.message = data.message;
+                      _this.other = data.other
+                      _this.dataList = data.data;
+                      _this.dataAddress = data.data[0];
+                      // if (localStorage.getItem('orderAddress') == '' || localStorage.getItem('orderAddress') == null) {
+                      //   _this.addressDef.name = data.data[0].userName;
+                      //   _this.addressDef.userAddress = data.data[0].userAddress;
+                      //   _this.addressDef.tel = data.data[0].userMobile;
+                      //   localStorage.setItem('orderAddress', JSON.stringify(_this.addressDef))
+                      // } else {
+                      //   let orderAddress = JSON.parse(localStorage.getItem('orderAddress'));
+                      //   _this.addressDef.name = orderAddress.name;
+                      //   _this.addressDef.userAddress = orderAddress.userAddress;
+                      //   _this.addressDef.tel = orderAddress.tel;
+                      // }
+                      //多商品轮播图
+                      _this.dataList.forEach((res, index) => {
+                        if (res.goodsList.length > 1) {
+                          var goodsId = 'res' + res.goodsList[0].goodsId;
+                          var classg = '.' + goodsId + ' .swiper-container';
+                          var bnt = '.' + goodsId + ' .swiper-button-next';
+                          _this.$nextTick(function () {
+                            new Swiper(classg, {
+                              slidesPerView: 4,
+                              slidesPerGroup: 1,
+                              spaceBetween: 10,
+                              navigation: {
+                                nextEl: bnt,
+                                // prevEl: '.swiper-button-prev',
+                              },
+                            })
+                          })
                         }
-                        //多商品轮播图
-                        _this.dataList.forEach((res, index) => {
-                            if (res.goodsList.length > 1) {
-                                var goodsId = 'res' + res.goodsList[0].goodsId;
-                                var classg = '.' + goodsId + ' .swiper-container';
-                                var bnt = '.' + goodsId + ' .swiper-button-next';
-                                _this.$nextTick(function() {
-                                    new Swiper(classg, {
-                                        slidesPerView: 4,
-                                        slidesPerGroup: 1,
-                                        spaceBetween: 10,
-                                        navigation: {
-                                            nextEl: bnt,
-                                            // prevEl: '.swiper-button-prev',
-                                        },
-                                    })
-                                })
-                            }
-                        });
-                        //地址存到localStorage
-                        var editItem = JSON.stringify(_this.dataAddress);
-                        localStorage.setItem('addressEdit', editItem);
-                    } else {
-                      this.Toast(data.message)
+                      });
+                      //地址存到localStorage
+                      // var editItem = JSON.stringify(_this.dataAddress);
+                      // localStorage.setItem('addressEdit', editItem);
+                    }else if(data.error_code == 3){
+                      this.Toast(data.message);
+                      this.$router.push({
+                        path: '/'
+                      });
+                    }else {
+                      this.Toast(data.message);
                     }
                 })
                 .catch((err) => {
@@ -331,14 +378,25 @@ export default {
         },
         //下单
         saveOrder: function() {
-            var token = localStorage.getItem("yeyun_token");
-            var buys = JSON.parse(sessionStorage.getItem('buys'));
-            var addressId = localStorage.getItem("addressId");
+            var token = getToken();
+            var buys = window.buys;
+            if(!this.addressDef)
+            {
+              this.Toast("请选择配送地址！");
+              return ;
+            }
+
+            if(!buys)
+            {
+              this.Toast("购买商品不能为空！");
+              this.$router.back(-1);
+              return ;
+            }
 
             let _this = this;
             this.axios(testUrl + api.saveOrder, {
                 "token": token,
-                "id": addressId,
+                "id": this.addressDef.id,
                 "buys": buys,
                 code: this.smsCode
             }, 'post')
@@ -347,9 +405,12 @@ export default {
                         var orderId = data.data[0].orderId;
                         // this.Toast('下单成功')
                         // this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
+                        _this.isSmsCode = false;
+                        _this.exchangeShow = true;
+                        _this.parOrderId = orderId;
 
-                        this.exchangeShow = true;
-                        this.parOrderId = orderId;
+                    }else{
+                      _this.Toast(data.msg);
                     }
                 })
                 .catch((err) => {
@@ -358,12 +419,16 @@ export default {
         },
         // 通过购物车下单
         saveOrderByCart: function() {
-            var token = localStorage.getItem("yeyun_token");
-            var addressId = localStorage.getItem("addressId");
+            var token = getToken();
+            if(!this.addressDef)
+            {
+              this.Toast("请选择配送地址！");
+              return ;
+            }
             let _this = this;
             this.axios(testUrl + api.saveOrderByCart, {
                 token,
-                id: addressId,
+                id: this.addressDef.id,
                 code: this.smsCode
             }, 'post')
                 .then((data) => {
@@ -371,10 +436,11 @@ export default {
                         var orderId = data.data[0].orderId;
                         // this.Toast('下单成功')
                         // this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
-                        this.exchangeShow = true;
-                        this.parOrderId = orderId;
+                        _this.isSmsCode = false;
+                        _this.exchangeShow = true;
+                        _this.parOrderId = orderId;
                     } else {
-                        this.Toast(data.message)
+                      _this.Toast(data.message)
                     }
                 })
                 .catch((err) => {

@@ -28,7 +28,6 @@
         </div>
 
         <div class="goTop" @click="goTop(500)" v-if="headShow">
-            回顶部
         </div>
 
         <div class="goodsD-headW">
@@ -92,6 +91,8 @@
 
             </div>
         </div>
+        <!-- 猜你喜欢 -->
+        <guess-like></guess-like>
 
         <div class="goodDetail-buyW">
             <div class="goodDetail-bMoney">
@@ -187,6 +188,7 @@ import Swiper from 'swiper';
 import api from '../../service/api';
 import { mapGetters } from 'vuex';
 import BgMask from '@/common/BgMask'
+import Guesslike from "@/common/guesslike.vue";
 
 export default {
     data() {
@@ -411,14 +413,15 @@ export default {
                 return
             }
             let buys = []
-            buys.push({ goodsId: this.goodsId, nums: this.buyNum })
-            sessionStorage.setItem('buys', JSON.stringify(buys))
-            this.$router.push('/order');
-        },
-
+            buys.push({ goodsId: this.goodsId, nums: this.buyNum });
+            //sessionStorage.setItem('buys', JSON.stringify(buys))
+            window.buys = buys;
+            this.$router.push('/order?cart=direct');
+        }
     },
     components: {
-        BgMask
+      BgMask,
+      'guess-like': Guesslike
     }
 };
 </script>
@@ -1050,8 +1053,22 @@ export default {
     }
 }
 .goTop{
-    position: fixed;
-    bottom: 60px;
+position: fixed;
+    bottom: 1.3rem;
     z-index: 11;
+    background: rgba(0,0,0,0.5);
+    width: 0.8rem;
+    height: 0.8rem;
+    right: 0.2rem;
+     &::after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-image: url(/static/images/goTop.png);
+    background-size: 25px
+    }
 }
 </style>

@@ -6,7 +6,13 @@
                 <span class="j1Png home-logo"></span>
                 <span class="j1Png home-searchL"></span>
                 <p class="home-searchI">
-                    <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont"/>
+                    <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont"/> -->
+                    <el-autocomplete
+                      v-model="searchCont"
+                      :fetch-suggestions="querySearchAsync"
+                      placeholder="请输入要搜索的内容"
+                      @select="handleSelect"
+                    ></el-autocomplete>
                 </p>
             </div>
             <span class="home-smdel" @click="cleanInp">
@@ -19,10 +25,12 @@
     </div>
 </template>
 <script>
+import api from '@/service/api'
 export default {
     data() {
         return {
-            searchCont: ''
+            searchCont: '',
+            timeout: null
         }
     },
     methods:{
@@ -31,7 +39,27 @@ export default {
         },
         sendSearch(){
             this.$emit('searchChild',this.searchCont)
-        }
+        },
+        querySearchAsync(queryString, cb) {
+          if (queryString) {
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(async() => {
+              let restaurants = await this.axios(jdTestUrl + api.searchHint, {keyword: queryString}, 'get')
+              let list = []
+              restaurants.list.forEach((item, index)=> {
+                let cur = {}
+                cur.id = item.id
+                cur.value = item.name
+                cur.parentId = item.parentId
+                list.push(cur)
+              },{})
+              cb(list);
+            }, 1000);
+          }
+        },
+        handleSelect(item) {
+          console.log(item);
+        },
     },
     mounted() {
         this.searchCont = this.$route.query.keyWord
@@ -39,6 +67,12 @@ export default {
 }
 </script>
 <style lang="less">
+.el-input{
+  height: 100%;
+  input{
+    height: 100%;
+  }
+}
 .home-sm {
     display: flex;
     justify-content: space-between;

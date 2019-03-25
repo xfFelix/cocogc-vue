@@ -37,15 +37,15 @@ export default (router) => {
     {
       //需要登录且已经登录
       //获取地址
-      if (/^\/layout\/shopCart$/.test(to.path))
-      {
-        const address = await axios(testUrl + api.selectDefaultAddresses, {token: _token}, 'post');
-        if (address.error_code == 0 && address.data)
-        {
-          localStorage.setItem('addressId', address.data.id);
-          store.dispatch('userinfo/setAddress', address.data)
-        }
-      }
+      // if (/^\/layout\/shopCart$/.test(to.path))
+      // {
+      //   const address = await axios(testUrl + api.selectDefaultAddresses, {token: _token}, 'post');
+      //   if (address.error_code == 0 && address.data)
+      //   {
+      //     localStorage.setItem('addressId', address.data.id);
+      //     store.dispatch('userinfo/setAddress', address.data)
+      //   }
+      // }
     }else if(to.meta.requireAuth && info.error_code != 0){
       //需要登录且未登录，跳转登录
       next({

@@ -19,12 +19,17 @@
         <div class="home-search">
           <span class="home-logo"></span>
           <span class="home-searchL"></span>
-          <p class="home-searchI">
-            <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" />
-          </p>
+          <div class="home-searchI">
+            <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" @input="searchHint($event)" autocomplete="true"/> -->
+            <el-autocomplete
+              v-model="searchCont"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="请输入要搜索的内容"
+              @select="handleSelect"
+            ></el-autocomplete>
+          </div>
         </div>
         <span @click="seachClick()" class="seachBnt">搜索</span>
-        <!-- div. -->
       </div>
 
       <div class="home-smWrapA" v-if="homeSmWrap==true">
@@ -32,7 +37,13 @@
           <span class="home-logo"></span>
           <span class="home-searchL"></span>
           <p class="home-searchI">
-            <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" />
+            <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" /> -->
+            <el-autocomplete
+              v-model="searchCont"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="请输入要搜索的内容"
+              @select="handleSelect"
+            ></el-autocomplete>
           </p>
         </div>
         <span @click="seachClick" class="seachBntA">搜索</span>
@@ -42,10 +53,12 @@
           <div class="home-notice">
             <span class="home-horn"></span>
             <span style="white-space: nowrap;">椰云公告：</span>
-            <marquee  style="margin-right:0.65rem;" loop="infinite" v-for="(item,index) in newsList" :key="index">
-              <a :href="item.url">
-                <span class="home-hotCont">{{item.noticeTitle}}</span>
-              </a>
+            <marquee  style="margin-right:0.65rem;" loop="infinite" >
+              <div style="display:flex;">
+                <a :href="item.url" v-for="(item,index) in newsList" :key="index" class="link-url">
+                  <span class="home-hotCont">{{item.noticeTitle}}</span>
+                </a>
+              </div>
             </marquee>
             <span class="home-noticeGo"></span>
           </div>
@@ -85,7 +98,8 @@ export default {
       searchCont: '',
       banList: [],
       swiperBan: '',
-      newsList:[]
+      newsList:[],
+      timeout: null
     };
   },
   watch: {
@@ -97,6 +111,26 @@ export default {
 
   },
   methods: {
+    querySearchAsync(queryString, cb) {
+      if (queryString) {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(async() => {
+          let restaurants = await this.axios(jdTestUrl + api.searchHint, {keyword: queryString}, 'get')
+          let list = []
+          restaurants.list.forEach((item, index)=> {
+            let cur = {}
+            cur.id = item.id
+            cur.value = item.name
+            cur.parentId = item.parentId
+            list.push(cur)
+          },{})
+          cb(list);
+        }, 1000);
+      }
+    },
+    handleSelect(item) {
+      console.log(item);
+    },
     // banner
     banner: function() {
       let _this = this;
@@ -187,6 +221,18 @@ export default {
 
 
 <style lang="less">
+.el-input{
+  height: 100%;
+  input{
+    height: 100%;
+  }
+}
+.link-url{
+  margin-right: 100px;
+  &:last-of-type{
+    margin-right: 0;
+  }
+}
 .banner-slide {
   img {
     width: 100%;
@@ -247,6 +293,17 @@ export default {
         width: 80%;
         display: inherit;
         padding-left: 0.1rem;
+        position: relative;
+        .search-hint{
+          position: absolute;
+          background: #fff;
+          width: 100%;
+          top: 0.61rem;
+          border-radius: 5px;
+          .hint{
+            padding: 0.05rem 0.15rem ;
+          }
+        }
         input {
           width: 100%;
           font-size: 0.26rem;

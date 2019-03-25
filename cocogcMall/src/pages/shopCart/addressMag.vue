@@ -52,6 +52,7 @@
 <script>
 import headerTop from "../../common/header.vue";
 import api from '../../service/api';
+import { IsEmpty, getToken } from "@/util/common";
 
 export default {
     data() {
@@ -60,7 +61,7 @@ export default {
             fixedshow: false,
             delIndex: '',
             delId: '',
-            fromPath:''
+            fromPath:this.$route.query.cart ? "?cart=" + this.$route.query.cart:""
         };
     },
     mounted() {
@@ -69,9 +70,10 @@ export default {
 
     methods: {
         addressEditC(item, index) {
-            var editItem = JSON.stringify(item);
-            localStorage.setItem('addressEdit', editItem);
-            this.$router.push('addressEdit')
+            //var editItem = JSON.stringify(item);
+            //localStorage.setItem('addressEdit', editItem);
+            window.addressEdit = item;
+            this.$router.push('addressEdit' + this.fromPath);
         },
         delAddress(item, index) {
             this.fixedshow = true;
@@ -79,8 +81,8 @@ export default {
             this.delId = item.id;
         },
         goAddressEdit() {
-            this.$router.push('addressEdit');
-            localStorage.setItem('addressEdit', '');
+            this.$router.push('addressEdit' + this.fromPath);
+            //localStorage.setItem('addressEdit', '');
         },
         //确定删除
         delConfirm() {
@@ -96,9 +98,8 @@ export default {
         addressMag: function(token) {
             let _this = this;
             this.axios(testUrl + api.selectAddresses, {
-                "token": localStorage.getItem("yeyun_token")
-            }, 'post')
-                .then((data) => {
+                "token": getToken()
+            }, 'post').then((data) => {
                     if (data.error_code == 0) {
                         _this.addressList = data.data;
                     } else {
@@ -130,24 +131,18 @@ export default {
                 })
         },
         jumpAddress(item) {
-            if(sessionStorage.getItem('fromOrder') == 'true'){
-                let area = {};
-                area.name = item.name;
-                area.tel = item.tel;
-                area.userAddress = item.area + ' ' + item.address
-                localStorage.setItem('orderAddress',JSON.stringify(area));
-                this.$router.push('/order');
-            }
+          window.chooseAddress = item;
+          this.$router.push('/order' + this.fromPath);
         }
     },
-    beforeRouteEnter(to, from, next){     
-         next(vm=>{
-            vm.fromPath = from.name;
-            if(from.name == 'order'){
-                sessionStorage.setItem('fromOrder',true);
-            }
-        })
-    },
+    // beforeRouteEnter(to, from, next){
+    //      next(vm=>{
+    //         vm.fromPath = from.name;
+    //         if(from.name == 'order'){
+    //             sessionStorage.setItem('fromOrder',true);
+    //         }
+    //     })
+    // },
     components: {
         "header-top": headerTop
 
