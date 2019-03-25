@@ -187,7 +187,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 #account{
   position: relative;
   .banner{
@@ -235,6 +235,7 @@ export default {
         display: flex;
         .acc-headImgW {
             width: 1.1rem;
+            height: 1.1rem;
             margin-left: 0.66rem;
             margin-top: 0.1rem;
             margin-right: 0.36rem;
@@ -243,6 +244,7 @@ export default {
             }
         }
         .acc-headTG {
+                width: 27%;
             .acc-headTel {
                 margin-bottom: 0.13rem;
                 font-size: 0.3rem;

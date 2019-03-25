@@ -16,7 +16,6 @@
             <div class="order-addressW">
                 <div class="order-address">
                     <p class="order-addPerson">
-                        <span>默认</span>
                         <span>{{dataList.userName}}</span>
                         <span>{{dataList.userMobile}}</span>
                     </p>
@@ -213,15 +212,9 @@ export default {
             width: 4.9rem;
             .order-addPerson {
                 margin-bottom: 0.33rem;
-                span:nth-of-type(1) {
-                    background: #30ce84;
-                    color: #fff;
-                    font-size: 0.24rem;
-                    border-radius: 0.4rem;
-                    padding: 0.1rem;
-                }
-                span:nth-of-type(2),
-                span:nth-of-type(3) {
+
+                span:nth-of-type(1),
+                span:nth-of-type(2) {
                     color: #000;
                     font-size: 0.3rem;
                 }
