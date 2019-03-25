@@ -21,6 +21,9 @@ Vue.use(Tips);
 
 //mint-ui
 import 'mint-ui/lib/style.css'
+import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from 'element-ui';
+Vue.use(ElementUI);
 import {
   MessageBox,
   Indicator,

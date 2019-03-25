@@ -351,16 +351,23 @@ export default {
         .home-iNmame {
             color: #333333;
             font-size: 0.26rem;
-            height: 0.64rem;
             font-weight: bold;
             margin-top: 0.12rem;
-            display: -webkit-box;
-            -webkit-box-orient: vertical; // -webkit-line-clamp: 2;
-            overflow: hidden;
-            text-overflow: ellipsis;
             word-break: break-all;
             word-wrap: break-word;
             text-align: center;
+            overflow: hidden;
+            position: relative;
+            line-height: 1.5em;
+            height: 3em;
+            &::after{
+              content: '';
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              padding: 0 5px;
+              background: #fff;
+            }
         }
         .home-iMoneyW {
             display: flex;
