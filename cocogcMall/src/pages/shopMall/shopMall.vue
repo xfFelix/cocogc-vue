@@ -20,13 +20,13 @@
           <span class="home-logo"></span>
           <span class="home-searchL"></span>
           <div class="home-searchI">
-            <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" @input="searchHint($event)"/>
-            <!-- <div class="search-hint">
-              <p class="hint">这是提示</p>
-              <p class="hint">这是提示</p>
-              <p class="hint">这是提示</p>
-              <p class="hint">这是提示</p>
-            </div> -->
+            <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" @input="searchHint($event)" autocomplete="true"/> -->
+            <el-autocomplete
+              v-model="searchCont"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="请输入要搜索的内容"
+              @select="handleSelect"
+            ></el-autocomplete>
           </div>
         </div>
         <span @click="seachClick()" class="seachBnt">搜索</span>
@@ -37,7 +37,13 @@
           <span class="home-logo"></span>
           <span class="home-searchL"></span>
           <p class="home-searchI">
-            <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" />
+            <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" /> -->
+            <el-autocomplete
+              v-model="searchCont"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="请输入要搜索的内容"
+              @select="handleSelect"
+            ></el-autocomplete>
           </p>
         </div>
         <span @click="seachClick" class="seachBntA">搜索</span>
@@ -92,7 +98,8 @@ export default {
       searchCont: '',
       banList: [],
       swiperBan: '',
-      newsList:[]
+      newsList:[],
+      timeout: null
     };
   },
   watch: {
@@ -104,15 +111,25 @@ export default {
 
   },
   methods: {
-    searchHint (e) {
-      let value = e.target.value
-      let timeout = 0
-      if (value) {
-        clearTimeout(timeout)
-        timeout = setTimeout(async()=> {
-          let hint = await this.axios(testUrl + api.searchHint, {keyword: this.searchCont}, 'get')
-        }, 1000)
+    querySearchAsync(queryString, cb) {
+      if (queryString) {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(async() => {
+          let restaurants = await this.axios(jdTestUrl + api.searchHint, {keyword: queryString}, 'get')
+          let list = []
+          restaurants.list.forEach((item, index)=> {
+            let cur = {}
+            cur.id = item.id
+            cur.value = item.name
+            cur.parentId = item.parentId
+            list.push(cur)
+          },{})
+          cb(list);
+        }, 1000);
       }
+    },
+    handleSelect(item) {
+      console.log(item);
     },
     // banner
     banner: function() {
@@ -204,6 +221,12 @@ export default {
 
 
 <style lang="less">
+.el-input{
+  height: 100%;
+  input{
+    height: 100%;
+  }
+}
 .link-url{
   margin-right: 100px;
   &:last-of-type{

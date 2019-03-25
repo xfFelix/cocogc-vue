@@ -74,6 +74,8 @@
 
             </div>
         </div>
+        <!-- 猜你喜欢 -->
+        <guess-like></guess-like>
 
         <div class="goodDetail-buyW">
             <div class="goodDetail-bMoney">
@@ -159,6 +161,7 @@ import Swiper from 'swiper';
 import api from '../../service/api';
 import { mapGetters } from 'vuex';
 import BgMask from '@/common/BgMask'
+import Guesslike from "@/common/guesslike.vue";
 
 export default {
     data() {
@@ -369,7 +372,8 @@ export default {
         }
     },
     components: {
-      BgMask
+      BgMask,
+      'guess-like': Guesslike
     }
 };
 </script>

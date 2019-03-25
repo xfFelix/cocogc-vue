@@ -6,7 +6,13 @@
                     <span class="home-logo"></span>
                     <span class="home-searchL"></span>
                     <p class="home-searchI">
-                        <input type="text" placeholder="请输入要搜索的内容" v-model="searchWord" />
+                        <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchWord" /> -->
+                        <el-autocomplete
+                          v-model="searchWord"
+                          :fetch-suggestions="querySearchAsync"
+                          placeholder="请输入要搜索的内容"
+                          @select="handleSelect"
+                        ></el-autocomplete>
                     </p>
                 </div>
                 <div class="home-message" @click="seachClick()">
@@ -29,7 +35,7 @@
 
             <div class="main select-bGoodsW">
                 <div class="select-bGoods">
-                    
+
                         <div class="classify-swipeW">
                             <div class="classify-swipe">
                                 <div class="swiper-container">
@@ -47,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-               
+
 
                     <div class="select-bGoodsT" v-for="(item,index) in cateTypeList" :key="index">
                         <h3 class="title">{{item.name}}</h3>
@@ -94,6 +100,7 @@ export default
                 cateGoodsList: [],
                 searchWord: '',
                 banner: [],
+                timeout: null
             };
         },
         mounted() {
@@ -128,6 +135,26 @@ export default
             next()
         },
         methods: {
+            querySearchAsync(queryString, cb) {
+              if (queryString) {
+                clearTimeout(this.timeout);
+                this.timeout = setTimeout(async() => {
+                  let restaurants = await this.axios(jdTestUrl + api.searchHint, {keyword: queryString}, 'get')
+                  let list = []
+                  restaurants.list.forEach((item, index)=> {
+                    let cur = {}
+                    cur.id = item.id
+                    cur.value = item.name
+                    cur.parentId = item.parentId
+                    list.push(cur)
+                  },{})
+                  cb(list);
+                }, 1000);
+              }
+            },
+            handleSelect(item) {
+              console.log(item);
+            },
             seachClick() {
                 this.$router.push({ path: '/goodsList', query: { keyWord: this.searchWord } })
             },
@@ -179,6 +206,12 @@ export default
 </script>
 
 <style lang="less">
+.el-input{
+  height: 100%;
+  input{
+    height: 100%;
+  }
+}
 .product-name {
     font-size: 12px;
     display: block;
