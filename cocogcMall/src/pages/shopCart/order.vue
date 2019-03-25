@@ -267,6 +267,13 @@ export default {
                         //地址存到localStorage
                         var editItem = JSON.stringify(_this.dataAddress);
                         localStorage.setItem('addressEdit', editItem);
+                    }else if(data.error_code == 3){
+                      this.Toast(data.msg);
+                      setTimeout(function () {
+                        that.$router.push({
+                          path: '/'
+                        });
+                      },1000);
                     }
                 })
                 .catch((err) => {
@@ -350,6 +357,7 @@ export default {
 
                         this.exchangeShow = true;
                         this.parOrderId = orderId;
+                        this.isSmsCode = false;
                     }
                 })
                 .catch((err) => {
