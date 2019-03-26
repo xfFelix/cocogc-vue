@@ -431,6 +431,7 @@ export default {
 .goodsDetail {
     position: relative;
     transition: all 0.4s;
+    padding-bottom: 0.42rem;
     .dialog-container {
         position: absolute;
         top: 0.78rem;

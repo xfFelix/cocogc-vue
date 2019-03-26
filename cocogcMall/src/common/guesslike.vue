@@ -22,6 +22,7 @@
                   </div>
                 </div>
             </div>
+            <no-data :data="goodsList"></no-data>
             <p  style="text-align: center;padding: 0.2rem;color: #666;">已经到底了噢~~</p>
         </div>
     </div>

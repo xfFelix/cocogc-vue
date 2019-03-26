@@ -9,94 +9,95 @@
                 </li>
             </ul>
         </div>
+        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+          <div class="orderContent">
+              <router-link v-for="(item,index) in list" :key="index" :class="'ye'+item.id" :to="{name: 'orderDetails', params: {orderId:item.orderId}}" >
+                  <!-- 多种商品 -->
+                  <div  v-if="item.goodsList.length>1" class="order-goodsMW">
+                      <div class="oMGoodsTit">
+                          <p class="oMGoodsTitLeft">
+                              <span>{{item.vendorId}}</span>
+                              <span>订单号：</span>
+                              <span>{{item.orderId}}</span>
+                          </p>
+                          <p class="oMGoodsTitRight">
+                              <span>{{item.payStatus}}</span>
+                          </p>
+                      </div>
 
-        <div class="orderContent">
-            <router-link v-for="(item,index) in list" :key="index" :class="'ye'+item.id" :to="{name: 'orderDetails', params: {orderId:item.orderId}}" >
-                <!-- 多种商品 -->
-                <div  v-if="item.goodsList.length>1" class="order-goodsMW">
-                    <div class="oMGoodsTit">
-                        <p class="oMGoodsTitLeft">
-                            <span>{{item.vendorId}}</span>
-                            <span>订单号：</span>
-                            <span>{{item.orderId}}</span>
-                        </p>
-                        <p class="oMGoodsTitRight">
-                            <span>{{item.payStatus}}</span>
-                        </p>
-                    </div>
+                      <div class="order-swipeW one-bottom-px">
+                          <div class="order-swipe">
 
-                    <div class="order-swipeW one-bottom-px">
-                        <div class="order-swipe">
+                              <div class="swiper-container">
+                                  <div class="swiper-wrapper">
+                                      <div class="swiper-slide" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
+                                          <div class="order-goodsList">
 
-                            <div class="swiper-container">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
-                                        <div class="order-goodsList">
+                                              <img :src="itemGoods.picUrl" alt="" />                                        </div>
+                                      </div>
 
-                                            <img :src="itemGoods.picUrl" alt="" />                                        </div>
-                                    </div>
+                                  </div>
 
-                                </div>
+                              </div>
+                          </div>
 
-                            </div>
-                        </div>
+                          <div class="swipe-bntWrap">
+                              <div class="swiper-button-next swiper-button-black"></div>
+                          </div>
 
-                        <div class="swipe-bntWrap">
-                            <div class="swiper-button-next swiper-button-black"></div>
-                        </div>
+                      </div>
 
-                    </div>
+                      <div class="oMGoodsTotal">
+                          <p>共
+                              <span>2</span>件商品</p>
+                          <p>合计：
+                              <span>{{item.totalMoney}}</span>
+                          </p>
+                      </div>
+                  </div>
 
-                    <div class="oMGoodsTotal">
-                        <p>共
-                            <span>2</span>件商品</p>
-                        <p>合计：
-                            <span>{{item.totalMoney}}</span>
-                        </p>
-                    </div>
-                </div>
+                  <!-- 单个商品 -->
+                  <div class="oMGoodsW" v-else>
+                      <div class="oMGoodsTit">
+                          <p class="oMGoodsTitLeft">
+                              <span>{{item.vendorId}}</span>
+                              <span>订单号：</span>
+                              <span>{{item.orderId}}</span>
+                          </p>
+                          <p class="oMGoodsTitRight">
+                              <span>{{item.payStatus}}</span>
+                          </p>
+                      </div>
+                      <div class="oMGoodsCon one-bottom-px">
+                          <div class="oMGoodsConImg">
 
-                <!-- 单个商品 -->
-                <div class="oMGoodsW" v-else>
-                    <div class="oMGoodsTit">
-                        <p class="oMGoodsTitLeft">
-                            <span>{{item.vendorId}}</span>
-                            <span>订单号：</span>
-                            <span>{{item.orderId}}</span>
-                        </p>
-                        <p class="oMGoodsTitRight">
-                            <span>{{item.payStatus}}</span>
-                        </p>
-                    </div>
-                    <div class="oMGoodsCon one-bottom-px">
-                        <div class="oMGoodsConImg">
-
-                            <img :src="item.goodsList[0].picUrl || ''" alt="" />
-                        </div>
-                        <div class="oMGoodsConInfo">
-                            <div class="oMGoodsConName">
-                                {{item.goodsList[0].goodsName}}
-                            </div>
-                            <p class="oMGoodsConType">黑色</p>
-                            <div class="oMGoodsConMoney">
-                                <p>{{item.goodsList[0].buyPrice}}</p>
-                                <p>
-                                    <span></span>
-                                    <span>{{item.goodsList[0].buyNum}}</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="oMGoodsTotal">
-                        <p>共
-                            <span>{{item.goodsList[0].buyNum}}</span>件商品</p>
-                        <p>合计：
-                            <span>{{item.totalMoney}}</span>
-                        </p>
-                    </div>
-                </div>
-            </router-link>
-        </div>
+                              <img :src="item.goodsList[0].picUrl || ''" alt="" />
+                          </div>
+                          <div class="oMGoodsConInfo">
+                              <div class="oMGoodsConName">
+                                  {{item.goodsList[0].goodsName}}
+                              </div>
+                              <p class="oMGoodsConType">黑色</p>
+                              <div class="oMGoodsConMoney">
+                                  <p>{{item.goodsList[0].buyPrice}}</p>
+                                  <p>
+                                      <span></span>
+                                      <span>{{item.goodsList[0].buyNum}}</span>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="oMGoodsTotal">
+                          <p>共
+                              <span>{{item.goodsList[0].buyNum}}</span>件商品</p>
+                          <p>合计：
+                              <span>{{item.totalMoney}}</span>
+                          </p>
+                      </div>
+                  </div>
+              </router-link>
+          </div>
+        </mt-loadmore>
         <no-data :data="list"></no-data>
 
     </div>
@@ -106,6 +107,7 @@ import headerTop from "../../common/header.vue";
 import Swiper from 'swiper';
 import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
+import { Loadmore } from 'mint-ui';
 
 export default {
     data() {
@@ -113,8 +115,16 @@ export default {
             list: [],
             headList: ['全部', '已完成', '未完成', '退换/售后'],
             headIndex: 0,
-            pathStatus: ''
+            pathStatus: '',
+            pageNum: 1,
+            pageSize: 10,
+            allLoaded: false
         }
+    },
+    computed: {
+      offset() {
+        return this.pageSize*(this.pageNum - 1) +1
+      }
     },
     watch: {
 
@@ -132,70 +142,68 @@ export default {
                 break;
             case '2':
                 this.headIndex = 2;
-
                 break;
             case '3':
                 this.headIndex = 3;
-
                 break;
             default:
                 this.headIndex = 0;
                 break;
         }
-
-        this.selectOrders(token, this.headIndex);
-
     },
     methods: {
+      async loadTop(){
+        console.log('this loadtop')
+        this.init()
+        await this.selectOrders(getToken(), this.headIndex);
+        this.$refs.loadmore.onTopLoaded();
+      },
+      async loadBottom(){
+        console.log('this is loadbottom')
+        await this.selectOrders(getToken(), this.headIndex);
+        this.$refs.loadmore.onBottomLoaded();
+      },
         headIndexCli(index) {
-
-            var token = getToken();
             this.headIndex = index;
-            this.selectOrders(token, index);
+            this.init()
+            this.selectOrders(getToken(), index);
         },
-
-        selectOrders: function(token, headIndex) {
-            let _this = this;
-            this.axios(testUrl + api.selectOrders, {
-                "token": token,
-                "status": headIndex
-            }, 'post')
-                .then((data) => {
-
-                    if (data.error_code == 0) {
-                        _this.list = data.data;
-                        _this.$nextTick(function() {
-                            _this.list.forEach((res) => {
-
-                                var goodsId = 'ye' + res.id;
-                                var classg = '.' + goodsId + ' .swiper-container';
-                                var bnt = '.' + goodsId + ' .swiper-button-next';
-                                new Swiper(classg, {
-                                    slidesPerView: 4,
-                                    slidesPerGroup: 1,
-                                    spaceBetween: 10,
-                                    navigation: {
-                                        nextEl: bnt,
-                                        // prevEl: '.swiper-button-prev',
-                                    },
-
-                                })
-                            });
-                        })
-                    } else {
-
-                    }
-                })
-                .catch((err) => {
-                })
+        init() {
+          this.pageNum = 1
+          this.list = []
         },
-
-
-
+        async selectOrders(token, headIndex) {
+          let data = await this.axios(testUrl + api.selectOrders, {"token": token,"status": headIndex,offset: this.offset}, 'post')
+          if (data.error_code) {
+             return
+          }
+          this.list.push(...data.data)
+          this.pageNum ++
+          this.allLoaded = !(data.data.length === this.pageSize)
+          this.setSwiper(this.list)
+        },
+        setSwiper(list) {
+          this.$nextTick(() =>{
+              list.forEach((res) => {
+                  var goodsId = 'ye' + res.id;
+                  var classg = '.' + goodsId + ' .swiper-container';
+                  var bnt = '.' + goodsId + ' .swiper-button-next';
+                  new Swiper(classg, {
+                      slidesPerView: 4,
+                      slidesPerGroup: 1,
+                      spaceBetween: 10,
+                      navigation: {
+                          nextEl: bnt,
+                          // prevEl: '.swiper-button-prev',
+                      }
+                  })
+              });
+          })
+        }
     },
     components: {
-        "header-top": headerTop
-
+        "header-top": headerTop,
+        "mt-loadmore": Loadmore
     }
 }
 </script>

@@ -42,7 +42,9 @@
             <ul class="account-quickUl">
                 <li v-for="(item,index) in orderList" :key="index">
                     <router-link class="account-quickA" :to="item.path">
-                        <p :class="item.bgImgClass"></p>
+                        <p :class="item.bgImgClass">
+                          <span v-if="item.name === '未完成' && num" class="num">{{num}}</span>
+                        </p>
                         <p class="account-qName">{{item.name}}</p>
                     </router-link>
                 </li>
@@ -134,13 +136,17 @@ export default {
             ],
             top: [],
             end: [],
-            levelFlag:false
+            levelFlag:false,
+            num: 1
         };
     },
     computed: {
         ...mapGetters({
             userinfo: 'userinfo/getUserInfo'
         })
+    },
+    created() {
+      this.getOrderTotals()
     },
     mounted() {
         this.userName = localStorage.getItem("userName");
@@ -153,6 +159,10 @@ export default {
         }
     },
     methods: {
+      async getOrderTotals() {
+        let data = await this.axios(testUrl+ api.getOrderTotals,{token: getToken()},'post')
+        this.num = data.data['2']
+      },
       async getSwiper() {
         const [top, end] = await Promise.all([
           this.getBanner('1ffcda7e7555460399096529c68a7a2a'),
@@ -315,6 +325,7 @@ export default {
         width: 92%;
         li {
             width: 25%;
+
             .account-quickA {
                 display: block;
                 text-align: center;
@@ -343,6 +354,17 @@ export default {
                 }
                 .account-qImg04 {
                     background-position: -1.71rem -0.13rem;
+                    position: relative;
+                    .num {
+                      position: absolute;
+                      top: -10px;
+                      right: -13px;
+                      padding: 2px 5px;
+                      background: #fb5c5c;
+                      color: #fff;
+                      border-radius: 50%;
+                      font-size: 12px;
+                    }
                 }
                 .account-qImg05 {
                     background-position: -2.23rem -0.13rem;
@@ -418,7 +440,7 @@ export default {
                         display: flex;
                         align-items: center;
                         span {
-                            color: #ebc99d;
+                            color: #666;
                         }
                         .acc-contentGo {
                             width: 0.25rem;

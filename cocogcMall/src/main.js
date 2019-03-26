@@ -31,7 +31,9 @@ import {
   Indicator,
   Toast,
   Spinner,
+  InfiniteScroll
 } from "mint-ui";
+Vue.use(InfiniteScroll);
 
 window.Toast= Toast;
 window.MessageBox= MessageBox;

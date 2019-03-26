@@ -1,6 +1,6 @@
 <template>
-  <div class="no-data">
-    <img src="/static/images/nothing.png" alt="" v-if="open">
+  <div class="no-data" v-if="open">
+    <img src="/static/images/nothing.png" alt="">
   </div>
 </template>
 
@@ -33,8 +33,8 @@ export default {
   align-items: center;
   justify-content: center;
   img{
-    width: 212px;
-    height: 227px;
+    width: 3.46rem;
+    height: 3.48rem;
   }
 }
 </style>

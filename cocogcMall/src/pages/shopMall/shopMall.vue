@@ -92,7 +92,6 @@ import HotGoods from '../../components/home/hotGoods.vue'
 import Integral from '../../components/home/integral.vue'
 
 
-
 export default {
   data() {
     return {

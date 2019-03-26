@@ -401,7 +401,6 @@ export default {
     .ihot-moneyW {
       display: flex;
       align-items: center;
-      justify-content: center;
       margin-top: 0.12rem;
       margin-bottom: 0.4rem;
       .ihot-logo {
