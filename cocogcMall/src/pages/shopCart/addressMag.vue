@@ -127,9 +127,13 @@ export default {
                     _this.Toast(err.message)
                 })
         },
-        jumpAddress(item) {
-          window.chooseAddress = item;
-          this.$router.push('/order');
+        jumpAddress(item)
+        {
+          if(fromPath != "")
+          {
+            window.chooseAddress = item;
+            this.$router.push('/order');
+          }
         }
     },
     // beforeRouteEnter(to, from, next){
