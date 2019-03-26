@@ -2,7 +2,7 @@
     <div class="order">
         <header-top></header-top>
         <!-- 地址 -->
-        <div>
+        <div style="padding-bottom: 70px;">
             <div class="order-addressWN" addressMag>
                 <div v-if="addressDef != null">
                   <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
@@ -592,11 +592,6 @@ export default {
             }
         }
     }
-}
-.product-container{
-  &:last-of-type{
-    margin-bottom: 70px;
-  }
 }
 .order-freight,
 .order-priceAll {

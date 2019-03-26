@@ -1,5 +1,5 @@
 <template>
-    <div class="shop">
+    <div class="shop" >
         <div class="shop-headW">
             <h3 class="shop-title">购物车</h3>
             <p class="shop-headR" v-if="list.length != 0">

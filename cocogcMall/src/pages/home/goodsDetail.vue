@@ -438,6 +438,9 @@ export default {
 
 <style lang="less">
 .goodsDetail {
+    position: relative;
+    transition: all 0.4s;
+    padding-bottom: 0.42rem;
     .dialog-container {
         position: fixed;
         top: 0.78rem;

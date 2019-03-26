@@ -30,6 +30,7 @@
                     </div>
                 </li>
             </ul>
+            <no-data :data="addressList"></no-data>
 
             <p class="button addBnt" @click="goAddressEdit()">
                 添加新地址
@@ -217,7 +218,7 @@ export default {
 
 .addBnt {
     background: #30ce84;
-    margin: 2rem 0.26rem 0.1rem 0.26rem;
+    margin: 2rem 0.26rem 0.5rem 0.26rem;
 }
 
 .address-fixedWrap {

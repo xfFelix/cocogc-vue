@@ -1,6 +1,6 @@
 <template>
-  <div class="no-data">
-    <img src="/static/images/nothing.png" alt="" v-if="open">
+  <div class="no-data" v-if="open">
+    <img src="/static/images/nothing.png" alt="">
   </div>
 </template>
 
@@ -29,12 +29,12 @@ export default {
 .no-data{
   display: flex;
   width: 100%;
-  height: 300px;
+  height: 200px;
   align-items: center;
   justify-content: center;
   img{
-    width: 212px;
-    height: 227px;
+    width: 2.22rem;
+    height: 2.22rem;
   }
 }
 </style>

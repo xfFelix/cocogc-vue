@@ -31,9 +31,9 @@
                 </div>
             </div>
         </div>
-        <div class="home-integralM one-top-px" @click="toGoodsList()">
+        <!-- <div class="home-integralM one-top-px" @click="toGoodsList()">
             查看更多
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -58,6 +58,10 @@ export default {
             iSintegra: '',
             goodsList: [],
             token: getToken(),
+            page: 1,
+            rows: 10,
+            offset: 0,
+            allLoaded: false
         }
     },
     computed: {
@@ -73,18 +77,40 @@ export default {
             }
         })
 
-        if (this.$store.getters['userinfo/getUserInfo'].score) {
-            this.price(this.homeSel[0].integral);
+        if (this.userinfo) {
+            this.price(this.homeSel[0].integral, 'first');
             this.iSintegra = this.homeSel[0].integral.replace('~', '-');
         } else {
             this.iSelectAct = 1
-            this.price(this.homeSel[1].integral);
+            this.price(this.homeSel[1].integral, 'first');
             this.iSintegra = this.homeSel[1].integral.replace('~', '-');
         }
 
-
+        window.addEventListener('scroll', this.handleScroll)
+    },
+    destroyed() {
+      window.removeEventListener('scroll', this.handleScroll)
     },
     methods: {
+      handleScroll(){
+        //变量scrollTop是滚动条滚动时，距离顶部的距离
+     		var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+     		//变量windowHeight是可视区的高度
+     		var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+     		//变量scrollHeight是滚动条的总高度
+     		var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
+        if (this.allLoaded) {
+          return
+        }
+        //滚动条到底部的条件
+        if(scrollTop+windowHeight==scrollHeight){
+          //写后台加载数据的函数
+          if (this.offset) {
+            this.price(this.iSintegra)
+          }
+         	console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
+        }
+      },
         //带积分到列表页
         toGoodsList() {
             this.$router.push({ path: '/goodsList', query: { integra: this.iSintegra } })
@@ -126,32 +152,44 @@ export default {
                 })
                 return
             } else {
+                this.init()
                 this.iSelectAct = index;
-                this.price(item.integral);
+                this.price(item.integral, 'first');
                 this.iSintegra = item.integral.replace('~', '-');
             }
         },
-        price: function(integral) {
-            let integrals = integral.replace('~', '-');
-            let _this = this;
+        init() {
+          this.page = 1
+          this.offset = 0
+          this.goodsList = []
+        },
+        price(integral, first) {
+            let integrals = this.charReplace(integral)
             this.axios(jdTestUrl + api.price, {
                 "price": integrals,
-                "offset": 0,
-                "rows": 10
+                "offset": this.offset,
+                "rows": this.rows
             }, 'get')
                 .then((data) => {
                     if (data.code == 0) {
-                        _this.goodsList = data.list;
+                        if (first) {
+                          this.goodsList = data.list
+                        } else {
+                          this.goodsList.push(...data.list)
+                        }
+                        this.allLoaded = !(data.list.length === this.rows)
+                        this.page ++
+                        this.offset = 1+this.rows*(this.page-1)
                     } else {
-                        _this.Toast(data.message)
+                        this.Toast(data.message)
                     }
                 })
-                .catch((err) => {
-
-                })
         },
-
-
+        charReplace(data){
+          if (data) {
+            return data.replace('~', '-')
+          }
+        }
     }
 
 }
@@ -216,6 +254,13 @@ export default {
     .home-interWrap {
         width: 100%;
         overflow: auto;
+        &::after{
+          content: '';
+          display: block;
+          height: 0;
+          clear: both;
+          visibility: hidden;
+        }
     }
     .home-iGoodsW {
         float: left;

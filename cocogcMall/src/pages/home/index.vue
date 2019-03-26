@@ -259,7 +259,7 @@ export default {
         font-size: 0.24rem;
         font-weight: bold;
         margin-top: -0.05rem;
-        text-align: center;
+        text-align: left;
       }
 
       .ih-nologin {
@@ -406,7 +406,6 @@ export default {
     .ihot-moneyW {
       display: flex;
       align-items: center;
-      justify-content: center;
       margin-top: 0.12rem;
       margin-bottom: 0.4rem;
       .ihot-logo {
