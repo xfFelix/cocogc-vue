@@ -17,7 +17,7 @@
       </a>
 
       <div class="ih-balanceW">
-        <div class="ih-balance" v-if="$store.state.userinfo.userinfo">
+        <div class="ih-balance" v-if="loScore">
           <p class="ih-money">{{loScore.score}}</p>
           <p class="ih-moneya">椰子分</p>
         </div>
@@ -107,7 +107,8 @@ export default {
       loginFlag: false,
       token: getToken(),
       banner: [],
-      newsList:[]
+      newsList:[],
+      autoplay: false
     }
   },
   created() {
@@ -130,10 +131,15 @@ export default {
         "id": "a10a220f9aa94dc49c960c77cd783d11"
       }, 'post')
       this.banner = banner.data.data;
+      if (this.banner.length >1) {
+        this.autoplay = true
+      } else {
+        this.autoplay = false
+      }
       this.$nextTick(() => {
         var swiperBan = new Swiper('.index-swipe .swiper-container', {
           loop: true,
-          autoplay: true,
+          autoplay: this.autoplay,
           pagination: {
             el: '.swiper-pagination',
           },

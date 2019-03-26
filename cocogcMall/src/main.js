@@ -13,8 +13,10 @@ import VueCookie from 'vue-cookies';
 import VueLazyload from 'vue-lazyload';
 import store from './store/index.js'
 import Tips from './common/tips'
+import NoData from './common/NoData'
 
 Vue.component(Spinner.name, Spinner)
+Vue.component('no-data', NoData)
 
 Vue.use(VueCookie);
 Vue.use(Tips);

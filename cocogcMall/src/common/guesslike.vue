@@ -28,6 +28,7 @@
 </template>
 <script>
 import api from "@/service/api";
+import { arrayContains } from "@/util/common";
 export default {
     data() {
         return {
@@ -40,11 +41,8 @@ export default {
           {
             for(var k=0;k<list.length;k++)
             {
-              for (var i = 0; i < window.userLikeId.length; i++)
-              {
-                if (window.userLikeId[i] == list[k].id){
-                   list.splice(k,1);
-                }
+              if(arrayContains(window.userLikeId,list[k].id)){
+                list.splice(k,1);
               }
             }
           }

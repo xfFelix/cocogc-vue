@@ -58,8 +58,24 @@ export const setToken = (token) => {
   }
 }
 
+
 export const delToken = () => {
   localStorage.removeItem("yeyun_token");
   Vue.prototype.$cookies.remove("yeyun_token");
 }
+
+//检测数组是否包含
+export const arrayContains = (arr, obj) => {
+  if (arr)
+  {
+    var i = arr.length;
+    while (i--) {
+      if (arr[i] == obj) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 

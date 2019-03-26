@@ -15,6 +15,12 @@ const getters = {
 const actions = {
   setNum ({commit}, num) {
     commit('setNum', num)
+  },
+  incrementNum({commit}) {
+    commit('incrementNum')
+  },
+  decrementNum({commit}) {
+    commit('decrementNum')
   }
 }
 
@@ -22,6 +28,16 @@ const actions = {
 const mutations = {
   setNum(state, num) {
     state.num = num
+  },
+  incrementNum(state) {
+    state.num++
+  },
+  decrementNum(state) {
+    if (state.num > 0) {
+      state.num--
+    } else {
+      state.num = 0
+    }
   }
 }
 

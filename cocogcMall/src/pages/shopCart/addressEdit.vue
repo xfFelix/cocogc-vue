@@ -4,11 +4,9 @@
         <div class="addEdit-contentWrap">
             <ul class="addEdit-content">
                 <li class="one-bottom-px">
-                    <p>
+                    <p class="item">
                         <span>收货人</span>
-                        <span>
-                            <input type="text" placeholder="请填写收货人姓名" v-model.trim="takeName">
-                        </span>
+                        <input type="text" placeholder="请填写收货人姓名" v-model.trim="takeName">
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeNameC" v-if="takeName.length>0">
                     </p>
@@ -208,6 +206,7 @@ export default {
         li {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 0.36rem 0 0.16rem 0;
             p:nth-of-type(1) {
                 width: 90%;
@@ -222,12 +221,14 @@ export default {
                 font-weight: bold;
                 color: #000;
                 height: 100%;
+                font-size: 0.27rem;
             }
              ::-webkit-input-placeholder {
                 /* WebKit, Blink, Edge */
                 color: #999999;
                 font-size: 0.26rem;
                 font-weight: 100;
+                line-height: 0.4rem;
             }
 
              :-moz-placeholder {
@@ -261,7 +262,7 @@ export default {
         li:nth-of-type(1),
         li:nth-of-type(2),
         li:nth-of-type(3) {
-            height: 0.46rem;
+            // height: 0.46rem;
             p:nth-of-type(1) {
                 span:nth-of-type(1) {
                     display: flex;
@@ -320,6 +321,7 @@ textarea {
     height: 1.38rem;
     margin-top: 0.05rem;
 }
+
 </style>
 
 
