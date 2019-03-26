@@ -402,6 +402,7 @@ export default {
                 })
         },
         async goPreview() {
+            var that = this;
             if (this.userinfo.isRealCert == 0) {
                 this.Toast({
                     message: '请先实名认证',
@@ -412,11 +413,24 @@ export default {
                 }, 1000)
                 return
             }
-            let buys = []
+            let buys = [];
             buys.push({ goodsId: this.goodsId, nums: this.buyNum });
             //sessionStorage.setItem('buys', JSON.stringify(buys))
-            window.buys = buys;
-            this.$router.push('/order?cart=direct');
+            //window.buys = buys;
+            //放入购物车，其他的不选中
+            this.axios(testUrl + api.updateCart,
+              {
+                token:getToken(),
+                buys:buys
+              },
+              'post')
+              .then((data) => {
+                if (data.error_code == 0) {
+                  that.$router.push('/order');
+                } else {
+                  that.Toast("添加购物车失败：" + data.message);
+                }
+            });
         }
     },
     components: {

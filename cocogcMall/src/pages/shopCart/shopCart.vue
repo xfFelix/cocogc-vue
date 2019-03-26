@@ -263,10 +263,7 @@ export default {
                         //sessionStorage.setItem('buys', JSON.stringify(buys));
                         window.buys = buys;
                         that.$router.push({
-                            path: '/order',
-                            query: {
-                                cart: 'cart'
-                            }
+                            path: '/order'
                         });
 
                     }
