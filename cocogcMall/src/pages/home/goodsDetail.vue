@@ -161,7 +161,7 @@
             <div class="arrow-top"></div>
             <div class="dialog-content">
                 <router-link :to="{path: '/layout/home'}">
-                    <div class="link">首页</div>
+                    <div class="link"><span class="navImg"></span>首页</div>
                 </router-link>
                 <router-link :to="{path: '/layout/account'}">
                     <div class="link">我的</div>
@@ -251,6 +251,7 @@ export default {
                 this.headShow = true;
             }else{
                 this.headShow = false;
+                this.showDialog = false;
             }
         },
         goTop(i){
@@ -432,12 +433,11 @@ export default {
     position: relative;
     transition: all 0.4s;
     .dialog-container {
-        position: absolute;
+        position: fixed;
         top: 0.78rem;
         right: 8px;
         z-index: 102;
         border-radius: 5px;
-        border: 1px solid #ccc;
         .arrow-top {
             border-left: 7px solid transparent;
             border-right: 7px solid transparent;
@@ -456,6 +456,7 @@ export default {
                 width: 1.84rem;
                 display: flex;
                 justify-content: center;
+                align-items: center;
                 &:last-of-type {
                     margin-bottom: 0;
                 }
@@ -478,7 +479,7 @@ export default {
     .circle {
         display: flex;
         align-items: center;
-        margin-right: 0.1rem;
+        margin-right: 0.2rem;
         span {
             width: 4px;
             height: 4px;
@@ -892,14 +893,14 @@ export default {
                 background-position: -1.71rem -0.73rem;
                 margin: 0 auto;
                 span {
-                    position: absolute;
-                    top: -2px;
-                    right: -4px;
-                    background: #f73130;
-                    font-size: 0.18rem;
-                    color: #fff;
-                    border-radius: 40px;
-                    padding: 0 3px;
+                        position: absolute;
+                        left: 15px;
+                        top: -6px;
+                        padding: 2px 5px;
+                        background: #fb5c5c;
+                        color: #fff;
+                        border-radius: 50%;
+                        font-size: 12px;
                 }
             }
             .goodDetail-bcName {

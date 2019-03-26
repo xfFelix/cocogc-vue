@@ -77,7 +77,7 @@
                             <div class="oMGoodsConName">
                                 {{item.goodsList[0].goodsName}}
                             </div>
-                            <p class="oMGoodsConType">黑色</p>
+                            <p class="oMGoodsConType">&nbsp;</p>
                             <div class="oMGoodsConMoney">
                                 <p>{{item.goodsList[0].buyPrice}}</p>
                                 <p>

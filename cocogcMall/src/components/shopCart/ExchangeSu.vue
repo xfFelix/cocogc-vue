@@ -27,7 +27,7 @@ export default {
         let countDown =  setInterval(()=>{
             this.numDown = this.numDown-1
             if(this.numDown<2){
-                this.$router.push('/layout/home');
+                this.$router.push({ name: 'orderDetails', params: { orderId: this.chOrderId } });
                 clearInterval(countDown)
             }
         },1000)

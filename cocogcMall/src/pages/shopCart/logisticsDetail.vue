@@ -55,7 +55,7 @@
                     </div>
                     <div class="order-goodsDetail">
                         <p class="order-goodsDName">{{orderList[0].goodsName}}</p>
-                        <!-- <p class="order-goodsDType">黑色</p> -->
+                         <p class="order-goodsDType">&nbsp;</p> 
                         <div class="order-goodsDPriceW">
                             <span class="order-goodsDPrice">{{orderList[0].buyPrice}}</span>
                             <p class="order-goodsDNumW">
