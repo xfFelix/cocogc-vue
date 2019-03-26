@@ -374,7 +374,7 @@ export default {
       font-size: 0.26rem;
       color: #333;
       .home-horn {
-        width: 0.22rem;
+        width: 0.35rem;
         height: 0.22rem;
         display: inline-block;
         background-image: url(/static/images/jl.png);

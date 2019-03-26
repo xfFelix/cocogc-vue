@@ -80,7 +80,6 @@ export default {
     mounted() {
         var item = window.addressInfo;
         if (item) {
-          console.log(item);
             this.takeName = item.name;
             this.takeTel = item.tel;
             this.takeAddress = item.area;
@@ -92,6 +91,7 @@ export default {
     },
     created() {
         var item = window.addressInfo;
+        console.log(item)
         if (item) {
             this.$route.meta.title = "编辑地址"
         } else {

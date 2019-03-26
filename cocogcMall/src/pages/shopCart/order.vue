@@ -484,6 +484,7 @@ export default {
         text-align: center;
         background: #fff;
         padding: 0.7rem 0 0.78rem 0;
+        margin: 0 auto;
         .order-addNImg {
             width: 0.4rem;
             height: 0.4rem;
@@ -492,7 +493,6 @@ export default {
             background-size: 5.8rem 1.86rem;
             background-position: -0.85rem -0.76rem;
             display: inline-block;
-            padding-bottom: 0.2rem;
         }
         p {
             color: #999999;

@@ -117,7 +117,7 @@ export default {
                 { bgImgClass: 'account-qImg01', name: '全部订单', path: '/orderManage?status=0' },
                 { bgImgClass: 'account-qImg03', name: '已完成', path: '/orderManage?status=1' },
                 { bgImgClass: 'account-qImg04', name: '未完成', path: '/orderManage?status=2' },
-                { bgImgClass: 'account-qImg05', name: '退换/售后', path: '/orderManage?status=3' },
+                { bgImgClass: 'account-qImg05', name: '已退货', path: '/orderManage?status=3' },
             ],
             score: '',
             userName: '',
