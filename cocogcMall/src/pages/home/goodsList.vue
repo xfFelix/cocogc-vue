@@ -32,7 +32,7 @@
 
             <div class="home-iSelectW" v-if="intervalFlag">
                 <ul class="home-iSelect">
-                    <li v-for="(item,index) in homeSel" :key="index" v-if="item.homeSelShow" @click="iSelect(item,index)" :class="item.id==iSelectAct?'iSelectCla':'iSelectNo'">
+                    <li v-for="(item,index) in homeSel" :key="index" v-if="item.homeSelShow" @click="iSelect(item,index)" :class="checkColor(item.id)">
                         {{item.integralInfo}}
                     </li>
                 </ul>
@@ -92,7 +92,6 @@ export default {
             pages: 1, //页数
             pages_size: 10, //每页显示页数
             offsetRows: 1, //页数开始
-
             price: '', //判断点击的积分区间
             moreShow: false,
             brandId: '', //分类id
@@ -102,7 +101,7 @@ export default {
             salesVolume: "",//销量排序
             productTypeId: "",
             token: getToken(),
-            hightLight: ''
+            hightLight: 'all'
         };
     },
     computed: {
@@ -133,6 +132,11 @@ export default {
 
     },
     methods: {
+      checkColor(id) {
+        if (this.hightLight === 'integral') {
+          return id===this.iSelectAct?'iSelectCla':'iSelectNo'
+        }
+      },
         //搜索框
         parentChild(val) {
             this.keyWord = val;
