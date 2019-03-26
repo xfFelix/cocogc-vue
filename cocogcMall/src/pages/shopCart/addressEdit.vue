@@ -8,7 +8,7 @@
                         <span>收货人</span>
                         <input type="text" placeholder="请填写收货人姓名" v-model.trim="takeName">
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeNameC" v-if="takeName.length>0">
+                    <p class="j1Png addEdid-delInp" @click="takeNameC" v-if="takeName">
                     </p>
                 </li>
                 <li class="one-bottom-px">
@@ -18,7 +18,7 @@
                             <input type="number" placeholder="请填写收货人手机号" v-model.trim="takeTel" pattern="\d*">
                         </span>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeTelC" v-if="takeTel.length>0">
+                    <p class="j1Png addEdid-delInp" @click="takeTelC" v-if="takeTel">
                     </p>
                 </li>
                 <li class="one-bottom-px">
@@ -28,7 +28,7 @@
                             <input type="text" placeholder="省市区县、乡镇等" v-model.trim="takeAddress" @click="fixedShowC()" readonly="">
                         </span>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeAddressC" v-if="takeAddress.length>0">
+                    <p class="j1Png addEdid-delInp" @click="takeAddressC" v-if="takeAddress">
                     </p>
                 </li>
                 <li class="one-bottom-px">
@@ -37,7 +37,7 @@
                         <textarea type="text" placeholder="街道、楼牌号等" v-model.trim="takeDAddress">
                         </textarea>
                     </p>
-                    <p class="j1Png addEdid-delInp" @click="takeDAddressC" v-if="takeDAddress.length>0">
+                    <p class="j1Png addEdid-delInp" @click="takeDAddressC" v-if="takeDAddress">
                     </p>
                 </li>
             </ul>

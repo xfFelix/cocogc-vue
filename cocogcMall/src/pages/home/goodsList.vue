@@ -4,10 +4,10 @@
             <head-search @searchChild='parentChild' v-bind:kewWordC="keyWord"></head-search>
             <ul class="goodsList-order one-bottom-px">
                 <li>
-                    <p @click="searchAll()">全部</p>
+                    <p @click="searchAll()" :class="{'hight-light': hightLight === 'all'}">全部</p>
                 </li>
                 <li>
-                    <div @click="goodsOrder()">
+                    <div @click="goodsOrder()" :class="{'hight-light': hightLight === 'sell'}">
                         <p>销量</p>
                         <p class="j1Png gl-orderBg">
                             <span></span>
@@ -16,7 +16,7 @@
                     </div>
                 </li>
                 <li>
-                    <div @click="goodsPrice()">
+                    <div @click="goodsPrice()" :class="{'hight-light': hightLight === 'price'}">
                         <p>价格</p>
                         <p class="j1Png gl-orderBg">
                             <span></span>
@@ -26,7 +26,7 @@
 
                 </li>
                 <li>
-                    <p @click="intervalCli">积分区间</p>
+                    <p @click="intervalCli" :class="{'hight-light': hightLight === 'integral'}">积分区间</p>
                 </li>
             </ul>
 
@@ -59,6 +59,7 @@
                 <mt-spinner type="fading-circle" class="loading-more"></mt-spinner>
                 <p class="loading-more-txt"> 点击加载更多...</p>
             </div>
+            <no-data :data="goodsList"></no-data>
             <div class="onBottom" v-show="moreShow==false">
                 已经到底了噢~~
             </div>
@@ -101,6 +102,7 @@ export default {
             salesVolume: "",//销量排序
             productTypeId: "",
             token: getToken(),
+            hightLight: ''
         };
     },
     computed: {
@@ -146,6 +148,7 @@ export default {
         },
         //价格顺序
         goodsPrice() {
+            this.hightLight = 'price'
             if (this.priceRangeFlag == true) {
                 this.priceRange = 'asc'
                 this.priceRangeFlag = false;
@@ -164,10 +167,11 @@ export default {
 
         //判断积分区间
         intervalCli() {
+          this.hightLight = 'integral'
             this.intervalFlag = !this.intervalFlag;
         },
         iSelect(item, index) {
-             if(item.integral == '0~NaN'){   
+             if(item.integral == '0~NaN'){
                 MessageBox.confirm('', {
                     message: '登录后查看您可兑换的商品，立即登录。',
                     title: '提示',
@@ -193,12 +197,13 @@ export default {
                 this.goodsListSearch(1)
             }
 
-          
+
 
         },
 
         //所有
         searchAll() {
+            this.hightLight = 'all'
             this.pages = 1;
             this.offsetRows = 1;
             this.goodsList = [];
@@ -210,6 +215,7 @@ export default {
 
         //销量排序
         goodsOrder() {
+            this.hightLight = 'sell'
             this.pages = 1;
             this.offsetRows = 1;
             this.goodsList = [];
@@ -258,8 +264,8 @@ export default {
                     this.iSelectAct =1;
                 }
             }
-           
-            
+
+
             if (this.$route.query.classfyId == undefined) {
                 this.brandId = ""
             }
@@ -516,5 +522,8 @@ export default {
     text-align: center;
     padding: 0.2rem;
     color: #666;
+}
+.hight-light{
+  color: #30ce84;
 }
 </style>
