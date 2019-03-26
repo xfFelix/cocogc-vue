@@ -183,16 +183,11 @@ export default {
             addressDef: null,
             isSmsCode: false,
             other: 0,
-            fromPath: this.$route.query.cart ? {cart:this.$route.query.cart} : {}
+            fromPath: {cart:'cart'}
         };
     },
     mounted() {
-        if (this.$route.query.cart == 'cart') {
-            this.previewOrderByCart()
-        } else {
-            this.previewOrder()
-        }
-        sessionStorage.setItem('fromOrder',false);
+       this.previewOrderByCart();
     },
     computed: {
         ...mapGetters({
@@ -208,11 +203,7 @@ export default {
           }
         },
         sumitOrder() {
-            if (this.$route.query.cart == 'cart') {
-                this.saveOrderByCart()
-            } else {
-                this.saveOrder();
-            }
+            this.saveOrderByCart()
         },
         async getUserAddress() {
           var that = this;
@@ -223,84 +214,84 @@ export default {
             that.addressDef = address.data;
           }
         },
-        // 订单预览
-      async previewOrder() {
-            var token = getToken();
-            var buys = window.buys;
-            if(!buys){
-                this.Toast("购买商品不能为空！");
-                this.$router.back(-1);
-                return ;
-            }
-            if(window.chooseAddress)
-            {
-              this.addressDef = window.chooseAddress;
-            }else{
-              //选区默认地址
-              await this.getUserAddress();
-            }
-            var addressId = 0;
-            if(this.addressDef)
-             addressId = this.addressDef.id;
-            let _this = this;
-            this.axios(testUrl + api.previewOrder, {
-                "token": token,
-                "id": addressId,
-                "buys": buys
-            }, 'post')
-                .then((data) => {
-                    if (data.error_code == 0 || data.error_code == 7) {
-                        _this.message = data.message;
-                        _this.other = data.other
-                        _this.dataList = data.data;
-                        _this.dataAddress = data.data[0];
-                        // if (localStorage.getItem('orderAddress')=='' || localStorage.getItem('orderAddress')==null) {
-                        //     _this.addressDef.name = data.data[0].userName;
-                        //     _this.addressDef.userAddress = data.data[0].userAddress;
-                        //     _this.addressDef.tel = data.data[0].userMobile;
-                        //     localStorage.setItem('orderAddress',JSON.stringify(_this.addressDef))
-                        // }else{
-                        //     let orderAddress = JSON.parse(localStorage.getItem('orderAddress'));
-                        //     _this.addressDef.name = orderAddress.name;
-                        //     _this.addressDef.userAddress = orderAddress.userAddress;
-                        //     _this.addressDef.tel = orderAddress.tel;
-                        // }
-
-                        //多商品轮播图
-                        _this.dataList.forEach((res, index) => {
-                            if (res.goodsList.length > 1) {
-                                var goodsId = 'res' + res.goodsList[0].goodsId;
-                                var classg = '.' + goodsId + ' .swiper-container';
-                                var bnt = '.' + goodsId + ' .swiper-button-next';
-                                _this.$nextTick(function() {
-                                    new Swiper(classg, {
-                                        slidesPerView: 4,
-                                        slidesPerGroup: 1,
-                                        spaceBetween: 10,
-                                        navigation: {
-                                            nextEl: bnt,
-                                            // prevEl: '.swiper-button-prev',
-                                        },
-                                    })
-                                })
-                            }
-                        });
-                        //地址存到localStorage
-                        // var editItem = JSON.stringify(_this.dataAddress);
-                        // localStorage.setItem('addressEdit', editItem);
-                    }else if(data.error_code == 3){
-                      this.Toast(data.msg);
-                      setTimeout(function () {
-                        _this.$router.push({
-                          path: '/'
-                        });
-                      },1000);
-                    }
-                })
-                .catch((err) => {
-
-                })
-        },
+      //   // 订单预览
+      // async previewOrder() {
+      //       var token = getToken();
+      //       var buys = window.buys;
+      //       if(!buys){
+      //           this.Toast("购买商品不能为空！");
+      //           this.$router.back(-1);
+      //           return ;
+      //       }
+      //       if(window.chooseAddress)
+      //       {
+      //         this.addressDef = window.chooseAddress;
+      //       }else{
+      //         //选区默认地址
+      //         await this.getUserAddress();
+      //       }
+      //       var addressId = 0;
+      //       if(this.addressDef)
+      //        addressId = this.addressDef.id;
+      //       let _this = this;
+      //       this.axios(testUrl + api.previewOrder, {
+      //           "token": token,
+      //           "id": addressId,
+      //           "buys": buys
+      //       }, 'post')
+      //           .then((data) => {
+      //               if (data.error_code == 0 || data.error_code == 7) {
+      //                   _this.message = data.message;
+      //                   _this.other = data.other
+      //                   _this.dataList = data.data;
+      //                   _this.dataAddress = data.data[0];
+      //                   // if (localStorage.getItem('orderAddress')=='' || localStorage.getItem('orderAddress')==null) {
+      //                   //     _this.addressDef.name = data.data[0].userName;
+      //                   //     _this.addressDef.userAddress = data.data[0].userAddress;
+      //                   //     _this.addressDef.tel = data.data[0].userMobile;
+      //                   //     localStorage.setItem('orderAddress',JSON.stringify(_this.addressDef))
+      //                   // }else{
+      //                   //     let orderAddress = JSON.parse(localStorage.getItem('orderAddress'));
+      //                   //     _this.addressDef.name = orderAddress.name;
+      //                   //     _this.addressDef.userAddress = orderAddress.userAddress;
+      //                   //     _this.addressDef.tel = orderAddress.tel;
+      //                   // }
+      //
+      //                   //多商品轮播图
+      //                   _this.dataList.forEach((res, index) => {
+      //                       if (res.goodsList.length > 1) {
+      //                           var goodsId = 'res' + res.goodsList[0].goodsId;
+      //                           var classg = '.' + goodsId + ' .swiper-container';
+      //                           var bnt = '.' + goodsId + ' .swiper-button-next';
+      //                           _this.$nextTick(function() {
+      //                               new Swiper(classg, {
+      //                                   slidesPerView: 4,
+      //                                   slidesPerGroup: 1,
+      //                                   spaceBetween: 10,
+      //                                   navigation: {
+      //                                       nextEl: bnt,
+      //                                       // prevEl: '.swiper-button-prev',
+      //                                   },
+      //                               })
+      //                           })
+      //                       }
+      //                   });
+      //                   //地址存到localStorage
+      //                   // var editItem = JSON.stringify(_this.dataAddress);
+      //                   // localStorage.setItem('addressEdit', editItem);
+      //               }else if(data.error_code == 3){
+      //                 this.Toast(data.msg);
+      //                 setTimeout(function () {
+      //                   _this.$router.push({
+      //                     path: '/'
+      //                   });
+      //                 },1000);
+      //               }
+      //           })
+      //           .catch((err) => {
+      //
+      //           })
+      //   },
         // 通过购物车进来
       async previewOrderByCart() {
             var token = getToken();
@@ -356,14 +347,9 @@ export default {
                           })
                         }
                       });
-                      //地址存到localStorage
-                      // var editItem = JSON.stringify(_this.dataAddress);
-                      // localStorage.setItem('addressEdit', editItem);
                     }else if(data.error_code == 3){
                       this.Toast(data.message);
-                      this.$router.push({
-                        path: '/'
-                      });
+                      this.$router.back();
                     }else {
                       this.Toast(data.message);
                     }
@@ -372,47 +358,47 @@ export default {
 
                 })
         },
-        //下单
-        saveOrder: function() {
-            var token = getToken();
-            var buys = window.buys;
-            if(!this.addressDef)
-            {
-              this.Toast("请选择配送地址！");
-              return ;
-            }
-
-            if(!buys)
-            {
-              this.Toast("购买商品不能为空！");
-              this.$router.back(-1);
-              return ;
-            }
-
-            let _this = this;
-            this.axios(testUrl + api.saveOrder, {
-                "token": token,
-                "id": this.addressDef.id,
-                "buys": buys,
-                code: this.smsCode
-            }, 'post')
-                .then((data) => {
-                    if (data.error_code == 0) {
-                        var orderId = data.data[0].orderId;
-                        // this.Toast('下单成功')
-                        // this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
-                        _this.showSendCode = false;
-                        _this.exchangeShow = true;
-                        _this.parOrderId = orderId;
-
-                    }else{
-                      _this.Toast(data.msg);
-                    }
-                })
-                .catch((err) => {
-
-                })
-        },
+        // //下单
+        // saveOrder: function() {
+        //     var token = getToken();
+        //     var buys = window.buys;
+        //     if(!this.addressDef)
+        //     {
+        //       this.Toast("请选择配送地址！");
+        //       return ;
+        //     }
+        //
+        //     if(!buys)
+        //     {
+        //       this.Toast("购买商品不能为空！");
+        //       this.$router.back(-1);
+        //       return ;
+        //     }
+        //
+        //     let _this = this;
+        //     this.axios(testUrl + api.saveOrder, {
+        //         "token": token,
+        //         "id": this.addressDef.id,
+        //         "buys": buys,
+        //         code: this.smsCode
+        //     }, 'post')
+        //         .then((data) => {
+        //             if (data.error_code == 0) {
+        //                 var orderId = data.data[0].orderId;
+        //                 // this.Toast('下单成功')
+        //                 // this.$router.push({ name: 'orderDetails', params: { orderId: orderId } })
+        //                 _this.showSendCode = false;
+        //                 _this.exchangeShow = true;
+        //                 _this.parOrderId = orderId;
+        //
+        //             }else{
+        //               _this.Toast(data.msg);
+        //             }
+        //         })
+        //         .catch((err) => {
+        //
+        //         })
+        // },
         // 通过购物车下单
         saveOrderByCart: function() {
             var token = getToken();
@@ -426,7 +412,7 @@ export default {
                 token,
                 id: this.addressDef.id,
                 code: this.smsCode
-            }, 'post')
+                }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
                         var orderId = data.data[0].orderId;
@@ -438,10 +424,7 @@ export default {
                     } else {
                       _this.Toast(data.message)
                     }
-                })
-                .catch((err) => {
-
-                })
+                });
         },
 
         //定时
