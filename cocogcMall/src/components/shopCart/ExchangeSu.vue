@@ -6,9 +6,9 @@
             </p>
             <p class="cs-info">兑换成功</p>
             <p class="cs-money">{{chMessage}}</p>
-            <router-link :to="{ name: 'orderDetails', params: { orderId: chOrderId } }" class="cs-bntGoDe">订单详情</router-link>
+            <router-link :to="{ name: 'orderDetails', params: {orderId: chOrderId}}" class="cs-bntGoDe">订单详情</router-link>
             <router-link to="/layout/home" class="cs-bntGoIndex">返回首页</router-link>
-            <p class="cs-jumpIndex">{{this.numDown}}秒后自动进入首页</p>
+            <p class="cs-jumpIndex">{{this.numDown}}秒后自动进入订单详情页</p>
         </div>
     </div>
 </template>
@@ -20,17 +20,23 @@ export default {
     },
     data() {
         return {
-            numDown:5
+            numDown:5,
+            countDown:null
         };
     },
     mounted() {
-        let countDown =  setInterval(()=>{
+        this.countDown =  setInterval(()=>{
             this.numDown = this.numDown-1
             if(this.numDown<2){
-                this.$router.push('/layout/home');
-                clearInterval(countDown)
+                this.$router.push({ name: 'orderDetails', params: { orderId: this.chOrderId } });
+                clearInterval(this.countDown);
             }
         },1000)
+    },
+    beforeDestroy() {
+        if(this.countDown) {
+            clearInterval(this.countDown); 
+        }
     }
 }
 </script>
@@ -41,6 +47,7 @@ export default {
     height: 100%;
     top: 0;
     position: fixed;
+    z-index: 100;
     .changeSuccess {
         color: #333333;
         .cs-bgImg {

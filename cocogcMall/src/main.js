@@ -14,6 +14,8 @@ import VueLazyload from 'vue-lazyload';
 import store from './store/index.js'
 import Tips from './common/tips'
 import NoData from './common/NoData'
+import Vconsole from 'vconsole'
+new Vconsole();
 
 Vue.component(Spinner.name, Spinner)
 Vue.component('no-data', NoData)

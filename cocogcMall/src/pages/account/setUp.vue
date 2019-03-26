@@ -47,6 +47,8 @@
 import headerTop from "../../common/header.vue";
 import api from "@/service/api";
 import { IsEmpty, getToken,delToken } from "@/util/common";
+import { mapGetters } from 'vuex';
+
 
 export default {
     data() {
@@ -55,9 +57,15 @@ export default {
             cardsFlag: true
         };
     },
+    computed: {
+        ...mapGetters({
+            userinfo: 'userinfo/getUserInfo'
+        })
+    },
     mounted() {
-        let isRealCert = localStorage.getItem("isRealCert");
-        if (isRealCert) {
+        if (this.$store.getters['userinfo/getUserInfo'].isRealCert == 0) {
+            this.identFlag = true;
+        }else{
             this.identFlag = false;
         }
         this.cards()

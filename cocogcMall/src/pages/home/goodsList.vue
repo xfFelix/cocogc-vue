@@ -168,7 +168,16 @@ export default {
         },
         iSelect(item, index) {
              if(item.integral == '0~NaN'){   
-                this.Toast('未登录');
+                MessageBox.confirm('', {
+                    message: '登录后查看您可兑换的商品，立即登录。',
+                    title: '提示',
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消'
+                }).then(action => {
+                    if (action == 'confirm') {     //确认的回调
+                        this.$router.push({ path: '/login' })
+                    }
+                })
                 return
             }else{
                 this.pages = 1;

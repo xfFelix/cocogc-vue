@@ -65,7 +65,7 @@
                             <span>{{item.orderId}}</span>
                         </p>
                         <p class="oMGoodsTitRight">
-                            <span>{{item.payStatus}}</span>
+                            <span>{{item.orderStatus}}</span>
                         </p>
                     </div>
                     <div class="oMGoodsCon one-bottom-px">
@@ -77,7 +77,7 @@
                             <div class="oMGoodsConName">
                                 {{item.goodsList[0].goodsName}}
                             </div>
-                            <p class="oMGoodsConType">黑色</p>
+                            <p class="oMGoodsConType">&nbsp;</p>
                             <div class="oMGoodsConMoney">
                                 <p>{{item.goodsList[0].buyPrice}}</p>
                                 <p>
@@ -111,7 +111,7 @@ export default {
     data() {
         return {
             list: [],
-            headList: ['全部', '已完成', '未完成', '退换/售后'],
+            headList: ['全部', '已完成', '未完成', '已退货'],
             headIndex: 0,
             pathStatus: ''
         }

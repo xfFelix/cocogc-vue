@@ -70,8 +70,6 @@ export default {
 
     methods: {
         addressEditC(item, index) {
-            //var editItem = JSON.stringify(item);
-            //localStorage.setItem('addressEdit', editItem);
             window.addressInfo = item;
             this.$router.push('addressEdit' + this.fromPath);
         },
@@ -82,7 +80,6 @@ export default {
         },
         goAddressEdit() {
             this.$router.push('addressEdit' + this.fromPath);
-            //localStorage.setItem('addressEdit', '');
         },
         //确定删除
         delConfirm() {

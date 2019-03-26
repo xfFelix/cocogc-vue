@@ -22,9 +22,6 @@ export default (router) => {
     const info = await axios(infoURl + api.info, {token: _token}, 'post');
     if(info.error_code == 0)
     {
-      localStorage.setItem('userName', info.data.userName);
-      localStorage.setItem('score', info.data.score);
-      localStorage.setItem('isRealCert', info.data.isRealCert);
       store.dispatch('userinfo/setUserInfo', info.data);
 
       //获取购物车数据
