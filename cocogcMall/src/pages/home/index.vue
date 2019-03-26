@@ -6,11 +6,11 @@
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
-              <marquee  style="width: 100%;font-size:0.26rem;" loop="infinite">
-                  <div style="display:flex;color:#fff;" >
-                    椰云公告：
+            <span>椰云公告：</span>
+              <marquee  style="width: 70%;font-size:0.26rem;" loop="infinite">
+                  <div style="display:flex;">
                     <a :href="item.url" class="link-url" v-for="(item,index) in newsList" :key="index.title" v-if="item.status == 1">
-                       {{item.noticeTitle}}
+                       {{item.noticeTitle}} 
                     </a>
                   </div>
               </marquee>
@@ -212,6 +212,8 @@ export default {
     margin: 0 auto;
     line-height: 0.6rem;
     .ih-notice {
+      color: #fff;
+      font-size: 0.26rem;
        width: 100%;
       display: flex;
       align-items: center;

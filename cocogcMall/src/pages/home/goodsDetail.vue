@@ -18,13 +18,13 @@
             <div class="backImgW" @click="$router.back()">
                 <span class="j1Png backImg"></span>
             </div>
-            <!-- <div class="backImgW" @click="showDialog = true">
+             <div class="backImgW" @click="showDialog = true">
                             <p class="circle">
                                 <span></span>
                                 <span></span>
                                 <span></span>
                             </p>
-                        </div> -->
+                        </div> 
         </div>
 
         <div class="goTop" @click="goTop()" v-if="headShow">
@@ -539,7 +539,7 @@ export default {
     .goodsD-hBack {
         display: flex;
         width: 0.78rem;
-        height: 1rem;
+        height: 1.2rem;
         justify-content: center;
         align-items: center;
         position: relative;

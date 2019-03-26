@@ -79,20 +79,26 @@ export default {
     },
     mounted() {
         var item = window.addressInfo;
-        if (item) {
-          //console.log(item);
-            this.takeName = item.name;
-            this.takeTel = item.tel;
-            this.takeAddress = item.area;
-            this.takeDAddress = item.address;
-            this.takeAddressId = item.id;
-            this.areaCode = item.areaCode;  //编辑页面传来的areacode
-            this.addressDef = item.isDefault;
+        if(this.$route.query.addOrder != '1'){
+            if (item) {
+                    this.takeName = item.name;
+                    this.takeTel = item.tel;
+                    this.takeAddress = item.area;
+                    this.takeDAddress = item.address;
+                    this.takeAddressId = item.id;
+                    this.areaCode = item.areaCode;  //编辑页面传来的areacode
+                    this.addressDef = item.isDefault;
+                }
+        }else{
+            this.takeName = '';
+            this.takeTel = '';
+            this.takeAddress = '';
+            this.takeDAddress = '';
         }
+       
     },
     created() {
-        var item = window.addressInfo;
-        if (item) {
+        if (this.$route.query.addOrder != '1') {
             this.$route.meta.title = "编辑地址"
         } else {
             this.$route.meta.title = "添加地址";
