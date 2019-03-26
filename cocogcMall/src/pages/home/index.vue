@@ -257,7 +257,7 @@ export default {
         font-size: 0.24rem;
         font-weight: bold;
         margin-top: -0.05rem;
-        text-align: center;
+        text-align: left;
       }
 
       .ih-nologin {

@@ -117,8 +117,8 @@ export default {
         return {
             orderList: [
                 { bgImgClass: 'account-qImg01', name: '全部订单', path: '/orderManage?status=0' },
-                { bgImgClass: 'account-qImg03', name: '已完成', path: '/orderManage?status=1' },
-                { bgImgClass: 'account-qImg04', name: '未完成', path: '/orderManage?status=2' },
+                { bgImgClass: 'account-qImg03', name: '未完成', path: '/orderManage?status=2' },
+                { bgImgClass: 'account-qImg04', name: '已完成', path: '/orderManage?status=1' },
                 { bgImgClass: 'account-qImg05', name: '已退货', path: '/orderManage?status=3' },
             ],
             score: '',
@@ -352,9 +352,6 @@ export default {
                 }
                 .account-qImg03 {
                     background-position: -1.17rem -0.13rem;
-                }
-                .account-qImg04 {
-                    background-position: -1.71rem -0.13rem;
                     position: relative;
                     .num {
                       position: absolute;
@@ -366,6 +363,9 @@ export default {
                       border-radius: 50%;
                       font-size: 12px;
                     }
+                }
+                .account-qImg04 {
+                    background-position: -1.71rem -0.13rem;
                 }
                 .account-qImg05 {
                     background-position: -2.23rem -0.13rem;

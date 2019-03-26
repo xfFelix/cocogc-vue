@@ -3,10 +3,7 @@
 
         <head>
             <div class="headLogin">
-                <div class="close">
-                    <span></span>
-                    <span></span>
-                </div>
+                <span class="back" @click="$router.back()"></span>
                 <router-link class="register" to="/register">
                     注册
                 </router-link>
@@ -163,6 +160,15 @@ export default {
 
 
 <style lang="less">
+.back{
+  width: 0.22rem;
+  height: 0.38rem;
+  background-image: url(/static/images/jl.png);
+  background-repeat: no-repeat;
+  background-size: 5.8rem 1.86rem;
+  background-position: -0.2rem -0.74rem;
+  transform: rotate(180deg);
+}
 #login {
     position: absolute;
     bottom: 0;
@@ -181,6 +187,7 @@ export default {
             padding: 0.44rem 0.5rem;
             font-size: 0.28rem;
             display: flex;
+            align-items: center;
             justify-content: space-between;
             .close {
                 width: 0.7rem;

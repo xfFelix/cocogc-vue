@@ -29,12 +29,12 @@ export default {
 .no-data{
   display: flex;
   width: 100%;
-  height: 300px;
+  height: 200px;
   align-items: center;
   justify-content: center;
   img{
-    width: 3.46rem;
-    height: 3.48rem;
+    width: 2.22rem;
+    height: 2.22rem;
   }
 }
 </style>

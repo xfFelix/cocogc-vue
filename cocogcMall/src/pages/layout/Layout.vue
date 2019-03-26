@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content">
         <router-view class="content"></router-view>
         <v-footer></v-footer>
     </div>
