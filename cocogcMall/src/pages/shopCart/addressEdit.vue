@@ -77,12 +77,10 @@ export default {
             fromPath: this.$route.query.cart ? "?cart=" + this.$route.query.cart : ""
         };
     },
-    watch: {
-
-    },
     mounted() {
-        var item = window.addressEdit;
+        var item = window.addressInfo;
         if (item) {
+          //console.log(item);
             this.takeName = item.name;
             this.takeTel = item.tel;
             this.takeAddress = item.area;
@@ -90,20 +88,15 @@ export default {
             this.takeAddressId = item.id;
             this.areaCode = item.areaCode;  //编辑页面传来的areacode
             this.addressDef = item.isDefault;
-        }else{
-          this.$router.back(-1);
         }
     },
     created() {
-        var item = window.addressEdit;
+        var item = window.addressInfo;
         if (item) {
             this.$route.meta.title = "编辑地址"
         } else {
             this.$route.meta.title = "添加地址";
         }
-    },
-    updated() {
-
     },
     methods: {
         parentShow(val) {
@@ -148,7 +141,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.addressList = data.data;
-                        window.addressEdit = null;
+                        window.addressInfo = null;
                         this.$router.replace('/addressMag' + this.fromPath);
                     } else {
                         return this.Toast(data.message)

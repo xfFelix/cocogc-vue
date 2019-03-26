@@ -71,9 +71,7 @@ export default {
 
     methods: {
         addressEditC(item, index) {
-            //var editItem = JSON.stringify(item);
-            //localStorage.setItem('addressEdit', editItem);
-            window.addressEdit = item;
+            window.addressInfo = item;
             this.$router.push('addressEdit' + this.fromPath);
         },
         delAddress(item, index) {
@@ -83,7 +81,6 @@ export default {
         },
         goAddressEdit() {
             this.$router.push('addressEdit' + this.fromPath);
-            //localStorage.setItem('addressEdit', '');
         },
         //确定删除
         delConfirm() {
@@ -133,7 +130,7 @@ export default {
         },
         jumpAddress(item) {
           window.chooseAddress = item;
-          this.$router.push('/order' + this.fromPath);
+          this.$router.push('/order');
         }
     },
     // beforeRouteEnter(to, from, next){

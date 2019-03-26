@@ -263,10 +263,7 @@ export default {
                         //sessionStorage.setItem('buys', JSON.stringify(buys));
                         window.buys = buys;
                         that.$router.push({
-                            path: '/order',
-                            query: {
-                                cart: 'cart'
-                            }
+                            path: '/order'
                         });
 
                     }
@@ -413,7 +410,7 @@ export default {
                 background-size: 5.8rem 1.86rem;
             }
             .shop-selectN {
-                background-position: -5.18rem -0.77rem;
+                background-position: -5.17rem -0.77rem;
             }
             .shop-selectY {
                 background-position: -4.75rem -0.77rem;

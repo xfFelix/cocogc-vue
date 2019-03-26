@@ -7,8 +7,11 @@
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
               <marquee  style="width: 100%;font-size:0.26rem;" loop="infinite">
-                  <div style="display:flex;" >
-                    <a :href="item.url" class="link-url" v-for="(item,index) in newsList" :key="index.title">{{item.noticeTitle}}</a>
+                  <div style="display:flex;color:#fff;" >
+                    椰云公告：
+                    <a :href="item.url" class="link-url" v-for="(item,index) in newsList" :key="index.title" v-if="item.status == 1">
+                       {{item.noticeTitle}}
+                    </a>
                   </div>
               </marquee>
           </div>

@@ -72,7 +72,7 @@ export default {
                     }
                 })
                 .catch((err) => {
-                    this.Toast(data.message);
+                    this.Toast(err.message);
                 })
         },
 
