@@ -80,7 +80,7 @@ export default {
     mounted() {
         var item = window.addressInfo;
         if (item) {
-          console.log(item);
+          //console.log(item);
             this.takeName = item.name;
             this.takeTel = item.tel;
             this.takeAddress = item.area;
