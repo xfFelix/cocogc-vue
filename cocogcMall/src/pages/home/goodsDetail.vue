@@ -19,15 +19,15 @@
                 <span class="j1Png backImg"></span>
             </div>
             <!-- <div class="backImgW" @click="showDialog = true">
-                <p class="circle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </p>
-            </div> -->
+                            <p class="circle">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </p>
+                        </div> -->
         </div>
 
-        <div class="goTop" @click="goTop(500)" v-if="headShow">
+        <div class="goTop" @click="goTop()" v-if="headShow">
         </div>
 
         <div class="goodsD-headW">
@@ -39,17 +39,7 @@
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
-
             </div>
-            <!-- <div class="goodsD-hBM">
-                <p class="goodsD-hBack" @click="$router.go(-1)">
-                    <span></span>
-                </p>
-                <div class="home-message">
-                    <span class="home-msg"></span>
-                    <span class="home-msgNum">11</span>
-                </div>
-            </div> -->
         </div>
 
         <div class="goodsD-priceAddress">
@@ -66,14 +56,9 @@
 
             <div class="goodsD-addressInfo">
                 <div class="goodsD-address">
-                    <!-- <p>送至</p> -->
                     <p>服务</p>
                 </div>
                 <div class="goodsD-serve">
-                    <!-- <p>
-                        <span>选择地区</span>
-                        <span class="j1Png goodsD-addressGO"></span>
-                    </p> -->
                     <p>{{goodsInfo.services}}</p>
                 </div>
             </div>
@@ -158,24 +143,32 @@
 
         </div>
         <div class="dialog-container" v-if="showDialog">
-            <div class="arrow-top"></div>
-            <div class="dialog-content">
-                <router-link :to="{path: '/layout/home'}">
-                    <div class="link"><span class="navImg"></span>首页</div>
-                </router-link>
-                <router-link :to="{path: '/layout/account'}">
-                    <div class="link">我的</div>
-                </router-link>
-                <router-link :to="{path: '/layout/shopCart'}">
-                    <div class="link">购物车</div>
-                </router-link>
-                <router-link :to="{path: '/layout/classify'}">
-                    <div class="link">分类</div>
-                </router-link>
-                <router-link :to="{path: '/layout/shopMall'}">
-                    <div class="link">商城</div>
-                </router-link>
+            <div class="dialog-conInner">
+                <div class="arrow-top"></div>
+                <div class="dialog-content">
+                    <router-link :to="{path: '/layout/home'}">
+                        <div class="link">
+                            <span class="navImg navGo navGo01"></span>首页</div>
+                    </router-link>
+                    <router-link :to="{path: '/layout/account'}">
+                        <div class="link">
+                            <span class="navImg navGo navGo02"></span>我的</div>
+                    </router-link>
+                    <router-link :to="{path: '/layout/shopCart'}">
+                        <div class="link">
+                            <span class="navImg navGo navGo03"></span>购物车</div>
+                    </router-link>
+                    <router-link :to="{path: '/layout/classify'}">
+                        <div class="link">
+                            <span class="navImg navGo navGo04"></span>分类</div>
+                    </router-link>
+                    <router-link :to="{path: '/layout/shopMall'}">
+                        <div class="link">
+                            <span class="navImg navGo navGo05"></span>商城</div>
+                    </router-link>
+                </div>
             </div>
+
         </div>
         <bg-mask v-model="showDialog" color="transparent"></bg-mask>
     </div>
@@ -245,23 +238,24 @@ export default {
     },
     methods: {
         //滚动出现
-        handleScroll () {
+        handleScroll() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-            if(scrollTop>0){
+            if (scrollTop > 0) {
                 this.headShow = true;
-            }else{
+            } else {
                 this.headShow = false;
                 this.showDialog = false;
             }
         },
-        goTop(i){
-                //参数i控制速度
-                document.documentElement.scrollTop-=i;
-                if (document.documentElement.scrollTop>0) {
-                    var c=setTimeout(()=>this.goTop(i),16);
-                }else {
-                    clearTimeout(c);
-                }
+        goTop() {
+            //参数i控制速度
+            document.body.scrollTop -= 500;
+            document.documentElement.scrollTop  -=500;
+            if (document.body.scrollTop > 0 || document.documentElement.scrollTop >0) {
+                var c = setTimeout(() => this.goTop(), 16);
+            } else {
+                clearTimeout(c);
+            }
         },
         fixedClose(e) {
             if (e.target.className.indexOf('goodDetail-sClose') != -1 || e.target.className.indexOf('goodDetail-selectFixed') != -1) {
@@ -421,8 +415,8 @@ export default {
         }
     },
     components: {
-      BgMask,
-      'guess-like': Guesslike
+        BgMask,
+        'guess-like': Guesslike
     }
 };
 </script>
@@ -430,35 +424,71 @@ export default {
 
 <style lang="less">
 .goodsDetail {
-    position: relative;
-    transition: all 0.4s;
     .dialog-container {
         position: fixed;
         top: 0.78rem;
         right: 8px;
         z-index: 102;
-        border-radius: 5px;
-        .arrow-top {
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-bottom: 7px solid #ccc;
-            transform: translateX(-50%);
-            margin-top: -7px;
-            margin-left: 80px;
-            width: 0;
-            height: 0;
-        }
-        .dialog-content {
-            .link {
+        .dialog-conInner {
+            position: relative;
+            .arrow-top {
+                width: 10px;
+                height: 10px;
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
                 background: #fff;
-                padding: 5px 0;
-                border-bottom: 1px solid #ccc;
-                width: 1.84rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                &:last-of-type {
-                    margin-bottom: 0;
+                display: inline-block;
+                position: absolute;
+                right: 9px;
+                top: -5px;
+                border-top: 1px solid #dfdfdf;
+                border-left: 1px solid #dfdfdf;
+            }
+            .dialog-content {
+                border: 1px solid #dfdfdf;
+                border-radius: 5px;
+                .link {
+                    background: #fff;
+                    padding: 5px 0;
+                    border-bottom: 1px solid #dfdfdf;
+                    width: 2rem;
+                    display: flex; // justify-content: center;
+                    align-items: center;
+                }
+                a:first-of-type {
+                    .link {
+                        border-radius: 5px 5px 0 0;
+                        border-top: none;
+                    }
+                }
+                a:last-of-type {
+                    .link {
+                        margin-bottom: 0;
+                        border-bottom: none;
+                        border-radius: 0 0 5px 4px;
+                    }
+                }
+
+                .navGo {
+                    width: 0.42rem;
+                    height: 0.42rem;
+                    display: inline-block;
+                    margin: 0 0.3rem 0 0.2rem;
+                }
+                .navGo01 {
+                    background-position: -0.1rem -0.73rem;
+                }
+                .navGo02 {
+                    background-position: -0.65rem -0.73rem;
+                }
+                .navGo03 {
+                    background-position: -1.17rem -0.73rem;
+                }
+                .navGo04 {
+                    background-position: -1.71rem -0.73rem;
+                }
+                .navGo05 {
+                    background-position: -2.24rem -0.73rem;
                 }
             }
         }
@@ -893,14 +923,14 @@ export default {
                 background-position: -1.71rem -0.73rem;
                 margin: 0 auto;
                 span {
-                        position: absolute;
-                        left: 15px;
-                        top: -6px;
-                        padding: 2px 5px;
-                        background: #fb5c5c;
-                        color: #fff;
-                        border-radius: 50%;
-                        font-size: 12px;
+                    position: absolute;
+                    left: 15px;
+                    top: -6px;
+                    padding: 2px 5px;
+                    background: #fb5c5c;
+                    color: #fff;
+                    border-radius: 50%;
+                    font-size: 12px;
                 }
             }
             .goodDetail-bcName {
@@ -1053,23 +1083,24 @@ export default {
         background: #30ce84;
     }
 }
-.goTop{
-position: fixed;
+
+.goTop {
+    position: fixed;
     bottom: 1.3rem;
     z-index: 11;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     width: 0.8rem;
     height: 0.8rem;
     right: 0.2rem;
-     &::after{
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-image: url(/static/images/goTop.png);
-    background-size: 25px
+    &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-image: url(/static/images/goTop.png);
+        background-size: 25px
     }
 }
 </style>

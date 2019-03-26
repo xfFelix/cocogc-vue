@@ -57,7 +57,7 @@
             <span style="white-space: nowrap;">椰云公告：</span>
             <marquee  style="margin-right:0.65rem;" loop="infinite" >
               <div style="display:flex;">
-                <a :href="item.url" v-for="(item,index) in newsList" :key="index" class="link-url">
+                <a :href="item.url" v-for="(item,index) in newsList" :key="index" class="link-url" v-if="item.status == 1">
                   <span class="home-hotCont">{{item.noticeTitle}}</span>
                 </a>
               </div>

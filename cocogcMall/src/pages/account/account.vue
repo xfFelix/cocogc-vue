@@ -143,8 +143,9 @@ export default {
         })
     },
     mounted() {
-        this.userName = localStorage.getItem("userName");
-        this.score = localStorage.getItem("score");
+        this.userName = this.$store.getters['userinfo/getUserInfo'].userName;
+        this.score = this.$store.getters['userinfo/getUserInfo'].score;
+
         this.getSwiper()
         if(this.userinfo.level == 0){
             this.levelFlag = false;

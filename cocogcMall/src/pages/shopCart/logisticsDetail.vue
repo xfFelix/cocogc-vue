@@ -89,7 +89,7 @@
                         <p class="ld-contentLineGray" v-if="index != logisticList.length-1"></p>
                     </div>
 
-                    <div class="ld-contenRight" :style="(index==0?'color:#30ce84':'color:#000')">
+                    <div class="ld-contenRight" :style="(index==0?'color:#30ce84':'color:#000')" v-if="dataOrMsg">
                         <p class="ld-contenAddress">
                             {{item.content}}
                         </p>
@@ -97,6 +97,11 @@
                             <span>{{item.msgTime}}</span>
                         </p>
                     </div>
+
+                    <div class="ld-contenRight" :style="(index==0?'color:#30ce84':'color:#000')" v-if="dataOrMsg==false">
+                        {{item}}
+                    </div>
+
                 </li>
             </ul>
         </div>
@@ -107,8 +112,7 @@
                 <div class="ld-logisTitleW one-bottom-px">
                     <div class="ld-logisTitle ">
                         <p>商品清单</p>
-                        <p>共(
-                            <span>{{goodsTotal}}</span>)件</p>
+                        <p>共(<span>{{goodsTotal}}</span>)件</p>
                     </div>
                     <p class="j1Png ld-logisClose" @click="showSendCode = false"></p>
                 </div>
@@ -165,7 +169,8 @@ export default {
             goodsTotal: 0,
             logisClose: false,
             logisticList: [],
-            showSendCode: false
+            showSendCode: false,
+            dataOrMsg:false
         };
     },
     mounted() {
@@ -214,8 +219,10 @@ export default {
                     if (data.error_code == 0) {
                         if (data.data != null) {
                             _this.logisticList = data.data.reverse();
+                            _this.dataOrMsg = true;
                         } else {
-                            _this.logisticList = data.message;
+                            _this.logisticList.push(data.message)
+                             _this.dataOrMsg = false;
                         }
 
                     } else {
