@@ -80,7 +80,11 @@ export default {
             this.delId = item.id;
         },
         goAddressEdit() {
-            this.$router.push('addressEdit' + this.fromPath +'&addOrder=1');
+            if(this.fromPath==''){
+                this.$router.push('addressEdit?&addOrder=1');
+            }else{
+                this.$router.push('addressEdit' + this.fromPath +'&addOrder=1');
+            }
         },
         //确定删除
         delConfirm() {

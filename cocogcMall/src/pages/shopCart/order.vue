@@ -39,7 +39,7 @@
                         <span class="shop-dNameImg"></span>
                         <span>{{dataItem.vendorId}}</span>
                         <p>
-                            (共<span>{{dataItem.goodsList.length}}</span>件)
+                            (共<span>{{computedNum(dataItem)}}</span>件)
                         </p>
                     </div>
 
@@ -52,12 +52,10 @@
                                             <img :src="itemGoods.picUrl" alt="" />
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
-                        <div class="swipe-bntWrap">
+                        <div class="swipe-bntWrap" @click="goodsShow(dataItem)">
                             <div class="swiper-button-next swiper-button-black"></div>
                         </div>
                     </div>
@@ -78,7 +76,7 @@
                         <span class="shop-dNameImg"></span>
                         <span>{{dataItem.vendorId}}</span>
                         <p>
-                            (共<span>1</span>件)
+                            (共<span>{{dataItem.goodsList[0].buyNum}}</span>件)
                         </p>
                     </div>
 
@@ -157,9 +155,48 @@
         <exchange-su v-if="exchangeShow" v-bind:chOrderId ='parOrderId' v-bind:chMessage="other"></exchange-su>
 
 
+         <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown"> 
+            <div class="ld-logis" v-if="goodsShowFlag">
+                <div class="ld-logisTitleW one-bottom-px">
+                    <div class="ld-logisTitle ">
+                        <p>商品清单</p>
+                        <p>共(<span>{{goodsShowNum}}</span>)件</p>
+                    </div>
+                    <p class="j1Png ld-logisClose" @click="goodsShowFlag = false"></p>
+                </div> 
+                 <div class="order-goodSWa">
+                    <div>
+                        <div class="order-goodSInfo" v-for="(itemGoods,indexGoods) in goodsShowList.goodsList" :key="indexGoods">
+                            <div class="order-goodSIImg">
+                                <img :src="itemGoods.picUrl" alt="" />
+                            </div>
+                            <div class="order-goodsDetail">
+                                <p class="order-goodsDName">{{itemGoods.goodsName}}</p>
+                                <div class="order-goodsDPriceW">
+                                    <span class="order-goodsDPrice">{{itemGoods.buyPrice}}</span>
+                                    <p class="order-goodsDNumW">
+                                        <span class="order-goodsDNumI"></span>
+                                        <span class="order-goodsDNum">{{itemGoods.buyNum}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="order-freight">
+                            <span>运费</span>
+                            <span>{{goodsShowList.shippingFee|toDecimal2}}</span>
+                        </p>
+                        <p class="order-priceAll">
+                            <span>小计</span>
+                            <span>{{goodsShowList.totalMoney|toDecimal2}}</span>
+                        </p>
+                    </div>
+                </div>  
+            </div>
+         </transition> 
 
-
-
+        <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <bg-mask v-model="goodsShowFlag"></bg-mask>
+        </transition>
         
     </div>
 </template>
@@ -189,6 +226,9 @@ export default {
             isSmsCode: false,
             other: 0,
             fromPath: {cart:'cart'},
+            goodsShowFlag:false,
+            goodsShowList:{},
+            goodsShowNum:0
         };
     },
     mounted() {
@@ -200,6 +240,25 @@ export default {
         })
     },
     methods: {
+        computedNum(item) {
+            if (item.goodsList) {
+                let num = 0
+                for (let good of item.goodsList) {
+                    num += good.buyNum
+                }
+                return num
+            }
+            return 0
+        },
+        goodsShow(item){
+             this.goodsShowNum = 0;
+            this.goodsShowFlag = true;
+            this.goodsShowList = item;
+            item.goodsList.forEach(res=>{
+                this.goodsShowNum += res.buyNum
+            })
+            
+        },
         dialogCode() {
           if (this.userinfo.score > this.other) {
             this.showSendCode = true
@@ -322,17 +381,6 @@ export default {
                       _this.other = data.other
                       _this.dataList = data.data;
                       _this.dataAddress = data.data[0];
-                      // if (localStorage.getItem('orderAddress') == '' || localStorage.getItem('orderAddress') == null) {
-                      //   _this.addressDef.name = data.data[0].userName;
-                      //   _this.addressDef.userAddress = data.data[0].userAddress;
-                      //   _this.addressDef.tel = data.data[0].userMobile;
-                      //   localStorage.setItem('orderAddress', JSON.stringify(_this.addressDef))
-                      // } else {
-                      //   let orderAddress = JSON.parse(localStorage.getItem('orderAddress'));
-                      //   _this.addressDef.name = orderAddress.name;
-                      //   _this.addressDef.userAddress = orderAddress.userAddress;
-                      //   _this.addressDef.tel = orderAddress.tel;
-                      // }
                       //多商品轮播图
                       _this.dataList.forEach((res, index) => {
                         if (res.goodsList.length > 1) {
@@ -551,7 +599,7 @@ export default {
         .order-goodSIImg {
             width: 2.11rem;
             height: 2.11rem;
-            margin-right: 0.76rem;
+            margin-right: 0.7rem;
             img {
                 width: 100%;
             }
@@ -692,6 +740,7 @@ export default {
     width: 100%;
     bottom: -1px;
     left: 0;
+    z-index: 10;
     .order-sumitP {
         font-weight: 500;
         color: #30ce84;
@@ -811,4 +860,92 @@ export default {
 .light {
     background-color: #27bd5a;
 }
+.ld-logis {
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    z-index: 101;
+    .order-goodSIImg {
+        margin: 0;
+    }
+    .ld-logisTitleW {
+        p {
+            display: inline-block;
+        }
+        .ld-logisTitle {
+            padding: 0.36rem 0 0.36rem 0.32rem;
+            p:nth-of-type(1) {
+                font-weight: bold;
+            }
+        }
+        .ld-logisClose {
+            width: 0.3rem;
+            height: 0.3rem;
+            background-position: -4.85rem -1.52rem;
+            position: absolute;
+            top: 0.4rem;
+            right: 0.5rem;
+        }
+    }
+}
+
+ .order-goodSWa {
+        background: #fff;
+        margin-top: 0.2rem;
+        padding: 0 0.37rem 0 0.32rem;
+        overflow: auto;
+        height: 8rem;
+        .order-goodSInfo {
+            display: flex;
+            align-items: end; // padding: 0 0.39rem 0 0.32rem;
+            // border-bottom: 1px solid #dfdfdf;
+            padding-bottom: 0.28rem;
+            margin-bottom: 0.11rem;
+            .order-goodSIImg {
+                width: 2.11rem;
+                height: 2.11rem;
+                margin-right: 0.7rem;
+                img {
+                    width: 100%;
+                }
+            }
+            .order-goodsDetail {
+                width: 4.2rem;
+                .order-goodsDName {
+                    line-height: 0.4rem;
+                    color: #333;
+                    font-size: 0.3rem;
+                    margin-bottom: 0.06rem;
+                    text-overflow: -o-ellipsis-lastline;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                }
+                .order-goodsDType {
+                    color: #999999;
+                    font-size: 0.3rem;
+                }
+                .order-goodsDPriceW {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 0.3rem;
+                    margin-top: 0.48rem;
+                    .order-goodsDNumW {
+                        .order-goodsDNumI {
+                            width: 0.36rem;
+                            height: 0.3rem;
+                            background-image: url(/static/images/jl.png);
+                            background-repeat: no-repeat;
+                            background-size: 5.8rem 1.86rem;
+                            background-position: -0.42rem -0.66rem;
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+        }
+    }
 </style>

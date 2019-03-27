@@ -9,7 +9,7 @@
             <span>椰云公告：</span>
               <marquee  style="width: 70%;font-size:0.26rem;" loop="infinite">
                   <div style="display:flex;">
-                    <a :href="item.url" class="link-url" v-for="(item,index) in newsList" :key="index.title" v-if="item.status == 1">
+                    <a :href="item.url" class="link-url" v-for="(item,index) in newsList" :key="index.title" v-if="item.status == 0">
                        {{item.noticeTitle}} 
                     </a>
                   </div>
