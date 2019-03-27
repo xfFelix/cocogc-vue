@@ -300,10 +300,9 @@
         }
         if (this.price == undefined) {
           this.price = "0~*";
-          if (!this.token) {
-            this.iSelectAct = 1;
-          }
+          this.iSelectAct = 1;
         }
+
 
 
         if (this.$route.query.classfyId == undefined) {

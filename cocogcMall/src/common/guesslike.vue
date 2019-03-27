@@ -77,11 +77,6 @@ export default {
         }, 1000);
         
     },
-    watch: {
-        '$route'(to, from) {
-            this.$router.go(0);
-        }
-    }
 
 }
 </script>

@@ -206,7 +206,20 @@ export default {
             userinfo: 'userinfo/getUserInfo'
         })
     },
-
+    watch: {
+        '$route'(to, from) {
+            window.scrollTo(0, 0);
+            this.getGoodsInfo(this.$route.params.goodId, (data)=> {
+                if (data != null) {
+                    this.setGoodsData(data);
+                } else {
+                    this.Toast("该商品不存在！");
+                    this.$router.back();
+                }
+        
+            })
+        }
+    },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
 
@@ -224,7 +237,6 @@ export default {
         that.getCarInfo(function(data) {
             that.carTotal = data;
         });
-        window.scrollTo(0, 0);
     },
     beforeRouteLeave(to, from, next) {
         if (to.path === '/goodsList') {
