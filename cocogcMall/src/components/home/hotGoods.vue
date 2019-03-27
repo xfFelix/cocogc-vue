@@ -163,6 +163,7 @@ export default {
         align-items: center;
         margin-bottom: 0.4rem;
         text-align: left;
+        padding: 0 0.22rem;
         .home-hSmoneyL {
             width: 0.28rem;
             height: 0.28rem;
