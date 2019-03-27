@@ -16,7 +16,8 @@
                         </p>
                         <div class="home-iMoneyW">
                             <span class="home-iMoneyL"></span>
-                            <span class="home-iMoney">  {{item.currentPrice}}</span>
+                            <span class="home-iMoney">{{item.currentPrice|toDecimal2Fp}}.</span>
+                            <span class="home-iMoney">{{item.currentPrice|toDecimal2Ap}}</span>
                         </div>
                     </router-link>
                   </div>

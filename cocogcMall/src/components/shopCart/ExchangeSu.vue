@@ -6,8 +6,8 @@
             </p>
             <p class="cs-info">兑换成功</p>
             <p class="cs-money">{{chMessage}}</p>
-            <router-link :to="{ name: 'orderDetails', params: {orderId: chOrderId}}" class="cs-bntGoDe">订单详情</router-link>
-            <router-link to="/layout/home" class="cs-bntGoIndex">返回首页</router-link>
+            <router-link :to="{ name: 'orderDetails', params: {orderId: chOrderId}}" class="cs-bntGoDe" replace>订单详情</router-link>
+            <router-link to="/layout/home" class="cs-bntGoIndex" replace>返回首页</router-link>
             <p class="cs-jumpIndex">{{this.numDown}}秒后自动进入订单详情页</p>
         </div>
     </div>
@@ -28,14 +28,14 @@ export default {
         this.countDown =  setInterval(()=>{
             this.numDown = this.numDown-1
             if(this.numDown<2){
-                this.$router.push({ name: 'orderDetails', params: { orderId: this.chOrderId } });
+                this.$router.replace({ name: 'orderDetails', params: { orderId: this.chOrderId } });
                 clearInterval(this.countDown);
             }
         },1000)
     },
     beforeDestroy() {
         if(this.countDown) {
-            clearInterval(this.countDown); 
+            clearInterval(this.countDown);
         }
     }
 }

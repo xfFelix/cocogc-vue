@@ -465,7 +465,7 @@
         margin-top: 0.12rem;
         word-break: break-all;
         word-wrap: break-word;
-        text-align: center;
+        text-align: left;
         overflow: hidden;
         position: relative;
         line-height: 1.5em;

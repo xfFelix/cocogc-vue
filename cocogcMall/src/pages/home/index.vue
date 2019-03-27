@@ -10,7 +10,7 @@
               <marquee  style="width: 70%;font-size:0.26rem;" loop="infinite">
                   <div style="display:flex;">
                     <a :href="item.url" class="link-url" v-for="(item,index) in newsList" :key="index.title" v-if="item.status == 1">
-                       {{item.noticeTitle}} 
+                       {{item.noticeTitle}}
                     </a>
                   </div>
               </marquee>
@@ -76,7 +76,8 @@
             <p class="ihot-name">{{item.name}}</p>
             <p class="ihot-moneyW">
               <span class="ihot-logo"></span>
-              <span class="ihot-money">{{item.currentPrice}}</span>
+              <span class="ihot-money">{{item.currentPrice|toDecimal2Fp}}.</span>
+              <span class="ihot-money">{{item.currentPrice|toDecimal2Ap}}</span>
             </p>
           </router-link>
         </div>
@@ -394,6 +395,7 @@ export default {
       overflow:hidden;
       word-break: break-all;
       word-wrap: break-word;
+      text-align: left;
       &::after{
         content:"";
 				position:absolute;
