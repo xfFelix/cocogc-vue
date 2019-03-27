@@ -27,6 +27,7 @@
               placeholder="请输入要搜索的内容"
               @select="handleSelect"
               :trigger-on-focus="false"
+              class="autocomplete"
             ></el-autocomplete>
           </div>
         </div>
@@ -307,27 +308,30 @@ export default {
           background: transparent;
           color: #fff;
         }
+        .autocomplete{
+          ::-webkit-input-placeholder {
+            /* WebKit, Blink, Edge */
+            color:#fff;
+            font-size: 0.26rem;
+          }
+        }
          ::-webkit-input-placeholder {
           /* WebKit, Blink, Edge */
-          color: #fff;
           font-size: 0.26rem;
         }
 
          :-moz-placeholder {
           /* Mozilla Firefox 4 to 18 */
-          color: #fff;
           font-size: 0.26rem;
         }
 
          ::-moz-placeholder {
           /* Mozilla Firefox 19+ */
-          color: #fff;
           font-size: 0.26rem;
         }
 
         input:-ms-input-placeholder {
           /* Internet Explorer 10-11 */
-          color: #fff;
           font-size: 0.26rem;
         }
       }
