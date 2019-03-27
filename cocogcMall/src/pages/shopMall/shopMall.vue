@@ -27,6 +27,8 @@
               placeholder="请输入要搜索的内容"
               @select="handleSelect"
               :trigger-on-focus="false"
+              :hide-loading="true"
+              :debounce="1000"
               class="autocomplete"
             ></el-autocomplete>
           </div>
@@ -113,10 +115,10 @@ export default {
 
   },
   methods: {
-    querySearchAsync(queryString, cb) {
+    async querySearchAsync(queryString, cb) {
       if (queryString) {
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(async() => {
+        // clearTimeout(this.timeout);
+        // this.timeout = setTimeout(async() => {
           let restaurants = await this.axios(jdTestUrl + api.searchHint, {keyword: queryString}, 'get')
           let list = []
           restaurants.list.forEach((item, index)=> {
@@ -127,7 +129,7 @@ export default {
             list.push(cur)
           },{})
           cb(list);
-        }, 1000);
+        // }, 1000);
       }
     },
     handleSelect(item) {
