@@ -41,7 +41,8 @@ export default {
 <style lang="less">
 #app {
     width: 100%;
-    height: 100%; // background: #eef1f6;
+    height: 100%;
+    background:#eef1f6;
 }
 
 .order-head {

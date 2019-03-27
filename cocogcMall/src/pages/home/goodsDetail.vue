@@ -890,17 +890,17 @@ export default {
         background: #fff;
         div,
         table {
-            width: 100%!important;
-            height: 100%!important;
-            position: relative!important;
-            line-height: auto!important;
-            background-size: 100% !important;
-            left: 0!important;
+            // width: 100%!important;
+            // height: 100%!important;
+            // position: relative!important;
+            // line-height: auto!important;
+            // background-size: 100% !important;
+            // left: 0!important;
         }
-        font-size: 0px;
+        // font-size: 0px;
         img {
-            width: 100% !important;
-            height: 100% !important;
+            // width: 100% !important;
+            // height: 100% !important;
         }
     }
 
@@ -910,6 +910,7 @@ export default {
     }
     div {
         width: 100%;
+        height: 100%;
         overflow: hidden;
     }
     margin-bottom: 0.9rem;
