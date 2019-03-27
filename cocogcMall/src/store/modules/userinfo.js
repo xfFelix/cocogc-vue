@@ -1,7 +1,17 @@
+import local from '@/util/local'
 // initial state
 // shape: [{ id, quantity }]
+let defaultUser = ''
+try{
+  if (local.get('userinfo')) {
+    defaultUser = local.get('userinfo')
+  }
+} catch(e) {
+  console.error(e)
+}
+
 const state = {
-  userinfo: '',
+  userinfo: defaultUser,
   address: ''
 }
 
@@ -29,6 +39,11 @@ const actions = {
 const mutations = {
   setUserInfo(state, userinfo) {
     state.userinfo = userinfo
+    try {
+          local.set('userinfo',userinfo)
+    }catch(e) {
+      console.error(e)
+    }
   },
   setAddress(state, address) {
     state.address = address
