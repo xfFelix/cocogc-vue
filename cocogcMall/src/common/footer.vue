@@ -39,11 +39,15 @@ export default {
     },
     watch: {
       showHeight:function() {
-          if(this.docmHeight > this.showHeight){
-              this.hideShow = false
-          }else{
-              this.hideShow = true
-          }
+        let u = navigator.userAgent, app = navigator.appVersion;
+        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+        if (isAndroid) {
+            if(this.docmHeight > this.showHeight){
+                this.hideShow = false
+            }else{
+                this.hideShow = true
+            }
+        }
       },
       '$route': {
           handler(val) {

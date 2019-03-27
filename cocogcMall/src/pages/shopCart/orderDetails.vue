@@ -262,7 +262,7 @@ export default {
     }
     .od-timeInfo {
         display: flex;
-        justify-content: end;
+        justify-content: flex-start;
         padding-bottom: 0.4rem;
         span:nth-of-type(1) {
             font-weight: bold;

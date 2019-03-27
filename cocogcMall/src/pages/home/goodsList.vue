@@ -176,74 +176,69 @@
           return id === this.iSelectAct ? 'iSelectCla' : 'iSelectNo'
         }
       },
-      //搜索框
-      parentChild(val) {
-        this.keyWord = val;
-        this.goodsList = [];
-        this.brandId = ''
-        this.goodsListSearch(1)
-      },
-      //加载更多
-      moreMsg() {
-        this.pages += 1;
-        this.offsetRows = 1 + 10 * (this.pages - 1);
-        this.goodsListSearch(this.offsetRows)
-      },
-      //价格顺序
-      goodsPrice() {
-        this.hightLight = 'price'
-        if (this.priceRangeFlag == true) {
-          this.priceRange = 'asc'
-          this.priceRangeFlag = false;
-        } else {
-          this.priceRange = 'desc'
-          this.priceRangeFlag = true;
-        }
-        this.pages = 1;
-        this.offsetRows = 1;
-        this.goodsList = [];
-        this.price = "0~*"
-        this.salesVolume = "";
-
-        this.goodsListSearch(1)
-      },
-
-      //判断积分区间
-      intervalCli() {
-        this.hightLight = 'integral'
-        this.intervalFlag = !this.intervalFlag;
-      },
-      iSelect(item, index) {
-        if (item.integral == '0~NaN') {
-          MessageBox.confirm('', {
-            message: '登录后查看您可兑换的商品，立即登录。',
-            title: '提示',
-            confirmButtonText: '确定',
-            cancelButtonText: '取消'
-          }).then(action => {
-            if (action == 'confirm') { //确认的回调
-              this.$router.push({
-                path: '/login'
-              })
+        //搜索框
+        parentChild(val) {
+            this.keyWord = val;
+            this.goodsList = [];
+            this.brandId = ''
+            this.goodsListSearch(1)
+        },
+        //加载更多
+        moreMsg() {
+            this.pages += 1;
+            this.offsetRows = 1 + 10 * (this.pages - 1);
+            this.goodsListSearch(this.offsetRows)
+        },
+        //价格顺序
+        goodsPrice() {
+            this.hightLight = 'price'
+            if (this.priceRangeFlag == true) {
+                this.priceRange = 'asc'
+                this.priceRangeFlag = false;
+            } else {
+                this.priceRange = 'desc'
+                this.priceRangeFlag = true;
             }
-          })
-          return
-        } else {
-          this.pages = 1;
-          this.offsetRows = 1;
-          this.goodsList = [];
-          this.priceRange = "";
-          this.salesVolume = "";
+            this.pages = 1;
+            this.offsetRows = 1;
+            this.goodsList = [];
+            this.price = "0~*"
+            this.salesVolume = "";
 
-          this.iSelectAct = index; //改变积分颜色
-          this.intervalFlag = false;
+            this.goodsListSearch(1)
+        },
 
-          this.price = item.integral;
-          this.goodsListSearch(1)
-        }
+        //判断积分区间
+        intervalCli() {
+          this.hightLight = 'integral'
+            this.intervalFlag = !this.intervalFlag;
+        },
+        iSelect(item, index) {
+             if(item.integral == '0~NaN'){
+                MessageBox.confirm('', {
+                    message: '<div>登录后查看您可兑换的商品</div><div>立即登录?</div>',
+                    title: '提示',
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消'
+                }).then(action => {
+                    if (action == 'confirm') {     //确认的回调
+                        this.$router.push({ path: '/login' })
+                    }
+                })
+                return
+            }else{
+                this.pages = 1;
+                this.offsetRows = 1;
+                this.goodsList = [];
+                this.priceRange = "";
+                this.salesVolume = "";
 
+                this.iSelectAct = index; //改变积分颜色
+                this.intervalFlag = false;
 
-
+                this.price = item.integral;
+                this.goodsListSearch(1)
+            }
       },
 
       //所有

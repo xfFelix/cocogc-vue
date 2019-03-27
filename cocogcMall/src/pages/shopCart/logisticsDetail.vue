@@ -35,7 +35,7 @@
                 </div>
                 <div class="order-priceAll">
                     <span>快递</span>
-                    <span>京东快递</span>
+                    <span>{{list.vendorId}}</span>
                 </div>
             </div>
 
@@ -65,13 +65,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="order-freight">
-                    <span>运单号</span>
-                    <span>va156564165156</span>
-                </div>
                 <div class="order-priceAll">
                     <span>快递</span>
-                    <span>京东快递</span>
+                    <span>{{list.vendorId}}</span>
                 </div>
             </div>
         </div>
@@ -107,7 +103,6 @@
         </div>
 
         <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
-
             <div class="ld-logis" v-if="showSendCode">
                 <div class="ld-logisTitleW one-bottom-px">
                     <div class="ld-logisTitle ">

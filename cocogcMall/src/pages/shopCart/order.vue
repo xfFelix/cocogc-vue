@@ -39,8 +39,7 @@
                         <span class="shop-dNameImg"></span>
                         <span>{{dataItem.vendorId}}</span>
                         <p>
-                            (共
-                            <span>{{dataItem.goodsList.length}}</span>件)
+                            (共<span>{{dataItem.goodsList.length}}</span>件)
                         </p>
                     </div>
 
@@ -156,6 +155,12 @@
         </transition>
 
         <exchange-su v-if="exchangeShow" v-bind:chOrderId ='parOrderId' v-bind:chMessage="other"></exchange-su>
+
+
+
+
+
+        
     </div>
 </template>
 
@@ -183,7 +188,7 @@ export default {
             addressDef: null,
             isSmsCode: false,
             other: 0,
-            fromPath: {cart:'cart'}
+            fromPath: {cart:'cart'},
         };
     },
     mounted() {

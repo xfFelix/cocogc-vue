@@ -80,7 +80,7 @@ export default {
             this.delId = item.id;
         },
         goAddressEdit() {
-            this.$router.push('addressEdit' + this.fromPath);
+            this.$router.push('addressEdit' + this.fromPath +'&addOrder=1');
         },
         //确定删除
         delConfirm() {
@@ -129,18 +129,13 @@ export default {
                 })
         },
         jumpAddress(item) {
-          window.chooseAddress = item;
-          this.$router.push('/order');
+            if(this.fromPath!=""){
+                window.chooseAddress = item;
+                this.$router.push('/order');
+            }
+
         }
     },
-    // beforeRouteEnter(to, from, next){
-    //      next(vm=>{
-    //         vm.fromPath = from.name;
-    //         if(from.name == 'order'){
-    //             sessionStorage.setItem('fromOrder',true);
-    //         }
-    //     })
-    // },
     components: {
         "header-top": headerTop
 

@@ -226,7 +226,8 @@ export default
 
 .classify-swipeW {
     height: 1.8rem;
-    margin: 0.22rem 0.19rem 0.18rem 0.19rem;
+    width: 5.52rem;
+    margin: 0.22rem auto 0.18rem auto;
     .classify-swipe {
         height: 100%;
         .swiper-container-horizontal>.swiper-pagination-bullets {

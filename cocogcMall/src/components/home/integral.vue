@@ -141,7 +141,7 @@ export default {
         iSelect(item, index) {
             if (item.integral == '0~NaN') {
                 MessageBox.confirm('', {
-                    message: '登录后查看您可兑换的商品，立即登录。',
+                    message: '<div>登录后查看您可兑换的商品</div><div>立即登录?</div>',
                     title: '提示',
                     confirmButtonText: '确定',
                     cancelButtonText: '取消'
