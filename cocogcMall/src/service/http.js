@@ -12,7 +12,7 @@ axios.defaults.headers['Content-Type'] = 'application/json';
 //拦截器
 var _this = this;
 axios.interceptors.request.use(config => {
-  Indicator.open('Loading...');
+  Indicator.open(' ');
   return config;
 }, error => {
   Indicator.close()
