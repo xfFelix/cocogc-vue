@@ -2,7 +2,6 @@
   <div class="index" id="index">
     <!-- 头部 -->
     <div class="index-head">
-      <a href="https://mp.weixin.qq.com/s?__biz=MzU0NDkzNTM3NQ==&mid=100000020&idx=1&sn=127b63d967b7f6a7ca3a5c279143b1ea&chksm=7b75ddb44c0254a2df472ccc626784b2fe09f2b9cf77c1b910b91b8e83a12dae6b801a76e247&xtrack=1&scene=0&subscene=93&clicktime=1552877700&ascene=7&devicetype=android-26&version=2700033b&nettype=WIFI&abtest_cookie=BQABAAgACgALABIAEwAGAJ2GHgAjlx4AVpkeAMOZHgDZmR4A3JkeAAAA&lang=zh_CN&pass_ticket=oDj080h7pGe7HlMtp4xb3XrV7xaXUp9jeLO2aUdHmznoVOKjpo0L6C5vME3ddskV&wx_header=1">
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
@@ -17,7 +16,6 @@
           </div>
           <span class="ih-goImg j1Png"></span>
         </div>
-      </a>
 
       <div class="ih-balanceW">
         <div class="ih-balance" v-if="loScore">
