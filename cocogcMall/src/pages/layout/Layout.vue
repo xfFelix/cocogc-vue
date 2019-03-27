@@ -17,5 +17,6 @@ export default {
 <style>
 .content{
   padding-bottom: 50px;
+      background: #eef1f6;
 }
 </style>

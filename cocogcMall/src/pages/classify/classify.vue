@@ -434,6 +434,7 @@ export default
     }
     .select-bGoodsW {
         width: 100%;
+        background: #fff;
         h3 {
             font-size: 0.24rem;
             color: #333;
