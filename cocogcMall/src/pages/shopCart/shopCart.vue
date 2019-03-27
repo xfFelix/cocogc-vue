@@ -385,10 +385,11 @@ export default {
 .shop-content {
     position: relative;
     .shop-dStoreWW {
+        margin-bottom: 0.3rem;
     }
     .shop-dStoreW {
         background: #fff;
-        border-bottom: 1px solid #efefef;
+        border-bottom: 1px solid #eef1f6;
         .shop-dStore {
             display: flex;
             align-items: center;
