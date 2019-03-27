@@ -41,17 +41,6 @@
             <span class="bnt">登录</span>
         </p>
         <p class="forgetPass" @click="forgerPass()">忘记密码？</p>
-
-        <div class="tipBg" v-if="tipBgShow">
-            <div class="toast">
-                <p>登录失败： </p>
-                <p>手机号或登录密码错误。</p>
-                <p class="failNext">
-                    <span @click="forgerPass()">忘记密码</span>
-                    <span @click="reInput()">重新输入</span>
-                </p>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -65,7 +54,6 @@ export default {
         return {
             eyeImgState: false,
             passShow: false,
-            tipBgShow: false,
             phoneCleanShow: false,
             passCleanShow: false,
             vaildCleanShow: false,
@@ -97,11 +85,21 @@ export default {
                           this.$router.replace('/layout/home');
                         }
                     } else {
-                        this.tipBgShow = true;
+                         MessageBox.confirm('', {
+                            message: '手机号或登录密码错误。',
+                            title: '登录失败',
+                            confirmButtonText: '忘记密码',
+                            cancelButtonText: '重新输入'
+                        }).then(action => {
+                               this.$router.push('/passSetUp');
+                        }).catch(action => {
+                                this.loginForm.passWord = '';
+                        })
+                        return
                     }
                 })
                 .catch((err) => {
-                    // this.tipBgShow = true;
+                    
                 })
         },
         //眼睛和清空
@@ -145,7 +143,6 @@ export default {
             this.$router.push('/passSetUp');
         },
         reInput: function() {
-            this.tipBgShow = false;
             this.loginForm.passWord = '';
 
         },

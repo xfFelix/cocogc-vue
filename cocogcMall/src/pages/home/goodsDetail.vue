@@ -670,7 +670,7 @@ export default {
         }
     }
     .swiper-pagination {
-        color: #fff;
+        color: #000;
         text-align: right;
         .swiper-pagination-total {
             margin-right: 0.25rem;

@@ -309,6 +309,13 @@ export default {
                     color: #333;
                     font-size: 0.3rem;
                     margin-bottom: 0.06rem;
+                    text-overflow: -o-ellipsis-lastline;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    line-clamp: 3;
+                    -webkit-box-orient: vertical;
                 }
                 .order-goodsDType {
                     color: #999999;

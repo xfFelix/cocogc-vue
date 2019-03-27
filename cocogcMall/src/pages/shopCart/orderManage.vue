@@ -21,7 +21,7 @@
                               <span>{{item.orderId}}</span>
                           </p>
                           <p class="oMGoodsTitRight">
-                              <span>{{item.payStatus}}</span>
+                              <span>{{item.orderStatus}}</span>
                           </p>
                       </div>
 

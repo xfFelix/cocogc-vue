@@ -6,9 +6,8 @@
             </div>
             <div class="home-interWrap">
                 <div v-for="(item,index) in goodsList" :key="index">
-                  <div class="home-iGoodsW">
-                    <router-link :to="{path:'/goodsDetail/'+item.id}">
-                        <div class="home-iGoods" >
+                    <div class="home-iGoodsW" @click="goDetail(item)">
+                        <div class="home-iGoods">
                             <img :src="item.image" alt="" />
                         </div>
                         <p class="home-iNmame">
@@ -19,12 +18,11 @@
                             <span class="home-iMoney">{{item.currentPrice|toDecimal2Fp}}.</span>
                             <span class="home-iMoney">{{item.currentPrice|toDecimal2Ap}}</span>
                         </div>
-                    </router-link>
-                  </div>
+                    </div>
                 </div>
             </div>
             <no-data :data="goodsList"></no-data>
-            <p  style="text-align: center;padding: 0.2rem;color: #666;">已经到底了噢~~</p>
+            <p style="text-align: center;padding: 0.2rem;color: #666;">已经到底了噢~~</p>
         </div>
     </div>
 </template>
@@ -34,25 +32,23 @@ import { arrayContains } from "@/util/common";
 export default {
     data() {
         return {
-            goodsList:[]
+            goodsList: []
         }
     },
     methods: {
-        parseGuessLike(list){
-          if(window.userLikeId)
-          {
-            for(var k=0;k<list.length;k++)
-            {
-              if(arrayContains(window.userLikeId,list[k].id)){
-                list.splice(k,1);
-              }
+        parseGuessLike(list) {
+            if (window.userLikeId) {
+                for (var k = 0; k < list.length; k++) {
+                    if (arrayContains(window.userLikeId, list[k].id)) {
+                        list.splice(k, 1);
+                    }
+                }
             }
-          }
-          return list;
+            return list;
         },
         guessLike: function() {
             let _this = this;
-            let name = window.userLikeName ;
+            let name = window.userLikeName;
             //console.log(name);
             this.axios(jdTestUrl + api.guessLike, {
                 "name": name
@@ -68,13 +64,25 @@ export default {
                     _this.Toast(data.message);
                 })
         },
+        goDetail(item) {
+            this.$router.push({
+                path: '/goodsDetail/' + item.id
+            })
+        },
     },
     mounted() {
-      var that = this;
-      setTimeout(function () {
-        that.guessLike()
-      },1000);
+        var that = this;
+        setTimeout(function() {
+            that.guessLike()
+        }, 1000);
+        
+    },
+    watch: {
+        '$route'(to, from) {
+            this.$router.go(0);
+        }
     }
+
 }
 </script>
 
@@ -87,7 +95,7 @@ export default {
         border-top: 1px solid transparent;
         margin-bottom: 0.8rem;
         .home-rHM {
-                margin:0;
+            margin: 0;
             h3 {
                 font-size: 0.3rem;
                 font-weight: 100;
@@ -98,10 +106,10 @@ export default {
             width: 100%;
             overflow: auto;
         }
-        .no-more{
-          padding-bottom: 0.5rem;
-          text-align: center;
-          font-style: italic;
+        .no-more {
+            padding-bottom: 0.5rem;
+            text-align: center;
+            font-style: italic;
         }
         .home-iGoodsW {
             float: left;
