@@ -76,7 +76,8 @@
             <p class="ihot-name">{{item.name}}</p>
             <p class="ihot-moneyW">
               <span class="ihot-logo"></span>
-              <span class="ihot-money">{{item.currentPrice}}</span>
+              <span class="ihot-money">{{item.currentPrice|toDecimal2Fp}}.</span>
+              <span class="ihot-money">{{item.currentPrice|toDecimal2Ap}}</span>
             </p>
           </router-link>
         </div>
@@ -394,6 +395,7 @@ export default {
       overflow:hidden;
       word-break: break-all;
       word-wrap: break-word;
+      text-align: left;
       &::after{
         content:"";
 				position:absolute;
