@@ -77,7 +77,6 @@ export default async (url = '', data = {}, type = 'GET') => {
         }
       })
     }
-
     request.then(response => {
       // loading
       // 如果http状态码正常，则直接返回数据
