@@ -72,7 +72,7 @@
 
         <div class="goodsD-imgW">
             <h3>商品详情</h3>
-            <div v-html="goodsInfo.detail" class="detailImg">
+            <div v-html="goodsInfo.detail" class="detailImg" id="commId">
 
             </div>
         </div>
@@ -414,6 +414,11 @@ export default {
         },
         async goPreview() {
             var that = this;
+
+            if(!getToken()){
+                this.$router.push('/login');
+                return;
+            }
             if (this.userinfo.isRealCert == 0) {
                 this.Toast({
                     message: '请先实名认证',
