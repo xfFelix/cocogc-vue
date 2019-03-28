@@ -150,22 +150,23 @@
                         <div class="link">
                             <span class="navImg navGo navGo01"></span>首页</div>
                     </router-link>
-                    <router-link :to="{path: '/layout/account'}">
+                    <router-link :to="{path: '/layout/shopMall'}">
                         <div class="link">
-                            <span class="navImg navGo navGo02"></span>我的</div>
+                            <span class="navImg navGo navGo02"></span>商城</div>
+                    </router-link>
+                   <router-link :to="{path: '/layout/classify'}">
+                        <div class="link">
+                            <span class="navImg navGo navGo03"></span>分类</div>
                     </router-link>
                     <router-link :to="{path: '/layout/shopCart'}">
                         <div class="link">
-                            <span class="navImg navGo navGo03"></span>购物车</div>
+                            <span class="navImg navGo navGo04"></span>购物车</div>
                     </router-link>
-                    <router-link :to="{path: '/layout/classify'}">
+                     <router-link :to="{path: '/layout/account'}">
                         <div class="link">
-                            <span class="navImg navGo navGo04"></span>分类</div>
+                            <span class="navImg navGo navGo05"></span>我的</div>
                     </router-link>
-                    <router-link :to="{path: '/layout/shopMall'}">
-                        <div class="link">
-                            <span class="navImg navGo navGo05"></span>商城</div>
-                    </router-link>
+                    
                 </div>
             </div>
 
@@ -497,7 +498,7 @@ export default {
                     background: #fff;
                     padding: 5px 0;
                     border-bottom: 1px solid #dfdfdf;
-                    width: 2rem;
+                    width: 2.2rem;
                     display: flex; // justify-content: center;
                     align-items: center;
                 }
@@ -514,12 +515,11 @@ export default {
                         border-radius: 0 0 5px 4px;
                     }
                 }
-
                 .navGo {
                     width: 0.42rem;
                     height: 0.42rem;
                     display: inline-block;
-                    margin: 0 0.3rem 0 0.2rem;
+                    margin: 0 0.4rem 0 0.2rem;
                 }
                 .navGo01 {
                     background-position: -0.1rem -0.73rem;
