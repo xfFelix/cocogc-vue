@@ -48,8 +48,7 @@
                       </div>
 
                       <div class="oMGoodsTotal">
-                          <p>共
-                              <span>2</span>件商品</p>
+                          <p>共<span>{{totalNum(item.goodsList)}}</span>件商品</p>
                           <p>合计：
                               <span>{{item.totalMoney}}</span>
                           </p>
@@ -150,6 +149,16 @@ export default {
         }
     },
     methods: {
+        totalNum(item){
+            if(item){
+                let totalMoney = 0;
+                item.forEach(res=>{
+                    totalMoney += res.buyNum
+                })
+                return totalMoney
+            }
+            return 0;
+        },
       async loadTop(){
         this.init()
         await this.selectOrders(getToken(), this.headIndex);

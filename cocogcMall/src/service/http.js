@@ -8,6 +8,7 @@ import { baseUrl } from '@/config'
 axios.defaults.timeout = 10000;
 axios.defaults.baseURL = baseUrl;
 axios.defaults.headers['Content-Type'] = 'application/json';
+// axios.defaults.withCredentials = true;
 
 //拦截器
 var _this = this;
@@ -76,7 +77,6 @@ export default async (url = '', data = {}, type = 'GET') => {
         }
       })
     }
-
     request.then(response => {
       // loading
       // 如果http状态码正常，则直接返回数据
