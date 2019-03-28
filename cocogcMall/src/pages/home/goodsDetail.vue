@@ -24,7 +24,7 @@
                     <span></span>
                     <span></span>
                 </p>
-            </div> 
+            </div>
         </div>
 
         <div class="goTop" @click="goTop()" v-if="headShow">
@@ -179,7 +179,7 @@
 import { IsEmpty, getToken } from "@/util/common";
 import Swiper from 'swiper';
 import api from '../../service/api';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import BgMask from '@/common/BgMask'
 import Guesslike from "@/common/guesslike.vue";
 
@@ -216,13 +216,13 @@ export default {
                     this.Toast("该商品不存在！");
                     this.$router.back();
                 }
-        
+
             })
         }
     },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
-
+        this.resetAddress()
         var that = this;
         //获取商品信息
         that.goodsId = this.$route.params.goodId;
@@ -249,6 +249,13 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        ...mapActions({
+          checkAddress: 'userinfo/checkAddress'
+        }),
+        async resetAddress() {
+          let data = await this.checkAddress()
+          window.chooseAddress = data
+        },
         //滚动出现
         handleScroll() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -900,7 +907,7 @@ export default {
             padding: 0.22rem 0.24rem;
             font-size: 0.3rem;
         }
-        margin: 0.2rem 0; 
+        margin: 0.2rem 0;
 }
 .goodDetail-buyW {
     height: 1.16rem;

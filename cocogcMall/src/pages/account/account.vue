@@ -11,7 +11,7 @@
                     <img class="acc-headImg" src="static/images/headImg.png" alt="" />
                 </div>
                 <div class="acc-headTG">
-                    <p class="acc-headTel">{{userName|formatPhone}}</p>
+                    <p class="acc-headTel">{{userName}}</p>
                     <p class="acc-headGrade">
                         <span class="acc-headChessI"></span>
                         <span class="acc-headChess" v-if="levelFlag">专业选手</span>
@@ -130,6 +130,7 @@ export default {
                 { name: '话费充值', scoreShow: false, path: infoURl + "#!/phoneBill?token=" + getToken(), bgImg: "acc-contentLog04" },
             ],
             helpList: [
+                { name: '卡密充值', path: infoURl + '#!/charge?token=' + getToken(), bgImg: "acc-contentLog08" },
                 { name: '帮助中心', path: 'https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q', bgImg: "acc-contentLog05" },
                 { name: '联系客服', path: infoURl + "#!/contact?token=" + getToken(), bgImg: "acc-contentLog06" },
                 { name: '商务合作', path: infoURl + "#!/cooperation?token=" + getToken(), bgImg: "acc-contentLog07" },
@@ -391,7 +392,9 @@ export default {
                     .acc-contentLog04,
                     .acc-contentLog05,
                     .acc-contentLog06,
-                    .acc-contentLog07 {
+                    .acc-contentLog07,
+                    .acc-contentLog08,
+                     {
                         width: 0.3rem;
                         height: 0.3rem;
                         display: inline-block;
@@ -420,6 +423,9 @@ export default {
                     }
                     .acc-contentLog07 {
                         background-position: -2.71rem -0.7rem;
+                    }
+                    .acc-contentLog08{
+                            background-position: -2.58rem -1.07rem;
                     }
 
 

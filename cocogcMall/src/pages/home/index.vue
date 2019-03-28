@@ -98,12 +98,17 @@ export default {
     return {
       fastList: [
         { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + getToken() },
-        { id: 2, name: "话费兑换", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
+        { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
         { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay&token=' + getToken() },
-        { id: 4, name: "兑换商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall' },
-        { id: 5, name: "卡密充值", imgBg: 'ifa-imgBg05', path: infoURl + '#!/charge?token=' + getToken() },
-        { id: 6, name: "加油卡兑换", imgBg: 'ifa-imgBg12', path: 'javascript:;' },
-        { id: 7, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;' },
+        { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
+        { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: 'javascript:;' },
+        { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;' },
+        { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: 'javascript:;' },
+        { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: 'javascript:;' },
+        { id: 9, name: "机票酒店", imgBg: 'ifa-imgBg04', path: 'javascript:;' },
+        { id: 10, name: "周大福金饰", imgBg: 'ifa-imgBg08', path: 'javascript:;' },
+        { id: 11, name: "小米有品", imgBg: 'ifa-imgBg10', path: 'javascript:;' },
+        { id: 12, name: "网易严选", imgBg: 'ifa-imgBg11', path: 'javascript:;' },
       ],
       goodsList: [],
       loginFlag: false,
@@ -320,7 +325,7 @@ export default {
       background-position: -3.23rem -1.34rem;
     }
     .ifa-imgBg11 {
-      background-position: -3.79rem -1.34rem;
+      background-position: -3.77rem -1.34rem;
     }
     .ifa-imgBg12 {
       background-position: -4.34rem -1.34rem;
