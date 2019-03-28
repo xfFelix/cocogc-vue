@@ -137,7 +137,7 @@ export default {
             top: [],
             end: [],
             levelFlag:false,
-            num: 1
+            num: 0
         };
     },
     computed: {

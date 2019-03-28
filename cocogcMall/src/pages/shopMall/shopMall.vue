@@ -27,6 +27,9 @@
               placeholder="请输入要搜索的内容"
               @select="handleSelect"
               :trigger-on-focus="false"
+              :hide-loading="true"
+              :debounce="1000"
+              class="autocomplete"
             ></el-autocomplete>
           </div>
         </div>
@@ -112,10 +115,10 @@ export default {
 
   },
   methods: {
-    querySearchAsync(queryString, cb) {
+    async querySearchAsync(queryString, cb) {
       if (queryString) {
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(async() => {
+        // clearTimeout(this.timeout);
+        // this.timeout = setTimeout(async() => {
           let restaurants = await this.axios(jdTestUrl + api.searchHint, {keyword: queryString}, 'get')
           let list = []
           restaurants.list.forEach((item, index)=> {
@@ -126,7 +129,7 @@ export default {
             list.push(cur)
           },{})
           cb(list);
-        }, 1000);
+        // }, 1000);
       }
     },
     handleSelect(item) {
@@ -307,27 +310,30 @@ export default {
           background: transparent;
           color: #fff;
         }
+        .autocomplete{
+          ::-webkit-input-placeholder {
+            /* WebKit, Blink, Edge */
+            color:#fff;
+            font-size: 0.26rem;
+          }
+        }
          ::-webkit-input-placeholder {
           /* WebKit, Blink, Edge */
-          color: #fff;
           font-size: 0.26rem;
         }
 
          :-moz-placeholder {
           /* Mozilla Firefox 4 to 18 */
-          color: #fff;
           font-size: 0.26rem;
         }
 
          ::-moz-placeholder {
           /* Mozilla Firefox 19+ */
-          color: #fff;
           font-size: 0.26rem;
         }
 
         input:-ms-input-placeholder {
           /* Internet Explorer 10-11 */
-          color: #fff;
           font-size: 0.26rem;
         }
       }

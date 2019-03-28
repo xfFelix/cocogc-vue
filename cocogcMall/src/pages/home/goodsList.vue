@@ -61,9 +61,11 @@
         <p class="loading-more-txt"> 点击加载更多...</p>
       </div>
       <no-data :data="goodsList"></no-data>
-      <div class="onBottom" v-show="moreShow==false">
-        已经到底了噢~~
-      </div>
+      <template v-if="goodsList.length">
+        <div class="onBottom" v-show="!moreShow">
+          已经到底了噢~~
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -300,10 +302,9 @@
         }
         if (this.price == undefined) {
           this.price = "0~*";
-          if (!this.token) {
-            this.iSelectAct = 1;
-          }
+          this.iSelectAct = 1;
         }
+
 
 
         if (this.$route.query.classfyId == undefined) {

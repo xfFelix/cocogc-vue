@@ -261,10 +261,15 @@ export default {
         },
         dialogCode() {
           if (this.userinfo.score > this.other) {
-            this.showSendCode = true
+            if(this.addressDef == null){
+                  this.Toast('地址不能为空');
+                  return;
+            }
+            this.showSendCode = true;
           } else {
             this.Toast(this.message)
           }
+          
         },
         sumitOrder() {
             this.saveOrderByCart()

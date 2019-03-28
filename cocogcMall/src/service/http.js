@@ -13,7 +13,7 @@ axios.defaults.withCredentials = true;
 //拦截器
 var _this = this;
 axios.interceptors.request.use(config => {
-  Indicator.open('Loading...');
+  Indicator.open(' ');
   return config;
 }, error => {
   Indicator.close()

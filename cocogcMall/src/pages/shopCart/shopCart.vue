@@ -384,14 +384,17 @@ export default {
 
 .shop-content {
     position: relative;
-    .shop-dStoreWW {}
+    .shop-dStoreWW {
+        margin-bottom: 0.3rem;
+    }
     .shop-dStoreW {
         background: #fff;
-        margin-bottom: 0.3rem;
+        border-bottom: 1px solid #eef1f6;
         .shop-dStore {
             display: flex;
             align-items: center;
             padding: 0.3rem 0 0.13rem 0;
+
             .shop-selectN,
             .shop-selectY,
             .shop-dNameImg,
@@ -404,7 +407,7 @@ export default {
             .shop-selectN,
             .shop-selectY {
                 margin: 0 0.25rem 0 0.32rem;
-                width: 0.3rem;
+                width: 0.32rem;
                 height: 0.3rem;
                 background: #fff;
                 background-image: url(/static/images/jl.png);

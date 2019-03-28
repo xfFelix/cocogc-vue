@@ -78,7 +78,7 @@ export default {
             window.location.href = infoURl + "#!/cert?token=" + getToken();
         },
         cardsJump() {
-
+            window.location.href = infoURl + "#!/pay?token=" + getToken();
         },
         passupJump() {
              window.location.href = infoURl + "#!/changePwd?token=" + getToken();

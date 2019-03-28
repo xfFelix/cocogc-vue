@@ -206,7 +206,20 @@ export default {
             userinfo: 'userinfo/getUserInfo'
         })
     },
-
+    watch: {
+        '$route'(to, from) {
+            window.scrollTo(0, 0);
+            this.getGoodsInfo(this.$route.params.goodId, (data)=> {
+                if (data != null) {
+                    this.setGoodsData(data);
+                } else {
+                    this.Toast("该商品不存在！");
+                    this.$router.back();
+                }
+        
+            })
+        }
+    },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
 
@@ -224,7 +237,6 @@ export default {
         that.getCarInfo(function(data) {
             that.carTotal = data;
         });
-        window.scrollTo(0, 0);
     },
     beforeRouteLeave(to, from, next) {
         if (to.path === '/goodsList') {
@@ -670,7 +682,7 @@ export default {
         }
     }
     .swiper-pagination {
-        color: #fff;
+        color: #000;
         text-align: right;
         .swiper-pagination-total {
             margin-right: 0.25rem;
@@ -878,17 +890,17 @@ export default {
         background: #fff;
         div,
         table {
-            width: 100%!important;
-            height: 100%!important;
-            position: relative!important;
-            line-height: auto!important;
-            background-size: 100% !important;
-            left: 0!important;
+            // width: 100%!important;
+            // height: 100%!important;
+            // position: relative!important;
+            // line-height: auto!important;
+            // background-size: 100% !important;
+            // left: 0!important;
         }
-        font-size: 0px;
+        // font-size: 0px;
         img {
-            width: 100% !important;
-            height: 100% !important;
+            // width: 100% !important;
+            // height: 100% !important;
         }
     }
 
@@ -898,6 +910,7 @@ export default {
     }
     div {
         width: 100%;
+        height: 100%;
         overflow: hidden;
     }
     margin-bottom: 0.9rem;

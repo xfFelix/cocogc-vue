@@ -137,7 +137,7 @@ export default {
         }
         .home-hSNmame {
             color: #333;
-            text-align: center;
+            text-align: left;
             font-weight: bold;
             font-size: 0.22rem;
             margin: 0.25rem 0 0.17rem;
@@ -160,9 +160,10 @@ export default {
     }
     .home-hSmoneyW {
         display: flex;
-        justify-content: center;
         align-items: center;
         margin-bottom: 0.4rem;
+        text-align: left;
+        padding: 0 0.22rem;
         .home-hSmoneyL {
             width: 0.28rem;
             height: 0.28rem;
@@ -174,7 +175,6 @@ export default {
             margin-right: 0.03rem;
             margin-left: 0.01rem;
         }
-        .home-hSmoney {}
     }
 }
 </style>

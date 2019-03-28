@@ -211,7 +211,7 @@ export default {
             width: 6.90rem;
             li {
                 width: 17.54%; // height: 0.56rem;
-                line-height: 0.5rem;
+                line-height: 0.65rem;
                 text-align: center; // border: 1px solid #ccc;
                 float: left;
                 margin: 0 0 0.15rem 1.77%;
