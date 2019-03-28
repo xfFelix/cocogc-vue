@@ -134,6 +134,7 @@ export default {
     },
     handleSelect(item) {
       console.log(item);
+      this.seachClick()
     },
     // banner
     banner: function() {
