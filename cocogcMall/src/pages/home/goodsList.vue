@@ -45,7 +45,7 @@
       <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
         <router-link :to="{path:'goodsDetail/'+item.id}">
           <div class="home-iGoods">
-            <img :src="item.image" alt="" />
+            <img v-lazy="item.image" alt="" />
           </div>
           <p class="home-iNmame">
             {{item.name}}
