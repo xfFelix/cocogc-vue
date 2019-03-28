@@ -97,7 +97,7 @@
 import Guesslike from "../../common/guesslike.vue";
 import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 
 export default {
@@ -137,6 +137,7 @@ export default {
       }
     },
     mounted() {
+        this.resetAddress()
         var that = this;
         this.getCartGoodsList(function(data) {
             if (data == null) {
@@ -153,8 +154,13 @@ export default {
         ...mapActions({
             setNum: 'cart/setNum',
             incrementNum: 'cart/incrementNum',
-            decrementNum: 'cart/decrementNum'
+            decrementNum: 'cart/decrementNum',
+            checkAddress: 'userinfo/checkAddress'
         }),
+        async resetAddress() {
+          let data = await this.checkAddress()
+          window.chooseAddress = data
+        },
         getCartGoodsList(callback) {
             let _this = this;
             this.axios(testUrl + api.selectCarts, {

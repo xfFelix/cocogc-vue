@@ -36,6 +36,7 @@ import { homedir } from 'os';
 
 import Layout from '@/pages/layout/Layout'
 import getInfo from './hook/getInfo';
+import scrollTop from './hook/scrollTop'
 Vue.use(Router)
 
 const router = new Router({
@@ -121,7 +122,7 @@ const router = new Router({
       path: '/goodsDetail/:goodId',
       name: 'goodsDetail',
       component: goodsDetail,
-      meta: { title: '商品详情' },
+      meta: { title: '商品详情', scrolltop: true },
     },
     {
       path: '/order',
@@ -197,4 +198,5 @@ const router = new Router({
 //   }
 // })
 getInfo(router)
+scrollTop(router)
 export default router

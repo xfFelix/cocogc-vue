@@ -4,7 +4,7 @@
             <div class="home-smWrap">
                 <div class="home-search">
                     <span class="home-logo"></span>
-                    <span class="home-searchL"></span>
+                    <!-- <span class="home-searchL"></span> -->
                     <p class="home-searchI">
                         <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchWord" /> -->
                         <el-autocomplete

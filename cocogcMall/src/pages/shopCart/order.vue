@@ -5,7 +5,7 @@
         <div style="padding-bottom: 70px;">
             <div class="order-addressWN" addressMag>
                 <div v-if="addressDef != null">
-                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}" replace>
                       <div class="order-address">
                           <p class="order-addPerson">
                               <span>{{addressDef.name}}</span>
@@ -16,12 +16,12 @@
                           </p>
                       </div>
                       <div>
-                          <span class="goTo" @click="$router.push('/addressEdit')"></span>
+                          <span class="goTo" @click="$router.replace('/addressEdit')"></span>
                       </div>
                   </router-link>
                 </div>
                 <div v-else>
-                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}">
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}" replace>
                     <div class="order-addressN" style="display: block;">
                           <span class="order-addNImg"></span>
                           <p>您还没有收货地址，点击添加</p>
@@ -155,7 +155,7 @@
         <exchange-su v-if="exchangeShow" v-bind:chOrderId ='parOrderId' v-bind:chMessage="other"></exchange-su>
 
 
-         <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown"> 
+         <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
             <div class="ld-logis" v-if="goodsShowFlag">
                 <div class="ld-logisTitleW one-bottom-px">
                     <div class="ld-logisTitle ">
@@ -163,7 +163,7 @@
                         <p>共(<span>{{goodsShowNum}}</span>)件</p>
                     </div>
                     <p class="j1Png ld-logisClose" @click="goodsShowFlag = false"></p>
-                </div> 
+                </div>
                  <div class="order-goodSWa">
                     <div>
                         <div class="order-goodSInfo" v-for="(itemGoods,indexGoods) in goodsShowList.goodsList" :key="indexGoods">
@@ -190,14 +190,14 @@
                             <span>{{goodsShowList.totalMoney|toDecimal2}}</span>
                         </p>
                     </div>
-                </div>  
+                </div>
             </div>
-         </transition> 
+         </transition>
 
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <bg-mask v-model="goodsShowFlag"></bg-mask>
         </transition>
-        
+
     </div>
 </template>
 
@@ -257,7 +257,7 @@ export default {
             item.goodsList.forEach(res=>{
                 this.goodsShowNum += res.buyNum
             })
-            
+
         },
         dialogCode() {
           if (this.userinfo.score > this.other) {
@@ -269,7 +269,7 @@ export default {
           } else {
             this.Toast(this.message)
           }
-          
+
         },
         sumitOrder() {
             this.saveOrderByCart()
