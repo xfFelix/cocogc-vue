@@ -19,12 +19,12 @@
                 <span class="j1Png backImg"></span>
             </div>
              <div class="backImgW" @click="showDialog = true">
-                            <p class="circle">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </p>
-                        </div> 
+                <p class="circle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </p>
+            </div> 
         </div>
 
         <div class="goTop" @click="goTop()" v-if="headShow">
@@ -383,6 +383,10 @@ export default {
         },
         toBuyCar() {
             var that = this;
+            if(!getToken()){
+                this.$router.push('/login');
+                return;
+            }
             //添加到购物车
             var data = {
                 token: getToken(),
@@ -453,6 +457,7 @@ export default {
     position: relative;
     transition: all 0.4s;
     padding-bottom: 0.42rem;
+    background: #eef1f6;
     .dialog-container {
         position: fixed;
         top: 0.78rem;
@@ -548,8 +553,6 @@ export default {
             margin: 0 2px;
         }
     }
-
-
 
     .goodsD-hBack {
         display: flex;
@@ -693,6 +696,7 @@ export default {
 .goodsD-priceAddress {
     background: #FFF;
     padding: 0 0.38rem;
+    margin-bottom: 0.2rem;
     .goodsD-priceW {
         background: #fff; // margin-bottom: 0.2rem;
         display: flex;
@@ -738,7 +742,6 @@ export default {
     .goodsD-addressInfo {
         background: #fff;
         font-size: 0.26rem;
-        margin-bottom: 0.2rem;
         display: flex;
         padding: 0.34rem 0;
         .goodsD-address {
@@ -886,36 +889,14 @@ export default {
 
 .goodsD-imgW {
     background: #fff;
-    .detailImg {
-        background: #fff;
-        div,
-        table {
-            // width: 100%!important;
-            // height: 100%!important;
-            // position: relative!important;
-            // line-height: auto!important;
-            // background-size: 100% !important;
-            // left: 0!important;
+    border-top: 1px solid #eef1f6;
+        h3 {
+            color: #000;
+            padding: 0.22rem 0.24rem;
+            font-size: 0.3rem;
         }
-        // font-size: 0px;
-        img {
-            // width: 100% !important;
-            // height: 100% !important;
-        }
-    }
-
-    h3 {
-        color: #000;
-        padding: 0.22rem 0.24rem;
-    }
-    div {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-    margin-bottom: 0.9rem;
+        margin: 0.2rem 0; 
 }
-
 .goodDetail-buyW {
     height: 1.16rem;
     background: #fff;
