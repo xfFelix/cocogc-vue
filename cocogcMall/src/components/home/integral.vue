@@ -20,7 +20,7 @@
         <div class="home-interWrap">
             <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index" @click="goDetail(item)">
                 <div class="home-iGoods one-bottom-px">
-                    <img :src="item.image" alt="" />
+                    <img v-lazy="item.image" alt="" />
                 </div>
                 <p class="home-iNmame">
                     {{item.name}}
