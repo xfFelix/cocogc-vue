@@ -11,7 +11,7 @@
                             <img :src="item.image" alt="" />
                         </div>
                         <p class="home-iNmame">
-                            {{item.name|wordSize(item.name)}}
+                            {{item.name}}
                         </p>
                         <div class="home-iMoneyW">
                             <span class="home-iMoneyL"></span>
@@ -155,7 +155,12 @@ export default {
             .home-iNmame {
                 color: #333333;
                 font-size: 0.26rem;
-                line-height: 0.36rem;
+                line-height: 1.5em;
+                height: 3em;
+                overflow: hidden;
+                word-break: break-all;
+                word-wrap: break-word;
+                text-align: left;
                 margin-top: 0.12rem;
             }
             .home-iMoneyW {
