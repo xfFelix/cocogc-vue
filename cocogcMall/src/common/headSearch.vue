@@ -61,6 +61,7 @@ export default {
         },
         handleSelect(item) {
           console.log(item);
+          this.sendSearch()
         },
     },
     mounted() {
