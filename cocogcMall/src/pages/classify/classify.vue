@@ -4,7 +4,7 @@
             <div class="home-smWrap">
                 <div class="home-search">
                     <span class="home-logo"></span>
-                    <span class="home-searchL"></span>
+                    <!-- <span class="home-searchL"></span> -->
                     <p class="home-searchI">
                         <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchWord" /> -->
                         <el-autocomplete
@@ -157,6 +157,7 @@ export default
             },
             handleSelect(item) {
               console.log(item);
+              this.seachClick()
             },
             seachClick() {
                 this.$router.push({ path: '/goodsList', query: { keyWord: this.searchWord } })

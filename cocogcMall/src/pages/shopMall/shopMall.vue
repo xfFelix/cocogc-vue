@@ -18,7 +18,7 @@
       <div class="home-smWrap" v-if="homeSmWrap==false">
         <div class="home-search">
           <span class="home-logo"></span>
-          <span class="home-searchL"></span>
+          <!-- <span class="home-searchL"></span> -->
           <div class="home-searchI">
             <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" @input="searchHint($event)" autocomplete="true"/> -->
             <el-autocomplete
@@ -39,7 +39,7 @@
       <div class="home-smWrapA" v-if="homeSmWrap==true">
         <div class="home-search">
           <span class="home-logo"></span>
-          <span class="home-searchL"></span>
+          <!-- <span class="home-searchL"></span> -->
           <p class="home-searchI">
             <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" /> -->
             <el-autocomplete
@@ -134,6 +134,7 @@ export default {
     },
     handleSelect(item) {
       console.log(item);
+      this.seachClick()
     },
     // banner
     banner: function() {

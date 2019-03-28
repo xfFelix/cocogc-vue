@@ -44,9 +44,9 @@
     </ul>
 
     <!-- 图片 -->
-    <div class="index-swipeW" style="height: 116px;">
+    <div class="index-swipeW">
       <div class="index-swipe">
-        <div class="swiper-container">
+        <div class="swiper-container" style="height:2rem">
           <!-- 页面 -->
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="item of banner" :key="item.title">
@@ -340,7 +340,7 @@ export default {
 }
 
 .index-swipeW {
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.2rem;
   img {
     width: 100%;
   }

@@ -135,7 +135,7 @@ export default {
         jumpAddress(item) {
             if(this.fromPath!=""){
                 window.chooseAddress = item;
-                this.$router.push('/order');
+                this.$router.replace('/order');
             }
 
         }

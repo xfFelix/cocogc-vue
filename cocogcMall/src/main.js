@@ -51,14 +51,14 @@ Vue.prototype.hideLoading = function () {
   Indicator.close();
 };
 
-// Vue.use(VueLazyload, {
-//   preLoad: 1.3,
-//   error: 'static/images/loading.jpg',
-//   loading: 'static/images/loading.jpg',
-//   attempt: 1,
-//   // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
-//   listenEvents: [ 'scroll' ]
-// })
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: 'static/images/loading.jpg',
+  loading: 'static/images/loading.jpg',
+  attempt: 1,
+  // the default is ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend']
+  listenEvents: [ 'scroll' ]
+})
 Vue.config.productionTip = false
 
 Vue.prototype.axios = axios;
@@ -75,10 +75,6 @@ new Vue({
   components: { App },
   template: '<App/>'
 });
-
-// router.afterEach((to,from,next) => {
-//     window.scrollTo(0,0);
-// });
 
 // router.beforeEach((to, from, next) => {
 //     // while (Vue.Cancel.length > 0) {

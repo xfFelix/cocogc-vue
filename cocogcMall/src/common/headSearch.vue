@@ -4,7 +4,7 @@
         <div class="home-search">
             <div class="home-smInput">
                 <span class="j1Png home-logo"></span>
-                <span class="j1Png home-searchL"></span>
+                <!-- <span class="j1Png home-searchL"></span> -->
                 <p class="home-searchI">
                     <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont"/> -->
                     <el-autocomplete
@@ -61,6 +61,7 @@ export default {
         },
         handleSelect(item) {
           console.log(item);
+          this.sendSearch()
         },
     },
     mounted() {

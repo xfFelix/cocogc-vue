@@ -8,7 +8,7 @@
                 <div v-for="(item,index) in goodsList" :key="index">
                     <div class="home-iGoodsW" @click="goDetail(item)">
                         <div class="home-iGoods">
-                            <img :src="item.image" alt="" />
+                            <img v-lazy="item.image" alt="" />
                         </div>
                         <p class="home-iNmame">
                             {{item.name}}
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <no-data :data="goodsList"></no-data>
+            <!-- <no-data :data="goodsList"></no-data> -->
             <p style="text-align: center;padding: 0.2rem;color: #666;">已经到底了噢~~</p>
         </div>
     </div>
@@ -61,7 +61,7 @@ export default {
                     }
                 })
                 .catch((err) => {
-                    _this.Toast(data.message);
+                    _this.Toast(err.message);
                 })
         },
         goDetail(item) {
@@ -71,11 +71,7 @@ export default {
         },
     },
     mounted() {
-        var that = this;
-        setTimeout(function() {
-            that.guessLike()
-        }, 1000);
-        
+      this.guessLike()
     },
 
 }
