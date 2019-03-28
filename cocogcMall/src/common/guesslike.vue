@@ -61,7 +61,7 @@ export default {
                     }
                 })
                 .catch((err) => {
-                    _this.Toast(data.message);
+                    _this.Toast(err.message);
                 })
         },
         goDetail(item) {
