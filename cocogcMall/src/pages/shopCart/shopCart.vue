@@ -1,5 +1,5 @@
 <template>
-    <div class="shop">
+    <div class="shop" >
         <div class="shop-headW">
             <h3 class="shop-title">购物车</h3>
             <p class="shop-headR" v-if="list.length != 0">
@@ -35,7 +35,9 @@
                                 <p class="shop-selGoodsT">{{items.goods!=null?items.goods.name:''}}</p>
                                 <p class="shop-selGoodsC">{{items.goods!=null?items.goods.attrs:''}}</p>
                                 <div class="shop-selGoodsN">
-                                    <span class="shop-selGoodsS">{{items.goods!=null?items.goods.currentPrice:''}}</span>
+                                    <div>
+                                      <span class="shop-selGoodsS">{{items.goods.currentPrice|toDecimal2Fp}}.</span><span class="shop-selGoodsS">{{items.goods.currentPrice|toDecimal2Ap}}</span>
+                                    </div>
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
                                         <span @click="numDecrease(index) " :class="items.num>1?'decNum':'decNoNum'"></span>

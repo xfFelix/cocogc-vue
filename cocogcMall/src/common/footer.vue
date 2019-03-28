@@ -39,11 +39,15 @@ export default {
     },
     watch: {
       showHeight:function() {
-          if(this.docmHeight > this.showHeight){
-              this.hideShow = false
-          }else{
-              this.hideShow = true
-          }
+        let u = navigator.userAgent, app = navigator.appVersion;
+        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+        if (isAndroid) {
+            if(this.docmHeight > this.showHeight){
+                this.hideShow = false
+            }else{
+                this.hideShow = true
+            }
+        }
       },
       '$route': {
           handler(val) {
@@ -66,10 +70,15 @@ export default {
     mounted() {
         // window.onresize监听页面高度的变化
         const that = this;
-        window.onresize = () => {
-            return (() => {
-                this.showHeight = document.body.clientHeight;
-            })()
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+          window.onresize = () => {
+              return (() => {
+                  this.showHeight = document.body.clientHeight;
+              })()
+          }
         }
         this.isSelect = sessionStorage.getItem('isSelect');
         if (this.$route.name == "home" || this.$route.name == 'shopMall' || this.$route.name == 'classify' || this.$route.name == 'shopCart' || this.$route.name == 'account') {
@@ -115,12 +124,12 @@ export default {
             }
             .num {
               position: absolute;
-              right: 15px;top: 1px;
-              padding: 2px 5px;
+              right: 17px;top: 1px;
+              padding: 1px 3px;
               background: #fb5c5c;
               color: #fff;
               border-radius: 50%;
-              font-size: 12px;
+              font-size: 0.22rem;
             }
             .navGo01 {
                 background-position: -0.1rem -0.73rem;

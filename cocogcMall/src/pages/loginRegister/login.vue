@@ -3,10 +3,7 @@
 
         <head>
             <div class="headLogin">
-                <div class="close">
-                    <span></span>
-                    <span></span>
-                </div>
+                <span class="back" @click="$router.back()"></span>
                 <router-link class="register" to="/register">
                     注册
                 </router-link>
@@ -44,17 +41,6 @@
             <span class="bnt">登录</span>
         </p>
         <p class="forgetPass" @click="forgerPass()">忘记密码？</p>
-
-        <div class="tipBg" v-if="tipBgShow">
-            <div class="toast">
-                <p>登录失败： </p>
-                <p>手机号或登录密码错误。</p>
-                <p class="failNext">
-                    <span @click="forgerPass()">忘记密码</span>
-                    <span @click="reInput()">重新输入</span>
-                </p>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -68,7 +54,6 @@ export default {
         return {
             eyeImgState: false,
             passShow: false,
-            tipBgShow: false,
             phoneCleanShow: false,
             passCleanShow: false,
             vaildCleanShow: false,
@@ -100,11 +85,21 @@ export default {
                           this.$router.replace('/layout/home');
                         }
                     } else {
-                        this.tipBgShow = true;
+                         MessageBox.confirm('', {
+                            message: '手机号或登录密码错误。',
+                            title: '登录失败',
+                            confirmButtonText: '忘记密码',
+                            cancelButtonText: '重新输入'
+                        }).then(action => {
+                               this.$router.push('/passSetUp');
+                        }).catch(action => {
+                                this.loginForm.passWord = '';
+                        })
+                        return
                     }
                 })
                 .catch((err) => {
-                    // this.tipBgShow = true;
+                    
                 })
         },
         //眼睛和清空
@@ -148,7 +143,6 @@ export default {
             this.$router.push('/passSetUp');
         },
         reInput: function() {
-            this.tipBgShow = false;
             this.loginForm.passWord = '';
 
         },
@@ -163,6 +157,15 @@ export default {
 
 
 <style lang="less">
+.back{
+  width: 0.22rem;
+  height: 0.38rem;
+  background-image: url(/static/images/jl.png);
+  background-repeat: no-repeat;
+  background-size: 5.8rem 1.86rem;
+  background-position: -0.2rem -0.74rem;
+  transform: rotate(180deg);
+}
 #login {
     position: absolute;
     bottom: 0;
@@ -181,6 +184,7 @@ export default {
             padding: 0.44rem 0.5rem;
             font-size: 0.28rem;
             display: flex;
+            align-items: center;
             justify-content: space-between;
             .close {
                 width: 0.7rem;

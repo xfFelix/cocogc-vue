@@ -27,7 +27,8 @@
                 </p>
                 <div class="home-iMoneyW">
                     <span class="home-iMoneyL"></span>
-                    <span class="home-iMoney">{{item.currentPrice}}</span>
+                    <span class="home-iMoney">{{item.currentPrice|toDecimal2Fp}}.</span>
+                    <span class="home-iMoney">{{item.currentPrice|toDecimal2Ap}}</span>
                 </div>
             </div>
         </div>
@@ -141,7 +142,7 @@ export default {
         iSelect(item, index) {
             if (item.integral == '0~NaN') {
                 MessageBox.confirm('', {
-                    message: '登录后查看您可兑换的商品，立即登录。',
+                    message: '<div>登录后查看您可兑换的商品</div><div>立即登录?</div>',
                     title: '提示',
                     confirmButtonText: '确定',
                     cancelButtonText: '取消'
@@ -320,6 +321,7 @@ export default {
             overflow: hidden;
             word-break: break-all;
             word-wrap: break-word;
+            text-align: left;
             &::after {
                 content: "";
                 position: absolute;
@@ -332,8 +334,8 @@ export default {
         .home-iMoneyW {
             display: flex;
             align-items: center;
-            justify-content: center;
             margin: 0.1rem 0;
+            text-align: left;
             .home-iMoneyL {
                 width: 0.26rem;
                 height: 0.28rem;

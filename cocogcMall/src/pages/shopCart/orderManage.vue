@@ -3,9 +3,9 @@
         <div class="orderHead">
             <header-top></header-top>
             <ul class="orderList">
-                <li v-for="(item,index) in headList" :key="index" @click="headIndexCli(index)">
-                    <p>{{item}}</p>
-                    <p v-if="headIndex==index"></p>
+                <li v-for="item in headList" :key="item.value" @click="headIndexCli(item.value)">
+                    <p>{{item.label}}</p>
+                    <p v-if="headIndex === item.value"></p>
                 </li>
             </ul>
         </div>
@@ -21,7 +21,7 @@
                               <span>{{item.orderId}}</span>
                           </p>
                           <p class="oMGoodsTitRight">
-                              <span>{{item.payStatus}}</span>
+                              <span>{{item.orderStatus}}</span>
                           </p>
                       </div>
 
@@ -113,7 +113,7 @@ export default {
     data() {
         return {
             list: [],
-            headList: ['全部', '已完成', '未完成', '已退货'],
+            headList: [{label: '全部', value: 0},{label: '未完成', value: 2},{label: '已完成', value: 1},{label: '已退货', value: 3 }],
             headIndex: 0,
             pathStatus: '',
             pageNum: 1,
@@ -130,8 +130,6 @@ export default {
 
     },
     mounted() {
-
-        var token = getToken();
         this.pathStatus = this.$route.query.status;
         switch (this.pathStatus) {
             case '0':
@@ -153,13 +151,11 @@ export default {
     },
     methods: {
       async loadTop(){
-        console.log('this loadtop')
         this.init()
         await this.selectOrders(getToken(), this.headIndex);
         this.$refs.loadmore.onTopLoaded();
       },
       async loadBottom(){
-        console.log('this is loadbottom')
         await this.selectOrders(getToken(), this.headIndex);
         this.$refs.loadmore.onBottomLoaded();
       },
