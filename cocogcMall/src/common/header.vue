@@ -10,20 +10,22 @@
 export default {
     data() {
         return {
-            shopOrGoods: ''
+            routeGo: ''
         }
     },
     methods: {
         goBack() {
-            this.$router.back();
-            // if (this.$route.path == '/order') {
-            //     this.$router.push(this.shopOrGoods);
-            // } else {
-            //     this.$router.back();
-            // }
+            if(this.routeGo == 'orderManage'){
+                this.$router.push('/layout/account');
+            }else if(this.routeGo == 'orderDetails'){
+                this.$router.push('/orderManage');
+            }else{
+                 this.$router.back();
+            }
         }
     },
     mounted() {
+        this.routeGo = this.$router.history.current.name;
     },
 }
 </script>
