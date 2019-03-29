@@ -124,8 +124,8 @@
                             <p class="goodDetail-sType">{{item}}</p>
                             <p class="goodDetail-sTypeSlect" ref="goodsAttrs">
                                 <template v-for="lv in goodsInfo.l_attrs[1][index]">
-                                    <span v-if="containAttr(lv)" class="goodsTypeActive">{{lv}}</span>
-                                    <span v-else class="goodsTypeNo" @click="chooseAttr(index,lv)">{{lv}}</span>
+                                    <span v-if="containAttr(lv)" class="goodsTypeActive" style="color:#fff;">{{lv}}</span>
+                                    <span v-else class="goodsTypeNo" @click="chooseAttr(index,lv)" v-color="index">{{lv}}</span>
                                 </template>
                             </p>
                         </div>
@@ -217,8 +217,7 @@ export default {
                     this.Toast("该商品不存在！");
                     this.$router.back();
                 }
-
-            })
+            });
         }
     },
     mounted() {
@@ -307,25 +306,29 @@ export default {
             this.isGo = 'order'
         },
         getGoodsInfo(goodId, callback) {
+          if(goodId && goodId != "null")
+          {
             this.axios(testUrl + api.goodsDetailInfo,
-                {
-                    "id": goodId
-                },
-                'post')
-                .then((data) => {
-                    if (data.error_code == 0) {
-                        if (callback)
-                            callback(data.data);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
+              {
+                "id": goodId
+              },
+              'post')
+              .then((data) => {
+                if (data.error_code == 0) {
+                  if (callback)
+                    callback(data.data);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+          }
         },
         containAttr(attr) {
             for (var i = 0; i < this.attrs.length; i++) {
-                if (this.attrs[i] == attr)
-                    return true;
+                if (this.attrs[i] == attr){
+                  return true;
+                }
             }
             return false;
         },
@@ -351,22 +354,23 @@ export default {
             if (!IsEmpty(that.goodsInfo.attrs))
                 that.attrs = that.goodsInfo.attrs.split(",");
             if (IsEmpty(that.goodsInfo.unit)) that.goodsInfo.unit = "件";
+
         },
         chooseAttr(i, v) {
             var that = this;
-            this.attrs[i] = v;
-            var a = this.attrs.join(",");
+            var at = this.attrs.slice(0);
+            at[i] = v;
+            var a = at.join(",");
             var id = this.findGoodsFromList(a);
-            this.goodsId = id;
-            that.getGoodsInfo(that.goodsId, function(data) {
-                if (data != null) {
-                    that.setGoodsData(data);
-                }
-            });
-            this.$router.push('/goodsDetail/' + id);
+            if(id > 0){
+              this.attrs = at.slice(0);
+              this.goodsId = id;
+              this.$router.push('/goodsDetail/' + id);
+            }
         },
         findGoodsFromList(attr) {
-            var ret = null;
+            var ret = 0;
+            //console.log(attr);
             var attrsGoods = this.goodsInfo.attrsGoods;
             if (attrsGoods) {
                 attrsGoods = JSON.parse(attrsGoods);
@@ -460,6 +464,22 @@ export default {
     components: {
         BgMask,
         'guess-like': Guesslike
+    },
+    directives:{
+      color:function (el,binding,vnode) {
+        var i = binding.value;
+        var v = el.innerText;
+        var that = vnode.context;
+        let at = that.attrs.slice(0);
+        at[i] = v;
+        var a = at.join(",");
+        var id = that.findGoodsFromList(a);
+        if(id == 0){
+          el.style.color = "#ccc";
+        }else{
+            el.style.color = "#000";
+        }
+      }
     }
 };
 </script>
