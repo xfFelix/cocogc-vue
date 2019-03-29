@@ -57,7 +57,7 @@
                         <p class="order-goodsDName">{{orderList[0].goodsName}}</p>
                          <p class="order-goodsDType">&nbsp;</p> 
                         <div class="order-goodsDPriceW">
-                            <span class="order-goodsDPrice">{{orderList[0].buyPrice}}</span>
+                            <span class="order-goodsDPrice">{{orderList[0].buyPrice|toDecimal2}}</span>
                             <p class="order-goodsDNumW">
                                 <span class="order-goodsDNumI"></span>
                                 <span class="order-goodsDNum">{{orderList[0].buyNum}}</span>

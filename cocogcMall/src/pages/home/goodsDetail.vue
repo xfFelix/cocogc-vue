@@ -72,7 +72,7 @@
 
         <div class="goodsD-imgW">
             <h3>商品详情</h3>
-            <div v-html="goodsInfo.detail" class="detailImg">
+            <div v-html="goodsInfo.detail" class="detail_info_wrap" id="detail">
 
             </div>
         </div>
@@ -124,8 +124,8 @@
                             <p class="goodDetail-sType">{{item}}</p>
                             <p class="goodDetail-sTypeSlect" ref="goodsAttrs">
                                 <template v-for="lv in goodsInfo.l_attrs[1][index]">
-                                    <span v-if="containAttr(lv)" class="goodsTypeActive">{{lv}}</span>
-                                    <span v-else class="goodsTypeNo" @click="chooseAttr(index,lv)">{{lv}}</span>
+                                    <span v-if="containAttr(lv)" class="goodsTypeActive" style="color:#fff;">{{lv}}</span>
+                                    <span v-else class="goodsTypeNo" @click="chooseAttr(index,lv)" v-color="index">{{lv}}</span>
                                 </template>
                             </p>
                         </div>
@@ -150,22 +150,23 @@
                         <div class="link">
                             <span class="navImg navGo navGo01"></span>首页</div>
                     </router-link>
-                    <router-link :to="{path: '/layout/account'}">
+                    <router-link :to="{path: '/layout/shopMall'}">
                         <div class="link">
-                            <span class="navImg navGo navGo02"></span>我的</div>
+                            <span class="navImg navGo navGo02"></span>商城</div>
+                    </router-link>
+                   <router-link :to="{path: '/layout/classify'}">
+                        <div class="link">
+                            <span class="navImg navGo navGo03"></span>分类</div>
                     </router-link>
                     <router-link :to="{path: '/layout/shopCart'}">
                         <div class="link">
-                            <span class="navImg navGo navGo03"></span>购物车</div>
+                            <span class="navImg navGo navGo04"></span>购物车</div>
                     </router-link>
-                    <router-link :to="{path: '/layout/classify'}">
+                     <router-link :to="{path: '/layout/account'}">
                         <div class="link">
-                            <span class="navImg navGo navGo04"></span>分类</div>
+                            <span class="navImg navGo navGo05"></span>我的</div>
                     </router-link>
-                    <router-link :to="{path: '/layout/shopMall'}">
-                        <div class="link">
-                            <span class="navImg navGo navGo05"></span>商城</div>
-                    </router-link>
+                    
                 </div>
             </div>
 
@@ -217,8 +218,7 @@ export default {
                     this.Toast("该商品不存在！");
                     this.$router.back();
                 }
-
-            })
+            });
         }
     },
     mounted() {
@@ -307,25 +307,29 @@ export default {
             this.isGo = 'order'
         },
         getGoodsInfo(goodId, callback) {
+          if(goodId && goodId != "null")
+          {
             this.axios(testUrl + api.goodsDetailInfo,
-                {
-                    "id": goodId
-                },
-                'post')
-                .then((data) => {
-                    if (data.error_code == 0) {
-                        if (callback)
-                            callback(data.data);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
+              {
+                "id": goodId
+              },
+              'post')
+              .then((data) => {
+                if (data.error_code == 0) {
+                  if (callback)
+                    callback(data.data);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+          }
         },
         containAttr(attr) {
             for (var i = 0; i < this.attrs.length; i++) {
-                if (this.attrs[i] == attr)
-                    return true;
+                if (this.attrs[i] == attr){
+                  return true;
+                }
             }
             return false;
         },
@@ -351,22 +355,23 @@ export default {
             if (!IsEmpty(that.goodsInfo.attrs))
                 that.attrs = that.goodsInfo.attrs.split(",");
             if (IsEmpty(that.goodsInfo.unit)) that.goodsInfo.unit = "件";
+
         },
         chooseAttr(i, v) {
             var that = this;
-            this.attrs[i] = v;
-            var a = this.attrs.join(",");
+            var at = this.attrs.slice(0);
+            at[i] = v;
+            var a = at.join(",");
             var id = this.findGoodsFromList(a);
-            this.goodsId = id;
-            that.getGoodsInfo(that.goodsId, function(data) {
-                if (data != null) {
-                    that.setGoodsData(data);
-                }
-            });
-            this.$router.push('/goodsDetail/' + id);
+            if(id > 0){
+              this.attrs = at.slice(0);
+              this.goodsId = id;
+              this.$router.push('/goodsDetail/' + id);
+            }
         },
         findGoodsFromList(attr) {
-            var ret = null;
+            var ret = 0;
+            //console.log(attr);
             var attrsGoods = this.goodsInfo.attrsGoods;
             if (attrsGoods) {
                 attrsGoods = JSON.parse(attrsGoods);
@@ -426,6 +431,11 @@ export default {
                 return;
             }
             var that = this;
+
+            if(!getToken()){
+                this.$router.push('/login');
+                return;
+            }
             if (this.userinfo.isRealCert == 0) {
                 this.Toast({
                     message: '请先实名认证',
@@ -459,6 +469,22 @@ export default {
     components: {
         BgMask,
         'guess-like': Guesslike
+    },
+    directives:{
+      color:function (el,binding,vnode) {
+        var i = binding.value;
+        var v = el.innerText;
+        var that = vnode.context;
+        let at = that.attrs.slice(0);
+        at[i] = v;
+        var a = at.join(",");
+        var id = that.findGoodsFromList(a);
+        if(id == 0){
+          el.style.color = "#ccc";
+        }else{
+            el.style.color = "#000";
+        }
+      }
     }
 };
 </script>
@@ -497,7 +523,7 @@ export default {
                     background: #fff;
                     padding: 5px 0;
                     border-bottom: 1px solid #dfdfdf;
-                    width: 2rem;
+                    width: 2.2rem;
                     display: flex; // justify-content: center;
                     align-items: center;
                 }
@@ -514,12 +540,11 @@ export default {
                         border-radius: 0 0 5px 4px;
                     }
                 }
-
                 .navGo {
                     width: 0.42rem;
                     height: 0.42rem;
                     display: inline-block;
-                    margin: 0 0.3rem 0 0.2rem;
+                    margin: 0 0.4rem 0 0.2rem;
                 }
                 .navGo01 {
                     background-position: -0.1rem -0.73rem;

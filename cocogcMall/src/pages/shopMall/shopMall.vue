@@ -21,16 +21,7 @@
           <!-- <span class="home-searchL"></span> -->
           <div class="home-searchI">
             <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" @input="searchHint($event)" autocomplete="true"/> -->
-            <el-autocomplete
-              v-model="searchCont"
-              :fetch-suggestions="querySearchAsync"
-              placeholder="请输入要搜索的内容"
-              @select="handleSelect"
-              :trigger-on-focus="false"
-              :hide-loading="true"
-              :debounce="1000"
-              class="autocomplete"
-            ></el-autocomplete>
+            <el-autocomplete v-model="searchCont" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" class="autocomplete"></el-autocomplete>
           </div>
         </div>
         <span @click="seachClick()" class="seachBnt">搜索</span>
@@ -42,31 +33,25 @@
           <!-- <span class="home-searchL"></span> -->
           <p class="home-searchI">
             <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" /> -->
-            <el-autocomplete
-              v-model="searchCont"
-              :fetch-suggestions="querySearchAsync"
-              placeholder="请输入要搜索的内容"
-              @select="handleSelect"
-              :trigger-on-focus="false"
-            ></el-autocomplete>
+            <el-autocomplete v-model="searchCont" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false"></el-autocomplete>
           </p>
         </div>
         <span @click="seachClick" class="seachBntA">搜索</span>
       </div>
 
       <div class="home-noticeW">
-          <div class="home-notice">
-            <span class="home-horn"></span>
-            <span style="white-space: nowrap;">椰云公告：</span>
-            <marquee  style="width: 65%; font-size: 0.26rem;" loop="infinite" >
-              <div style="display:flex;">
-                <a :href="item.url" v-for="(item,index) in newsList" :key="index" class="link-url" v-if="item.status == 0">
-                  <span class="home-hotCont">{{item.noticeTitle}}</span>
-                </a>
-              </div>
-            </marquee>
-            <span class="home-noticeGo"></span>
-          </div>
+        <div class="home-notice">
+          <span class="home-horn"></span>
+          <span style="white-space: nowrap;">椰云公告：</span>
+          <marquee style="width: 65%; font-size: 0.26rem;" loop="infinite">
+            <div style="display:flex;">
+              <a :href="item.url" v-for="(item,index) in newsList" :key="index" class="link-url" v-if="item.status == 0">
+                <span class="home-hotCont">{{item.noticeTitle}}</span>
+              </a>
+            </div>
+          </marquee>
+          <span class="home-noticeGo"></span>
+        </div>
       </div>
 
     </div>
@@ -82,8 +67,8 @@
 
     <!-- 底部切换 -->
 
-    <!-- 头部 -->
-    <!-- <v-footer></v-footer> -->
+    <!-- 回到顶部 -->
+    <div class="goTop" @click="goTop()" v-if="homeSmWrap"></div>
   </div>
 </template>
 
@@ -102,7 +87,7 @@ export default {
       searchCont: '',
       banList: [],
       swiperBan: '',
-      newsList:[],
+      newsList: [],
       timeout: null
     };
   },
@@ -115,20 +100,30 @@ export default {
 
   },
   methods: {
+    // 回到顶部
+    goTop() {
+      document.body.scrollTop -= 500;
+      document.documentElement.scrollTop -= 500;
+      if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+        var c = setTimeout(() => this.goTop(), 16);
+      } else {
+        clearTimeout(c);
+      }
+    },
     async querySearchAsync(queryString, cb) {
       if (queryString) {
         // clearTimeout(this.timeout);
         // this.timeout = setTimeout(async() => {
-          let restaurants = await this.axios(jdTestUrl + api.searchHint, {keyword: queryString}, 'get')
-          let list = []
-          restaurants.list.forEach((item, index)=> {
-            let cur = {}
-            cur.id = item.id
-            cur.value = item.name
-            cur.parentId = item.parentId
-            list.push(cur)
-          },{})
-          cb(list);
+        let restaurants = await this.axios(jdTestUrl + api.searchHint, { keyword: queryString }, 'get')
+        let list = []
+        restaurants.list.forEach((item, index) => {
+          let cur = {}
+          cur.id = item.id
+          cur.value = item.name
+          cur.parentId = item.parentId
+          list.push(cur)
+        }, {})
+        cb(list);
         // }, 1000);
       }
     },
@@ -165,9 +160,8 @@ export default {
                 },
               });
             })
-
           } else {
-
+            this.Toast(data.message)
           }
         })
         .catch((err) => {
@@ -209,7 +203,7 @@ export default {
   updated() {
 
   },
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     if (to.path === '/goodsList') {
       to.meta.keepAlive = false
     }
@@ -225,12 +219,13 @@ export default {
 
 
 <style lang="less">
-.link-url{
+.link-url {
   margin-right: 100px;
-  &:last-of-type{
+  &:last-of-type {
     margin-right: 0;
   }
 }
+
 .banner-slide {
   img {
     width: 100%;
@@ -293,14 +288,14 @@ export default {
         align-items: center;
         padding-left: 0.1rem;
         position: relative;
-        .search-hint{
+        .search-hint {
           position: absolute;
           background: #fff;
           width: 100%;
           top: 0.61rem;
           border-radius: 5px;
-          .hint{
-            padding: 0.05rem 0.15rem ;
+          .hint {
+            padding: 0.05rem 0.15rem;
           }
         }
         input {
@@ -310,10 +305,10 @@ export default {
           background: transparent;
           color: #fff;
         }
-        .autocomplete{
-          ::-webkit-input-placeholder {
+        .autocomplete {
+           ::-webkit-input-placeholder {
             /* WebKit, Blink, Edge */
-            color:#fff;
+            color: #fff;
             font-size: 0.26rem;
           }
         }
@@ -502,9 +497,24 @@ export default {
 .focusFixed {
   position: fixed;
 }
-
-// .blurFixed {
-//   position: relative;
-// }
+.goTop {
+    position: fixed;
+    bottom: 1.3rem;
+    z-index: 11;
+    background: rgba(0, 0, 0, 0.5);
+    width: 0.8rem;
+    height: 0.8rem;
+    right: 0.2rem;
+    &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-image: url(/static/images/goTop.png);
+        background-size: 25px
+    }
+}
 </style>
 
