@@ -50,7 +50,7 @@ const saveOrderByCart = 'api/saveOrderByCart' // 通过购物车下单
 const selectDefaultAddresses = 'api/selectDefaultAddresses' // 获取默认地址
 const searchHint = '/query/type/keyword' // 搜索提示
 const getOrderTotals = 'api/selectOrderTotals' //订单未完成数量
-
+const searchItem = '/query/categoryId'
 
 
 
@@ -91,5 +91,6 @@ export default {
   selectDefaultAddresses,
   newsList,
   searchHint,
-  getOrderTotals
+  getOrderTotals,
+  searchItem
 }

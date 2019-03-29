@@ -182,8 +182,9 @@ import api from '../../service/api';
 import { mapGetters, mapActions } from 'vuex';
 import BgMask from '@/common/BgMask'
 import Guesslike from "@/common/guesslike.vue";
-
+import mixin from '@/util/mixin'
 export default {
+    mixins: [mixin],
     data() {
         return {
             fixedCloseFlag: false,
@@ -391,7 +392,7 @@ export default {
         toBuyCar() {
             var that = this;
             if(!getToken()){
-                this.$router.push('/login');
+                this.confirmBack()
                 return;
             }
             //添加到购物车
@@ -420,6 +421,10 @@ export default {
                 })
         },
         async goPreview() {
+            if(!getToken()){
+                this.confirmBack()
+                return;
+            }
             var that = this;
             if (this.userinfo.isRealCert == 0) {
                 this.Toast({
