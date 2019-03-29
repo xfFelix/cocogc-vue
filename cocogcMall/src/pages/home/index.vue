@@ -137,14 +137,16 @@ export default {
   },
   methods: {
     goLink(item) {
+      if (item.id === 4) {
+        return this.$router.push(item.path)
+      }
+      if (item.path === 'javascript:;'){
+        return
+      }
       if (!getToken()) {
         return this.confirmBack()
       }
-      if (item.id === 4) {
-        this.$router.push(item.path)
-      } else {
-        window.location.href = item.path
-      }
+      window.location.href = item.path
     },
     async getBanner() {
       let banner = await this.axios(testUrl + api.goodsGroups, {

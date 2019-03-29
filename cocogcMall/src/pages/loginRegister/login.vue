@@ -3,7 +3,7 @@
 
         <head>
             <div class="headLogin">
-                <span class="back" @click="$router.back()"></span>
+                <span class="back" @click="goBack"></span>
                 <router-link class="register" to="/register">
                     注册
                 </router-link>
@@ -99,8 +99,11 @@ export default {
                     }
                 })
                 .catch((err) => {
-                    
+
                 })
+        },
+        goBack(){
+          this.$router.back()
         },
         //眼睛和清空
         eyeImgClose: function() {
@@ -148,6 +151,15 @@ export default {
         },
     },
     mounted() {
+    },
+    beforeRouteLeave (to, from, next) {
+      if (/\/setUp/.test(to.path)) {
+        next({
+          path: '/layout/home'
+        })
+        return
+      }
+      next()
     },
     components: {
 
