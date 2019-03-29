@@ -72,9 +72,9 @@
 
         <div class="goodsD-imgW">
             <h3>商品详情</h3>
-            <div v-html="goodsInfo.detail" class="detail_info_wrap" id="detail">
-
-            </div>
+          <div>
+            <div v-html="goodsInfo.detail" id="detail"></div>
+          </div>
         </div>
         <!-- 猜你喜欢 -->
         <guess-like></guess-like>
@@ -166,7 +166,7 @@
                         <div class="link">
                             <span class="navImg navGo navGo05"></span>我的</div>
                     </router-link>
-                    
+
                 </div>
             </div>
 
@@ -355,7 +355,7 @@ export default {
             if (!IsEmpty(that.goodsInfo.attrs))
                 that.attrs = that.goodsInfo.attrs.split(",");
             if (IsEmpty(that.goodsInfo.unit)) that.goodsInfo.unit = "件";
-
+            areaResize("detail");
         },
         chooseAttr(i, v) {
             var that = this;
@@ -487,10 +487,46 @@ export default {
       }
     }
 };
+
+function areaResize(commId)
+{
+  setTimeout(function(){
+    var oDiv = document.getElementById(commId);
+    if (!oDiv) return 0;
+    var detLeftPadding = 0,detRightPadding = 0;
+    var pageWidth = $(window).width();
+    var pDiv = oDiv.parentNode,
+      w = oDiv.offsetWidth,
+      h = oDiv.offsetHeight,
+      cw = (pageWidth > 640 ? 640 : pageWidth) - detLeftPadding - detRightPadding;
+
+
+      if (w > 0) {
+        var scale = cw / w;
+        if (scale < 1) {
+          oDiv.style.WebkitTransformOrigin = 0 + 'px ' + 0 + 'px';
+          oDiv.style.transformOrigin = 0 + 'px ' + 0 + 'px';
+          oDiv.style.WebkitTransform = 'scale(' + scale + ')';
+          oDiv.style.transform = 'scale(' + scale + ')';
+          pDiv.style.width = (w * scale) + 'px';
+          pDiv.style.height = (h * scale) + 'px';
+          oDiv.style.position = "relative";
+        }
+        if (scale && Math.ceil(14 / scale) > 10) {
+          var oDiv = document.getElementById(commId);
+          oDiv.style.fontSize = Math.ceil(14 / scale) + 'px';
+        }
+      }
+
+  },1000);
+}
 </script>
 
 
 <style lang="less">
+  #detail{
+    position: absolute;
+  }
 .goodsDetail {
     position: relative;
     transition: all 0.4s;
