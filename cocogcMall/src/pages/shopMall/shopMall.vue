@@ -132,9 +132,8 @@ export default {
         // }, 1000);
       }
     },
-    handleSelect(item) {
-      console.log(item);
-      this.seachClick()
+    async handleSelect(item) {
+      this.$router.push({ path: '/goodsList', query: { categoryId: item.id, keyWord: this.searchCont } })
     },
     // banner
     banner: function() {
