@@ -88,7 +88,8 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin('common.js'),
     new webpack.ProvidePlugin({
       jQuery: "jquery",
-      $: "jquery"
+      $: "jquery",
+      goodsDetail: resolve('/static/js/goodDetail.js')
     })
   ]
 }

@@ -72,7 +72,7 @@
 
         <div class="goodsD-imgW">
             <h3>商品详情</h3>
-            <div v-html="goodsInfo.detail" class="detailImg" id="commId">
+            <div v-html="goodsInfo.detail" class="detail_info_wrap" id="detail">
 
             </div>
         </div>
