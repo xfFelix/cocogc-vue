@@ -31,14 +31,16 @@
     <!-- 导航 -->
     <ul class="index-fastNav">
       <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
-        <router-link :to="item.path" v-if="item.id==4">
+        <!-- <router-link :to="item.path" v-if="item.id==4"> -->
+          <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)">
+            <p class="navImg imgBg" :class="item.imgBg"></p>
+            <p class="ifa-name">{{item.name}}</p>
+          </div>
+        <!-- </router-link> -->
+        <!-- <a :href='item.path' :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" v-else>
           <p class="navImg imgBg" :class="item.imgBg"></p>
           <p class="ifa-name">{{item.name}}</p>
-        </router-link>
-        <a :href='item.path' :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" v-else>
-          <p class="navImg imgBg" :class="item.imgBg"></p>
-          <p class="ifa-name">{{item.name}}</p>
-        </a>
+        </a> -->
 
       </li>
     </ul>
@@ -91,9 +93,10 @@ import Swiper from 'swiper';
 import api from '../../service/api';
 import { mapGetters } from 'vuex';
 import { getToken } from '@/util/common'
-
+import mixin from '@/util/mixin'
 export default {
   name: 'index',
+  mixins: [mixin],
   data() {
     return {
       fastList: [
@@ -133,6 +136,18 @@ export default {
   components: {
   },
   methods: {
+    goLink(item) {
+      if (item.id === 4) {
+        return this.$router.push(item.path)
+      }
+      if (item.path === 'javascript:;'){
+        return
+      }
+      if (!getToken()) {
+        return this.confirmBack()
+      }
+      window.location.href = item.path
+    },
     async getBanner() {
       let banner = await this.axios(testUrl + api.goodsGroups, {
         "id": "a10a220f9aa94dc49c960c77cd783d11"

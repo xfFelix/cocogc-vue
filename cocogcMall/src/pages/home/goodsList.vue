@@ -1,7 +1,7 @@
 <template>
   <div class="goodsList">
     <div class="home-smWrap">
-      <head-search @searchChild='parentChild' v-bind:kewWordC="keyWord"></head-search>
+      <head-search @searchChild='parentChild' v-bind:kewWordC="keyWord" @switchName="switchName"></head-search>
       <ul class="goodsList-order one-bottom-px">
         <li>
           <p @click="searchAll()" :class="{'hight-light': hightLight === 'all'}">全部</p>
@@ -142,7 +142,8 @@
         salesVolume: "", //销量排序
         productTypeId: "",
         token: getToken(),
-        hightLight: 'all'
+        hightLight: 'all',
+        switch: 'name'
       };
     },
     computed: {
@@ -151,7 +152,11 @@
       })
     },
     mounted() {
-
+      if (this.$route.query.categoryId) {
+        this.switch = 'id'
+      } else {
+        this.switch = 'name'
+      }
       // 观察是否到了底部
       this.observer = new IntersectionObserver(
         function (entries) {
@@ -167,10 +172,7 @@
       this.observer.observe(
         document.querySelector('#moreMsg')
       );
-
       this.urlParams();
-
-
     },
     methods: {
       checkColor(id) {
@@ -183,7 +185,13 @@
             this.keyWord = val;
             this.goodsList = [];
             this.brandId = ''
+            this.switch = 'name'
             this.goodsListSearch(1)
+        },
+        switchName() {
+          this.switch = 'id'
+          this.goodsList = [];
+          this.goodsListSearch(1)
         },
         //加载更多
         moreMsg() {
@@ -325,34 +333,54 @@
       },
 
       goodsListSearch(offsetRows) {
-        let _this = this;
-        this.axios(jdTestUrl + api.keyword, {
-            "categoryId": _this.brandId,
-            "keyWord": _this.keyWord,
-            "offset": offsetRows,
-            "price": _this.price.replace('~', '-'),
-            "priceRange": _this.priceRange,
-            "rows": 10,
-            "salesVolume": _this.salesVolume,
-            "timeSort": "",
-            "productTypeId": _this.productTypeId
-          }, 'post')
-          .then((data) => {
-            if (data.code == 0) {
-              if (data.list.length > 0) {
-                _this.goodsList = _this.goodsList.concat(data.list);
-                _this.moreShow = true;
-              } else {
-                _this.moreShow = false;
-              }
-            } else {
-              _this.Toast(data.message);
-            }
-          })
-          .catch((err) => {
-            _this.Toast(err.message);
-          })
+        if (this.switch === 'id') {
+          this.getListById(offsetRows)
+        } else {
+          this.getListByName(offsetRows)
+        }
       },
+      async getListById(offsetRows) {
+        let data = await this.axios(jdTestUrl + api.searchItem, {categoryId: this.$route.query.categoryId, offset: offsetRows, rows: 10}, 'get')
+        if (data.code == 0) {
+          if (data.list.length > 0) {
+            this.goodsList = this.goodsList.concat(data.list);
+            this.moreShow = true;
+          } else {
+            this.moreShow = false;
+          }
+        } else {
+          this.Toast(data.message);
+        }
+      },
+      getListByName(offsetRows) {
+        let _this = this
+        this.axios(jdTestUrl + api.keyword, {
+          "categoryId": _this.brandId,
+          "keyWord": _this.keyWord,
+          "offset": offsetRows,
+          "price": _this.price.replace('~', '-'),
+          "priceRange": _this.priceRange,
+          "rows": 10,
+          "salesVolume": _this.salesVolume,
+          "timeSort": "",
+          "productTypeId": _this.productTypeId
+        }, 'post')
+        .then((data) => {
+          if (data.code == 0) {
+            if (data.list.length > 0) {
+              _this.goodsList = _this.goodsList.concat(data.list);
+              _this.moreShow = true;
+            } else {
+              _this.moreShow = false;
+            }
+          } else {
+            _this.Toast(data.message);
+          }
+        })
+        .catch((err) => {
+          _this.Toast(err.message);
+        })
+      }
     },
     components: {
       "head-search": headSearch,
