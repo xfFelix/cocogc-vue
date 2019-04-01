@@ -210,6 +210,7 @@ import ExchangeSu from "@/components/shopCart/ExchangeSu"
 import { mapGetters } from 'vuex';
 import { IsEmpty, getToken } from "@/util/common";
 import axios from '@/service/http'
+import store from '@/store'
 
 export default {
     data() {
@@ -228,11 +229,33 @@ export default {
             fromPath: {cart:'cart'},
             goodsShowFlag:false,
             goodsShowList:{},
-            goodsShowNum:0
+            goodsShowNum:0,
+            dialogToast: false
         };
     },
-    mounted() {
-       this.previewOrderByCart();
+    async beforeRouteEnter(to, from, next) {
+      var token = getToken();
+      if (!window.chooseAddress) {
+        window.chooseAddress = await store.dispatch('userinfo/checkAddress')
+      }
+      axios(testUrl + api.previewOrderByCart, {token: token,id: window.chooseAddress.id,}, 'post').then((data) => {
+          if (data.error_code == 0 || data.error_code == 7)
+          {
+            next(vm=>{
+              if (data.error_code == 7) {
+                vm.Toast(data.message)
+                vm.dialogToast = true
+              }
+              vm.handlePreview(vm, data)
+            })
+          }else if(data.error_code == 3){
+            Toast(data.message)
+            next(false)
+          }
+      })
+      .catch((err) => {
+
+      })
     },
     computed: {
         ...mapGetters({
@@ -240,6 +263,32 @@ export default {
         })
     },
     methods: {
+        handlePreview(_this, data) {
+          _this.message = data.message;
+          _this.other = data.other
+          _this.dataList = data.data;
+          _this.dataAddress = data.data[0];
+          _this.addressDef = window.chooseAddress
+          //多商品轮播图
+          _this.dataList.forEach((res, index) => {
+            if (res.goodsList.length > 1) {
+              var goodsId = 'res' + res.goodsList[0].goodsId;
+              var classg = '.' + goodsId + ' .swiper-container';
+              var bnt = '.' + goodsId + ' .swiper-button-next';
+              _this.$nextTick(function () {
+                new Swiper(classg, {
+                  slidesPerView: 4,
+                  slidesPerGroup: 1,
+                  spaceBetween: 10,
+                  navigation: {
+                    nextEl: bnt,
+                    // prevEl: '.swiper-button-prev',
+                  },
+                })
+              })
+            }
+          });
+        },
         computedNum(item) {
             if (item.goodsList) {
                 let num = 0
@@ -260,7 +309,7 @@ export default {
 
         },
         dialogCode() {
-          if (this.userinfo.score > this.other) {
+          if (!this.dialogToast) {
             if(this.addressDef == null){
                   this.Toast('地址不能为空');
                   return;
@@ -361,61 +410,7 @@ export default {
       //
       //           })
       //   },
-        // 通过购物车进来
-      async previewOrderByCart() {
-            var token = getToken();
-            if(window.chooseAddress)
-            {
-              this.addressDef = window.chooseAddress;
-            }else{
-              //选区默认地址
-              await this.getUserAddress();
-            }
-            var addressId = 0;
-            if(this.addressDef)
-              addressId = this.addressDef.id;
-            let _this = this;
-            this.axios(testUrl + api.previewOrderByCart, {
-                "token": token,
-                "id": addressId,
-            }, 'post')
-                .then((data) => {
-                    if (data.error_code == 0 || data.error_code == 7)
-                    {
-                      _this.message = data.message;
-                      _this.other = data.other
-                      _this.dataList = data.data;
-                      _this.dataAddress = data.data[0];
-                      //多商品轮播图
-                      _this.dataList.forEach((res, index) => {
-                        if (res.goodsList.length > 1) {
-                          var goodsId = 'res' + res.goodsList[0].goodsId;
-                          var classg = '.' + goodsId + ' .swiper-container';
-                          var bnt = '.' + goodsId + ' .swiper-button-next';
-                          _this.$nextTick(function () {
-                            new Swiper(classg, {
-                              slidesPerView: 4,
-                              slidesPerGroup: 1,
-                              spaceBetween: 10,
-                              navigation: {
-                                nextEl: bnt,
-                                // prevEl: '.swiper-button-prev',
-                              },
-                            })
-                          })
-                        }
-                      });
-                    }else if(data.error_code == 3){
-                      this.Toast(data.message);
-                      this.$router.back();
-                    }else {
-                      this.Toast(data.message);
-                    }
-                })
-                .catch((err) => {
 
-                })
-        },
         // //下单
         // saveOrder: function() {
         //     var token = getToken();

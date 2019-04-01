@@ -14,9 +14,10 @@ import VueLazyload from 'vue-lazyload';
 import store from './store/index.js'
 import Tips from './common/tips'
 import NoData from './common/NoData'
+import FastClick from 'fastclick'
 // import Vconsole from 'vconsole'
 // new Vconsole();
-
+FastClick.attach(document.body);
 
 Vue.component(Spinner.name, Spinner)
 Vue.component('no-data', NoData)
