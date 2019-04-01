@@ -133,7 +133,7 @@
                     <div style="margin-top:0.5rem;font-size:0.24rem;color: #999;">数量</div>
                     <div class="goodDetail-selectNumW">
                         <span class="goodDetail-selectDec" @click="setBuyNum(0)">-</span>
-                        <span class="goodDetail-selectNum"><input type="number" :value="buyNum"></span>
+                        <span class="goodDetail-selectNum"><input type="number" v-model="buyNum"></span>
                         <span class="goodDetail-selectInc" @click="setBuyNum(1)">+</span>
                     </div>
                 </div>
@@ -326,8 +326,8 @@ export default {
           }
         },
         containAttr(attr) {
-            for (var i = 0; i < this.attrs.length; i++) {
-                if (this.attrs[i] == attr){
+          for (var i = 0; i < this.attrs.length; i++) {
+            if (this.attrs[i] == attr){
                   return true;
                 }
             }
@@ -371,7 +371,6 @@ export default {
         },
         findGoodsFromList(attr) {
             var ret = 0;
-            //console.log(attr);
             var attrsGoods = this.goodsInfo.attrsGoods;
             if (attrsGoods) {
                 attrsGoods = JSON.parse(attrsGoods);

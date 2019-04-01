@@ -58,7 +58,7 @@
       </div>
       <div id="moreMsg" @click="moreMsg()" v-show="moreShow">
         <mt-spinner type="fading-circle" class="loading-more"></mt-spinner>
-        <p class="loading-more-txt"> 点击加载更多...</p>
+        <!-- <p class="loading-more-txt"> 点击加载更多...</p> -->
       </div>
       <no-data :data="goodsList"></no-data>
       <template v-if="goodsList.length">
