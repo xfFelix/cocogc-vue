@@ -43,6 +43,7 @@
         </div>
 
         <div class="goodsD-priceAddress">
+            <div class="goodsStyle"></div>
             <div class="goodsD-priceW one-bottom-px">
                 <div class="changeGoods">
                     <p class="changeGoodsa">{{goodsInfo.name}} {{goodsInfo.noSpecs==0?goodsInfo.attrs:""}}</p>
@@ -343,7 +344,7 @@ export default {
                         el: '.goodsD-headImg .swiper-pagination',
                         type: 'fraction',
                         renderFraction: function(currentClass, totalClass) {
-                            return '<span class="' + currentClass + '"></span>' + ' | ' + '<span class="' + totalClass + '"></span>';
+                            return '<span class="' + currentClass + '"></span>' + ' / ' + '<span class="' + totalClass + '"></span>';
                         },
                     },
                 });
@@ -557,7 +558,7 @@ function areaResize(commId)
                 border-radius: 5px;
                 .link {
                     background: #fff;
-                    padding: 5px 0;
+                    padding: 8px 0;
                     border-bottom: 1px solid #dfdfdf;
                     width: 2.2rem;
                     display: flex; // justify-content: center;
@@ -758,22 +759,31 @@ function areaResize(commId)
         }
     }
     .swiper-pagination {
-        color: #000;
+        color: #fff;
         text-align: right;
-        .swiper-pagination-total {
-            margin-right: 0.25rem;
-        }
+        background: rgba(0,0,0,0.4);
+        width: 50px;
+        text-align: center;
+        border-radius: 20px;
+        position: absolute;
+        bottom: 21px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        right: 14px;
+        left: auto;
     }
 }
 
 .goodsD-priceAddress {
     background: #FFF;
-    padding: 0 0.38rem;
     margin-bottom: 0.2rem;
+    position: relative;
     .goodsD-priceW {
         background: #fff; // margin-bottom: 0.2rem;
         display: flex;
         justify-content: space-between;
+        margin: 0 0.38rem;
         .changeMoney {
             width: 1.6rem;
             height: 1.4rem;
@@ -803,7 +813,7 @@ function areaResize(commId)
             width: 4.8rem;
             .changeGoodsa {
                 line-height: 0.5rem;
-                margin-top: 0.5rem;
+                margin-top: 0.2rem;
                 font-size: 14px;
             }
             .changeGoodsb {
@@ -817,6 +827,7 @@ function areaResize(commId)
         font-size: 0.26rem;
         display: flex;
         padding: 0.34rem 0;
+         margin: 0 0.38rem;
         .goodsD-address {
             width: 10%;
             color: #999;
@@ -1186,5 +1197,15 @@ function areaResize(commId)
         background-image: url(/static/images/goTop.png);
         background-size: 25px
     }
+}
+
+.goodsStyle{
+    height: 20px;
+    width: 100%;
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    top: -14px;
+    background: #fff;
+    z-index: 1;
 }
 </style>

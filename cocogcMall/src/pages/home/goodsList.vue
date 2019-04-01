@@ -7,23 +7,22 @@
           <p @click="searchAll()" :class="{'hight-light': hightLight === 'all'}">全部</p>
         </li>
         <li>
-          <div @click="goodsOrder()" :class="{'hight-light': hightLight === 'sell'}">
+          <div @click="goodsOrder()" :class="{'hight-light': hightLight === 'sell'}" style="display: flex;align-items: center;">
             <p>销量</p>
-            <p class="j1Png gl-orderBg">
-              <span></span>
-              <span></span>
+            <p>
+              <span class="j1Png gl-orderBg gl-orderBga" ></span>
+              <span class="j1Png gl-orderBg gl-orderBgc"></span>
             </p>
           </div>
         </li>
         <li>
-          <div @click="goodsPrice()" :class="{'hight-light': hightLight === 'price'}">
+          <div @click="goodsPrice()" :class="{'hight-light': hightLight === 'price'}" style="display: flex;align-items: center;">
             <p>价格</p>
-            <p class="j1Png gl-orderBg">
-              <span></span>
-              <span></span>
+            <p>
+              <span class="j1Png gl-orderBg" :class="priceRange == 'asc'?'gl-orderBgb':'gl-orderBga'"></span>
+              <span class="j1Png gl-orderBg" :class="priceRange == 'desc'?'gl-orderBgd':'gl-orderBgc'"></span>
             </p>
           </div>
-
         </li>
         <li>
           <p @click="intervalCli" :class="{'hight-light': hightLight === 'integral'}">积分区间</p>
@@ -214,7 +213,8 @@
             this.goodsList = [];
             this.price = "0~*"
             this.salesVolume = "";
-
+            this.intervalFlag = false;
+            this.iSelectAct = 1;
             this.goodsListSearch(1)
         },
 
@@ -222,6 +222,8 @@
         intervalCli() {
           this.hightLight = 'integral'
             this.intervalFlag = !this.intervalFlag;
+            this.priceRange='';
+            this.priceRangeFlag = true;
         },
         iSelect(item, index) {
              if(item.integral == '0~NaN'){
@@ -260,6 +262,9 @@
         this.price = "0~*"
         this.priceRange = "";
         this.salesVolume = "";
+        this.intervalFlag = false;
+        this.priceRangeFlag = true;
+        this.iSelectAct = 1;
         this.goodsListSearch(1);
       },
 
@@ -272,6 +277,9 @@
         this.price = "0~*"
         this.priceRange = "";
         this.salesVolume = "y";
+         this.intervalFlag = false;
+         this.priceRangeFlag = true;
+         this.iSelectAct = 1;
         this.goodsListSearch(1);
       },
 
@@ -411,13 +419,26 @@
           padding: 0.5rem 0 0.18rem 0;
 
           p {
-            display: inline-block;
+                            display: inline-flex;
+    flex-direction: column;
           }
 
           .gl-orderBg {
             width: 0.22rem;
-            height: 0.26rem;
+            height: 0.13rem;
+            display: inline-block;
+          }
+          .gl-orderBga {
             background-position: -0.63rem -1.27rem;
+          }
+          .gl-orderBgb {
+            background-position: -0.63rem -1.59rem;
+          }
+          .gl-orderBgc {
+            background-position: -0.63rem -1.4rem;
+          }
+          .gl-orderBgd {
+            background-position: -0.63rem -1.71rem;
           }
         }
       }

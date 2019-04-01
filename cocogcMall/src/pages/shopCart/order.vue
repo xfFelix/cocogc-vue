@@ -3,7 +3,7 @@
         <header-top></header-top>
         <!-- 地址 -->
         <div style="padding-bottom: 70px;">
-            <div class="order-addressWN" addressMag>
+            <div class="order-addressWN">
                 <div v-if="addressDef != null">
                   <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}" replace>
                       <div class="order-address">
@@ -519,7 +519,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .order-bottom {
     height: 0.1rem;
     background-image: url(/static/images/bgRepeat.jpg);
@@ -709,10 +709,7 @@ export default {
     .swiper-container-rtl .swiper-button-prev.swiper-button-black {
         background-size: 13px;
         border: none;
-    } // .swiper-wrapper {
-    //     width: 93%;
-    //     overflow: hidden;
-    // }
+    } 
     .swiper-button-next {
         right: -5px;
     }

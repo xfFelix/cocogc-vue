@@ -52,7 +52,9 @@
           <!-- 页面 -->
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="item of banner" :key="item.title">
-              <img :src="item.src" alt="">
+              <a :href="item.url">
+                <img :src="item.src" alt="">
+              </a>
             </div>
           </div>
           <!-- 分页器 -->

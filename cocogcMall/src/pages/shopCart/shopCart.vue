@@ -1,5 +1,5 @@
 <template>
-    <div class="shop" >
+    <div class="shop">
         <div class="shop-headW">
             <h3 class="shop-title">购物车</h3>
             <p class="shop-headR" v-if="list.length != 0">
@@ -36,12 +36,13 @@
                                 <p class="shop-selGoodsC">{{items.goods!=null?items.goods.attrs:''}}</p>
                                 <div class="shop-selGoodsN">
                                     <div>
-                                      <span class="shop-selGoodsS">{{items.goods.currentPrice|toDecimal2Fp}}.</span><span class="shop-selGoodsS">{{items.goods.currentPrice|toDecimal2Ap}}</span>
+                                        <span class="shop-selGoodsS">{{items.goods.currentPrice|toDecimal2Fp}}.</span>
+                                        <span class="shop-selGoodsS">{{items.goods.currentPrice|toDecimal2Ap}}</span>
                                     </div>
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
                                         <span @click="numDecrease(index) " :class="items.num>1?'decNum':'decNoNum'"></span>
-                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1" /></span>
+                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1" @click="numberShow(items.num,index)" /></span>
                                         <!-- 是否需要有货和没货？+号颜色是否要变 -->
                                         <span @click="numIncrease(index)"></span>
                                     </p>
@@ -58,6 +59,24 @@
             <p>购物车竟然是空的~~</p>
             <!-- <p>再忙也记得买点什么犒赏自己</p> -->
         </div>
+
+        <div class="inputNum" v-if="inputNumShow">
+            <div class="inputNumInfo">
+                <p class="inputNumTitle">修改购买数量</p>
+                <div class="inputNumWrite">
+                    <span class="decNum" @click="numDec">-</span>
+                    <span><input type="number" min="1" v-model="goodsNum" /></span>
+                    <span @click="numInc">+</span>
+                </div>
+            </div>
+            <div class="inputNumBnt">
+                <p @click="cancelInp">取消</p>
+                <p @click="comfirmInp()">确定</p>
+            </div>
+        </div>
+        <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <bg-mask v-model="inputNumShow"></bg-mask>
+        </transition>
 
         <!-- 猜你喜欢 -->
         <guess-like></guess-like>
@@ -90,7 +109,6 @@
             </div>
         </div>
 
-
     </div>
 </template>
 <script>
@@ -98,7 +116,7 @@ import Guesslike from "../../common/guesslike.vue";
 import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
 import { mapActions, mapGetters } from 'vuex';
-
+import BgMask from "@/common/BgMask"
 
 export default {
     data() {
@@ -110,31 +128,34 @@ export default {
             selectAllPrice: 0,
             selectAllGoods: 0,
             deitDelFlag: true,
+            inputNumShow: true,
+            goodsNum: 1,
+            goodsNumIndex: 0
 
         };
     },
     computed: {
-      countNum() {
-        let num = 0
-        if (this.list) {
-          let buys = []
-          let total = this.list.reduce((state, item) =>{
-            if (item.check) {
-              buys.push({goodsId: item.goodsId, nums: item.num})
-              state.num = item.num + state.num
-              num ++
+        countNum() {
+            let num = 0
+            if (this.list) {
+                let buys = []
+                let total = this.list.reduce((state, item) => {
+                    if (item.check) {
+                        buys.push({ goodsId: item.goodsId, nums: item.num })
+                        state.num = item.num + state.num
+                        num++
+                    }
+                    return state
+                }, { num: 0 })
+                if (num === this.list.length) {
+                    this.selectAllFlag = true
+                }
+                this.axios(testUrl + api.updateCart, { token: getToken(), buys: buys }, 'post')
+                return total.num
+            } else {
+                return 0
             }
-            return state
-          },{num: 0})
-          if (num === this.list.length) {
-            this.selectAllFlag = true
-          }
-          this.axios(testUrl + api.updateCart, {token: getToken(),buys: buys}, 'post')
-          return total.num
-        } else {
-          return 0
         }
-      }
     },
     mounted() {
         this.resetAddress()
@@ -158,8 +179,8 @@ export default {
             checkAddress: 'userinfo/checkAddress'
         }),
         async resetAddress() {
-          let data = await this.checkAddress()
-          window.chooseAddress = data
+            let data = await this.checkAddress()
+            window.chooseAddress = data
         },
         getCartGoodsList(callback) {
             let _this = this;
@@ -192,44 +213,44 @@ export default {
         // 删除
         delGoods() {
             this.MessageBox.confirm('是否删除？').then(
-              confirm => {
-                var that = this;
-                var ids = [];
-                that.list.forEach((res) => {
-                    if (res.check == true) {
-                        ids.push(res.id);
+                confirm => {
+                    var that = this;
+                    var ids = [];
+                    that.list.forEach((res) => {
+                        if (res.check == true) {
+                            ids.push(res.id);
+                        }
+                    });
+                    if (ids.length > 0) {
+                        that.axios(testUrl + api.removeCarts,
+                            {
+                                token: getToken(),
+                                id: ids.join(",")
+                            },
+                            'post')
+                            .then((data) => {
+                                if (data.error_code == 0) {
+                                    that.getCartGoodsList(function(data) {
+                                        if (data == null) {
+                                            that.list = [];
+                                            that.setNum(0)
+                                        } else {
+                                            that.list = data;
+                                        }
+                                        that.deitDelFlag = false;
+                                        that.selectAllPrice = 0;
+                                        that.selectAllGoods = 0;
+                                    });
+                                }
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            })
                     }
-                });
-                if (ids.length > 0) {
-                    that.axios(testUrl + api.removeCarts,
-                        {
-                            token: getToken(),
-                            id: ids.join(",")
-                        },
-                        'post')
-                        .then((data) => {
-                            if (data.error_code == 0) {
-                                that.getCartGoodsList(function(data) {
-                                    if (data == null) {
-                                        that.list = [];
-                                        that.setNum(0)
-                                    } else {
-                                        that.list = data;
-                                    }
-                                    that.deitDelFlag = false;
-                                    that.selectAllPrice = 0;
-                                    that.selectAllGoods = 0;
-                                });
-                            }
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        })
+                },
+                cancel => {
+                    return console.log('cancel')
                 }
-              },
-              cancel => {
-                return console.log('cancel')
-              }
             )
 
         },
@@ -243,7 +264,7 @@ export default {
                     duration: 1000
                 })
                 setTimeout(() => {
-                   window.location.href = infoURl+ '#!/cert?token=' + getToken();
+                    window.location.href = infoURl + '#!/cert?token=' + getToken();
                 }, 1000)
                 return
             }
@@ -300,7 +321,7 @@ export default {
         },
         // 数量减小
         numDecrease(index) {
-          if (this.list[index].num > 1) {
+            if (this.list[index].num > 1) {
                 this.list[index].check = true
                 this.list[index].num--;
                 this.decrementNum()
@@ -312,7 +333,7 @@ export default {
             this.list[index].check = true
             if (this.list[index].goods != null && this.list[index].num < this.list[index].goods.stocks) {
                 this.list[index].num++;
-                this.incrementNum()
+                this.incrementNum();
                 this.computeTotal();
             }
         },
@@ -353,17 +374,39 @@ export default {
             });
             this.selectAllFlag = Notselected;
         },
+        cancelInp() {
+            this.inputNumShow = false;
+        },
+        numberShow(itemNum, index) {
+            this.inputNumShow = true;
+            this.goodsNum = itemNum;
+            this.goodsNumIndex = index
+        },
+        comfirmInp() {
+            this.inputNumShow = false;
+            this.list[this.goodsNumIndex].num = this.goodsNum;
+        },
+        numDec() {
+            if (this.goodsNum > 1) {
+                this.goodsNum--
+            }
+        },
+        numInc() {
+            this.goodsNum++
+        }
     },
     components: {
-        "guess-like": Guesslike
+        "guess-like": Guesslike,
+        BgMask
     }
 };
 </script>
 
 <style lang="less">
-.shop{
-  padding-bottom: 1.4rem;
+.shop {
+    padding-bottom: 1.4rem;
 }
+
 .shop-headW {
     background: #fff;
     position: relative;
@@ -502,6 +545,7 @@ export default {
                         .shop-selGoodsS {
                             color: #333333;
                         }
+
                         .shop-selGoodsOW {
                             width: 1.68rem;
                             height: 0.48rem;
@@ -517,7 +561,6 @@ export default {
                                 text-align: center;
                                 display: flex;
                             }
-
                             .decNum {
                                 float: left;
                                 background-position: -2.85rem -1.04rem;
@@ -555,6 +598,8 @@ export default {
             }
         }
     }
+
+
 
     .shop-dropW {
         position: absolute;
@@ -618,7 +663,7 @@ export default {
             margin: 0 auto;
         }
         .shop-selectN {
-            background-position: -5.18rem -0.77rem;
+            background-position: -5.17rem -0.77rem;
         }
         .shop-selectY {
             background-position: -4.75rem -0.77rem;
@@ -678,4 +723,70 @@ export default {
 }
 
 
+.inputNum {
+    width: 85%;
+    background: #fff;
+    border-radius: 10px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 0.32rem;
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    right: 0;
+    z-index: 101;
+    .inputNumInfo {
+        .inputNumTitle {
+            line-height: 1.2rem;
+            color: #333;
+        }
+        .inputNumWrite {
+            line-height: 0.8rem;
+            border: 1px solid #dfdfdf;
+            width: 50%;
+            margin: 0 auto 0.4rem auto;
+            display: flex;
+            span:nth-of-type(2) {
+                border-right: 1px solid #DFDFDF;
+                border-left: 1px solid #DFDFDF;
+                width: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            span {
+                text-align: center;
+                width: 25%;
+                display: inline-block;
+                font-size: 26px;
+                font-weight: bold;
+                input {
+                    text-align: center;
+                    width: 100%;
+                    height: 98%;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+    .inputNumBnt {
+        display: flex;
+        justify-content: space-around;
+        height: 0.9rem;
+        line-height: 0.8rem;
+        border-top: 1px solid #DFDFDF;
+        p {
+            width: 50%;
+        }
+        p:first-of-type {
+            color: #333;
+            border-right: 1px solid #DFDFDF;
+        }
+        p:last-of-type {
+            color: #fff;
+            background: #32CE84;
+            border-radius: 0 0 10px 0;
+        }
+    }
+}
 </style>
