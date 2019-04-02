@@ -152,16 +152,17 @@ export default {
                 color: #333333;
                 font-size: 0.26rem;
                 line-height: 1.5em;
-                height: 3em;
+                height: 2.8em;
                 overflow: hidden;
                 word-break: break-all;
                 word-wrap: break-word;
                 text-align: left;
-                margin-top: 0.12rem;
+                margin: 0.12rem 0; 
             }
             .home-iMoneyW {
                 display: flex;
                 align-items: center;
+                font-size: 0.26rem;
                 .home-iMoneyL {
                     width: 0.26rem;
                     height: 0.28rem;
