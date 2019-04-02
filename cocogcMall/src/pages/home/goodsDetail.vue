@@ -488,8 +488,7 @@ export default {
     }
 };
 
-function areaResize(commId)
-{
+function areaResize(commId){
   setTimeout(function(){
     var oDiv = document.getElementById(commId);
     if (!oDiv) return 0;

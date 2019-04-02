@@ -65,7 +65,7 @@
                 <p class="inputNumTitle">修改购买数量</p>
                 <div class="inputNumWrite">
                     <span class="decNum" @click="numDec">-</span>
-                    <span><input type="number" min="1" v-model="goodsNum" /></span>
+                    <span><input type="text" min="1" v-model.number="goodsNum"/></span>
                     <span @click="numInc">+</span>
                 </div>
             </div>
@@ -93,8 +93,7 @@
                 </p>
                 <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum1':'shop-cartNum0'">
                     <span class="shop-carNumI" @click="settleGoods">
-                        去结算(
-                        <span class="shop-cartNum">{{countNum}}</span>)
+                        去结算(<span class="shop-cartNum">{{countNum}}</span>)
                     </span>
                 </p>
             </div>
@@ -102,8 +101,7 @@
             <div class="shop-cPN" v-if="!deitDelFlag">
                 <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum1':'shop-cartNum0'">
                     <span class="shop-carNumI" @click="delGoods">
-                        删除(
-                        <span class="shop-cartNum">{{selectAllGoods}}</span>)
+                        删除(<span class="shop-cartNum">{{selectAllGoods}}</span>)
                     </span>
                 </p>
             </div>
