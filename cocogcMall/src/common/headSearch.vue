@@ -59,7 +59,7 @@ export default {
           }
         },
         handleSelect(item) {
-          this.$emit('switchName')
+          this.$emit('switchName', item.id)
         },
     },
     mounted() {

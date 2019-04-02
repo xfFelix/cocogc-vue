@@ -72,7 +72,7 @@
 <script>
   import headSearch from "../../common/headSearch.vue";
   import {
-    mapGetters
+    mapGetters, mapActions
   } from 'vuex';
   import api from '../../service/api';
   import {
@@ -148,7 +148,8 @@
     },
     computed: {
       ...mapGetters({
-        userinfo: 'userinfo/getUserInfo'
+        userinfo: 'userinfo/getUserInfo',
+        getScrollto: 'scrollto/getGoodsList'
       })
     },
     mounted() {
@@ -174,12 +175,38 @@
       );
       this.urlParams();
     },
+    activated() {
+      // 观察是否到了底部
+      this.observer = new IntersectionObserver(
+        function (entries) {
+          // 如果不可见，就返回
+          if (entries[0].intersectionRatio <= 0) return;
+          // loadItems(10);  //可见做的事
+          var avtive = $('#moreMsg').attr('data-active')
+          if (avtive !== 'false') {
+            $('#moreMsg').click();
+          }
+        });
+      // 开始观察
+      this.observer.observe(
+        document.querySelector('#moreMsg')
+      );
+      console.log(this.getScrollto)
+      window.scrollTo(0,this.getScrollto)
+    },
+    deactivated() {
+      console.log('deactivated'+ document.documentElement.scrollHeight)
+      this.setScrollto(document.documentElement.scrollTop||document.body.scrollTop)
+    },
     methods: {
       checkColor(id) {
         if (this.hightLight === 'integral') {
           return id === this.iSelectAct ? 'iSelectCla' : 'iSelectNo'
         }
       },
+      ...mapActions({
+        setScrollto: 'scrollto/setGoodsList'
+      }),
         //搜索框
         parentChild(val) {
             this.keyWord = val;
@@ -188,10 +215,10 @@
             this.switch = 'name'
             this.goodsListSearch(1)
         },
-        switchName() {
+        switchName(id) {
           this.switch = 'id'
           this.goodsList = [];
-          this.goodsListSearch(1)
+          this.goodsListSearch(1, id)
         },
         //加载更多
         moreMsg() {
@@ -332,15 +359,21 @@
         this.goodsListSearch(this.offsetRows)
       },
 
-      goodsListSearch(offsetRows) {
+      goodsListSearch(offsetRows, id) {
         if (this.switch === 'id') {
-          this.getListById(offsetRows)
+          let categoryId = ''
+          if (this.$route.query.categoryId) {
+            categoryId = this.$route.query.categoryId
+          } else {
+            categoryId = id
+          }
+          this.getListById(offsetRows, categoryId)
         } else {
           this.getListByName(offsetRows)
         }
       },
-      async getListById(offsetRows) {
-        let data = await this.axios(jdTestUrl + api.searchItem, {categoryId: this.$route.query.categoryId, offset: offsetRows, rows: 10}, 'get')
+      async getListById(offsetRows, categoryId) {
+        let data = await this.axios(jdTestUrl + api.searchItem, {categoryId: categoryId, offset: offsetRows, rows: 10}, 'get')
         if (data.code == 0) {
           if (data.list.length > 0) {
             this.goodsList = this.goodsList.concat(data.list);
