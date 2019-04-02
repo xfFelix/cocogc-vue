@@ -13,7 +13,7 @@
           <div class="orderContent">
               <router-link v-for="(item,index) in list" :key="index" :class="'ye'+item.id" :to="{name: 'orderDetails', params: {orderId:item.orderId}}" >
                   <!-- 多种商品 -->
-                  <div  v-if="item.goodsList.length>1" class="order-goodsMW">
+                  <div  v-if="item.goodsList&&item.goodsList.length>1" class="order-goodsMW">
                       <div class="oMGoodsTit">
                           <p class="oMGoodsTitLeft">
                               <span>{{item.vendorId}}</span>
@@ -56,7 +56,7 @@
                   </div>
 
                   <!-- 单个商品 -->
-                  <div class="oMGoodsW" v-else>
+                  <div class="oMGoodsW" v-else-if="item.goodsList">
                       <div class="oMGoodsTit">
                           <p class="oMGoodsTitLeft">
                               <span>{{item.vendorId}}</span>
