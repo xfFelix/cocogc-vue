@@ -14,16 +14,16 @@
             <ul class="loginUl">
                 <li>
                     <div class="loginLileft">
-                        <span></span>
+                        <span class="loginIcon"></span>
                         <input type="number" placeholder="请输入注册手机号码" v-model.trim="loginForm.userName" @input="phoneInp($event)">
                     </div>
                     <div class="loginLiRight">
                         <span class="clean" @click="phoneClean()" v-if="phoneCleanShow"></span>
                     </div>
                 </li>
-                <li>
+                <li  v-if="smsFlag===false">
                     <div class="loginLileft">
-                        <span></span>
+                        <span class="passWordIcon"></span>
                         <input type="password" placeholder="请输入密码" v-model.trim="loginForm.passWord" @input="passInp($event)" v-if="passShow == false">
                         <input type="text" placeholder="请输入密码" v-model.trim="loginForm.passWord" @input="passInp($event)" v-if="passShow == true">
                     </div>
@@ -34,13 +34,24 @@
                         <span class="eyeImgOpen" v-if="eyeImgState == true" @click="eyeImgClose"></span>
                     </div>
                 </li>
+
+                <li v-if="smsFlag">
+                    <div class="loginLileft">
+                        <span class="smsIcon"></span>
+                        <input type="number" placeholder="请输入短信验证码" v-model.trim="loginForm.smsCode">
+                    </div>
+                   <div class="loginLiRight">
+                        <span class="validate" @click="validateCli()">{{validate}}</span>
+                    </div>
+                </li>
             </ul>
         </section>
 
         <p class="bntWrap" @click="loginBnt()">
             <span class="bnt">登录</span>
         </p>
-        <p class="forgetPass" @click="forgerPass()">忘记密码？</p>
+        <p class="forgetPass" @click="usePassWord()" v-if="smsFlag">使用密码登录</p>
+        <p class="forgetPass" @click="forgerPass()" v-if="smsFlag===false">忘记密码？</p>
     </div>
 </template>
 
@@ -59,8 +70,12 @@ export default {
             vaildCleanShow: false,
             loginForm: {
                 userName: '',
-                passWord: ''
-            }
+                passWord: '',
+                smsCode:''
+            },
+            validate: "获取验证码",
+            validateFlag: 1,
+            smsFlag:true
         };
     },
     computed: {
@@ -74,6 +89,7 @@ export default {
             this.axios(infoURl+api.login, {
                 mobile: _this.loginForm.userName,
                 passwd: _this.loginForm.passWord,
+                verify_code:_this.loginForm.smsCode,
             }, 'post')
                 .then((data) => {
                   if (data.error_code == 0) {
@@ -85,7 +101,7 @@ export default {
                           this.$router.replace('/layout/home');
                         }
                     } else {
-                         MessageBox.confirm('', {
+                        this.MessageBox.confirm('', {
                             message: '手机号或登录密码错误。',
                             title: '登录失败',
                             confirmButtonText: '忘记密码',
@@ -98,12 +114,9 @@ export default {
                         return
                     }
                 })
-                .catch((err) => {
-
-                })
         },
         goBack(){
-          this.$router.back()
+          this.$router.back();
         },
         //眼睛和清空
         eyeImgClose: function() {
@@ -131,14 +144,22 @@ export default {
         //登录按钮
         loginBnt: function() {
             if (IsEmpty(this.loginForm.userName) || !IsMobile(this.loginForm.userName)) {
-                this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
+                this.MessageBox("提示", "请输入有效的11位手机号码。")
                 return false;
             }
-            if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
-                this.MessageBox("密码错误", "用户名或密码错误")
-                return false;
+
+            if(this.smsFlag === false){
+                if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
+                    this.MessageBox("提示", "用户名或密码错误")
+                    return false;
+                }
+            }else{
+                if (IsEmpty(this.loginForm.smsCode)) {
+                    this.MessageBox("提示", "短信验证码不能为空")
+                    return false;
+                }
             }
-            this.login()
+            this.login();
         },
 
         //弹出框按钮
@@ -149,6 +170,51 @@ export default {
             this.loginForm.passWord = '';
 
         },
+
+        validateCli: function() {
+            if (IsEmpty(this.loginForm.userName) || !IsMobile(this.loginForm.userName)) {
+                this.MessageBox("提示", "请输入有效的11位手机号码。")
+                return false;
+            }
+            if (this.validateFlag == 1) {
+                this.sms();
+            }
+        },
+
+        // 短信验证码接口
+        sms: function() {
+            let _this = this;
+            this.axios(infoURl+api.sms, {
+                mobile: _this.loginForm.userName,
+            }, 'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        this.validateFlag = 0;
+                        this.validate = "120s 重新获取";
+                        let _this = this;
+                        let timeInit = 120;
+                        let countDown = setInterval(function() {
+                            let i = 1;
+                            timeInit = timeInit - i;
+                            if (timeInit > 0) {
+                                _this.validate = timeInit + 's 重新获取'
+                            } else {
+                                _this.validate = "重新获取"
+                                _this.validateFlag = 1;
+                                clearInterval(countDown)
+                            }
+                        }, 1000)
+                    } else {
+                         this.MessageBox("提示", data.message)
+                    }
+                })
+                .catch((data) => {
+                    this.MessageBox("提示", data.message)
+                })
+        },
+        usePassWord(){
+            this.smsFlag = false;
+        }   
     },
     mounted() {
     },
@@ -304,13 +370,13 @@ export default {
             }
         }
     }
-    li:nth-of-type(1) .loginLileft span {
+    .loginIcon{
         background-position: -80px -3px;
     }
-    li:nth-of-type(2) .loginLileft span {
+    .passWordIcon{
         background-position: -52px -3px;
     }
-    li:nth-of-type(3) .loginLileft span {
+    .smsIcon{
         background-position: -105px -3px;
     }
     li:last-of-type {
@@ -397,11 +463,16 @@ export default {
     }
 }
 
-
-
-
-
-
+.validate {
+    font-size: 12px;
+    border: 1px solid #19ad6a;
+    border-radius: 30px;
+    line-height: 0.4rem;
+    color: #19ad6a;
+    height: 0.4rem;
+    width: 1.8rem;
+    text-align: center;
+}
 
 .toastMsg {
     background: #fff;

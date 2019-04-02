@@ -52,6 +52,9 @@ const searchHint = '/query/type/keyword' // 搜索提示
 const getOrderTotals = 'api/selectOrderTotals' //订单未完成数量
 const searchItem = '/query/categoryId'
 
+const confirmReceived = 'api/confirmReceived' //确认收货
+
+
 
 
 export default {
@@ -92,5 +95,6 @@ export default {
   newsList,
   searchHint,
   getOrderTotals,
-  searchItem
+  searchItem,
+  confirmReceived
 }
