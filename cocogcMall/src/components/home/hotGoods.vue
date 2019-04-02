@@ -22,7 +22,7 @@
                                 </p>
                                 <div class="home-hSmoneyW">
                                     <span class="home-hSmoneyL"></span>
-                                    <span class="home-hSmoney">{{item.marketPrice|toDecimal2(item.marketPrice)}}</span>
+                                    <span class="home-hSmoney">{{item.currentPrice|toDecimal2}}</span>
                                 </div>
                             </router-link>
                         </div>
