@@ -563,14 +563,15 @@ export default {
                                 margin: 0 auto;
                                 text-align: center;
                                 display: flex;
+                                align-self: center;
                             }
                             .decNum {
                                 float: left;
-                                background-position: -2.85rem -1.04rem;
+                                background-position: -2.88rem -1.04rem;
                             }
                             .decNoNum {
                                 float: left;
-                                background-position: -2.05rem -1.04rem;
+                                background-position: -2.08rem -1.04rem;
                             }
                             span:nth-of-type(2) {
                                 width: 0.76rem;
@@ -584,7 +585,7 @@ export default {
                             }
                             span:nth-of-type(3) {
                                 float: right; // background-position: -2.49rem -1.15rem; 灰色
-                                background-position: -3.27rem -1.17rem;
+                                background-position: -3.32rem -1.17rem;
                             }
                             span:nth-of-type(odd) {
                                 display: inline-block;
