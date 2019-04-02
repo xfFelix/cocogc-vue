@@ -21,7 +21,7 @@
           <!-- <span class="home-searchL"></span> -->
           <div class="home-searchI">
             <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" @input="searchHint($event)" autocomplete="true"/> -->
-            <el-autocomplete v-model="searchCont" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" class="autocomplete"></el-autocomplete>
+            <el-autocomplete v-model="searchCont" @keyup.enter.native="seachClick" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" class="autocomplete"></el-autocomplete>
           </div>
         </div>
         <span @click="seachClick()" class="seachBnt">搜索</span>
@@ -33,7 +33,7 @@
           <!-- <span class="home-searchL"></span> -->
           <p class="home-searchI">
             <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont" /> -->
-            <el-autocomplete v-model="searchCont" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false"></el-autocomplete>
+            <el-autocomplete v-model="searchCont" @keyup.enter.native="seachClick" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false"></el-autocomplete>
           </p>
         </div>
         <span @click="seachClick" class="seachBntA">搜索</span>
