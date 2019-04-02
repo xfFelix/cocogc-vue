@@ -6,13 +6,14 @@
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
             <span>椰子分公告：</span>
-              <marquee  style="width: 65%;font-size:0.26rem;" loop="infinite">
+              <!-- <marquee  style="width: 65%;font-size:0.26rem;" loop="infinite">
                   <div style="display:flex;">
                     <a :href="item.url" class="link-url" v-for="(item,index) in newsList" :key="index.title" v-if="item.status == 0">
                        {{item.noticeTitle}}
                     </a>
                   </div>
-              </marquee>
+              </marquee> -->
+              <div id="marquee" style="width:65%;"></div>
           </div>
           <span class="ih-goImg j1Png"></span>
         </div>
@@ -188,7 +189,6 @@ export default {
         })
     },
     async getNews() {
-
       let newsList = await this.axios(infoURl + api.newsList, {
         "catId": 206,
         "startNum": 0,
@@ -197,12 +197,21 @@ export default {
         .then((data) => {
           if (data.resultCode == 0) {
             this.newsList = data.data;
+            let marqueeHtml = document.createElement('div');
+            let html = `<marquee  style="font-size:0.26rem;margin-top: 0.2rem;"  scrollamount=7   loop="infinite" >`
+            this.newsList.forEach(res => {
+              if(res.status == 0){
+                 html += `<a href=${res.url} class="link-url" style="color:#fff;margin-right: 50px;">
+                       ${res.noticeTitle}
+                    </a>`
+              }
+            });
+            html += `</marquee>`;
+            marqueeHtml.innerHTML = html;
+            document.getElementById("marquee").appendChild(marqueeHtml)
           } else {
             this.Toast(data.message);
           }
-        })
-        .catch((err) => {
-          this.Toast(data.message);
         })
     },
 
