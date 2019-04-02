@@ -238,21 +238,21 @@ export default {
     background-size: 172px 32px;
 }
 
-.loginUl li:nth-of-type(1) .loginLileft span {
-    background-position: -74px -2px;
-}
+// .loginUl li:nth-of-type(1) .loginLileft span {
+//     background-position: -74px -2px;
+// }
 
-.loginUl li:nth-of-type(2) .loginLileft span {
-    background-position: -50px -2px;
-}
+// .loginUl li:nth-of-type(2) .loginLileft span {
+//     background-position: -50px -2px;
+// }
 
-.loginUl li:nth-of-type(3) .loginLileft span {
-    background-position: -100px -2px;
-}
+// .loginUl li:nth-of-type(3) .loginLileft span {
+//     background-position: -100px -2px;
+// }
 
-.loginUl li:last-of-type {
-    border: none;
-}
+// .loginUl li:last-of-type {
+//     border: none;
+// }
 
 .loginLileft {
     display: flex;
