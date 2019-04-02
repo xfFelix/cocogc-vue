@@ -181,6 +181,7 @@ export default {
         this.homeSmWrap = true;
       }
     },
+
     async getNews() {
 
       let newsList = await this.axios(infoURl + api.newsList, {
@@ -208,6 +209,9 @@ export default {
       to.meta.keepAlive = false
     }
     next()
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll)
   },
   components: {
     "v-shortcut": Shortcut,

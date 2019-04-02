@@ -1,7 +1,7 @@
 <template>
   <div class="goodsList">
     <div class="home-smWrap">
-      <head-search @searchChild='parentChild' v-bind:kewWordC="keyWord" @switchName="switchName"></head-search>
+      <head-search @searchChild='parentChild' v-bind:kewWordC="keyWord"></head-search>
       <ul class="goodsList-order one-bottom-px">
         <li>
           <p @click="searchAll()" :class="{'hight-light': hightLight === 'all'}">全部</p>
@@ -40,9 +40,10 @@
 
     </div>
 
-    <div class="goodList-interWrap">
+    <div class="goodList-interWrap" ref="wrapper">
       <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
-        <router-link :to="{path:'goodsDetail/'+item.id}">
+        <!-- <router-link :to="{path:'goodsDetail/'+item.id}"> -->
+        <div @click="goDetail(item.id)">
           <div class="home-iGoods">
             <img v-lazy="item.image" alt="" />
           </div>
@@ -53,23 +54,17 @@
             <span class="home-iMoneyL"></span>
             <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
           </div>
-        </router-link>
-      </div>
-      <div id="moreMsg" @click="moreMsg()" v-show="moreShow">
-        <mt-spinner type="fading-circle" class="loading-more"></mt-spinner>
-        <!-- <p class="loading-more-txt"> 点击加载更多...</p> -->
+        </div>
+        <!-- </router-link> -->
       </div>
       <no-data :data="goodsList"></no-data>
-      <template v-if="goodsList.length">
-        <div class="onBottom" v-show="!moreShow">
-          已经到底了噢~~
-        </div>
-      </template>
     </div>
+    <observer @intersect="intersected"></observer>
   </div>
 </template>
 <script>
   import headSearch from "../../common/headSearch.vue";
+  import Observer from '@/common/Observer'
   import {
     mapGetters, mapActions
   } from 'vuex';
@@ -131,7 +126,6 @@
         goodsList: [],
         pages: 1, //页数
         pages_size: 10, //每页显示页数
-        offsetRows: 1, //页数开始
         price: '', //判断点击的积分区间
         moreShow: false,
         brandId: '', //分类id
@@ -142,62 +136,48 @@
         productTypeId: "",
         token: getToken(),
         hightLight: 'all',
-        switch: 'name'
+        isFromDetail: false
       };
     },
     computed: {
       ...mapGetters({
         userinfo: 'userinfo/getUserInfo',
         getScrollto: 'scrollto/getGoodsList'
-      })
+      }),
+      offsetRows () {
+        return 1 + this.pages_size * (this.pages - 1)
+      }
     },
     mounted() {
-      if (this.$route.query.categoryId) {
-        this.switch = 'id'
-      } else {
-        this.switch = 'name'
-      }
-      // 观察是否到了底部
-      this.observer = new IntersectionObserver(
-        function (entries) {
-          // 如果不可见，就返回
-          if (entries[0].intersectionRatio <= 0) return;
-          // loadItems(10);  //可见做的事
-          var avtive = $('#moreMsg').attr('data-active')
-          if (avtive !== 'false') {
-            $('#moreMsg').click();
-          }
-        });
-      // 开始观察
-      this.observer.observe(
-        document.querySelector('#moreMsg')
-      );
       this.urlParams();
     },
+    beforeRouteEnter(to, from, next) {
+      if (from.path.includes('goodsDetail')) {
+        next(vm=>{
+          vm.isFromDetail = true
+        })
+      } else {
+        next(vm=>{
+          vm.isFromDetail = false
+        })
+      }
+    },
     activated() {
-      // 观察是否到了底部
-      this.observer = new IntersectionObserver(
-        function (entries) {
-          // 如果不可见，就返回
-          if (entries[0].intersectionRatio <= 0) return;
-          // loadItems(10);  //可见做的事
-          var avtive = $('#moreMsg').attr('data-active')
-          if (avtive !== 'false') {
-            $('#moreMsg').click();
-          }
-        });
-      // 开始观察
-      this.observer.observe(
-        document.querySelector('#moreMsg')
-      );
-      console.log(this.getScrollto)
+      console.log('activated:'+this.getScrollto)
       window.scrollTo(0,this.getScrollto)
     },
-    deactivated() {
-      console.log(this)
-      this.setScrollto(document.documentElement.scrollTop||document.body.scrollTop)
-    },
+    // deactivated() {
+    //   console.log('deactivated:'+this.scrollTop)
+    //   this.setScrollto(this.scrollTop)
+    // },
     methods: {
+      goDetail(id) {
+        this.setScrollto(document.documentElement.scrollTop || document.body.scrollTop)
+        this.$router.push({path: '/goodsDetail/'+ id})
+      },
+      handleScroll () {
+        this.scrollTop = document.documentElement.scrollTop||document.body.scrollTop
+      },
       checkColor(id) {
         if (this.hightLight === 'integral') {
           return id === this.iSelectAct ? 'iSelectCla' : 'iSelectNo'
@@ -206,25 +186,20 @@
       ...mapActions({
         setScrollto: 'scrollto/setGoodsList'
       }),
+      initData() {
+        this.pages = 1
+        this.pages_size= 10
+        this.goodsList = []
+      },
         //搜索框
         parentChild(val) {
             this.keyWord = val;
-            this.goodsList = [];
+            this.initData()
             this.brandId = ''
             this.switch = 'name'
-            this.goodsListSearch(1)
-        },
-        switchName(id) {
-          this.switch = 'id'
-          this.goodsList = [];
-          console.log(id)
-          this.getListById(1, id)
-        },
-        //加载更多
-        moreMsg() {
-            this.pages += 1;
-            this.offsetRows = 1 + 10 * (this.pages - 1);
-            this.goodsListSearch(this.offsetRows)
+            if (!this.goodsList.length) {
+              this.intersected()
+            }
         },
         //价格顺序
         goodsPrice() {
@@ -236,19 +211,16 @@
                 this.priceRange = 'desc'
                 this.priceRangeFlag = true;
             }
-            this.pages = 1;
-            this.offsetRows = 1;
-            this.goodsList = [];
+            this.initData()
             this.price = "0~*"
             this.salesVolume = "";
             this.intervalFlag = false;
             this.iSelectAct = 1;
-            this.goodsListSearch(1)
         },
 
         //判断积分区间
         intervalCli() {
-          this.hightLight = 'integral'
+            this.hightLight = 'integral'
             this.intervalFlag = !this.intervalFlag;
             this.priceRange='';
             this.priceRangeFlag = true;
@@ -267,48 +239,37 @@
                 })
                 return
             }else{
-                this.pages = 1;
-                this.offsetRows = 1;
-                this.goodsList = [];
+                this.initData()
                 this.priceRange = "";
                 this.salesVolume = "";
-
                 this.iSelectAct = index; //改变积分颜色
                 this.intervalFlag = false;
-
                 this.price = item.integral;
-                this.goodsListSearch(1)
             }
       },
 
       //所有
       searchAll() {
         this.hightLight = 'all'
-        this.pages = 1;
-        this.offsetRows = 1;
-        this.goodsList = [];
+        this.initData()
         this.price = "0~*"
         this.priceRange = "";
         this.salesVolume = "";
         this.intervalFlag = false;
         this.priceRangeFlag = true;
         this.iSelectAct = 1;
-        this.goodsListSearch(1);
       },
 
       //销量排序
       goodsOrder() {
         this.hightLight = 'sell'
-        this.pages = 1;
-        this.offsetRows = 1;
-        this.goodsList = [];
+        this.initData()
         this.price = "0~*"
         this.priceRange = "";
         this.salesVolume = "y";
-         this.intervalFlag = false;
-         this.priceRangeFlag = true;
-         this.iSelectAct = 1;
-        this.goodsListSearch(1);
+        this.intervalFlag = false;
+        this.priceRangeFlag = true;
+        this.iSelectAct = 1;
       },
 
       //判断url参数
@@ -317,10 +278,7 @@
         this.brandId = this.$route.query.classfyId;
         this.keyWord = this.$route.query.keyWord;
         this.salesVolume = this.$route.query.salesVolume;
-
         this.productTypeId = this.$route.query.quickItem;
-
-
         switch (this.$route.query.integra) {
           case "0-*":
             this.iSelectAct = 1;
@@ -348,9 +306,6 @@
           this.price = "0~*";
           this.iSelectAct = 1;
         }
-
-
-
         if (this.$route.query.classfyId == undefined) {
           this.brandId = ""
         }
@@ -363,69 +318,31 @@
         if (this.productTypeId == undefined) {
           this.productTypeId = ""
         }
-
-
-        this.goodsListSearch(this.offsetRows)
       },
-
-      goodsListSearch(offsetRows, id) {
-        if (this.switch === 'id') {
-          let categoryId = ''
-          if (this.$route.query.categoryId) {
-            categoryId = this.$route.query.categoryId
-          } else {
-            categoryId = id
-          }
-          this.getListById(offsetRows, categoryId)
-        } else {
-          this.getListByName(offsetRows)
-        }
-      },
-      async getListById(offsetRows, categoryId) {
-        let data = await this.axios(jdTestUrl + api.searchItem, {categoryId: categoryId, offset: offsetRows, rows: 10}, 'get')
+      async intersected() {
+        let data = await this.axios(jdTestUrl + api.keyword, {
+          "categoryId": this.brandId,
+          "keyWord": this.keyWord,
+          "offset": this.offsetRows,
+          "price": this.price.replace('~', '-'),
+          "priceRange": this.priceRange,
+          "rows": this.pages_size,
+          "salesVolume": this.salesVolume,
+          "timeSort": "",
+          "productTypeId": this.productTypeId
+        }, 'post')
         if (data.code == 0) {
-          if (data.list.length > 0) {
-            this.goodsList = this.goodsList.concat(data.list);
-            this.moreShow = true;
-          } else {
-            this.moreShow = false;
-          }
+          this.goodsList = this.goodsList.concat(data.list);
+          this.pages += 1;
+          this.moreShow = !(data.list.length === this.pages_size)
         } else {
           this.Toast(data.message);
         }
-      },
-      getListByName(offsetRows) {
-        let _this = this
-        this.axios(jdTestUrl + api.keyword, {
-          "categoryId": _this.brandId,
-          "keyWord": _this.keyWord,
-          "offset": offsetRows,
-          "price": _this.price.replace('~', '-'),
-          "priceRange": _this.priceRange,
-          "rows": 10,
-          "salesVolume": _this.salesVolume,
-          "timeSort": "",
-          "productTypeId": _this.productTypeId
-        }, 'post')
-        .then((data) => {
-          if (data.code == 0) {
-            if (data.list.length > 0) {
-              _this.goodsList = _this.goodsList.concat(data.list);
-              _this.moreShow = true;
-            } else {
-              _this.moreShow = false;
-            }
-          } else {
-            _this.Toast(data.message);
-          }
-        })
-        .catch((err) => {
-          _this.Toast(err.message);
-        })
       }
     },
     components: {
       "head-search": headSearch,
+      Observer
     }
 
   }
