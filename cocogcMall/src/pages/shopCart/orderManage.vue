@@ -45,16 +45,14 @@
                         </router-link>
 
                         <div class="oMGoodsTotal one-bottom-px">
-                            <p>共
-                                <span>{{totalNum(item.goodsList)}}</span>件商品</p>
-                            <p>合计：
-                                <span>{{item.totalMoney}}</span>
+                            <p>共<span>{{totalNum(item.goodsList)}}</span>件商品</p>
+                            <p>合计：<span>{{item.totalMoney}}</span>
                             </p>
                         </div>
 
                         <div class="logistTake">
                             <span class="lookLogist" @click="$router.push({name:'logisticsDetail',query:{orderId:item.orderId,logisticId:item.id}})">查看物流</span>
-                            <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus!='已完成'">确认收货</span>
+                            <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus =='已确认'">确认收货</span>
                         </div>
                     </div>
 
@@ -89,15 +87,12 @@
                             </div>
                         </router-link>
                         <div class="oMGoodsTotal one-bottom-px">
-                            <p>共
-                                <span>{{item.goodsList[0].buyNum}}</span>件商品</p>
-                            <p>合计：
-                                <span>{{item.totalMoney}}</span>
-                            </p>
+                            <p>共<span>{{item.goodsList[0].buyNum}}</span>件商品</p>
+                            <p>合计：<span>{{item.totalMoney}}</span></p>
                         </div>
                         <div class="logistTake ">
                             <span class="lookLogist" @click="$router.push({name:'logisticsDetail',query:{orderId:item.orderId,logisticId:item.id}})">查看物流</span>
-                            <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus!='已完成'">确认收货</span>
+                            <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus =='已确认'">确认收货</span>
                         </div>
                     </div>
                 </div>
@@ -400,6 +395,7 @@ export default {
     margin: 0.2rem 0;
     display: flex;
     justify-content: flex-end;
+    font-size: 0.24rem;
     span {
         padding: 0.1rem 0.2rem;
         margin: 0 0 0.2rem 0.2rem;

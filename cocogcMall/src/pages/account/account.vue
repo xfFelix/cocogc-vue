@@ -15,7 +15,7 @@
                     <p class="acc-headGrade">
                         <span class="acc-headChessI"></span>
                         <span class="acc-headChess" v-if="levelFlag">专业选手</span>
-                        <span class="acc-headChess" v-else>非专业选手</span>
+                        <span class="acc-headChess" v-else>业余选手</span>
                     </p>
                 </div>
             </div>

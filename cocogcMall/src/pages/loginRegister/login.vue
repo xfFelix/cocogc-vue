@@ -153,11 +153,13 @@ export default {
                     this.MessageBox("提示", "用户名或密码错误")
                     return false;
                 }
+                this.loginForm.smsCode = ''
             }else{
                 if (IsEmpty(this.loginForm.smsCode)) {
                     this.MessageBox("提示", "短信验证码不能为空")
                     return false;
                 }
+                this.loginForm.passWord = ''
             }
             this.login();
         },
