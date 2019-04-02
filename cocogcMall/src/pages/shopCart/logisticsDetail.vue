@@ -2,7 +2,7 @@
     <div id="logisticsDetail">
         <header-top></header-top>
 
-        <div>
+        <div style="margin-top: 0.2rem;">
             <!-- 多种商品 -->
             <div v-if="orderList  &&  orderList.length > 1" class="order-goodsMW">
                 <div class="od-numberWrap">
