@@ -8,7 +8,9 @@ import { baseUrl } from '@/config'
 axios.defaults.timeout = 10000;
 axios.defaults.baseURL = baseUrl;
 axios.defaults.headers['Content-Type'] = 'application/json';
-// axios.defaults.withCredentials = true;
+if (process.env.NODE_ENV === 'production') {
+  axios.defaults.withCredentials = true;
+}
 
 //拦截器
 var _this = this;
