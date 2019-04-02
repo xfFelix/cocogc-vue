@@ -235,10 +235,18 @@ export default {
     },
     async beforeRouteEnter(to, from, next) {
       var token = getToken();
+      let id = ''
       if (!window.chooseAddress) {
         window.chooseAddress = await store.dispatch('userinfo/checkAddress')
+        if (!window.chooseAddress) {
+          id = ''
+        } else {
+          id = window.chooseAddress.id
+        }
+      } else {
+        id = window.chooseAddress.id
       }
-      axios(testUrl + api.previewOrderByCart, {token: token,id: window.chooseAddress.id,}, 'post').then((data) => {
+      axios(testUrl + api.previewOrderByCart, {token: token,id: id}, 'post').then((data) => {
           if (data.error_code == 0 || data.error_code == 7)
           {
             next(vm=>{
@@ -704,7 +712,7 @@ export default {
     .swiper-container-rtl .swiper-button-prev.swiper-button-black {
         background-size: 13px;
         border: none;
-    } 
+    }
     .swiper-button-next {
         right: -5px;
     }

@@ -194,7 +194,7 @@
       window.scrollTo(0,this.getScrollto)
     },
     deactivated() {
-      console.log('deactivated'+ document.documentElement.scrollHeight)
+      console.log(this)
       this.setScrollto(document.documentElement.scrollTop||document.body.scrollTop)
     },
     methods: {
@@ -217,7 +217,8 @@
         switchName(id) {
           this.switch = 'id'
           this.goodsList = [];
-          this.goodsListSearch(1, id)
+          console.log(id)
+          this.getListById(1, id)
         },
         //加载更多
         moreMsg() {

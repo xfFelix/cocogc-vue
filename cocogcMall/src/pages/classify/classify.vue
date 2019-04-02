@@ -156,7 +156,7 @@ export default
               }
             },
             handleSelect(item) {
-              this.$router.push({ path: '/goodsList', query: { categoryId: item.id, keyWord: this.searchWord } })
+              this.seachClick()
             },
             seachClick() {
                 this.$router.push({ path: '/goodsList', query: { keyWord: this.searchWord } })
