@@ -387,6 +387,7 @@ export default {
                 return false;
             }
             this.list[this.goodsNumIndex].num = parseInt(this.goodsNum);
+            this.list[this.goodsNumIndex].check = true
         },
         numDec() {
             if (this.goodsNum > 1) {
