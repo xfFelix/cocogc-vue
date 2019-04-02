@@ -62,6 +62,7 @@ import headerTop from "../../common/header.vue";
 import addressSelect from "../../components/shopCart/addressSelect.vue";
 import api from '../../service/api';
 import { IsEmpty, IsMobile, CheckPass,getToken } from "@/util/common";
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -95,7 +96,7 @@ export default {
             this.takeAddress = '';
             this.takeDAddress = '';
         }
-       
+
     },
     created() {
         if (this.$route.query.addOrder != '1') {
@@ -105,6 +106,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+          removeAddress: 'userinfo/removeAddress'
+        }),
         parentShow(val) {
             this.fixedShow = val;
         },
@@ -148,6 +152,9 @@ export default {
                     if (data.error_code == 0) {
                         _this.addressList = data.data;
                         window.addressInfo = null;
+                        if (this.addressDef) {
+                          this.removeAddress()
+                        }
                         this.$router.replace('/addressMag' + this.fromPath);
                     } else {
                         return this.Toast(data.message)

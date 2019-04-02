@@ -54,6 +54,7 @@
 import headerTop from "../../common/header.vue";
 import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
+import { mapActions } from 'vuex';
 
 export default {
     data() {
@@ -70,6 +71,9 @@ export default {
     },
 
     methods: {
+        ...mapActions({
+          removeAddressById: 'userinfo/removeAddressById'
+        }),
         addressEditC(item, index) {
             window.addressInfo = item;
             this.$router.push('addressEdit' + this.fromPath);
@@ -90,7 +94,6 @@ export default {
         delConfirm() {
             this.fixedshow = false;
             this.removeAddress()
-
         },
         colseFixed() {
             this.fixedshow = false;
@@ -124,6 +127,7 @@ export default {
                     if (data.error_code == 0) {
                         _this.addressList.splice(this.delIndex, 1);
                         _this.Toast('删除成功')
+                        this.removeAddressById(this.delId)
                     } else {
                         _this.Toast(data.message)
                     }

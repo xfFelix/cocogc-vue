@@ -128,7 +128,7 @@ export default {
       }
     },
     handleSelect(item) {
-      this.$router.push({ path: '/goodsList', query: { categoryId: item.id, keyWord: this.searchCont } })
+      this.seachClick()
     },
     // banner
     banner: function() {
