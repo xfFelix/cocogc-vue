@@ -43,13 +43,14 @@
         <div class="home-notice">
           <span class="home-horn"></span>
           <span style="white-space: nowrap;">椰子分公告：</span>
-          <marquee style="width: 62%; font-size: 0.26rem;" loop="infinite">
+          <!-- <marquee style="width: 62%; font-size: 0.26rem;" loop="infinite">
             <div style="display:flex;">
               <a :href="item.url" v-for="(item,index) in newsList" :key="index" class="link-url" v-if="item.status == 0">
                 <span class="home-hotCont">{{item.noticeTitle}}</span>
               </a>
             </div>
-          </marquee>
+          </marquee> -->
+          <div id="marquee" style="width:60%;"></div>
           <span class="home-noticeGo"></span>
         </div>
       </div>
@@ -192,12 +193,24 @@ export default {
         .then((data) => {
           if (data.resultCode == 0) {
             this.newsList = data.data;
+            let marqueeHtml = document.createElement('div');
+            let html = `<marquee  style="font-size:0.26rem;margin-top: 0.1rem;"  scrollamount=7  loop="infinite" >`
+            this.newsList.forEach(res => {
+              if(res.status == 0){
+                 html += `<a href=${res.url} class="link-url" style="color:#333;margin-right: 50px;">
+                       ${res.noticeTitle}
+                    </a>`
+              }
+            });
+            html += `</marquee>`;
+            marqueeHtml.innerHTML = html;
+            document.getElementById("marquee").appendChild(marqueeHtml)
           } else {
             this.Toast(data.message);
           }
         })
         .catch((err) => {
-          this.Toast(data.message);
+          console.log(err.message);
         })
     }
   },
