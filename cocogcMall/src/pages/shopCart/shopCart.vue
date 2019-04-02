@@ -65,7 +65,7 @@
                 <p class="inputNumTitle">修改购买数量</p>
                 <div class="inputNumWrite">
                     <span class="decNum" @click="numDec">-</span>
-                    <span><input type="text" min="1" v-model.number="goodsNum"/></span>
+                    <span><input type="number" min="1" v-model="goodsNum"/></span>
                     <span @click="numInc">+</span>
                 </div>
             </div>
@@ -140,7 +140,7 @@ export default {
                 let total = this.list.reduce((state, item) => {
                     if (item.check) {
                         buys.push({ goodsId: item.goodsId, nums: item.num })
-                        state.num = item.num + state.num
+                        state.num = Number(item.num) + Number(state.num)
                         num++
                     }
                     return state
@@ -153,7 +153,7 @@ export default {
             } else {
                 return 0
             }
-        }
+        },
     },
     mounted() {
         this.resetAddress()
@@ -382,7 +382,11 @@ export default {
         },
         comfirmInp() {
             this.inputNumShow = false;
-            this.list[this.goodsNumIndex].num = this.goodsNum;
+            if(this.goodsNum <= 0){
+                this.Toast('宝贝不能再少了~~');
+                return false;
+            }
+            this.list[this.goodsNumIndex].num = parseInt(this.goodsNum);
         },
         numDec() {
             if (this.goodsNum > 1) {
@@ -391,7 +395,7 @@ export default {
         },
         numInc() {
             this.goodsNum++
-        }
+        },
     },
     components: {
         "guess-like": Guesslike,

@@ -42,7 +42,7 @@
       <div class="home-noticeW">
         <div class="home-notice">
           <span class="home-horn"></span>
-          <span style="white-space: nowrap;">椰云公告：</span>
+          <span style="white-space: nowrap;">椰子分公告：</span>
           <marquee style="width: 65%; font-size: 0.26rem;" loop="infinite">
             <div style="display:flex;">
               <a :href="item.url" v-for="(item,index) in newsList" :key="index" class="link-url" v-if="item.status == 0">
