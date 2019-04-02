@@ -128,7 +128,7 @@ export default {
             selectAllPrice: 0,
             selectAllGoods: 0,
             deitDelFlag: true,
-            inputNumShow: true,
+            inputNumShow: false,
             goodsNum: 1,
             goodsNumIndex: 0
 
