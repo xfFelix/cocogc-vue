@@ -62,6 +62,12 @@ const actions = {
       }
       return state.address
     }
+  },
+  removeAddressById({commit}, id) {
+    commit('removeAddressById', id)
+  },
+  removeAddress({commit}) {
+    commit('removeAddress')
   }
 }
 
@@ -77,6 +83,24 @@ const mutations = {
   },
   setAddress(state, address) {
     state.address = address
+  },
+  removeAddressById(state, id) {
+    if (state.address.id === id) {
+      state.address = ''
+      try{
+        local.remove('address')
+      } catch(e) {
+        console.error(e)
+      }
+    }
+  },
+  removeAddress(state) {
+    state.address = ''
+    try{
+      local.remove('address')
+    } catch(e) {
+      console.error(e)
+    }
   }
 }
 
