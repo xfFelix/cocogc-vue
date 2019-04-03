@@ -54,6 +54,10 @@
                     <p class="changeMoneyb">兑换价</p>
                 </div>
             </div>
+            <div class="good-number">
+              <span>商品编号</span>
+              <p class="">{{goodsInfo.goodsSn}}</p>
+            </div>
 
             <div class="goodsD-addressInfo">
                 <div class="goodsD-address">
@@ -523,6 +527,19 @@ function areaResize(commId){
 
 
 <style lang="less">
+.good-number{
+  display: flex;
+  box-sizing: border-box;
+  margin: 0 0.38rem;
+  padding: 0.32rem 0 0;
+  font-size: 0.26rem;
+  span{
+    color: #999;
+  }
+  p{
+    margin-left: 10px;
+  }
+}
   #detail{
     position: absolute;
   }

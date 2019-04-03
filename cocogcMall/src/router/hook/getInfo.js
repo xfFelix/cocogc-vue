@@ -1,13 +1,12 @@
-import {getToken, setToken} from '@/util/common'
+import {getToken, setToken, getParam} from '@/util/common'
 import api from '@/service/api'
 import axios from '@/service/http'
 import store from '@/store/index'
-import qs from 'qs'
 export default (router) => {
   router.beforeEach(async(to, from, next) => {
     if (location.href.indexOf('?') != -1) {
-      const param = qs.parse(location.href.split('?')[1])
-      if (param.token)
+      const param = getParam()
+      if (param && param.token)
       {
         const user = await axios(infoURl + api.info, {token: param.token}, 'post');
         if(user.error_code == 0)

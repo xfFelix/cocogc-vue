@@ -21,7 +21,7 @@
                                 <span>{{item.orderId}}</span>
                             </p>
                             <p class="oMGoodsTitRight">
-                                <span>{{item.orderStatus}}</span>
+                                <span :style="(item.orderStatus=='已完成'?'color:#ccc':'color:#333')">{{item.orderStatus}}</span>
                             </p>
                         </div>
 
@@ -212,10 +212,17 @@ export default {
             if (data.error_code) {
                 return
             }
-            this.headIndexCli(1);
+            this.selectOrders(token, this.headIndex);
         },
         confirmTake(takeId){
-            this.confirmReceived(getToken(),takeId);
+            this.MessageBox.confirm('', {
+                message: '未收到货时确认可能会钱货两空哦~',
+                title: '确认收货',
+            }).then(action => {
+                    this.confirmReceived(getToken(),takeId);
+            }).catch(action => {
+                    
+            })
         }
     },
     components: {
