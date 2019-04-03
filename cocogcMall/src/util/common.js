@@ -43,7 +43,7 @@ export const getToken = () => {
             localStorage.setItem("yeyun_token", token);
         }
     } else {
-        Vue.prototype.$cookies.set("yeyun_token", token,30);
+        Vue.prototype.$cookies.set("yeyun_token", token,30,null,".cocogc.cn");
     }
     return token;
 }
@@ -51,7 +51,7 @@ export const getToken = () => {
 //获取用户token
 export const setToken = (token) => {
   if (token) {
-    Vue.prototype.$cookies.set("yeyun_token", token,30);
+    Vue.prototype.$cookies.set("yeyun_token", token,30,null,".cocogc.cn");
     localStorage.setItem("yeyun_token", token);
   } else {
     console.error('token为空')

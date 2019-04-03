@@ -92,7 +92,7 @@
                         </div>
                         <div class="logistTake ">
                             <span class="lookLogist" @click="$router.push({name:'logisticsDetail',query:{orderId:item.orderId,logisticId:item.id}})">查看物流</span>
-                            <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus =='已确认'">确认收货</span>
+                            <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus =='待确认'">确认收货</span>
                         </div>
                     </div>
                 </div>
@@ -179,6 +179,7 @@ export default {
             this.list = []
         },
         async selectOrders(token, headIndex) {
+            console.log(this.offset)
             let data = await this.axios(testUrl + api.selectOrders, { "token": token, "status": headIndex, offset: this.offset }, 'post')
             if (data.error_code) {
                 return
@@ -208,10 +209,11 @@ export default {
         },
         //确认收货
         async confirmReceived(token,takeId) {
-            let data = await this.axios(testUrl + api.confirmReceived, { "token": token, "id":  takeId}, 'post')
-            if (data.error_code) {
-                return
-            }
+            // let data = await this.axios(testUrl + api.confirmReceived, { "token": token, "id":  takeId}, 'post')
+            // if (data.error_code) {
+            //     return
+            // }
+            this.offset = 1;
             this.selectOrders(token, this.headIndex);
         },
         confirmTake(takeId){
