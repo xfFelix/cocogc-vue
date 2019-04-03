@@ -78,4 +78,32 @@ export const arrayContains = (arr, obj) => {
   return false;
 }
 
-
+export function getParam () {
+  var args = {}
+  var end = location.hash.indexOf('?') + 1
+  var query = location.hash.substring(end)
+  var pairs = query.split('&')
+  for (var i = 0; i < pairs.length; i += 1) {
+    var pos = pairs[i].indexOf('=')
+    if (pos === -1) {
+      continue
+    }
+    var argname = pairs[i].substring(0, pos)
+    var value = pairs[i].substring(pos + 1)
+    args[argname] = unescape(value)
+  }
+  if (!Object.keys(args).length) {
+    query = location.search.substring(1)
+    pairs = query.split('&')
+    for (var i = 0; i < pairs.length; i += 1) {
+      var pos = pairs[i].indexOf('=')
+      if (pos === -1) {
+        continue
+      }
+      var argname = pairs[i].substring(0, pos)
+      var value = pairs[i].substring(pos + 1)
+      args[argname] = unescape(value)
+    }
+  }
+  return args
+}

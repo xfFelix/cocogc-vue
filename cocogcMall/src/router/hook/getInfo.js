@@ -1,13 +1,12 @@
-import {getToken, setToken} from '@/util/common'
+import {getToken, setToken, getParam} from '@/util/common'
 import api from '@/service/api'
 import axios from '@/service/http'
 import store from '@/store/index'
-import qs from 'qs'
 export default (router) => {
   router.beforeEach(async(to, from, next) => {
     if (location.href.indexOf('?') != -1) {
-      const param = qs.parse(location.href.split('?')[1])
-      if (param.token)
+      const param = getParam()
+      if (param && param.token)
       {
         const user = await axios(infoURl + api.info, {token: param.token}, 'post');
         if(user.error_code == 0)
@@ -19,15 +18,17 @@ export default (router) => {
     }
 
     var _token = getToken();
-    const info = await axios(infoURl + api.info, {token: _token}, 'post');
-    if(info.error_code == 0)
-    {
-      store.dispatch('userinfo/setUserInfo', info.data);
+    if (_token) {
+      const info = await axios(infoURl + api.info, {token: _token}, 'post');
+      if(info.error_code == 0)
+      {
+        store.dispatch('userinfo/setUserInfo', info.data);
 
-      //获取购物车数据
-      const cart = await axios(testUrl + api.totalCarts,{token: _token},'post');
-      if(cart.error_code == 0 && cart.data)
-        store.dispatch('cart/setNum', cart.data);
+        //获取购物车数据
+        const cart = await axios(testUrl + api.totalCarts,{token: _token},'post');
+        if(cart.error_code == 0 && cart.data)
+          store.dispatch('cart/setNum', cart.data);
+      }
     }
 
     if (to.meta.requireAuth && info.error_code == 0)
