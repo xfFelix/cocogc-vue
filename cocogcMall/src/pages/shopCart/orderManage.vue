@@ -179,7 +179,6 @@ export default {
             this.list = []
         },
         async selectOrders(token, headIndex) {
-            console.log(this.offset)
             let data = await this.axios(testUrl + api.selectOrders, { "token": token, "status": headIndex, offset: this.offset }, 'post')
             if (data.error_code) {
                 return
@@ -213,7 +212,7 @@ export default {
             if (data.error_code) {
                 return
             }
-            this.offset = 1;
+            this.init();
             this.selectOrders(token, this.headIndex);
         },
         confirmTake(takeId){
