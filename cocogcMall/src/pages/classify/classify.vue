@@ -15,6 +15,7 @@
                           :trigger-on-focus="false"
                           :hide-loading="true"
                           :debounce="1000"
+                          @keyup.enter.native="seachClick"
                         ></el-autocomplete>
                     </p>
                 </div>
