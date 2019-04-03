@@ -18,17 +18,15 @@ export default (router) => {
     }
 
     var _token = getToken();
-    if (_token) {
-      const info = await axios(infoURl + api.info, {token: _token}, 'post');
-      if(info.error_code == 0)
-      {
-        store.dispatch('userinfo/setUserInfo', info.data);
+    const info = await axios(infoURl + api.info, {token: _token}, 'post');
+    if(info.error_code == 0)
+    {
+      store.dispatch('userinfo/setUserInfo', info.data);
 
-        //获取购物车数据
-        const cart = await axios(testUrl + api.totalCarts,{token: _token},'post');
-        if(cart.error_code == 0 && cart.data)
-          store.dispatch('cart/setNum', cart.data);
-      }
+      //获取购物车数据
+      const cart = await axios(testUrl + api.totalCarts,{token: _token},'post');
+      if(cart.error_code == 0 && cart.data)
+        store.dispatch('cart/setNum', cart.data);
     }
 
     if (to.meta.requireAuth && info.error_code == 0)
