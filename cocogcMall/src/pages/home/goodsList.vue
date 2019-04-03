@@ -197,6 +197,7 @@
             this.initData()
             this.brandId = ''
             this.switch = 'name'
+            this.$router.push({path: '/goodsList', query:{keyWord: val}})
             if (!this.goodsList.length) {
               this.intersected()
             }
