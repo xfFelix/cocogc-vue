@@ -21,7 +21,7 @@
                                 <span>{{item.orderId}}</span>
                             </p>
                             <p class="oMGoodsTitRight">
-                                <span>{{item.orderStatus}}</span>
+                                <span :style="(item.orderStatus=='已完成'?'color:#ccc':'color:#333')">{{item.orderStatus}}</span>
                             </p>
                         </div>
 
