@@ -55,13 +55,13 @@ const router = new Router({
           path: 'home',
           name: 'home',
           component: home,
-          meta: { title: '首页' },
+          meta: { title: '首页',scrolltop: true },
         },
         {
           path: 'shopMall',
           name: 'shopMall',
           component: shopMall,
-          meta: { title: '商城' },
+          meta: { title: '商城',scrolltop: true },
         },
         {
           path: 'shopCart',
@@ -75,7 +75,8 @@ const router = new Router({
           component: account,
           meta: {
             title: '账户',
-            requireAuth: true
+            requireAuth: true,
+            scrolltop: true 
           },
         },
         {
@@ -102,7 +103,7 @@ const router = new Router({
       path: '/addressMag',
       name: 'addressMag',
       component: addressMag,
-      meta: { title: '地址管理', requireAuth: true },
+      meta: { title: '地址管理', requireAuth: true,scrolltop: true  },
 
     },
     {
