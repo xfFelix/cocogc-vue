@@ -101,17 +101,21 @@ export default {
                           this.$router.replace('/layout/home');
                         }
                     } else {
-                        this.MessageBox.confirm('', {
-                            message: '手机号或登录密码错误。',
-                            title: '登录失败',
-                            confirmButtonText: '忘记密码',
-                            cancelButtonText: '重新输入'
-                        }).then(action => {
-                               this.$router.push('/passSetUp');
-                        }).catch(action => {
+                        if(this.smsFlag === false){
+                            this.MessageBox.confirm('', {
+                                message: '手机号或登录密码错误。',
+                                title: '登录失败',
+                                confirmButtonText: '忘记密码',
+                                cancelButtonText: '重新输入'
+                            }).then(action => {
+                                this.$router.push('/passSetUp');
+                            }).catch(action => {
                                 this.loginForm.passWord = '';
-                        })
-                        return
+                            })
+                        }else{
+                            this.MessageBox("提示",data.message)
+                        }
+                        return;
                     }
                 })
         },
