@@ -64,7 +64,8 @@
                     <p>服务</p>
                 </div>
                 <div class="goodsD-serve">
-                    <p>{{goodsInfo.services}}</p>
+                    <p v-if="goodsInfo.services">{{goodsInfo.services}}</p>
+                    <p v-else-if="goodsInfo.vendorId === 'jingDong' && !goodsInfo.services">由京东发货，并提供售后服务，服务电话4006-066-866</p>
                 </div>
             </div>
         </div>
