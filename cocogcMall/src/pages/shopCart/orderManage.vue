@@ -90,9 +90,9 @@
                             <p>共<span>{{item.goodsList[0].buyNum}}</span>件商品</p>
                             <p>合计：<span>{{item.totalMoney}}</span></p>
                         </div>
-                        <div class="logistTake ">
+                        <div class="logistTake">
                             <span class="lookLogist" @click="$router.push({name:'logisticsDetail',query:{orderId:item.orderId,logisticId:item.id}})">查看物流</span>
-                            <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus =='待确认'">确认收货</span>
+                            <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus =='已确认'">确认收货</span>
                         </div>
                     </div>
                 </div>
@@ -209,10 +209,10 @@ export default {
         },
         //确认收货
         async confirmReceived(token,takeId) {
-            // let data = await this.axios(testUrl + api.confirmReceived, { "token": token, "id":  takeId}, 'post')
-            // if (data.error_code) {
-            //     return
-            // }
+            let data = await this.axios(testUrl + api.confirmReceived, { "token": token, "id":  takeId}, 'post')
+            if (data.error_code) {
+                return
+            }
             this.offset = 1;
             this.selectOrders(token, this.headIndex);
         },
