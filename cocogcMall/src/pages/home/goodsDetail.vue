@@ -441,16 +441,16 @@ export default {
                 this.$router.push('/login');
                 return;
             }
-            if (this.userinfo.isRealCert == 0) {
-                this.Toast({
-                    message: '请先实名认证',
-                    duration: 1000
-                })
-                setTimeout(() => {
-                    window.location.href = infoURl + '#!/cert?token=' + getToken();
-                }, 1000)
-                return
-            }
+            // if (this.userinfo.isRealCert == 0) {
+            //     this.Toast({
+            //         message: '请先实名认证',
+            //         duration: 1000
+            //     })
+            //     setTimeout(() => {
+            //         window.location.href = infoURl + '#!/cert?token=' + getToken();
+            //     }, 1000)
+            //     return
+            // }
             let buys = [];
             buys.push({ goodsId: this.goodsId, nums: this.buyNum });
             //sessionStorage.setItem('buys', JSON.stringify(buys))
