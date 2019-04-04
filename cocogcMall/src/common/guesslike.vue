@@ -150,9 +150,9 @@ export default {
             }
             .home-iNmame {
                 color: #333333;
-                font-size: 0.26rem;
-                line-height: 1.5em;
-                height: 2.8em;
+                font-size: 13px;
+                line-height: 20px;
+                height: 38px;
                 overflow: hidden;
                 word-break: break-all;
                 word-wrap: break-word;

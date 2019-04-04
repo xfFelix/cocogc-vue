@@ -32,9 +32,7 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="home-integralM one-top-px" @click="toGoodsList()">
-            查看更多
-        </div> -->
+        <no-data :data="goodsList"></no-data>
     </div>
 </template>
 <script>
