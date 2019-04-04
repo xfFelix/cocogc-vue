@@ -53,6 +53,8 @@ const getOrderTotals = 'api/selectOrderTotals' //订单未完成数量
 const searchItem = '/query/categoryId'
 
 const confirmReceived = 'api/confirmReceived' //确认收货
+const userSms = 'user/sms'
+const bindMobile = 'user/bindMobile'
 
 
 
@@ -96,5 +98,7 @@ export default {
   searchHint,
   getOrderTotals,
   searchItem,
-  confirmReceived
+  confirmReceived,
+  userSms,
+  bindMobile
 }
