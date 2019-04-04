@@ -230,7 +230,8 @@ export default {
             goodsShowFlag:false,
             goodsShowList:{},
             goodsShowNum:0,
-            dialogToast: false
+            dialogToast: false,
+            info: ''
         };
     },
     async beforeRouteEnter(to, from, next) {
@@ -276,6 +277,7 @@ export default {
           _this.other = data.other
           _this.dataList = data.data;
           _this.dataAddress = data.data[0];
+          _this.info = data.info
           _this.addressDef = window.chooseAddress
           //多商品轮播图
           _this.dataList.forEach((res, index) => {
@@ -317,6 +319,18 @@ export default {
 
         },
         dialogCode() {
+          if (this.info > 30000) {
+            if (this.$store.state.userinfo.userinfo.isRealCert == 0) {
+                this.Toast({
+                    message: '请先实名认证',
+                    duration: 1000
+                })
+                setTimeout(() => {
+                    window.location.href = infoURl + '#!/cert?token=' + getToken();
+                }, 1000)
+                return
+            }
+          }
           if (!this.dialogToast) {
             if(this.addressDef == null){
                   this.Toast('地址不能为空');

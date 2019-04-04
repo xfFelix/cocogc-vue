@@ -256,16 +256,16 @@ export default {
         settleGoods() {
             var that = this;
             var buys = [];
-            if (this.$store.state.userinfo.userinfo.isRealCert == 0) {
-                this.Toast({
-                    message: '请先实名认证',
-                    duration: 1000
-                })
-                setTimeout(() => {
-                    window.location.href = infoURl + '#!/cert?token=' + getToken();
-                }, 1000)
-                return
-            }
+            // if (this.$store.state.userinfo.userinfo.isRealCert == 0) {
+            //     this.Toast({
+            //         message: '请先实名认证',
+            //         duration: 1000
+            //     })
+            //     setTimeout(() => {
+            //         window.location.href = infoURl + '#!/cert?token=' + getToken();
+            //     }, 1000)
+            //     return
+            // }
             that.list.forEach(function(v) {
                 if (v.check) {
                     var buy = {};
