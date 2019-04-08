@@ -14,9 +14,12 @@
           <li>
             <div class="loginLileft">
               <span></span>
-              <select style="border:none;background:#fff;"  v-on:change="indexSelect($event)">
-                <option :value="item.telRealVal"  v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
-              </select>
+              <div style="position:relative;display: flex;">
+                  <select style="border:none;background:#fff;"  v-on:change="indexSelect($event)">
+                    <option :value="item.telRealVal"  v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
+                  </select>
+                  <div style="position:absolute;width: 16px;height: 37px;background: #fff;bottom: -2px;right: 0;"></div>
+              </div>
               <input type="number" placeholder="请输入手机号码" v-model.trim="register.userName" style="width:60%">
             </div>
           </li>
