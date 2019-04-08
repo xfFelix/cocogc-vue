@@ -162,7 +162,7 @@ export default {
             .home-iMoneyW {
                 display: flex;
                 align-items: center;
-                font-size: 0.26rem;
+                font-size: 0.26rem ;
                 .home-iMoneyL {
                     width: 0.26rem;
                     height: 0.28rem;

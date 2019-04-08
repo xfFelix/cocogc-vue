@@ -14,7 +14,10 @@
           <li>
             <div class="loginLileft">
               <span></span>
-              <input type="text" placeholder="请输入手机号码" v-model.trim="register.userName">
+              <select style="border:none;background:#fff;"  v-on:change="indexSelect($event)">
+                <option :value="item.telRealVal"  v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
+              </select>
+              <input type="number" placeholder="请输入手机号码" v-model.trim="register.userName" style="width:60%">
             </div>
           </li>
 
@@ -68,7 +71,7 @@
 
 <script>
 import api from "@/service/api";
-import { IsEmpty, IsMobile, CheckPass } from "@/util/common"
+import { IsEmpty, IsMobile, CheckPass , IsHkMobile} from "@/util/common"
 
 
 
@@ -85,10 +88,24 @@ export default {
         captcha: '',
         msgValidate: '',
         inputPass: ""
-      }
+      },
+      telList:[
+        {
+          telRealVal:86,
+          telShowVal:'+86 中国',
+        },
+        {
+          telRealVal:852,
+          telShowVal:'852 香港',
+        }
+      ],
+      telPlace:86
     };
   },
   methods: {
+    indexSelect(event){
+      this.telPlace= event.target.value;
+    },
     /*
         注册接口
     */
@@ -166,9 +183,17 @@ export default {
         注册按钮
     */
     registerBnt: function() {
-      if (IsEmpty(this.register.userName) || !IsMobile(this.register.userName)) {
-        this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
+      if (IsEmpty(this.register.userName)) {
+        this.MessageBox("提示", "手机号码不能为空")
         return false;
+      }
+      if(this.telPlace == '86' && !IsMobile(this.register.userName)){
+        this.MessageBox("提示", "手机号码格式错误");
+         return false;
+      }
+      if(this.telPlace == '852' && !IsHkMobile(this.register.userName)){
+        this.MessageBox("提示", "手机号码格式错误");
+         return false;
       }
       if (IsEmpty(this.register.captcha) || this.register.captcha.length < 4) {
         this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
@@ -190,16 +215,22 @@ export default {
     */
     validateCli: function() {
       var that = this;
-      if (IsEmpty(this.register.userName) || !IsMobile(this.register.userName)) {
-        this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
-
+      if (IsEmpty(this.register.userName)) {
+        this.MessageBox("提示", "手机号码不能为空")
         return false;
+      }
+      if(this.telPlace == '86' && !IsMobile(this.register.userName)){
+        this.MessageBox("提示", "手机号码格式错误");
+         return false;
+      }
+      if(this.telPlace == '852' && !IsHkMobile(this.register.userName)){
+        this.MessageBox("提示", "手机号码格式错误");
+         return false;
       }
       if (IsEmpty(this.register.captcha) && this.register.captcha.length < 4) {
         this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
         return false;
       }
-
       if (this.validateFlag == 1) {
         this.regsms();
       }
