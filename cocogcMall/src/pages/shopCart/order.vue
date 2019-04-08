@@ -325,13 +325,11 @@ export default {
         if (data.error_code) {
             return this.Toast(data.message)
         }
-        let user = await axios(infoURl + api.info, {token: getToken()}, 'post');
-        if(user.error_code == 0)
-        {
-          store.dispatch('userinfo/setUserInfo', user.data)
-        }
         this.data.show = false
         this.Toast(data.message)
+        setTimeout(()=> {
+          window.location.reload()
+        }, 500)
       },
         handlePreview(_this, data) {
           _this.message = data.message;
