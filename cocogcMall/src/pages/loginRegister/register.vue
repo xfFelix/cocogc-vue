@@ -14,10 +14,10 @@
           <li>
             <div class="loginLileft">
               <span></span>
-              <select style="border:none;"  v-on:change="indexSelect($event)">
+              <select style="border:none;background:#fff;"  v-on:change="indexSelect($event)">
                 <option :value="item.telRealVal"  v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
               </select>
-              <input type="number" placeholder="请输入手机号码" v-model.trim="register.userName" style="width:auto">
+              <input type="number" placeholder="请输入手机号码" v-model.trim="register.userName" style="width:60%">
             </div>
           </li>
 
@@ -92,11 +92,11 @@ export default {
       telList:[
         {
           telRealVal:86,
-          telShowVal:'+86',
+          telShowVal:'+86 中国',
         },
         {
           telRealVal:852,
-          telShowVal:852,
+          telShowVal:'852 香港',
         }
       ],
       telPlace:86
