@@ -1,6 +1,4 @@
 import Vue from 'vue';
-import api from '@/service/api'
-import axios from '@/service/http'
 /*
     是否为空
 */
@@ -10,12 +8,25 @@ export const IsEmpty = str => {
 }
 
 export const IsMobile = mobile => {
-    var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
-    if (reg.test(mobile)) {
-        return true;
-    } else {
-        return false;
-    }
+  return IsChinaMobile(mobile) || IsHKMobile(mobile);
+}
+
+export const IsChinaMobile =  (mobile)=> {
+  var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/
+  if (reg.test(mobile)) {
+      return true
+  } else {
+      return false
+  }
+}
+
+export const IsHKMobile = (mobile) => {
+  var reg = /^(5|6|8|9)\\d{7}$/
+  if (reg.test(mobile)) {
+      return true
+  } else {
+      return false
+  }
 }
 
 // 密码检测
