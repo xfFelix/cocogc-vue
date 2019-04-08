@@ -107,3 +107,12 @@ export function getParam () {
   }
   return args
 }
+
+export const IsHkMobile = mobile => {
+  var reg=/^(5|6|8|9)\\d{7}$/;
+  if(reg.test(mobile)){
+    return true;
+  }else{
+    return false;
+  }
+}
