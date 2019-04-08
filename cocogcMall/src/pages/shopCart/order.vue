@@ -381,6 +381,7 @@ export default {
         },
         dialogCode() {
           if (!IsMobile(this.userinfo.userName)) {
+            console.log(this.userinfo.userName)
             return this.data.show = true
           }
           if (this.info > 30000) {
