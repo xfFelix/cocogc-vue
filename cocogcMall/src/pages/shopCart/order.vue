@@ -325,6 +325,11 @@ export default {
         if (data.error_code) {
             return this.Toast(data.message)
         }
+        let user = await axios(infoURl + api.info, {token: getToken()}, 'post');
+        if(user.error_code == 0)
+        {
+          store.dispatch('userinfo/setUserInfo', user.data)
+        }
         this.data.show = false
         this.Toast(data.message)
       },
@@ -376,6 +381,7 @@ export default {
         },
         dialogCode() {
           if (!IsMobile(this.userinfo.userName)) {
+            console.log(this.userinfo.userName)
             return this.data.show = true
           }
           if (this.info > 30000) {
