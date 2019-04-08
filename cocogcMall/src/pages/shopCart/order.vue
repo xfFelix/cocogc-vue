@@ -197,7 +197,25 @@
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <bg-mask v-model="goodsShowFlag"></bg-mask>
         </transition>
-
+        <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+          <div class="mobile-wrapper" v-if="data.show" @click="data.show = false">
+            <div class="wrapper" @click.stop="data.show = true">
+              <h1>绑定手机号码</h1>
+              <div class="item">
+                <span class="user"></span>
+                <input type="tel" placeholder="请输入手机号" v-model="data.mobile" pattern="[1-9]*" autocomplete="off">
+              </div>
+              <div class="item border-1-px">
+                <span class="book"></span>
+                <input type="text" placeholder="请输入验证码" v-model="data.code" pattern="[1-9]*" autocomplete="off">
+                <button class="send-code" @click.stop="sendCode" :disabled="data.codeFlag">{{data.codeText}}</button>
+              </div>
+              <div class="item">
+                <button class="link-mobile" @click.stop="setMobile">绑定</button>
+              </div>
+            </div>
+          </div>
+        </transition>
     </div>
 </template>
 
@@ -208,7 +226,7 @@ import Swiper from 'swiper';
 import api from '../../service/api';
 import ExchangeSu from "@/components/shopCart/ExchangeSu"
 import { mapGetters } from 'vuex';
-import { IsEmpty, getToken } from "@/util/common";
+import { IsEmpty, getToken, IsMobile } from "@/util/common";
 import axios from '@/service/http'
 import store from '@/store'
 
@@ -231,7 +249,14 @@ export default {
             goodsShowList:{},
             goodsShowNum:0,
             dialogToast: false,
-            info: ''
+            info: '',
+            data: {
+              mobile: '',
+              show: false,
+              code: '',
+              codeText: '发送验证码',
+              codeFlag: false
+            }
         };
     },
     async beforeRouteEnter(to, from, next) {
@@ -272,6 +297,37 @@ export default {
         })
     },
     methods: {
+        async sendCode() {
+          if (!IsMobile(this.data.mobile)) return this.Toast('请输入正确的手机号')
+          let data = await this.axios(infoURl + api.userSms, { mobile: this.data.mobile }, 'post')
+          if (data.error_code) {
+              return this.Toast(data.message)
+          }
+          this.data.codeText = "120s 重新获取"
+          let _this = this;
+          let timeInit = 120;
+          let countDown = setInterval(function() {
+              let i = 1;
+              timeInit = timeInit - i;
+              if (timeInit > 0) {
+                  _this.data.codeText = timeInit + 's 重新获取';
+                  _this.data.codeFlag = true
+              } else {
+                  _this.data.codeText = "重新获取"
+                  _this.data.codeFlag = false;
+                  clearInterval(countDown)
+              }
+          }, 1000)
+      },
+      async setMobile() {
+        if (!IsMobile(this.data.mobile)) return this.Toast('请输入正确的手机号')
+        let data = await this.axios(infoURl + api.bindMobile, { token: getToken(), mobile: this.data.mobile, code: this.data.code }, 'post')
+        if (data.error_code) {
+            return this.Toast(data.message)
+        }
+        this.data.show = false
+        this.Toast(data.message)
+      },
         handlePreview(_this, data) {
           _this.message = data.message;
           _this.other = data.other
@@ -319,6 +375,9 @@ export default {
 
         },
         dialogCode() {
+          if (!IsMobile(this.userinfo.userName)) {
+            return this.data.show = true
+          }
           if (this.info > 30000) {
             if (this.$store.state.userinfo.userinfo.isRealCert == 0) {
                 this.Toast({
@@ -537,6 +596,89 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.mobile-wrapper{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 11;
+  .wrapper{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    padding: 10px 0;
+    box-sizing: border-box;
+    width: 70%;
+    border-radius: 15px;
+    h1{
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .item{
+      padding: 10px 20px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      &.border-1-px{
+        &::after{
+          display: block;
+          content: '';
+          height: 1px;
+          width: 100%;
+          background-color: #ccc;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          transform: scaleY(0.5);
+        }
+      }
+      span{
+        display: block;
+        width: 30px;
+        height: 30px;
+        background-size: 172px 32px;
+        background-repeat: no-repeat;
+        background-image: url(/static/images/login.png);
+        &.user{
+          background-position: -77px -2px;
+        }
+        &.book{
+          background-position: -103px -2px;
+        }
+      }
+      input{
+        padding: 10px 0;
+        margin-left: 10px;
+        width: 100%;
+      }
+      .send-code{
+        position: absolute;
+        right: 10px;
+        margin: 0;
+        background-color: transparent;
+        border: 1px solid #27bd5a;
+        padding: 1px 10px;
+        color: #27bd5a;
+        border-radius: 25px;
+      }
+      .link-mobile{
+        background: #27bd5a;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        letter-spacing: 0.4em;
+        margin: 0 auto;
+        padding: 10px 50px;
+        border-radius: 25px;
+      }
+    }
+  }
+}
 .order-bottom {
     height: 0.1rem;
     background-image: url(/static/images/bgRepeat.jpg);
