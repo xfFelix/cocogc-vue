@@ -225,12 +225,12 @@ export default {
         return false;
       }
 
-      if (this.telPlace == 86 && !IsChinaMobile(this.register.userName)) {
+      if (this.telPlace == '86' && !IsChinaMobile(this.register.userName)) {
         this.MessageBox("提示", "手机号码格式错误");
         return false;
       }
 
-      if (this.telPlace == 852 && !IsHKMobile(this.register.userName)) {
+      if (this.telPlace == '852' && !IsHKMobile(this.register.userName)) {
         this.MessageBox("提示", "手机号码格式错误");
         return false;
       }
