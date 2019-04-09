@@ -39,32 +39,33 @@
       </div>
 
     </div>
-
-    <div class="goodList-interWrap" ref="wrapper">
-      <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
-        <!-- <router-link :to="{path:'goodsDetail/'+item.id}"> -->
-        <div @click="goDetail(item.id)">
-          <div class="home-iGoods">
-            <img v-lazy="item.image" alt="" />
+    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+      <div class="goodList-interWrap" ref="wrapper">
+        <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
+          <!-- <router-link :to="{path:'goodsDetail/'+item.id}"> -->
+          <div @click="goDetail(item.id)">
+            <div class="home-iGoods">
+              <img v-lazy="item.image" alt="" />
+            </div>
+            <p class="home-iNmame">
+              {{item.name}}
+            </p>
+            <div class="home-iMoneyW">
+              <span class="home-iMoneyL"></span>
+              <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
+            </div>
           </div>
-          <p class="home-iNmame">
-            {{item.name}}
-          </p>
-          <div class="home-iMoneyW">
-            <span class="home-iMoneyL"></span>
-            <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
-          </div>
+          <!-- </router-link> -->
         </div>
-        <!-- </router-link> -->
+        <no-data :data="goodsList"></no-data>
       </div>
-      <no-data :data="goodsList"></no-data>
-    </div>
-    <observer @intersect="intersected"></observer>
+    </mt-loadmore>
+    <!-- <observer @intersect="intersected"></observer> -->
   </div>
 </template>
 <script>
   import headSearch from "../../common/headSearch.vue";
-  import Observer from '@/common/Observer'
+  // import Observer from '@/common/Observer'
   import {
     mapGetters, mapActions
   } from 'vuex';
@@ -72,11 +73,12 @@
   import {
     getToken
   } from '@/util/common'
+  import {Loadmore} from 'mint-ui'
 
   export default {
     data() {
       return {
-        observer: null,
+        // observer: null,
         searchCont: '',
         homeSel: [{
             id: 0,
@@ -136,7 +138,8 @@
         productTypeId: "",
         token: getToken(),
         hightLight: 'all',
-        isFromDetail: false
+        isFromDetail: false,
+        allLoaded: false
       };
     },
     computed: {
@@ -171,6 +174,15 @@
     //   this.setScrollto(this.scrollTop)
     // },
     methods: {
+      async loadTop() {
+          this.initData()
+          await this.intersected();
+          this.$refs.loadmore.onTopLoaded();
+      },
+      async loadBottom() {
+          await this.intersected();
+          this.$refs.loadmore.onBottomLoaded();
+      },
       goDetail(id) {
         this.setScrollto(document.documentElement.scrollTop || document.body.scrollTop)
         this.$router.push({path: '/goodsDetail/'+ id})
@@ -198,9 +210,7 @@
             this.brandId = ''
             this.switch = 'name'
             this.$router.push({path: '/goodsList', query:{keyWord: val}})
-            if (!this.goodsList.length) {
-              this.intersected()
-            }
+            this.intersected()
         },
         //价格顺序
         goodsPrice() {
@@ -217,6 +227,7 @@
             this.salesVolume = "";
             this.intervalFlag = false;
             this.iSelectAct = 1;
+            this.intersected()
         },
 
         //判断积分区间
@@ -246,6 +257,7 @@
                 this.iSelectAct = index; //改变积分颜色
                 this.intervalFlag = false;
                 this.price = item.integral;
+                this.intersected()
             }
       },
 
@@ -259,6 +271,7 @@
         this.intervalFlag = false;
         this.priceRangeFlag = true;
         this.iSelectAct = 1;
+        this.intersected()
       },
 
       //销量排序
@@ -271,6 +284,7 @@
         this.intervalFlag = false;
         this.priceRangeFlag = true;
         this.iSelectAct = 1;
+        this.intersected()
       },
 
       //判断url参数
@@ -335,7 +349,7 @@
         if (data.code == 0) {
           this.goodsList = this.goodsList.concat(data.list);
           this.pages += 1;
-          this.moreShow = !(data.list.length === this.pages_size)
+          this.allLoaded = !(data.list.length === this.pages_size)
         } else {
           this.Toast(data.message);
         }
@@ -343,7 +357,8 @@
     },
     components: {
       "head-search": headSearch,
-      Observer
+      "mt-loadmore": Loadmore
+      // Observer
     }
 
   }
