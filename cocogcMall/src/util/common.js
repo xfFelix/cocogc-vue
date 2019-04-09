@@ -21,11 +21,11 @@ export const IsChinaMobile =  (mobile)=> {
 }
 
 export const IsHKMobile = (mobile) => {
-  var reg = /^(5|6|8|9)\\d{7}$/
+  var reg = /^[5,6,8,9][0-9]{7}$/;
   if (reg.test(mobile)) {
-      return true
+    return true;
   } else {
-      return false
+    return false;
   }
 }
 
