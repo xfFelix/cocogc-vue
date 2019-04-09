@@ -13,7 +13,7 @@
         <section>
             <ul class="loginUl">
                 <li>
-                    <div class="loginLileft">
+                    <div class="loginLileft" style="width:100%;">
                         <span class="loginIcon"></span>
                         <div style="position:relative;display: flex;">
                             <select style="border:none;background:#fff;" v-on:change="indexSelect($event)">
@@ -21,7 +21,7 @@
                             </select>
                             <div style="position:absolute;width: 18px;height: 20px;background: #fff;bottom: -2px;right: 0;"></div>
                         </div>
-                        <input type="number" placeholder="请输入注册手机号码" v-model.trim="loginForm.userName" @input="phoneInp($event)">
+                        <input type="number" placeholder="请输入注册手机号码" v-model.trim="loginForm.userName" @input="phoneInp($event)" style="width:60%;">
                     </div>
                     <div class="loginLiRight">
                         <span class="clean" @click="phoneClean()" v-if="phoneCleanShow"></span>
@@ -69,7 +69,7 @@
 
 <script>
 import api from "@/service/api";
-import { IsEmpty, IsMobile, CheckPass, setToken } from "@/util/common";
+import { IsEmpty, IsMobile, CheckPass, setToken ,IsChinaMobile,IsHkMobile} from "@/util/common";
 
 export default {
     data() {
@@ -172,11 +172,18 @@ export default {
 
         //登录按钮
         loginBnt: function() {
-            if (IsEmpty(this.loginForm.userName) || !IsMobile(this.loginForm.userName)) {
-                this.MessageBox("提示", "请输入有效的11位手机号码。")
+            if (IsEmpty(this.loginForm.userName)) {
+                this.MessageBox("提示", "手机号码不能为空")
                 return false;
             }
-
+            if (this.telPlace == '86' && !IsChinaMobile(this.loginForm.userName)) {
+                this.MessageBox("提示", "手机号码格式错误");
+                return false;
+            }
+            if (this.telPlace == '852' && !IsHkMobile(this.loginForm.userName)) {
+                this.MessageBox("提示", "手机号码格式错误");
+                return false;
+            }
             if (this.smsFlag === false) {
                 if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
                     this.MessageBox("提示", "用户名或密码错误")
@@ -199,12 +206,19 @@ export default {
         },
         reInput: function() {
             this.loginForm.passWord = '';
-
         },
 
         validateCli: function() {
-            if (IsEmpty(this.loginForm.userName) || !IsMobile(this.loginForm.userName)) {
-                this.MessageBox("提示", "请输入有效的11位手机号码。")
+            if (IsEmpty(this.loginForm.userName)) {
+                this.MessageBox("提示", "手机号码不能为空")
+                return false;
+            }
+            if (this.telPlace == '86' && !IsChinaMobile(this.loginForm.userName)) {
+                this.MessageBox("提示", "手机号码格式错误");
+                return false;
+            }
+            if (this.telPlace == '852' && !IsHkMobile(this.loginForm.userName)) {
+                this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
             if (this.validateFlag == 1) {
