@@ -49,13 +49,14 @@ export default {
         guessLike: function() {
             let _this = this;
             let name = window.userLikeName;
-            //console.log(name);
+            console.log(name);
             this.axios(jdTestUrl + api.guessLike, {
                 "name": name
             }, 'post')
                 .then((data) => {
                     if (data.code == 0) {
-                        _this.goodsList = _this.parseGuessLike(data.list);
+                        // _this.goodsList = _this.parseGuessLike(data.list);
+                        _this.goodsList = data.list
                     } else {
                         _this.Toast(data.message);
                     }
@@ -157,7 +158,7 @@ export default {
                 word-break: break-all;
                 word-wrap: break-word;
                 text-align: left;
-                margin: 0.12rem 0; 
+                margin: 0.12rem 0;
             }
             .home-iMoneyW {
                 display: flex;
