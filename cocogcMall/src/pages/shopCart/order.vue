@@ -1023,7 +1023,7 @@ export default {
 }
 
 .light {
-    background-color: #27bd5a;
+    background:linear-gradient(left,#52E59E,#30CE84);
 }
 .ld-logis {
     position: fixed;

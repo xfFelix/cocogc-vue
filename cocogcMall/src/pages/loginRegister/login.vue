@@ -15,13 +15,19 @@
                 <li>
                     <div class="loginLileft">
                         <span class="loginIcon"></span>
+                        <div style="position:relative;display: flex;">
+                            <select style="border:none;background:#fff;" v-on:change="indexSelect($event)">
+                                <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
+                            </select>
+                            <div style="position:absolute;width: 18px;height: 20px;background: #fff;bottom: -2px;right: 0;"></div>
+                        </div>
                         <input type="number" placeholder="请输入注册手机号码" v-model.trim="loginForm.userName" @input="phoneInp($event)">
                     </div>
                     <div class="loginLiRight">
                         <span class="clean" @click="phoneClean()" v-if="phoneCleanShow"></span>
                     </div>
                 </li>
-                <li  v-if="smsFlag===false">
+                <li v-if="smsFlag===false">
                     <div class="loginLileft">
                         <span class="passWordIcon"></span>
                         <input type="password" placeholder="请输入密码" v-model.trim="loginForm.passWord" @input="passInp($event)" v-if="passShow == false">
@@ -40,7 +46,7 @@
                         <span class="smsIcon"></span>
                         <input type="number" placeholder="请输入短信验证码" v-model.trim="loginForm.smsCode">
                     </div>
-                   <div class="loginLiRight">
+                    <div class="loginLiRight">
                         <span class="validate" @click="validateCli()">{{validate}}</span>
                     </div>
                 </li>
@@ -50,7 +56,7 @@
         <p class="bntWrap" @click="loginBnt()">
             <span class="bnt">登录</span>
         </p>
-        <p class="forgetPass"  v-if="smsFlag">
+        <p class="forgetPass" v-if="smsFlag">
             <span @click="usePassWord()">使用密码登录</span>
         </p>
         <div class="forgetPass" v-if="smsFlag===false">
@@ -63,7 +69,7 @@
 
 <script>
 import api from "@/service/api";
-import { IsEmpty, IsMobile, CheckPass,setToken } from "@/util/common";
+import { IsEmpty, IsMobile, CheckPass, setToken } from "@/util/common";
 
 export default {
     data() {
@@ -76,11 +82,22 @@ export default {
             loginForm: {
                 userName: '',
                 passWord: '',
-                smsCode:''
+                smsCode: ''
             },
             validate: "获取验证码",
             validateFlag: 1,
-            smsFlag:true
+            smsFlag: true,
+            telList: [
+                {
+                    telRealVal: 86,
+                    telShowVal: '+86 中国',
+                },
+                {
+                    telRealVal: 852,
+                    telShowVal: '852 香港',
+                }
+            ],
+            telPlace: 86
         };
     },
     computed: {
@@ -88,25 +105,28 @@ export default {
 
     },
     methods: {
+        indexSelect(event) {
+            this.telPlace = event.target.value;
+        },
         // 登录
         login: function() {
             let _this = this;
-            this.axios(infoURl+api.login, {
+            this.axios(infoURl + api.login, {
                 mobile: _this.loginForm.userName,
                 passwd: _this.loginForm.passWord,
-                verify_code:_this.loginForm.smsCode,
+                verify_code: _this.loginForm.smsCode,
             }, 'post')
                 .then((data) => {
-                  if (data.error_code == 0) {
+                    if (data.error_code == 0) {
                         this.token = data.data.token;
                         setToken(this.token);
                         if (this.$route.query.redirect) {
-                          this.$router.replace(this.$route.query.redirect)
+                            this.$router.replace(this.$route.query.redirect)
                         } else {
-                          this.$router.replace('/layout/home');
+                            this.$router.replace('/layout/home');
                         }
                     } else {
-                        if(this.smsFlag === false){
+                        if (this.smsFlag === false) {
                             this.MessageBox.confirm('', {
                                 message: '手机号或登录密码错误。',
                                 title: '登录失败',
@@ -117,15 +137,15 @@ export default {
                             }).catch(action => {
                                 this.loginForm.passWord = '';
                             })
-                        }else{
-                            this.MessageBox("提示",data.message)
+                        } else {
+                            this.MessageBox("提示", data.message)
                         }
                         return;
                     }
                 })
         },
-        goBack(){
-          this.$router.back();
+        goBack() {
+            this.$router.back();
         },
         //眼睛和清空
         eyeImgClose: function() {
@@ -157,13 +177,13 @@ export default {
                 return false;
             }
 
-            if(this.smsFlag === false){
+            if (this.smsFlag === false) {
                 if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
                     this.MessageBox("提示", "用户名或密码错误")
                     return false;
                 }
                 this.loginForm.smsCode = ''
-            }else{
+            } else {
                 if (IsEmpty(this.loginForm.smsCode)) {
                     this.MessageBox("提示", "短信验证码不能为空")
                     return false;
@@ -195,7 +215,7 @@ export default {
         // 短信验证码接口
         sms: function() {
             let _this = this;
-            this.axios(infoURl+api.sms, {
+            this.axios(infoURl + api.sms, {
                 mobile: _this.loginForm.userName,
             }, 'post')
                 .then((data) => {
@@ -216,27 +236,27 @@ export default {
                             }
                         }, 1000)
                     } else {
-                         this.MessageBox("提示", data.message)
+                        this.MessageBox("提示", data.message)
                     }
                 })
                 .catch((data) => {
                     this.MessageBox("提示", data.message)
                 })
         },
-        usePassWord(){
+        usePassWord() {
             this.smsFlag = false;
-        }   
+        }
     },
     mounted() {
     },
-    beforeRouteLeave (to, from, next) {
-      if (/\/setUp/.test(to.path)) {
-        next({
-          path: '/layout/home'
-        })
-        return
-      }
-      next()
+    beforeRouteLeave(to, from, next) {
+        if (/\/setUp/.test(to.path)) {
+            next({
+                path: '/layout/home'
+            })
+            return
+        }
+        next()
     },
     components: {
 
@@ -246,15 +266,16 @@ export default {
 
 
 <style lang="less">
-.back{
-  width: 0.22rem;
-  height: 0.38rem;
-  background-image: url(/static/images/jl.png);
-  background-repeat: no-repeat;
-  background-size: 5.8rem 1.86rem;
-  background-position: -0.2rem -0.74rem;
-  transform: rotate(180deg);
+.back {
+    width: 0.22rem;
+    height: 0.38rem;
+    background-image: url(/static/images/jl.png);
+    background-repeat: no-repeat;
+    background-size: 5.8rem 1.86rem;
+    background-position: -0.2rem -0.74rem;
+    transform: rotate(180deg);
 }
+
 #login {
     position: absolute;
     bottom: 0;
@@ -381,13 +402,13 @@ export default {
             }
         }
     }
-    .loginIcon{
+    .loginIcon {
         background-position: -80px -3px;
     }
-    .passWordIcon{
+    .passWordIcon {
         background-position: -52px -3px;
     }
-    .smsIcon{
+    .smsIcon {
         background-position: -105px -3px;
     }
     li:last-of-type {
