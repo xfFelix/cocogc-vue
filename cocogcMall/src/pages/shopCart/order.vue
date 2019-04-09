@@ -252,7 +252,7 @@ export default {
             info: '',
             data: {
               mobile: '',
-              show: true,
+              show: false,
               code: '',
               codeText: '发送验证码',
               codeFlag: false
