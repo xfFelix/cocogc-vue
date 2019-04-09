@@ -69,7 +69,7 @@
 
 <script>
 import api from "@/service/api";
-import { IsEmpty, IsMobile, CheckPass, setToken ,IsChinaMobile,IsHkMobile} from "@/util/common";
+import { IsEmpty, IsMobile, CheckPass, setToken ,IsChinaMobile,IsHKMobile} from "@/util/common";
 
 export default {
     data() {
@@ -180,7 +180,7 @@ export default {
                 this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
-            if (this.telPlace == '852' && !IsHkMobile(this.loginForm.userName)) {
+            if (this.telPlace == '852' && !IsHKMobile(this.loginForm.userName)) {
                 this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
@@ -217,7 +217,7 @@ export default {
                 this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
-            if (this.telPlace == '852' && !IsHkMobile(this.loginForm.userName)) {
+            if (this.telPlace == '852' && !IsHKMobile(this.loginForm.userName)) {
                 this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }

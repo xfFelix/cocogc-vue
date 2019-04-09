@@ -12,7 +12,7 @@ export const IsMobile = mobile => {
 }
 
 export const IsChinaMobile =  (mobile)=> {
-  var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/
+  var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
   if (reg.test(mobile)) {
       return true
   } else {
@@ -28,6 +28,7 @@ export const IsHKMobile = (mobile) => {
     return false;
   }
 }
+
 
 // 密码检测
 export const CheckPass = (s) => {
@@ -119,11 +120,3 @@ export function getParam () {
   return args
 }
 
-export const IsHkMobile = mobile => {
-  var reg=/^(5|6|8|9)\\d{7}$/;
-  if(reg.test(mobile)){
-    return true;
-  }else{
-    return false;
-  }
-}
