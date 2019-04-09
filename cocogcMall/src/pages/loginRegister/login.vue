@@ -50,8 +50,13 @@
         <p class="bntWrap" @click="loginBnt()">
             <span class="bnt">登录</span>
         </p>
-        <p class="forgetPass" @click="usePassWord()" v-if="smsFlag">使用密码登录</p>
-        <p class="forgetPass" @click="forgerPass()" v-if="smsFlag===false">忘记密码？</p>
+        <p class="forgetPass"  v-if="smsFlag">
+            <span @click="usePassWord()">使用密码登录</span>
+        </p>
+        <div class="forgetPass" v-if="smsFlag===false">
+            <span @click="smsFlag=true">使用短信登录</span>&nbsp;&nbsp;
+            <span @click="forgerPass()">忘记密码？</span>
+        </div>
     </div>
 </template>
 
