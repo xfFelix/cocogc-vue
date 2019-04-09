@@ -15,10 +15,10 @@
             <div class="loginLileft">
               <span></span>
               <div style="position:relative;display: flex;">
-                  <select style="border:none;background:#fff;"  v-on:change="indexSelect($event)">
-                    <option :value="item.telRealVal"  v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
-                  </select>
-                  <div style="position:absolute;width: 18px;height: 20px;background: #fff;bottom: -2px;right: 0;"></div>
+                <select style="border:none;background:#fff;" v-on:change="indexSelect($event)">
+                  <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
+                </select>
+                <div style="position:absolute;width: 18px;height: 20px;background: #fff;bottom: -2px;right: 0;"></div>
               </div>
               <input type="number" placeholder="请输入手机号码" v-model.trim="register.userName" style="width:60%">
             </div>
@@ -74,7 +74,7 @@
 
 <script>
 import api from "@/service/api";
-import { IsEmpty, IsMobile, CheckPass , IsHkMobile} from "@/util/common"
+import { IsEmpty, IsMobile, CheckPass, IsHkMobile, IsChinaMobile } from "@/util/common"
 
 
 
@@ -92,29 +92,29 @@ export default {
         msgValidate: '',
         inputPass: ""
       },
-      telList:[
+      telList: [
         {
-          telRealVal:86,
-          telShowVal:'+86 中国',
+          telRealVal: 86,
+          telShowVal: '+86 中国',
         },
         {
-          telRealVal:852,
-          telShowVal:'852 香港',
+          telRealVal: 852,
+          telShowVal: '852 香港',
         }
       ],
-      telPlace:86
+      telPlace: 86
     };
   },
   methods: {
-    indexSelect(event){
-      this.telPlace= event.target.value;
+    indexSelect(event) {
+      this.telPlace = event.target.value;
     },
     /*
         注册接口
     */
     regist: function() {
       let _this = this;
-      this.axios(infoURl+api.register, {
+      this.axios(infoURl + api.register, {
         mobile: this.register.userName,
         passwd: this.register.inputPass,
         confirm_passwd: this.register.inputPass,
@@ -137,7 +137,7 @@ export default {
     */
     regsms: function() {
       let _this = this;
-      this.axios(infoURl+api.regsms, {
+      this.axios(infoURl + api.regsms, {
         mobile: this.register.userName,
         captcha: this.register.captcha,
       }, 'post')
@@ -190,13 +190,13 @@ export default {
         this.MessageBox("提示", "手机号码不能为空")
         return false;
       }
-      if(this.telPlace == '86' && !IsChinaMobile(this.register.userName)){
+      if (this.telPlace == '86' && !IsChinaMobile(this.register.userName)) {
         this.MessageBox("提示", "手机号码格式错误");
-         return false;
+        return false;
       }
-      if(this.telPlace == '852' && !IsHkMobile(this.register.userName)){
+      if (this.telPlace == '852' && !IsHkMobile(this.register.userName)) {
         this.MessageBox("提示", "手机号码格式错误");
-         return false;
+        return false;
       }
       if (IsEmpty(this.register.captcha) || this.register.captcha.length < 4) {
         this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
@@ -222,13 +222,13 @@ export default {
         this.MessageBox("提示", "手机号码不能为空")
         return false;
       }
-      if(this.telPlace == '86' && !IsChinaMobile(this.register.userName)){
+      if (this.telPlace == '86' && !IsChinaMobile(this.register.userName)) {
         this.MessageBox("提示", "手机号码格式错误");
-         return false;
+        return false;
       }
-      if(this.telPlace == '852' && !IsHkMobile(this.register.userName)){
+      if (this.telPlace == '852' && !IsHkMobile(this.register.userName)) {
         this.MessageBox("提示", "手机号码格式错误");
-         return false;
+        return false;
       }
       if (IsEmpty(this.register.captcha) && this.register.captcha.length < 4) {
         this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
