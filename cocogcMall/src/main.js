@@ -5,6 +5,9 @@ import App from './App';
 import router from './router';
 import axios from './service/http'
 import * as filters from './util/filter.js';
+import 'babel-polyfill'
+import promise from 'es6-promise';
+promise.polyfill();
 // import Swiper from 'swiper';
 import 'swiper/dist/css/swiper.css';
 import '../static/css/style.css';
