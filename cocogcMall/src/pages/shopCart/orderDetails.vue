@@ -5,7 +5,7 @@
              <p class="od-titleInfoWrap">
                 <span class="j1Png od-titleInfoImg"></span>
                 <span class="od-titleInfo">{{dataList.orderStatus}}</span>
-            </p> 
+            </p>
             <!-- <p class="od-service">
                 申请售后
             </p> -->

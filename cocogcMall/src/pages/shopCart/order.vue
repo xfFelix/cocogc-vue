@@ -328,7 +328,7 @@ export default {
         this.data.show = false
         this.Toast(data.message)
         setTimeout(()=> {
-          window.location.reload()
+          this.$router.back()
         }, 500)
       },
         handlePreview(_this, data) {
