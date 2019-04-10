@@ -123,13 +123,10 @@ export default {
       }, 'post')
         .then((data) => {
           if (data.error_code == 0) {
-            this.$router.push('/registerSucess');
+            this.$router.push('/login');
           } else {
             this.Toast(data.message)
           }
-        })
-        .catch((data) => {
-          this.Toast(data.message)
         })
     },
     /*
