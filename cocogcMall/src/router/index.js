@@ -30,7 +30,6 @@ import login from '@/pages/loginRegister/login';
 import passSetUp from '@/pages/loginRegister/passSetUp';
 import passSetSucess from '@/pages/loginRegister/passSetSucess';
 import register from '@/pages/loginRegister/register';
-import registerSucess from '@/pages/loginRegister/registerSucess';
 
 import { homedir } from 'os';
 
@@ -172,12 +171,6 @@ const router = new Router({
       name: 'register',
       component: register,
       meta: { title: '注册' },
-    },
-    {
-      path: '/registerSucess',
-      name: 'registerSucess',
-      component: registerSucess,
-      meta: { title: '注册成功' },
     },
 
   ],
