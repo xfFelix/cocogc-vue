@@ -49,7 +49,6 @@ export default {
         guessLike: function() {
             let _this = this;
             let name = window.userLikeName;
-            console.log(name);
             this.axios(jdTestUrl + api.guessLike, {
                 "name": name
             }, 'post')

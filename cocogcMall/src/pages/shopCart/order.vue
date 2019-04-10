@@ -203,6 +203,9 @@
               <h1>绑定手机号码</h1>
               <div class="item">
                 <span class="user"></span>
+                <select style="border:none;background:#fff;width: 50px;" v-model="telPlace">
+                    <option :value="item.telRealVal" v-for="item in telList" :key="item.telRealVal">{{item.telShowVal}}</option>
+                </select>
                 <input type="tel" placeholder="请输入手机号" v-model="data.mobile" pattern="[1-9]*" autocomplete="off">
               </div>
               <div class="item border-1-px">
@@ -226,7 +229,7 @@ import Swiper from 'swiper';
 import api from '../../service/api';
 import ExchangeSu from "@/components/shopCart/ExchangeSu"
 import { mapGetters } from 'vuex';
-import { IsEmpty, getToken, IsMobile } from "@/util/common";
+import { IsEmpty, getToken, IsMobile, IsChinaMobile, IsHKMobile } from "@/util/common";
 import axios from '@/service/http'
 import store from '@/store'
 
@@ -256,7 +259,18 @@ export default {
               code: '',
               codeText: '发送验证码',
               codeFlag: false
-            }
+            },
+            telList: [
+                {
+                    telRealVal: 86,
+                    telShowVal: '+86　中国',
+                },
+                {
+                    telRealVal: 852,
+                    telShowVal: '+852 香港',
+                }
+            ],
+            telPlace: 86
         };
     },
     async beforeRouteEnter(to, from, next) {
@@ -298,6 +312,8 @@ export default {
     },
     methods: {
         async sendCode() {
+          if (this.telPlace == '86' && !IsChinaMobile(this.data.mobile)) return this.Toast('请输入国内手机号')
+          if (this.telPlace == '852' && !IsHKMobile(this.data.mobile)) return this.Toast('请输入香港手机号')
           if (!IsMobile(this.data.mobile)) return this.Toast('请输入正确的手机号')
           let data = await this.axios(infoURl + api.userSms, { mobile: this.data.mobile }, 'post')
           if (data.error_code) {
@@ -320,7 +336,10 @@ export default {
           }, 1000)
       },
       async setMobile() {
+        if (this.telPlace == '86' && !IsChinaMobile(this.data.mobile)) return this.Toast('请输入国内手机号')
+        if (this.telPlace == '852' && !IsHKMobile(this.data.mobile)) return this.Toast('请输入香港手机号')
         if (!IsMobile(this.data.mobile)) return this.Toast('请输入正确的手机号')
+        if (!this.data.code) return this.Toast('请输入验证码')
         let data = await this.axios(infoURl + api.bindMobile, { token: getToken(), mobile: this.data.mobile, code: this.data.code }, 'post')
         if (data.error_code) {
             return this.Toast(data.message)
@@ -643,6 +662,7 @@ export default {
       }
       span{
         display: block;
+        flex: 0 0 30px;
         width: 30px;
         height: 30px;
         background-size: 172px 32px;
