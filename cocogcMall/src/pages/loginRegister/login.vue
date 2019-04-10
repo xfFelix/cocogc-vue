@@ -16,7 +16,7 @@
                     <div class="loginLileft" style="width:100%;">
                         <span class="loginIcon"></span>
                         <div style="position:relative;display: flex;">
-                            <select style="border:none;background:#fff;" v-on:change="indexSelect($event)">
+                            <select style="border:none;background:#fff;width: 53px;" v-on:change="indexSelect($event)">
                                 <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
                             </select>
                             <div style="position:absolute;width: 18px;height: 20px;background: #fff;bottom: -2px;right: 0;"></div>
@@ -69,7 +69,7 @@
 
 <script>
 import api from "@/service/api";
-import { IsEmpty, IsMobile, CheckPass, setToken ,IsChinaMobile,IsHkMobile} from "@/util/common";
+import { IsEmpty, IsMobile, CheckPass, setToken ,IsChinaMobile,IsHKMobile} from "@/util/common";
 
 export default {
     data() {
@@ -90,11 +90,11 @@ export default {
             telList: [
                 {
                     telRealVal: 86,
-                    telShowVal: '+86 中国',
+                    telShowVal: '+86　中国',
                 },
                 {
                     telRealVal: 852,
-                    telShowVal: '852 香港',
+                    telShowVal: '+852 香港',
                 }
             ],
             telPlace: 86
@@ -180,7 +180,7 @@ export default {
                 this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
-            if (this.telPlace == '852' && !IsHkMobile(this.loginForm.userName)) {
+            if (this.telPlace == '852' && !IsHKMobile(this.loginForm.userName)) {
                 this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
@@ -217,7 +217,7 @@ export default {
                 this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
-            if (this.telPlace == '852' && !IsHkMobile(this.loginForm.userName)) {
+            if (this.telPlace == '852' && !IsHKMobile(this.loginForm.userName)) {
                 this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
