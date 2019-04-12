@@ -16,10 +16,9 @@
                     <div class="loginLileft" style="width:100%;">
                         <span class="loginIcon"></span>
                         <div style="position:relative;display: flex;">
-                            <select style="border:none;background:#fff;width: 53px;" v-on:change="indexSelect($event)">
+                            <select style="border:none;background:#fff;" v-on:change="indexSelect($event)">
                                 <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
                             </select>
-                            <div style="position:absolute;width: 18px;height: 20px;background: #fff;bottom: -2px;right: 0;"></div>
                         </div>
                         <input type="number" placeholder="请输入注册手机号码" v-model.trim="loginForm.userName" @input="phoneInp($event)" style="width:60%;">
                     </div>
@@ -90,7 +89,7 @@ export default {
             telList: [
                 {
                     telRealVal: 86,
-                    telShowVal: '+86　中国',
+                    telShowVal: '+86 中国',
                 },
                 {
                     telRealVal: 852,
