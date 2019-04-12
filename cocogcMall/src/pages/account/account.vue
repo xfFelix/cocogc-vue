@@ -128,7 +128,7 @@ export default {
                 { name: '信用卡还款', scoreShow: false, path: infoURl + "#!/pay?back=pay&token=" + getToken(), bgImg: "acc-contentLog02" },
                 { name: '黄金兑换', scoreShow: false, path: infoURl + "#!/goldChange?token=" + getToken(), bgImg: "acc-contentLog03" },
                 { name: '话费充值', scoreShow: false, path: infoURl + "#!/phoneBill?token=" + getToken(), bgImg: "acc-contentLog04" },
-                { name: '门票兑换记录', scoreShow: false, path: infoURl + "#!/phoneBill?token=" + getToken(), bgImg: "acc-contentLog09" },
+                { name: '门票兑换记录', scoreShow: false, path: hostUrl + 'ticket/order/list?token=' + getToken() , bgImg: "acc-contentLog09" },
             ],
             helpList: [
                 { name: '卡密充值', path: infoURl + '#!/charge?token=' + getToken(), bgImg: "acc-contentLog08" },
