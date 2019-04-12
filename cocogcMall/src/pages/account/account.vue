@@ -128,6 +128,7 @@ export default {
                 { name: '信用卡还款', scoreShow: false, path: infoURl + "#!/pay?back=pay&token=" + getToken(), bgImg: "acc-contentLog02" },
                 { name: '黄金兑换', scoreShow: false, path: infoURl + "#!/goldChange?token=" + getToken(), bgImg: "acc-contentLog03" },
                 { name: '话费充值', scoreShow: false, path: infoURl + "#!/phoneBill?token=" + getToken(), bgImg: "acc-contentLog04" },
+                { name: '门票兑换记录', scoreShow: false, path: infoURl + "#!/phoneBill?token=" + getToken(), bgImg: "acc-contentLog09" },
             ],
             helpList: [
                 { name: '卡密充值', path: infoURl + '#!/charge?token=' + getToken(), bgImg: "acc-contentLog08" },
@@ -394,6 +395,7 @@ export default {
                     .acc-contentLog06,
                     .acc-contentLog07,
                     .acc-contentLog08,
+                    .acc-contentLog09,
                      {
                         width: 0.3rem;
                         height: 0.3rem;
@@ -426,6 +428,10 @@ export default {
                     }
                     .acc-contentLog08{
                             background-position: -2.58rem -1.07rem;
+                    }
+                    .acc-contentLog09{
+                            background-position: -2.58rem -1.07rem;
+                            transform: rotate(-63deg);
                     }
 
 
