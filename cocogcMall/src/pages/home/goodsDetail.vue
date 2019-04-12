@@ -515,13 +515,16 @@ function areaResize(commId){
           pDiv.style.width = (w * scale) + 'px';
           pDiv.style.height = (h * scale) + 'px';
           oDiv.style.position = "relative";
+        }else {
+          oDiv.style.position = "relative";
         }
         if (scale && Math.ceil(14 / scale) > 10) {
           var oDiv = document.getElementById(commId);
           oDiv.style.fontSize = Math.ceil(14 / scale) + 'px';
         }
-      }
-
+     }else{
+        oDiv.style.position = "relative";
+    }
   },1000);
 }
 </script>
