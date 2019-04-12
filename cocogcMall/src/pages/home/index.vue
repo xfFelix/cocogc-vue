@@ -109,7 +109,7 @@ export default {
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
         { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: 'javascript:;' },
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;' },
-        { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: 'javascript:;' },
+        { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: hostUrl + 'ticket/?token=' + getToken() },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: 'javascript:;' },
         { id: 9, name: "机票酒店", imgBg: 'ifa-imgBg04', path: 'javascript:;' },
         { id: 10, name: "周大福金饰", imgBg: 'ifa-imgBg08', path: 'javascript:;' },
