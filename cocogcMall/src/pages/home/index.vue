@@ -143,6 +143,9 @@ export default {
       if (item.id === 4) {
         return this.$router.push(item.path)
       }
+      if(item.id === 7){
+        return window.location = hostUrl + 'ticket/?token=' + getToken();
+      }
       if (item.path === 'javascript:;'){
         return
       }
