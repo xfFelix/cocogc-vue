@@ -361,7 +361,7 @@ export default {
             if (!IsEmpty(that.goodsInfo.attrs))
                 that.attrs = that.goodsInfo.attrs.split(",");
             if (IsEmpty(that.goodsInfo.unit)) that.goodsInfo.unit = "件";
-            areaResize("detail");
+            areaResize("detail",that.goodsInfo.vendorId);
         },
         chooseAttr(i, v) {
             var that = this;
@@ -493,16 +493,17 @@ export default {
     }
 };
 
-function areaResize(commId){
-  setTimeout(function(){
-    var oDiv = document.getElementById(commId);
-    if (!oDiv) return 0;
-    var detLeftPadding = 0,detRightPadding = 0;
-    var pageWidth = $(window).width();
-    var pDiv = oDiv.parentNode,
-      w = oDiv.offsetWidth,
-      h = oDiv.offsetHeight,
-      cw = (pageWidth > 640 ? 640 : pageWidth) - detLeftPadding - detRightPadding;
+function areaResize(commId,vendorId){
+  if(vendorId == "jingDong"){
+    setTimeout(function(){
+      var oDiv = document.getElementById(commId);
+      if (!oDiv) return 0;
+      var detLeftPadding = 0,detRightPadding = 0;
+      var pageWidth = $(window).width();
+      var pDiv = oDiv.parentNode,
+        w = oDiv.offsetWidth,
+        h = oDiv.offsetHeight,
+        cw = (pageWidth > 640 ? 640 : pageWidth) - detLeftPadding - detRightPadding;
 
 
       if (w > 0) {
@@ -522,15 +523,27 @@ function areaResize(commId){
           var oDiv = document.getElementById(commId);
           oDiv.style.fontSize = Math.ceil(14 / scale) + 'px';
         }
-     }else{
+      }else{
         oDiv.style.position = "relative";
-    }
-  },1000);
+      }
+    },1000);
+  }else{
+    var oDiv = document.getElementById(commId);
+    if (!oDiv) return 0;
+    oDiv.style.position = "relative";
+    oDiv.className = "imgWidth100";
+  }
 }
 </script>
 
 
 <style lang="less">
+.imgWidth100
+{
+    img{
+        width: 100% !important;
+      }
+}
 .good-number{
   display: flex;
   box-sizing: border-box;
@@ -544,9 +557,9 @@ function areaResize(commId){
     margin-left: 10px;
   }
 }
-  #detail{
+#detail{
     position: absolute;
-  }
+}
 .goodsDetail {
     position: relative;
     transition: all 0.4s;
