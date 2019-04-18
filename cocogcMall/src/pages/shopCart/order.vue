@@ -143,9 +143,9 @@
                 </p>
                 <p class="phonePay-inpW">
                     <input class="phonePay-msg" type="number" placeholder="请输入短信验证码" v-model="smsCode" />
-                    <span class="sendPhoneSms" style="background: green;" @click="sendPhoneSms()">{{validate}}</span>
+                    <span class="sendPhoneSms" :style="{'background': validateFlag? 'green':'#dedede'}" @click="sendPhoneSms()">{{validate}}</span>
                 </p>
-                <p class="phonePay-confirm phonePay-conA" :class="smsCode?'light': ''" @click="sumitOrder">确认兑换</p>
+                <button class="phonePay-confirm phonePay-conA" :disabled="btnDisabled" :class="smsCode?'light': ''" @click="sumitOrder">确认兑换</button>
             </div>
         </transition>
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -270,7 +270,8 @@ export default {
                     telShowVal: '+852 香港',
                 }
             ],
-            telPlace: 86
+            telPlace: 86,
+            btnDisabled: false
         };
     },
     async beforeRouteEnter(to, from, next) {
@@ -425,6 +426,7 @@ export default {
 
         },
         sumitOrder() {
+            this.btnDisabled = true
             this.saveOrderByCart()
         },
         async getUserAddress() {
@@ -561,6 +563,7 @@ export default {
             var token = getToken();
             if(!this.addressDef)
             {
+              this.btnDisabled = false
               this.Toast("请选择配送地址！");
               return ;
             }
@@ -571,6 +574,7 @@ export default {
                 code: this.smsCode
                 }, 'post')
                 .then((data) => {
+                     this.btnDisabled = false
                     if (data.error_code == 0) {
                         var orderId = data.data[0].orderId;
                         // this.Toast('下单成功')
@@ -587,8 +591,10 @@ export default {
         //定时
         async sendPhoneSms() {
             if (this.validateFlag == 1) {
+                this.validateFlag = 0
                 let data = await this.axios(testUrl + api.sendSms, { token: getToken() }, 'post')
                 if (data.error_code) {
+                    this.validateFlag = 1
                     return this.Toast(data.message)
                 }
                 this.isSmsCode = true
@@ -1040,6 +1046,8 @@ export default {
     background: #91efb1;
     width: 90%;
     margin-bottom: 1rem;
+    border: none;
+    display: block;
 }
 
 .light {
