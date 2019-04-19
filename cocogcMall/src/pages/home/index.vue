@@ -107,7 +107,7 @@ export default {
         { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
         { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay&token=' + getToken() },
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
-        { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: 'javascript:;' },
+        { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil/?token=' + getToken() },
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;' },
         { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: hostUrl + 'ticket/?token=' + getToken() },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: '/goodsList?classfyId=18591'},
