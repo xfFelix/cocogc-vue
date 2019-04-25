@@ -165,3 +165,13 @@ export default {
     }
 }
 </style>
+<style>
+@media screen and (min-width: 600px) {
+  .tabs {
+    max-width: 450px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+</style>
+
