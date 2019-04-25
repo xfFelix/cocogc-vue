@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
   <meta http-equiv="pragma" content="no-cache" />
   <meta http-equiv="content-type" content="no-cache, must-revalidate" />
   <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
@@ -13,8 +14,57 @@
   <script src="static/js/iscroll-probe.js"></script>
 
   <script>
-    !function (e) { function t(n) { if (i[n]) return i[n].exports; var r = i[n] = { exports: {}, id: n, loaded: !1 }; return e[n].call(r.exports, r, r.exports, t), r.loaded = !0, r.exports } var i = {}; return t.m = e, t.c = i, t.p = "", t(0) }([function (e, t) { "use strict"; Object.defineProperty(t, "__esModule", { value: !0 }); var i = window; t["default"] = i.vl = function (e, t) { var n = e || 100, r = t || 750, a = i.document, d = navigator.userAgent, o = d.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i), l = d.match(/U3\/((\d+|\.){5,})/i), s = l && parseInt(l[1].split(".").join(""), 10) >= 80, u = a.documentElement, c = 1; if (o && o[1] > 534 || s) { u.style.fontSize = n + "px"; var p = a.createElement("div"); p.setAttribute("style", "width: 1rem;display:none"), u.appendChild(p); var m = i.getComputedStyle(p).width; if (u.removeChild(p), m !== u.style.fontSize) { var v = parseInt(m, 10); c = 100 / v } } var f = a.querySelector('meta[name="viewport"]'); f || (f = a.createElement("meta"), f.setAttribute("name", "viewport"), a.head.appendChild(f)), f.setAttribute("content", "width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"); var h = function () { u.style.fontSize = n / r * u.clientWidth * c + "px" }; h(), i.addEventListener("resize", h) }, e.exports = t["default"] }]);
+    ! function (e) {
+      function t(n) {
+        if (i[n]) return i[n].exports;
+        var r = i[n] = {
+          exports: {},
+          id: n,
+          loaded: !1
+        };
+        return e[n].call(r.exports, r, r.exports, t), r.loaded = !0, r.exports
+      }
+      var i = {};
+      return t.m = e, t.c = i, t.p = "", t(0)
+    }([function (e, t) {
+      "use strict";
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      });
+      var i = window;
+      t["default"] = i.vl = function (e, t) {
+        var n = e || 100,
+          r = t || 750,
+          a = i.document,
+          d = navigator.userAgent,
+          o = d.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),
+          l = d.match(/U3\/((\d+|\.){5,})/i),
+          s = l && parseInt(l[1].split(".").join(""), 10) >= 80,
+          u = a.documentElement,
+          c = 1;
+        if (o && o[1] > 534 || s) {
+          u.style.fontSize = n + "px";
+          var p = a.createElement("div");
+          p.setAttribute("style", "width: 1rem;display:none"), u.appendChild(p);
+          var m = i.getComputedStyle(p).width;
+          if (u.removeChild(p), m !== u.style.fontSize) {
+            var v = parseInt(m, 10);
+            c = 100 / v
+          }
+        }
+        var f = a.querySelector('meta[name="viewport"]');
+        f || (f = a.createElement("meta"), f.setAttribute("name", "viewport"), a.head.appendChild(f)), f
+          .setAttribute("content",
+            "width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1");
+        var h = function () {
+          let width = u.clientWidth >= 480 ? 480 : u.clientWidth
+          u.style.fontSize = n / r * width * c + "px"
+        };
+        h(), i.addEventListener("resize", h)
+      }, e.exports = t["default"]
+    }]);
     vl(100, 750);
+
   </script>
 
   <!-- <script>
@@ -29,9 +79,9 @@
   </script> -->
 
   <script>
-    var testUrl = "https://tshop.cocogc.cn/"; // shop
-    var infoURl = "https://tapi.cocogc.cn/"; // api
-    var jdTestUrl = "https://tsearch.cocogc.cn/"; // 查询商品
+    // var testUrl = "https://tshop.cocogc.cn/"; // shop
+    // var infoURl = "https://tapi.cocogc.cn/"; // api
+    // var jdTestUrl = "https://tsearch.cocogc.cn/"; // 查询商品
     var hostUrl = "https://tmall.cocogc.cn/"; // mall
 
     // var testUrl = "https://shop.cocogc.cn/"; // shop
@@ -39,11 +89,17 @@
     // var jdTestUrl = "https://search.cocogc.cn/"; // 查询商品
     // var hostUrl = "https://mall.cocogc.cn/"; // mall
 
-    // var testUrl = "http://192.168.0.110:8888/"; // shop
-    // var infoURl = "http://192.168.0.110:9999/"; // api
-    // var jdTestUrl = "http://192.168.0.110:9988/"; // 查询商品
-  </script>
+    var testUrl = "http://192.168.0.110:8888/"; // shop
+    var infoURl = "http://192.168.0.110:9999/"; // api
+    var jdTestUrl = "http://192.168.0.110:9988/"; // 查询商品
 
+  </script>
+  <style>
+    html {
+      max-width: 480px;
+    }
+
+  </style>
 </head>
 
 <body>
