@@ -105,7 +105,7 @@ export default {
       fastList: [
         { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + getToken() },
         { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
-        { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: infoURl + '#!/pay?back=pay&token=' + getToken() },
+        { id: 3, name: "手机/配件", imgBg: 'ifa-imgBg03', path: '/goodsList?classfyId=9987' },
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
         { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil/?token=' + getToken() },
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;' },
@@ -140,7 +140,7 @@ export default {
   },
   methods: {
     goLink(item) {
-      if (item.id === 4 || item.id === 8) {
+      if (item.id === 4 || item.id === 8 || item.id === 3) {
         return this.$router.push(item.path)
       }
       if(item.id === 7){
@@ -330,7 +330,7 @@ export default {
       background-position: -2.92rem -0.11rem;
     }
     .ifa-imgBg03 {
-      background-position: -3.49rem -0.04rem;
+      background-position: -3.44rem -0.1rem;
     }
     .ifa-imgBg04 {
       background-position: -4.12rem -0.08rem;
