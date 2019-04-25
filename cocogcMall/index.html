@@ -57,7 +57,7 @@
           .setAttribute("content",
             "width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1");
         var h = function () {
-          let width = u.clientWidth >= 480 ? 480 : u.clientWidth
+          let width = u.clientWidth >= 450 ? 450 : u.clientWidth
           u.style.fontSize = n / r * width * c + "px"
         };
         h(), i.addEventListener("resize", h)
@@ -94,12 +94,6 @@
     var jdTestUrl = "http://192.168.0.110:9988/"; // 查询商品
 
   </script>
-  <style>
-    html {
-      max-width: 480px;
-    }
-
-  </style>
 </head>
 
 <body>

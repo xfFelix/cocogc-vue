@@ -31,4 +31,11 @@ export default {
   /* background-color: rgba(0,0,0,0.6); */
   z-index: 100;
 }
+@media screen and (min-width: 600px){
+  .mask{
+    max-width: 450px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 </style>

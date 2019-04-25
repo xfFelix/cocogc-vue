@@ -130,7 +130,7 @@
             </div>
             <div class="order-sumit" @click="dialogCode">提交订单</div>
         </div>
-        <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
+        <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="phonePay-bg" id="phonePay-sms" v-if="showSendCode">
                 <p class="phonePay-title">
                     <span class="phoneChe-backW" @click="showSendCode = false">
@@ -1142,3 +1142,24 @@ export default {
         }
     }
 </style>
+<style>
+@media screen and (min-width: 600px) {
+  .order-sumitW {
+    max-width: 450px;
+    left: 50% !important;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+  }
+  .phonePay-bg{
+    margin: 0 0 !important;
+    max-width: 450px;
+    left: 50% !important;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+  }
+  .order-addressWN{
+    overflow: hidden;
+  }
+}
+</style>
+

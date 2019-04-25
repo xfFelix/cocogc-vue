@@ -534,4 +534,13 @@ export default {
     }
 }
 </style>
+<style>
+@media screen and (min-width: 600px){
+  .home-smWrapA{
+    left: 50% !important;
+    transform: translateX(-50%);
+    max-width: 450px;
+  }
+}
+</style>
 

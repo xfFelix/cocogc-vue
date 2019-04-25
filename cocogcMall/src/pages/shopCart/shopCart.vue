@@ -650,6 +650,7 @@ export default {
     position: fixed;
     bottom: 48px;
     width: 100%;
+    max-width: 450px;
     border-top: 1px solid #dfdfdf;
     justify-content: space-between;
     background: #fff;

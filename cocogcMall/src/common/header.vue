@@ -32,4 +32,12 @@ export default {
 <style lang="less">
 header {}
 </style>
+<style>
+@media screen and (min-width: 600px) {
+  header{
+    position: relative;
+  }
+}
+</style>
+
 

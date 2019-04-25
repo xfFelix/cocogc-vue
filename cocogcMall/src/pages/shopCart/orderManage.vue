@@ -31,7 +31,7 @@
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide" v-for="(itemGoods,indexGoods) in item.goodsList" :key="indexGoods">
                                             <div class="order-goodsList">
-                                                <img :src="itemGoods.picUrl" alt="" /> 
+                                                <img :src="itemGoods.picUrl" alt="" />
                                             </div>
                                         </div>
 
@@ -222,7 +222,7 @@ export default {
             }).then(action => {
                     this.confirmReceived(getToken(),takeId);
             }).catch(action => {
-                    
+
             })
         }
     },
@@ -418,3 +418,13 @@ export default {
     }
 }
 </style>
+<style>
+@media screen and (min-width: 600px){
+  .orderHead{
+    max-width: 450px;
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+}
+</style>
+
