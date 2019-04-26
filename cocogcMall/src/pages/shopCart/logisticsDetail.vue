@@ -46,7 +46,7 @@
                         <span>订单编号：</span>
                         <span>{{list.orderId}}</span>
                     </p>
-                    <p class="od-numberCopy"  @click="handleCopy(list.orderId, $event)">复制</p>
+                    <p class="od-numberCopy" @click="handleCopy(list.orderId, $event)">复制</p>
                 </div>
 
                 <div class="order-goodSInfo one-bottom-px">
@@ -55,7 +55,7 @@
                     </div>
                     <div class="order-goodsDetail">
                         <p class="order-goodsDName">{{orderList[0].goodsName}}</p>
-                         <p class="order-goodsDType">&nbsp;</p> 
+                        <p class="order-goodsDType">&nbsp;</p>
                         <div class="order-goodsDPriceW">
                             <span class="order-goodsDPrice">{{orderList[0].buyPrice|toDecimal2}}</span>
                             <p class="order-goodsDNumW">
@@ -107,7 +107,8 @@
                 <div class="ld-logisTitleW one-bottom-px">
                     <div class="ld-logisTitle ">
                         <p>商品清单</p>
-                        <p>共(<span>{{goodsTotal}}</span>)件</p>
+                        <p>共(
+                            <span>{{goodsTotal}}</span>)件</p>
                     </div>
                     <p class="j1Png ld-logisClose" @click="showSendCode = false"></p>
                 </div>
@@ -165,7 +166,7 @@ export default {
             logisClose: false,
             logisticList: [],
             showSendCode: false,
-            dataOrMsg:false
+            dataOrMsg: false
         };
     },
     mounted() {
@@ -217,7 +218,7 @@ export default {
                             _this.dataOrMsg = true;
                         } else {
                             _this.logisticList.push(data.message)
-                             _this.dataOrMsg = false;
+                            _this.dataOrMsg = false;
                         }
 
                     } else {
@@ -441,6 +442,7 @@ export default {
     bottom: 0;
     background: #fff;
     z-index: 101;
+    max-width: 450px;
     .order-goodSIImg {
         margin: 0;
     }

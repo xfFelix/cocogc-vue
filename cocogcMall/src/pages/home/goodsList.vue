@@ -368,14 +368,13 @@
   .goodsList {
     height: 100%;
     background: #fff;
-
     .home-smWrap {
       padding: 0.5rem 0 0 0;
       width: 100%; // align-items: center;
       background: #fff;
       position: fixed;
       z-index: 2;
-
+      max-width: 450px;
       .goodsList-order {
         display: flex;
         justify-content: space-around;

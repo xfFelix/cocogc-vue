@@ -192,12 +192,16 @@ export default {
     width: 100%;
     height: 100%;
     z-index: 2;
+    max-width: 450px;
+    right: 0;
+    margin: 0 auto;
     head {
         background: url(/static/images/regist.png) no-repeat;
         width: 100%;
         height: 3.5rem;
         display: block;
         background-size: 100% 100%;
+        position: relative;
     }
 }
 

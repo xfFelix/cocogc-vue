@@ -20,7 +20,7 @@
                     <span class="j1Png setUp-go"></span>
                 </div>
             </li>
-            <li class="one-bottom-px" @click="cardsJump()">
+            <!-- <li class="one-bottom-px" @click="cardsJump()">
                 <div>
                     信用卡管理
                 </div>
@@ -29,7 +29,7 @@
                     <span class="redCircle" v-if="cardsFlag"></span>
                     <span class="j1Png setUp-go"></span>
                 </div>
-            </li>
+            </li> -->
             <li class="one-bottom-px" @click="passupJump()">
                 <div>
                     修改密码

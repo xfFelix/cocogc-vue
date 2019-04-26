@@ -311,6 +311,7 @@ export default
                     font-size: 0.26rem;
                     border: none;
                     background: transparent;
+                    line-height: 20px;
                 }
                  ::-webkit-input-placeholder {
                     /* WebKit, Blink, Edge */

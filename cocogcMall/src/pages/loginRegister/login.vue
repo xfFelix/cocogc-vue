@@ -297,6 +297,9 @@ export default {
     height: 100%;
     z-index: 2;
     background: #fff;
+        right: 0;
+    margin: 0 auto;
+    max-width: 450px;
     head {
         background: url(/static/images/regist.png) no-repeat;
         width: 100%;

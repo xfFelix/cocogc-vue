@@ -18,16 +18,13 @@
             <div class="backImgW" @click="$router.back()">
                 <span class="j1Png backImg"></span>
             </div>
-             <div class="backImgW" @click="showDialog = true">
+            <div class="backImgW" @click="showDialog = true">
                 <p class="circle">
                     <span></span>
                     <span></span>
                     <span></span>
                 </p>
             </div>
-        </div>
-
-        <div class="goTop" @click="goTop()" v-if="headShow">
         </div>
 
         <div class="goodsD-headW">
@@ -55,8 +52,8 @@
                 </div>
             </div>
             <div class="good-number">
-              <span>商品编号</span>
-              <p class="">{{goodsInfo.goodsSn}}</p>
+                <span>商品编号</span>
+                <p class="">{{goodsInfo.goodsSn}}</p>
             </div>
 
             <div class="goodsD-addressInfo">
@@ -78,9 +75,9 @@
 
         <div class="goodsD-imgW">
             <h3>商品详情</h3>
-          <div>
-            <div v-html="goodsInfo.detail" id="detail"></div>
-          </div>
+            <div>
+                <div v-html="goodsInfo.detail" id="detail"></div>
+            </div>
         </div>
         <!-- 猜你喜欢 -->
         <guess-like></guess-like>
@@ -148,35 +145,48 @@
             </div>
 
         </div>
-        <div class="dialog-container" v-if="showDialog">
-            <div class="dialog-conInner">
-                <div class="arrow-top"></div>
-                <div class="dialog-content">
-                    <router-link :to="{path: '/layout/home'}">
-                        <div class="link">
-                            <span class="navImg navGo navGo01"></span>首页</div>
-                    </router-link>
-                    <router-link :to="{path: '/layout/shopMall'}">
-                        <div class="link">
-                            <span class="navImg navGo navGo02"></span>商城</div>
-                    </router-link>
-                   <router-link :to="{path: '/layout/classify'}">
-                        <div class="link">
-                            <span class="navImg navGo navGo03"></span>分类</div>
-                    </router-link>
-                    <router-link :to="{path: '/layout/shopCart'}">
-                        <div class="link">
-                            <span class="navImg navGo navGo04"></span>购物车</div>
-                    </router-link>
-                     <router-link :to="{path: '/layout/account'}">
-                        <div class="link">
-                            <span class="navImg navGo navGo05"></span>我的</div>
-                    </router-link>
+
+        <div class="fixOut" style="top:0px;">
+            <div class="relOut">
+                <div class="dialog-container" v-if="showDialog">
+                    <div class="dialog-conInner">
+                        <div class="arrow-top"></div>
+                        <div class="dialog-content">
+                            <router-link :to="{path: '/layout/home'}">
+                                <div class="link">
+                                    <span class="navImg navGo navGo01"></span>首页</div>
+                            </router-link>
+                            <router-link :to="{path: '/layout/shopMall'}">
+                                <div class="link">
+                                    <span class="navImg navGo navGo02"></span>商城</div>
+                            </router-link>
+                            <router-link :to="{path: '/layout/classify'}">
+                                <div class="link">
+                                    <span class="navImg navGo navGo03"></span>分类</div>
+                            </router-link>
+                            <router-link :to="{path: '/layout/shopCart'}">
+                                <div class="link">
+                                    <span class="navImg navGo navGo04"></span>购物车</div>
+                            </router-link>
+                            <router-link :to="{path: '/layout/account'}">
+                                <div class="link">
+                                    <span class="navImg navGo navGo05"></span>我的</div>
+                            </router-link>
+
+                        </div>
+                    </div>
 
                 </div>
             </div>
-
         </div>
+
+        <div class="fixOut" style="bottom:0px;">
+            <div class="relOut">
+                <div class="goTop" @click="goTop()" v-if="headShow" >
+                </div>
+            </div>
+        </div>
+
         <bg-mask v-model="showDialog" color="transparent"></bg-mask>
     </div>
 </template>
@@ -217,7 +227,7 @@ export default {
     watch: {
         '$route'(to, from) {
             window.scrollTo(0, 0);
-            this.getGoodsInfo(this.$route.params.goodId, (data)=> {
+            this.getGoodsInfo(this.$route.params.goodId, (data) => {
                 if (data != null) {
                     this.setGoodsData(data);
                 } else {
@@ -257,11 +267,11 @@ export default {
     },
     methods: {
         ...mapActions({
-          checkAddress: 'userinfo/checkAddress'
+            checkAddress: 'userinfo/checkAddress'
         }),
         async resetAddress() {
-          let data = await this.checkAddress()
-          window.chooseAddress = data
+            let data = await this.checkAddress()
+            window.chooseAddress = data
         },
         //滚动出现
         handleScroll() {
@@ -276,8 +286,8 @@ export default {
         goTop() {
             //参数i控制速度
             document.body.scrollTop -= 500;
-            document.documentElement.scrollTop  -=500;
-            if (document.body.scrollTop > 0 || document.documentElement.scrollTop >0) {
+            document.documentElement.scrollTop -= 500;
+            if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
                 var c = setTimeout(() => this.goTop(), 16);
             } else {
                 clearTimeout(c);
@@ -313,28 +323,27 @@ export default {
             this.isGo = 'order'
         },
         getGoodsInfo(goodId, callback) {
-          if(goodId && goodId != "null")
-          {
-            this.axios(testUrl + api.goodsDetailInfo,
-              {
-                "id": goodId
-              },
-              'post')
-              .then((data) => {
-                if (data.error_code == 0) {
-                  if (callback)
-                    callback(data.data);
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-              })
-          }
+            if (goodId && goodId != "null") {
+                this.axios(testUrl + api.goodsDetailInfo,
+                    {
+                        "id": goodId
+                    },
+                    'post')
+                    .then((data) => {
+                        if (data.error_code == 0) {
+                            if (callback)
+                                callback(data.data);
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            }
         },
         containAttr(attr) {
-          for (var i = 0; i < this.attrs.length; i++) {
-            if (this.attrs[i] == attr){
-                  return true;
+            for (var i = 0; i < this.attrs.length; i++) {
+                if (this.attrs[i] == attr) {
+                    return true;
                 }
             }
             return false;
@@ -361,7 +370,7 @@ export default {
             if (!IsEmpty(that.goodsInfo.attrs))
                 that.attrs = that.goodsInfo.attrs.split(",");
             if (IsEmpty(that.goodsInfo.unit)) that.goodsInfo.unit = "件";
-            areaResize("detail",that.goodsInfo.vendorId);
+            areaResize("detail", that.goodsInfo.vendorId);
         },
         chooseAttr(i, v) {
             var that = this;
@@ -369,10 +378,10 @@ export default {
             at[i] = v;
             var a = at.join(",");
             var id = this.findGoodsFromList(a);
-            if(id > 0){
-              this.attrs = at.slice(0);
-              this.goodsId = id;
-              this.$router.push('/goodsDetail/' + id);
+            if (id > 0) {
+                this.attrs = at.slice(0);
+                this.goodsId = id;
+                this.$router.push('/goodsDetail/' + id);
             }
         },
         findGoodsFromList(attr) {
@@ -401,7 +410,7 @@ export default {
         },
         toBuyCar() {
             var that = this;
-            if(!getToken()){
+            if (!getToken()) {
                 this.confirmBack()
                 return;
             }
@@ -431,13 +440,13 @@ export default {
                 })
         },
         async goPreview() {
-            if(!getToken()){
+            if (!getToken()) {
                 this.confirmBack()
                 return;
             }
             var that = this;
 
-            if(!getToken()){
+            if (!getToken()) {
                 this.$router.push('/login');
                 return;
             }
@@ -457,118 +466,120 @@ export default {
             //window.buys = buys;
             //放入购物车，其他的不选中
             this.axios(testUrl + api.updateCart,
-              {
-                token:getToken(),
-                buys:buys
-              },
-              'post')
-              .then((data) => {
-                if (data.error_code == 0) {
-                  that.$router.push('/order');
-                } else {
-                  that.Toast("添加购物车失败：" + data.message);
-                }
-            });
+                {
+                    token: getToken(),
+                    buys: buys
+                },
+                'post')
+                .then((data) => {
+                    if (data.error_code == 0) {
+                        that.$router.push('/order');
+                    } else {
+                        that.Toast("添加购物车失败：" + data.message);
+                    }
+                });
         }
     },
     components: {
         BgMask,
         'guess-like': Guesslike
     },
-    directives:{
-      color:function (el,binding,vnode) {
-        var i = binding.value;
-        var v = el.innerText;
-        var that = vnode.context;
-        let at = that.attrs.slice(0);
-        at[i] = v;
-        var a = at.join(",");
-        var id = that.findGoodsFromList(a);
-        if(id == 0){
-          el.style.color = "#ccc";
-        }else{
-            el.style.color = "#000";
+    directives: {
+        color: function(el, binding, vnode) {
+            var i = binding.value;
+            var v = el.innerText;
+            var that = vnode.context;
+            let at = that.attrs.slice(0);
+            at[i] = v;
+            var a = at.join(",");
+            var id = that.findGoodsFromList(a);
+            if (id == 0) {
+                el.style.color = "#ccc";
+            } else {
+                el.style.color = "#000";
+            }
         }
-      }
     }
 };
 
-function areaResize(commId,vendorId){
-  if(vendorId == "jingDong"){
-    setTimeout(function(){
-      var oDiv = document.getElementById(commId);
-      if (!oDiv) return 0;
-      var detLeftPadding = 0,detRightPadding = 0;
-      var pageWidth = $(window).width();
-      var pDiv = oDiv.parentNode,
-        w = oDiv.offsetWidth,
-        h = oDiv.offsetHeight,
-        cw = (pageWidth > 640 ? 640 : pageWidth) - detLeftPadding - detRightPadding;
+function areaResize(commId, vendorId) {
+    if (vendorId == "jingDong") {
+        setTimeout(function() {
+            var oDiv = document.getElementById(commId);
+            if (!oDiv) return 0;
+            var detLeftPadding = 0, detRightPadding = 0;
+            var pageWidth = $(window).width();
+            var pDiv = oDiv.parentNode,
+                w = oDiv.offsetWidth,
+                h = oDiv.offsetHeight,
+                cw = (pageWidth > 640 ? 640 : pageWidth) - detLeftPadding - detRightPadding;
 
 
-      if (w > 0) {
-        var scale = cw / w;
-        if (scale < 1) {
-          oDiv.style.WebkitTransformOrigin = 0 + 'px ' + 0 + 'px';
-          oDiv.style.transformOrigin = 0 + 'px ' + 0 + 'px';
-          oDiv.style.WebkitTransform = 'scale(' + scale + ')';
-          oDiv.style.transform = 'scale(' + scale + ')';
-          pDiv.style.width = (w * scale) + 'px';
-          pDiv.style.height = (h * scale) + 'px';
-          oDiv.style.position = "relative";
-        }else {
-          oDiv.style.position = "relative";
-        }
-        if (scale && Math.ceil(14 / scale) > 10) {
-          var oDiv = document.getElementById(commId);
-          oDiv.style.fontSize = Math.ceil(14 / scale) + 'px';
-        }
-      }else{
+            if (w > 0) {
+                var scale = cw / w;
+                if (scale < 1) {
+                    oDiv.style.WebkitTransformOrigin = 0 + 'px ' + 0 + 'px';
+                    oDiv.style.transformOrigin = 0 + 'px ' + 0 + 'px';
+                    oDiv.style.WebkitTransform = 'scale(' + scale + ')';
+                    oDiv.style.transform = 'scale(' + scale + ')';
+                    pDiv.style.width = (w * scale) + 'px';
+                    pDiv.style.height = (h * scale) + 'px';
+                    oDiv.style.position = "relative";
+                } else {
+                    oDiv.style.position = "relative";
+                }
+                if (scale && Math.ceil(14 / scale) > 10) {
+                    var oDiv = document.getElementById(commId);
+                    oDiv.style.fontSize = Math.ceil(14 / scale) + 'px';
+                }
+            } else {
+                oDiv.style.position = "relative";
+            }
+        }, 1000);
+    } else {
+        var oDiv = document.getElementById(commId);
+        if (!oDiv) return 0;
         oDiv.style.position = "relative";
-      }
-    },1000);
-  }else{
-    var oDiv = document.getElementById(commId);
-    if (!oDiv) return 0;
-    oDiv.style.position = "relative";
-    oDiv.className = "imgWidth100";
-  }
+        oDiv.className = "imgWidth100";
+    }
 }
 </script>
 
 
 <style lang="less">
-.imgWidth100
-{
-    img{
+.imgWidth100 {
+    img {
         width: 100% !important;
-      }
+    }
 }
-.good-number{
-  display: flex;
-  box-sizing: border-box;
-  margin: 0 0.38rem;
-  padding: 0.32rem 0 0;
-  font-size: 0.26rem;
-  span{
-    color: #999;
-  }
-  p{
-    margin-left: 10px;
-  }
+
+.good-number {
+    display: flex;
+    box-sizing: border-box;
+    margin: 0 0.38rem;
+    padding: 0.32rem 0 0;
+    font-size: 0.26rem;
+    span {
+        color: #999;
+    }
+    p {
+        margin-left: 10px;
+    }
 }
-#detail{
+
+#detail {
     position: absolute;
 }
+
 .goodsDetail {
     position: relative;
     transition: all 0.4s;
     padding-bottom: 0.42rem;
     background: #eef1f6;
     .dialog-container {
-        position: fixed;
-        top: 0.78rem;
-        right: 8px;
+        position: absolute;
+        top: 1rem;
+        right: 20px;
         z-index: 102;
         .dialog-conInner {
             position: relative;
@@ -642,6 +653,7 @@ function areaResize(commId,vendorId){
     z-index: 12;
     display: flex;
     justify-content: space-between;
+    max-width: 450px;
     .goodsD-headList {
         display: flex;
         justify-content: space-around;
@@ -793,7 +805,7 @@ function areaResize(commId,vendorId){
     .swiper-pagination {
         color: #fff;
         text-align: right;
-        background: rgba(0,0,0,0.4);
+        background: rgba(0, 0, 0, 0.4);
         width: 50px;
         text-align: center;
         border-radius: 20px;
@@ -859,7 +871,7 @@ function areaResize(commId,vendorId){
         font-size: 0.26rem;
         display: flex;
         padding: 0.34rem 0;
-         margin: 0 0.38rem;
+        margin: 0 0.38rem;
         .goodsD-address {
             width: 10%;
             color: #999;
@@ -1006,13 +1018,14 @@ function areaResize(commId,vendorId){
 .goodsD-imgW {
     background: #fff;
     border-top: 1px solid #eef1f6;
-        h3 {
-            color: #000;
-            padding: 0.22rem 0.24rem;
-            font-size: 0.3rem;
-        }
-        margin: 0.2rem 0;
+    h3 {
+        color: #000;
+        padding: 0.22rem 0.24rem;
+        font-size: 0.3rem;
+    }
+    margin: 0.2rem 0;
 }
+
 .goodDetail-buyW {
     height: 1.16rem;
     background: #fff;
@@ -1023,6 +1036,7 @@ function areaResize(commId,vendorId){
     bottom: 0;
     width: 100%;
     z-index: 20;
+    max-width: 450px;
     .goodDetail-bMoney {
         margin-left: 0.2rem;
         .goodDetail-bmReal {
@@ -1095,6 +1109,10 @@ function areaResize(commId,vendorId){
     right: 0;
     background: rgba(0, 0, 0, 0.2);
     z-index: 21;
+    max-width: 450px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     .goodDetail-selectW {
         height: 8.7rem;
         background: #fff;
@@ -1103,6 +1121,8 @@ function areaResize(commId,vendorId){
         bottom: 0;
         padding: 0 0.37rem;
         box-sizing: border-box;
+        max-width: 450px;
+
         .goodDetail-sim {
             .goodDetail-sClose {
                 width: 0.3rem;
@@ -1212,8 +1232,8 @@ function areaResize(commId,vendorId){
 }
 
 .goTop {
-    position: fixed;
-    bottom: 1.3rem;
+    position: absolute;
+    bottom: 1.6rem;
     z-index: 11;
     background: rgba(0, 0, 0, 0.5);
     width: 0.8rem;
@@ -1231,7 +1251,7 @@ function areaResize(commId,vendorId){
     }
 }
 
-.goodsStyle{
+.goodsStyle {
     height: 20px;
     width: 100%;
     border-radius: 15px 15px 0 0;
@@ -1239,5 +1259,21 @@ function areaResize(commId,vendorId){
     top: -14px;
     background: #fff;
     z-index: 1;
+}
+
+.fixOut {
+    max-width: 450px;
+    width: 100%;
+    position: fixed;
+    height: 1px;
+    z-index: 200;
+}
+
+.relOut {
+    max-width: 450px;
+    width: 100%;
+    position: relative;
+    height: 1px;
+    background: red;
 }
 </style>

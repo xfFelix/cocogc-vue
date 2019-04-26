@@ -321,6 +321,7 @@ export default {
           border: none;
           background: transparent;
           color: #fff;
+          line-height: 20px;
         }
         .autocomplete {
            ::-webkit-input-placeholder {

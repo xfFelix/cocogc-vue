@@ -34,8 +34,9 @@ export default {
 @media screen and (min-width: 600px){
   .mask{
     max-width: 450px;
-    left: 50%;
-    transform: translateX(-50%);
+    /* left: 50%;
+    transform: translateX(-50%); */
+    margin: 0 auto;
   }
 }
 </style>
