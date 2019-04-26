@@ -51,7 +51,7 @@
             </p>
             <div class="home-iMoneyW">
               <span class="home-iMoneyL"></span>
-              <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span> 
+              <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
               <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">￥{{item.marketPrice|toDecimal2}}</span>
             </div>
           </div>
@@ -75,6 +75,7 @@
   import {Loadmore} from 'mint-ui'
 
   export default {
+    name: 'goodsList',
     data() {
       return {
         // observer: null,
@@ -149,25 +150,45 @@
         return 1 + this.pages_size * (this.pages - 1)
       }
     },
-    mounted() {
-      console.log('mounted++++++++++++++++++=')
-      this.urlParams();
+    activated() {
+      console.log(this.getScrollto)
+      window.scrollTo(0, this.getScrollto)
     },
-    beforeDestroy() {
-      this.allLoaded = true
-    },
-    async beforeRouteLeave(to, from, next) {
-      console.log(from.meta)
-      if (to.path === '/goodsDetail') {
-        from.meta.keepAlive = true
+    beforeRouteEnter(to, from, next) {
+      if (from.path.includes('layout')) {
+      console.log('1111')
+        next(vm => {
+          vm.initData()
+          vm.urlParams()
+          vm.intersected()
+        })
       } else {
-        await this.$destroy()
+        next()
       }
-      next()
     },
     methods: {
       async loadBottom() {
-          await this.intersected();
+          if (this.$route.path === '/goodsList') {
+            await this.intersected();
+          }
+      },
+      initData() {
+        this.iSelectAct= 0,
+        this.intervalFlag= false,
+        this.goodsList= [],
+        this.pages= 1, //页数
+        this.pages_size= 10, //每页显示页数
+        this.price= '', //判断点击的积分区间
+        this.moreShow= false,
+        this.brandId= '', //分类id
+        this.keyWord='', //关键字
+        this.priceRange= '', //判断价格的高低
+        this.priceRangeFlag= true, //判断价格的高低
+        this.salesVolume= "", //销量排序
+        this.productTypeId= "",
+        this.token= getToken(),
+        this.hightLight= 'all',
+        this.allLoaded= false
       },
       goDetail(id) {
         this.setScrollto(document.documentElement.scrollTop || document.body.scrollTop)

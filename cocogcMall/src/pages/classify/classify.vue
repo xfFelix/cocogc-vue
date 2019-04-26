@@ -95,6 +95,7 @@ import api from '../../service/api';
 import Swiper from 'swiper';
 export default
     {
+        name: 'classify',
         data() {
             return {
                 cateId: 0,
