@@ -89,7 +89,7 @@ const router = new Router({
           path: 'classify',
           name: 'classify',
           component: classify,
-          meta: { title: '分类' },
+          meta: { title: '分类', keepAlive: true  },
         }
       ]
     },
