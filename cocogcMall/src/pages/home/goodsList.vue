@@ -223,10 +223,8 @@
                 this.priceRangeFlag = true;
             }
             this.initData()
-            this.price = "0~*"
             this.salesVolume = "";
             this.intervalFlag = false;
-            this.iSelectAct = 1;
             this.intersected()
         },
 
@@ -278,12 +276,10 @@
       goodsOrder() {
         this.hightLight = 'sell'
         this.initData()
-        this.price = "0~*"
         this.priceRange = "";
         this.salesVolume = "y";
         this.intervalFlag = false;
         this.priceRangeFlag = true;
-        this.iSelectAct = 1;
         this.intersected()
       },
 

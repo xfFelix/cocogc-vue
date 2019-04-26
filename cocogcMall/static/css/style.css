@@ -256,6 +256,9 @@ img {
 }
 
 
+body{
+  position: relative;
+}
 .v-modal{
 margin: 0 auto;
 right: 0;
