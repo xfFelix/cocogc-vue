@@ -51,7 +51,8 @@
             </p>
             <div class="home-iMoneyW">
               <span class="home-iMoneyL"></span>
-              <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
+              <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span> 
+              <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">￥{{item.marketPrice|toDecimal2}}</span>
             </div>
           </div>
           <!-- </router-link> -->
@@ -205,10 +206,8 @@
                 this.priceRangeFlag = true;
             }
             this.initData()
-            this.price = "0~*"
             this.salesVolume = "";
             this.intervalFlag = false;
-            this.iSelectAct = 1;
             this.intersected()
         },
 
@@ -260,12 +259,10 @@
       goodsOrder() {
         this.hightLight = 'sell'
         this.initData()
-        this.price = "0~*"
         this.priceRange = "";
         this.salesVolume = "y";
         this.intervalFlag = false;
         this.priceRangeFlag = true;
-        this.iSelectAct = 1;
         this.intersected()
       },
 
@@ -589,5 +586,6 @@
   .hight-light {
     color: #30ce84;
   }
+
 
 </style>

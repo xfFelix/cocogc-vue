@@ -46,7 +46,7 @@
                         <span>订单编号：</span>
                         <span>{{list.orderId}}</span>
                     </p>
-                    <p class="od-numberCopy" @click="handleCopy(list.orderId, $event)">复制</p>
+                    <p class="od-numberCopy"  @click="handleCopy(list.orderId, $event)">复制</p>
                 </div>
 
                 <div class="order-goodSInfo one-bottom-px">
@@ -107,8 +107,7 @@
                 <div class="ld-logisTitleW one-bottom-px">
                     <div class="ld-logisTitle ">
                         <p>商品清单</p>
-                        <p>共(
-                            <span>{{goodsTotal}}</span>)件</p>
+                        <p>共(<span>{{goodsTotal}}</span>)件</p>
                     </div>
                     <p class="j1Png ld-logisClose" @click="showSendCode = false"></p>
                 </div>
@@ -166,7 +165,7 @@ export default {
             logisClose: false,
             logisticList: [],
             showSendCode: false,
-            dataOrMsg: false
+            dataOrMsg:false
         };
     },
     mounted() {
