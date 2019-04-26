@@ -132,12 +132,6 @@ export default
             this.getBanner();
 
         },
-        beforeRouteLeave(to, from, next) {
-            if (to.path === '/goodsList') {
-                to.meta.keepAlive = false
-            }
-            next()
-        },
         methods: {
             async querySearchAsync(queryString, cb) {
               if (queryString) {

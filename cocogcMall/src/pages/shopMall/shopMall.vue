@@ -217,12 +217,6 @@ export default {
   updated() {
 
   },
-  beforeRouteLeave(to, from, next) {
-    if (to.path === '/goodsList') {
-      to.meta.keepAlive = false
-    }
-    next()
-  },
   beforeDestroy() {
     window.removeEventListener('scroll', this.handleScroll)
   },

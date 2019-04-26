@@ -255,12 +255,6 @@ export default {
             that.carTotal = data;
         });
     },
-    beforeRouteLeave(to, from, next) {
-        if (to.path === '/goodsList') {
-            to.meta.keepAlive = true
-        }
-        next()
-    },
     beforeDestroy() {
         this.showDialog = false;
         window.removeEventListener('scroll', this.handleScroll);

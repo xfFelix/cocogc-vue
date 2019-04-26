@@ -37,6 +37,7 @@ import { homedir } from 'os';
 import Layout from '@/pages/layout/Layout'
 import getInfo from './hook/getInfo';
 import scrollTop from './hook/scrollTop'
+import reloadInterceptor from './hook/reloadInterceptor';
 Vue.use(Router)
 
 const router = new Router({
@@ -200,4 +201,5 @@ const router = new Router({
 // })
 getInfo(router)
 scrollTop(router)
+reloadInterceptor(router)
 export default router

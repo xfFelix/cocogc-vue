@@ -39,8 +39,7 @@
       </div>
 
     </div>
-    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
-      <div class="goodList-interWrap" ref="wrapper">
+      <div class="goodList-interWrap" ref="wrapper" v-infinite-scroll="loadBottom" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
         <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
           <!-- <router-link :to="{path:'goodsDetail/'+item.id}"> -->
           <div @click="goDetail(item.id)">
@@ -59,7 +58,6 @@
         </div>
         <no-data :data="goodsList"></no-data>
       </div>
-    </mt-loadmore>
     <!-- <observer @intersect="intersected"></observer> -->
   </div>
 </template>
@@ -138,7 +136,6 @@
         productTypeId: "",
         token: getToken(),
         hightLight: 'all',
-        isFromDetail: false,
         allLoaded: false
       };
     },
@@ -152,43 +149,28 @@
       }
     },
     mounted() {
+      console.log('mounted++++++++++++++++++=')
       this.urlParams();
     },
-    beforeRouteEnter(to, from, next) {
-      if (from.path.includes('goodsDetail')) {
-        next(vm=>{
-          vm.isFromDetail = true
-        })
+    beforeDestroy() {
+      this.allLoaded = true
+    },
+    async beforeRouteLeave(to, from, next) {
+      console.log(from.meta)
+      if (to.path === '/goodsDetail') {
+        from.meta.keepAlive = true
       } else {
-        next(vm=>{
-          vm.isFromDetail = false
-        })
+        await this.$destroy()
       }
+      next()
     },
-    activated() {
-      console.log('activated:'+this.getScrollto)
-      window.scrollTo(0,this.getScrollto)
-    },
-    // deactivated() {
-    //   console.log('deactivated:'+this.scrollTop)
-    //   this.setScrollto(this.scrollTop)
-    // },
     methods: {
-      async loadTop() {
-          this.initData()
-          await this.intersected();
-          this.$refs.loadmore.onTopLoaded();
-      },
       async loadBottom() {
           await this.intersected();
-          this.$refs.loadmore.onBottomLoaded();
       },
       goDetail(id) {
         this.setScrollto(document.documentElement.scrollTop || document.body.scrollTop)
         this.$router.push({path: '/goodsDetail/'+ id})
-      },
-      handleScroll () {
-        this.scrollTop = document.documentElement.scrollTop||document.body.scrollTop
       },
       checkColor(id) {
         if (this.hightLight === 'integral') {
@@ -335,6 +317,7 @@
         }
       },
       async intersected() {
+        this.allLoaded = true
         let data = await this.axios(jdTestUrl + api.keyword, {
           "categoryId": this.brandId,
           "keyWord": this.keyWord,
