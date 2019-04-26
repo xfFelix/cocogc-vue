@@ -52,7 +52,8 @@
             </p>
             <div class="home-iMoneyW">
               <span class="home-iMoneyL"></span>
-              <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
+              <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span> 
+              <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">￥{{item.marketPrice|toDecimal2}}</span>
             </div>
           </div>
           <!-- </router-link> -->
@@ -602,5 +603,6 @@
   .hight-light {
     color: #30ce84;
   }
+
 
 </style>

@@ -69,7 +69,16 @@
     <!-- 底部切换 -->
 
     <!-- 回到顶部 -->
-    <div class="goTop" @click="goTop()" v-if="homeSmWrap"></div>
+    
+    
+
+        <div class="fixOut" style="bottom:0px;">
+            <div class="relOut">
+                <div class="goTop" @click="goTop()" v-if="homeSmWrap"></div>
+                </div>
+            </div>
+        </div>
+    
   </div>
 </template>
 
@@ -516,8 +525,8 @@ export default {
   position: fixed;
 }
 .goTop {
-    position: fixed;
-    bottom: 1.3rem;
+    position: absolute;
+    bottom: 1.6rem;
     z-index: 11;
     background: rgba(0, 0, 0, 0.5);
     width: 0.8rem;

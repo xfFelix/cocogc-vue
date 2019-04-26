@@ -44,7 +44,7 @@
             <div class="goodsD-priceW one-bottom-px">
                 <div class="changeGoods">
                     <p class="changeGoodsa">{{goodsInfo.name}} {{goodsInfo.noSpecs==0?goodsInfo.attrs:""}}</p>
-                    <p class="changeGoodsb">{{goodsInfo.marketPrice}}</p>
+                    <p class="changeGoodsb" v-if="goodsInfo.currentPrice!=goodsInfo.marketPrice">{{goodsInfo.marketPrice|toDecimal2}}</p>
                 </div>
                 <div class="changeMoney">
                     <p class="changeMoneya">{{goodsInfo.currentPrice}}</p>
@@ -182,7 +182,7 @@
 
         <div class="fixOut" style="bottom:0px;">
             <div class="relOut">
-                <div class="goTop" @click="goTop()" v-if="headShow" >
+                <div class="goTop" @click="goTop()" v-if="headShow">
                 </div>
             </div>
         </div>
@@ -1261,18 +1261,5 @@ function areaResize(commId, vendorId) {
     z-index: 1;
 }
 
-.fixOut {
-    max-width: 450px;
-    width: 100%;
-    position: fixed;
-    height: 1px;
-    z-index: 200;
-}
 
-.relOut {
-    max-width: 450px;
-    width: 100%;
-    position: relative;
-    height: 1px;
-}
 </style>

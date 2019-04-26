@@ -267,3 +267,26 @@ max-width: 450px;
 .mint-msgbox{
       max-width: 375px;
 }
+
+.home-iMoneymar{
+font-size: 14px;
+    color: #999;
+    margin-left: 10px;
+    text-decoration: line-through;
+    display: flex;
+    align-self: flex-end;
+}
+
+.fixOut {
+    max-width: 450px;
+    width: 100%;
+    position: fixed;
+    height: 1px;
+    z-index: 200;
+}
+.relOut {
+    max-width: 450px;
+    width: 100%;
+    position: relative;
+    height: 1px;
+}
