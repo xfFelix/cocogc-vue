@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import home from '@/pages/home/index';
+import layoutIndex from '@/pages/home/layoutIndex';
 import goodsDetail from '@/pages/home/goodsDetail'; //商品详情页
 import goodsList from '@/pages/home/goodsList'; //列表页
 import searchPage from '@/pages/home/searchPage'; //列表页
@@ -54,7 +55,13 @@ const router = new Router({
           path: 'home',
           name: 'home',
           component: home,
-          meta: { title: '首页',scrolltop: true },
+          meta: { title: '首页:无信用卡',scrolltop: true },
+        },
+        {
+          path: 'index',
+          name: 'layoutIndex',
+          component: layoutIndex,
+          meta: { title: '首页:有信用卡',scrolltop: true },
         },
         {
           path: 'shopMall',
@@ -75,7 +82,7 @@ const router = new Router({
           meta: {
             title: '账户',
             requireAuth: true,
-            scrolltop: true 
+            scrolltop: true
           },
         },
         {
