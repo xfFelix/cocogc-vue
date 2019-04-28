@@ -18,6 +18,8 @@ import store from './store/index.js'
 import Tips from './common/tips'
 import NoData from './common/NoData'
 import FastClick from 'fastclick'
+import infiniteScroll from 'vue-infinite-scroll'
+Vue.use(infiniteScroll)
 // import Vconsole from 'vconsole'
 // new Vconsole();
 FastClick.attach(document.body);

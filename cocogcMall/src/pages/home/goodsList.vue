@@ -39,8 +39,7 @@
       </div>
 
     </div>
-    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
-      <div class="goodList-interWrap" ref="wrapper">
+      <div class="goodList-interWrap" ref="wrapper" v-infinite-scroll="loadBottom" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
         <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
           <!-- <router-link :to="{path:'goodsDetail/'+item.id}"> -->
           <div @click="goDetail(item.id)">
@@ -60,7 +59,6 @@
         </div>
         <no-data :data="goodsList"></no-data>
       </div>
-    </mt-loadmore>
     <!-- <observer @intersect="intersected"></observer> -->
   </div>
 </template>
@@ -77,6 +75,7 @@
   import {Loadmore} from 'mint-ui'
 
   export default {
+    name: 'goodsList',
     data() {
       return {
         // observer: null,
@@ -139,7 +138,6 @@
         productTypeId: "",
         token: getToken(),
         hightLight: 'all',
-        isFromDetail: false,
         allLoaded: false
       };
     },
@@ -152,44 +150,49 @@
         return 1 + this.pages_size * (this.pages - 1)
       }
     },
-    mounted() {
-      this.urlParams();
+    activated() {
+      console.log(this.getScrollto)
+      window.scrollTo(0, this.getScrollto)
     },
     beforeRouteEnter(to, from, next) {
-      if (from.path.includes('goodsDetail')) {
-        next(vm=>{
-          vm.isFromDetail = true
+      if (from.path.includes('layout')) {
+      console.log('1111')
+        next(vm => {
+          vm.initData()
+          vm.urlParams()
+          vm.intersected()
         })
       } else {
-        next(vm=>{
-          vm.isFromDetail = false
-        })
+        next()
       }
     },
-    activated() {
-      console.log('activated:'+this.getScrollto)
-      window.scrollTo(0,this.getScrollto)
-    },
-    // deactivated() {
-    //   console.log('deactivated:'+this.scrollTop)
-    //   this.setScrollto(this.scrollTop)
-    // },
     methods: {
-      async loadTop() {
-          this.initData()
-          await this.intersected();
-          this.$refs.loadmore.onTopLoaded();
-      },
       async loadBottom() {
-          await this.intersected();
-          this.$refs.loadmore.onBottomLoaded();
+          if (this.$route.path === '/goodsList') {
+            await this.intersected();
+          }
+      },
+      initData() {
+        this.iSelectAct= 0,
+        this.intervalFlag= false,
+        this.goodsList= [],
+        this.pages= 1, //页数
+        this.pages_size= 10, //每页显示页数
+        this.price= '', //判断点击的积分区间
+        this.moreShow= false,
+        this.brandId= '', //分类id
+        this.keyWord='', //关键字
+        this.priceRange= '', //判断价格的高低
+        this.priceRangeFlag= true, //判断价格的高低
+        this.salesVolume= "", //销量排序
+        this.productTypeId= "",
+        this.token= getToken(),
+        this.hightLight= 'all',
+        this.allLoaded= false
       },
       goDetail(id) {
         this.setScrollto(document.documentElement.scrollTop || document.body.scrollTop)
         this.$router.push({path: '/goodsDetail/'+ id})
-      },
-      handleScroll () {
-        this.scrollTop = document.documentElement.scrollTop||document.body.scrollTop
       },
       checkColor(id) {
         if (this.hightLight === 'integral') {
@@ -332,6 +335,7 @@
         }
       },
       async intersected() {
+        this.allLoaded = true
         let data = await this.axios(jdTestUrl + api.keyword, {
           "categoryId": this.brandId,
           "keyWord": this.keyWord,

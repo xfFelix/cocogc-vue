@@ -25,13 +25,13 @@ export default {
 
     },
     methods: {
-       
+
     },
     beforeMounted() {
 
     },
     mounted() {
-     
+
     }
 }
 

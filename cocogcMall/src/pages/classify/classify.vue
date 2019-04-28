@@ -95,6 +95,7 @@ import api from '../../service/api';
 import Swiper from 'swiper';
 export default
     {
+        name: 'classify',
         data() {
             return {
                 cateId: 0,
@@ -131,12 +132,6 @@ export default
 
             this.getBanner();
 
-        },
-        beforeRouteLeave(to, from, next) {
-            if (to.path === '/goodsList') {
-                to.meta.keepAlive = false
-            }
-            next()
         },
         methods: {
             async querySearchAsync(queryString, cb) {
