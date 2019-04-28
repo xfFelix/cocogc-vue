@@ -4,23 +4,19 @@ import axios from '@/service/http'
 import {getToken} from '@/util/common'
 // initial state
 // shape: [{ id, quantity }]
-let defaultGoodsList = ''
-try{
-  if (local.get('goodsList')) {
-    defaultGoodsList = local.get('goodsList')
-  }
-} catch(e) {
-  console.error(e)
-}
 
 const state = {
-  goodsList: defaultGoodsList
+  goodsList: 0,
+  scrollCart: 0
 }
 
 // getters
 const getters = {
   getGoodsList: state => {
     return state.goodsList
+  },
+  getScrollCart: state => {
+    return state.scrollCart
   }
 }
 
@@ -28,6 +24,9 @@ const getters = {
 const actions = {
   setGoodsList ({state, commit}, scroll) {
     commit('setGoodsList', scroll)
+  },
+  setScrollCart ({state, commit}, scroll) {
+    commit('setScrollCart', scroll)
   }
 }
 
@@ -35,11 +34,9 @@ const actions = {
 const mutations = {
   setGoodsList(state, scroll) {
     state.goodsList = scroll
-    try {
-      local.set('goodsList',scroll)
-    }catch(e) {
-      console.error(e)
-    }
+  },
+  setScrollCart(state, scroll) {
+    state.scrollCart = scroll
   }
 }
 

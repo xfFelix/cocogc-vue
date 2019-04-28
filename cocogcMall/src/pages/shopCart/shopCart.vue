@@ -8,6 +8,34 @@
             </p>
         </div>
 
+        <div class="order-addressWN">
+          <div v-if="addressDef != null">
+            <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}" replace>
+                <div class="order-address">
+                    <p class="order-addPerson">
+                        <span>{{addressDef.name}}</span>
+                        <span>{{addressDef.tel}}</span>
+                    </p>
+                    <p class="order-addInfo">
+                        {{addressDef.area}} {{addressDef.address}}
+                    </p>
+                </div>
+                <div>
+                    <span class="goTo" @click="$router.replace('/addressEdit')"></span>
+                </div>
+            </router-link>
+          </div>
+          <div v-else>
+            <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}" replace>
+              <div class="order-addressN" style="display: block;">
+                    <span class="order-addNImg"></span>
+                    <p>您还没有收货地址，点击添加</p>
+              </div>
+            </router-link>
+          </div>
+          <div class="order-bottom"></div>
+        </div>
+
         <div class="shop-content">
             <div class="shop-dropW">
                 <p>
@@ -128,11 +156,14 @@ export default {
             deitDelFlag: true,
             inputNumShow: false,
             goodsNum: 1,
-            goodsNumIndex: 0
-
+            goodsNumIndex: 0,
+            addressDef: undefined
         };
     },
     computed: {
+      ...mapGetters({
+        getScrollCart: 'scrollto/getScrollCart'
+      }),
         countNum() {
             let num = 0
             if (this.list) {
@@ -169,16 +200,35 @@ export default {
         });
 
     },
+    beforeRouteEnter(to, from, next) {
+      if (!from.path.includes('address')) {
+        next(vm => {
+          vm.resetAddress()
+        })
+      } else {
+        next()
+      }
+    },
+    beforeRouteLeave(to, from, next) {
+      this.setScrollCart(document.body.scrollTop || document.documentElement.scrollTop)
+      next()
+    },
+    activated () {
+      this.addressDef = window.chooseAddress
+      console.log(this.getScrollCart)
+      window.scrollTo(0, this.getScrollCart)
+    },
     methods: {
         ...mapActions({
             setNum: 'cart/setNum',
             incrementNum: 'cart/incrementNum',
             decrementNum: 'cart/decrementNum',
-            checkAddress: 'userinfo/checkAddress'
+            checkAddress: 'userinfo/checkAddress',
+            setScrollCart: 'scrollto/setScrollCart'
         }),
         async resetAddress() {
             let data = await this.checkAddress()
-            window.chooseAddress = data
+            window.chooseAddress = this.addressDef = data
         },
         getCartGoodsList(callback) {
             let _this = this;
@@ -408,6 +458,66 @@ export default {
 <style lang="less">
 .shop {
     padding-bottom: 1.4rem;
+}
+.order-bottom {
+    height: 0.1rem;
+    background-image: url(/static/images/bgRepeat.jpg);
+    background-repeat: repeat-x;
+    margin-left: -0.1rem;
+    margin-bottom: 10px;
+}
+.order-addressWN {
+    margin-top: 0.2rem;
+    .order-addressN {
+        display: none;
+        text-align: center;
+        background: #fff;
+        padding: 0.7rem 0 0.78rem 0;
+        margin: 0 auto;
+        .order-addNImg {
+            width: 0.4rem;
+            height: 0.4rem;
+            background-image: url(/static/images/jl.png);
+            background-repeat: no-repeat;
+            background-size: 5.8rem 1.86rem;
+            background-position: -0.85rem -0.76rem;
+            display: inline-block;
+        }
+        p {
+            color: #999999;
+        }
+    }
+    .order-addressW {
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.4rem 0.33rem 0.5rem 0.39rem;
+        .order-address {
+            width: 4.9rem;
+            .order-addPerson {
+                margin-bottom: 0.33rem;
+                span:nth-of-type(1),
+                span:nth-of-type(2) {
+                    color: #000;
+                    font-size: 0.3rem;
+                }
+            }
+            .order-addInfo {
+                color: #666666;
+                font-size: 0.28rem;
+            }
+        }
+        .goTo {
+            width: 0.3rem;
+            height: 0.38rem;
+            background-position: -0.2rem -0.75rem;
+            background-image: url(/static/images/jl.png);
+            background-repeat: no-repeat;
+            background-size: 5.8rem 1.86rem;
+            display: inline-block;
+        }
+    }
 }
 
 .shop-headW {

@@ -5,7 +5,7 @@
         <div style="padding-bottom: 70px;">
             <div class="order-addressWN">
                 <div v-if="addressDef != null">
-                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}" replace>
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}" replace>
                       <div class="order-address">
                           <p class="order-addPerson">
                               <span>{{addressDef.name}}</span>
@@ -21,7 +21,7 @@
                   </router-link>
                 </div>
                 <div v-else>
-                  <router-link class="order-addressW" :to="{path:'/addressMag',query:fromPath}" replace>
+                  <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}" replace>
                     <div class="order-addressN" style="display: block;">
                           <span class="order-addNImg"></span>
                           <p>您还没有收货地址，点击添加</p>
@@ -247,7 +247,7 @@ export default {
             addressDef: null,
             isSmsCode: false,
             other: 0,
-            fromPath: {cart:'cart'},
+            fromPath: this.$route.path,
             goodsShowFlag:false,
             goodsShowList:{},
             goodsShowNum:0,
