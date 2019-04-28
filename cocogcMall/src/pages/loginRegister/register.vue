@@ -46,10 +46,10 @@
           </li>
 
           <li>
-            <div class="loginLileft" style="width:80%;">
+            <div class="loginLileft" style="width:92%;">
               <span></span>
-              <input type="password" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == false">
-              <input type="text" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == true">
+              <input type="password" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == false" style="width:86%;">
+              <input type="text" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == true" style="width:86%;">
             </div>
             <div class="loginLiRight">
               <span class="eyeImgClose" v-if="eyeImgState == false" @click="eyeImgOpen"></span>

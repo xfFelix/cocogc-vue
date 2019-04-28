@@ -90,7 +90,7 @@ export default {
             phoneCleanShow: false,
             passCleanShow: false,
             vaildCleanShow: false,
-            validateImgSrc: '',
+            validateImgSrc: infoURl + 'user/captcha?' + (new Date()),
             loginForm: {
                 userName: '',
                 passWord: '',
@@ -286,7 +286,6 @@ export default {
         }
     },
     mounted() {
-        this.validateImgSrc = infoURl + 'user/captcha?' + (new Date());
     },
     beforeRouteLeave(to, from, next) {
         if (/\/setUp/.test(to.path)) {

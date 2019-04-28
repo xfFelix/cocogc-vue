@@ -7,16 +7,7 @@
                     <!-- <span class="home-searchL"></span> -->
                     <p class="home-searchI">
                         <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchWord" /> -->
-                        <el-autocomplete
-                          v-model="searchWord"
-                          :fetch-suggestions="querySearchAsync"
-                          placeholder="请输入要搜索的内容"
-                          @select="handleSelect"
-                          :trigger-on-focus="false"
-                          :hide-loading="true"
-                          :debounce="1000"
-                          @keyup.enter.native="seachClick"
-                        ></el-autocomplete>
+                        <el-autocomplete v-model="searchWord" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="seachClick"></el-autocomplete>
                     </p>
                 </div>
                 <div class="home-message" @click="seachClick()">
@@ -40,24 +31,23 @@
             <div class="main select-bGoodsW">
                 <div class="select-bGoods">
 
-                        <div class="classify-swipeW">
-                            <div class="classify-swipe">
-                                <div class="swiper-container">
-                                    <!-- 页面 -->
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide" v-for="item of banner" :key="item.title">
-                                            <a :href="item.url">
-                                                <img :src="item.src" alt="" />
-                                            </a>
-                                        </div>
-
+                    <div class="classify-swipeW">
+                        <div class="classify-swipe">
+                            <div class="swiper-container">
+                                <!-- 页面 -->
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide" v-for="item of banner" :key="item.title">
+                                        <a :href="item.url">
+                                            <img :src="item.src" alt="" />
+                                        </a>
                                     </div>
-                                    <!-- 分页器 -->
-                                    <div class="swiper-pagination"></div>
+
                                 </div>
+                                <!-- 分页器 -->
+                                <div class="swiper-pagination"></div>
                             </div>
                         </div>
-
+                    </div>
 
                     <div class="select-bGoodsT" v-for="(item,index) in cateTypeList" :key="index">
                         <h3 class="title">{{item.name}}</h3>
@@ -135,24 +125,24 @@ export default
         },
         methods: {
             async querySearchAsync(queryString, cb) {
-              if (queryString) {
-                // clearTimeout(this.timeout);
-                // this.timeout = setTimeout(async() => {
-                  let restaurants = await this.axios(jdTestUrl + api.searchHint, {keyword: queryString}, 'get')
-                  let list = []
-                  restaurants.list.forEach((item, index)=> {
-                    let cur = {}
-                    cur.id = item.id
-                    cur.value = item.name
-                    cur.parentId = item.parentId
-                    list.push(cur)
-                  },{})
-                  cb(list);
-                // }, 1000);
-              }
+                if (queryString) {
+                    // clearTimeout(this.timeout);
+                    // this.timeout = setTimeout(async() => {
+                    let restaurants = await this.axios(jdTestUrl + api.searchHint, { keyword: queryString }, 'get')
+                    let list = []
+                    restaurants.list.forEach((item, index) => {
+                        let cur = {}
+                        cur.id = item.id
+                        cur.value = item.name
+                        cur.parentId = item.parentId
+                        list.push(cur)
+                    }, {})
+                    cb(list);
+                    // }, 1000);
+                }
             },
             handleSelect(item) {
-              this.seachClick()
+                this.seachClick()
             },
             seachClick() {
                 this.$router.push({ path: '/goodsList', query: { keyWord: this.searchWord } })
@@ -205,12 +195,13 @@ export default
 </script>
 
 <style lang="less">
-.el-input{
-  height: 100%;
-  input{
+.el-input {
     height: 100%;
-  }
+    input {
+        height: 100%;
+    }
 }
+
 .product-name {
     font-size: 12px;
     display: block;
@@ -296,8 +287,8 @@ export default
                 margin-right: 0.04rem;
             }
             .home-searchI {
-                height: 0.32rem;
-                width: 5rem;
+                height: 100%;
+                width: 90%;
                 display: flex;
                 align-items: center;
                 padding-left: 0.1rem;
@@ -330,6 +321,14 @@ export default
                     /* Internet Explorer 10-11 */
                     color: #c5c5c5;
                     font-size: 0.26rem;
+                }
+                .el-autocomplete {
+                    width: 100%;
+                    height: 100%;
+                    input {
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
             }
         }

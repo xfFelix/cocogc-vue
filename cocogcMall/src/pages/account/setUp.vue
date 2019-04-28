@@ -86,7 +86,6 @@ export default {
         loginOut(){
             delToken();
             this.$router.push("/login")
-
         },
         cards: function() {
             let _this = this;
