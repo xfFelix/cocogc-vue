@@ -41,6 +41,18 @@
                 </li>
 
                 <li v-if="smsFlag">
+                    <div class="loginLileft" style="width:100%;justify-content: space-between;">
+                        <div style="display: flex; width: 100%;align-items: center;">
+                            <span class="pictureIcon"></span>
+                            <input type="text" name="captcha" id="captcha" maxlength="4" placeholder="验证码" v-model.trim="loginForm.captcha">
+                        </div>
+                        <div>
+                            <img :src="validateImgSrc" class="img_captcha" @click="validateImgClick()">
+                        </div>
+                    </div>
+                </li>
+
+                <li v-if="smsFlag">
                     <div class="loginLileft">
                         <span class="smsIcon"></span>
                         <input type="number" placeholder="请输入短信验证码" v-model.trim="loginForm.smsCode">
@@ -68,7 +80,7 @@
 
 <script>
 import api from "@/service/api";
-import { IsEmpty, IsMobile, CheckPass, setToken ,IsChinaMobile,IsHKMobile} from "@/util/common";
+import { IsEmpty, IsMobile, CheckPass, setToken, IsChinaMobile, IsHKMobile } from "@/util/common";
 
 export default {
     data() {
@@ -78,10 +90,12 @@ export default {
             phoneCleanShow: false,
             passCleanShow: false,
             vaildCleanShow: false,
+            validateImgSrc: '',
             loginForm: {
                 userName: '',
                 passWord: '',
-                smsCode: ''
+                smsCode: '',
+                captcha: '',
             },
             validate: "获取验证码",
             validateFlag: 1,
@@ -104,6 +118,10 @@ export default {
 
     },
     methods: {
+        // 图片验证码
+        validateImgClick: function() {
+            this.validateImgSrc = infoURl + 'user/captcha?' + (new Date());
+        },
         indexSelect(event) {
             this.telPlace = event.target.value;
         },
@@ -114,6 +132,7 @@ export default {
                 mobile: _this.loginForm.userName,
                 passwd: _this.loginForm.passWord,
                 verify_code: _this.loginForm.smsCode,
+                captcha: _this.loginForm.captcha
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
@@ -183,6 +202,7 @@ export default {
                 this.MessageBox("提示", "手机号码格式错误");
                 return false;
             }
+
             if (this.smsFlag === false) {
                 if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
                     this.MessageBox("提示", "用户名或密码错误")
@@ -190,6 +210,10 @@ export default {
                 }
                 this.loginForm.smsCode = ''
             } else {
+                if (IsEmpty(this.loginForm.captcha) || this.loginForm.captcha.length < 4) {
+                    this.MessageBox("提示", "请输入正确的图片验证码。")
+                    return false;
+                }
                 if (IsEmpty(this.loginForm.smsCode)) {
                     this.MessageBox("提示", "短信验证码不能为空")
                     return false;
@@ -258,9 +282,11 @@ export default {
         },
         usePassWord() {
             this.smsFlag = false;
+            this.loginForm.captcha = '';
         }
     },
     mounted() {
+        this.validateImgSrc = infoURl + 'user/captcha?' + (new Date());
     },
     beforeRouteLeave(to, from, next) {
         if (/\/setUp/.test(to.path)) {
@@ -297,7 +323,7 @@ export default {
     height: 100%;
     z-index: 2;
     background: #fff;
-        right: 0;
+    right: 0;
     margin: 0 auto;
     max-width: 450px;
     head {
@@ -423,6 +449,9 @@ export default {
     }
     .passWordIcon {
         background-position: -52px -3px;
+    }
+    .pictureIcon {
+        background-position: -133px -3px;
     }
     .smsIcon {
         background-position: -105px -3px;
