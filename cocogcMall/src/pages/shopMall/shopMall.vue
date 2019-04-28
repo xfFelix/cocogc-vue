@@ -303,7 +303,7 @@ export default {
       }
       .home-searchI {
         height: 100%;
-        width: 80%;
+        width: 90%;
         display: flex;
         align-items: center;
         padding-left: 0.1rem;
@@ -351,6 +351,10 @@ export default {
         input:-ms-input-placeholder {
           /* Internet Explorer 10-11 */
           font-size: 0.26rem;
+        }
+        .el-autocomplete{
+          width: 100%;
+          height: 100%;
         }
       }
     }

@@ -3,7 +3,7 @@
 
         <head>
             <div class="registHead" @click="$router.back(-1)">
-               
+
             </div>
         </head>
 
@@ -13,18 +13,11 @@
                     <div class="loginLileft">
                         <input type="text" placeholder="手机号" v-model.trim="passSet.userName" @input="phoneInp($event)">
                     </div>
-                    <div class="loginLiRight">
-                        <span class="clean" @click="phoneClean()" v-if="phoneCleanShow"></span>
-                    </div>
                 </li>
 
                 <li>
                     <div class="loginLileft">
                         <input type="password" placeholder="设置新密码" v-model.trim="passSet.passWord">
-
-                    </div>
-
-                    <div class="loginLiRight">
 
                     </div>
                 </li>
@@ -78,7 +71,7 @@ export default {
         // 忘记密码接口
         passSetUp: function() {
             let _this = this;
-            this.axios(infoURl+api.forget, {
+            this.axios(infoURl + api.forget, {
                 mobile: _this.passSet.userName,
                 passwd: _this.passSet.passWord,
                 confirm_passwd: _this.passSet.passConfirm,
@@ -98,7 +91,7 @@ export default {
         // 忘记密码短信接口
         sms: function() {
             let _this = this;
-            this.axios(infoURl+api.sms, {
+            this.axios(infoURl + api.sms, {
                 mobile: _this.passSet.userName,
             }, 'post')
                 .then((data) => {
@@ -119,7 +112,7 @@ export default {
                             }
                         }, 1000)
                     } else {
-                         this.MessageBox("提示", data.message)
+                        this.MessageBox("提示", data.message)
                     }
                 })
                 .catch((data) => {
@@ -203,6 +196,52 @@ export default {
         background-size: 100% 100%;
         position: relative;
     }
+
+    .loginUl {
+        padding: 1.25rem 1rem 0 1rem;
+        margin-bottom: 0.2rem;
+        li {
+            border-bottom: 1px solid #dfdfdf;
+            height: 0.48rem;
+            padding: 0.18rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .loginLileft {
+                display: flex;
+                width: 100%;
+                span {
+                    background-image: url(/static/images/login.png);
+                    background-repeat: no-repeat;
+                    width: 24px;
+                    height: 24px;
+                    display: inline-block;
+                    background-size: 172px 32px;
+                }
+                input {
+                    height: 0.47rem;
+                    font-size: 15px;
+                    width: 100%;
+                    padding-left: 0.1rem;
+                }
+            }
+        }
+        li:last-of-type {
+            .loginLileft {
+                width: 68%;
+            }
+            .loginLiRight {
+                .validate {
+                    padding: 1px 6px;
+                    font-size: 12px;
+                    border: 1px solid #19ad6a;
+                    border-radius: 30px;
+                    text-align: center;
+                    color: #19ad6a;
+                }
+            }
+        }
+    }
 }
 
 
@@ -220,59 +259,6 @@ export default {
     transform: rotate(180deg);
 }
 
-.loginUl {
-    padding: 1.25rem 1rem 0 1rem;
-    margin-bottom: 0.2rem;
-}
-
-.loginUl li {
-    border-bottom: 1px solid #dfdfdf;
-    height: 0.48rem;
-    padding: 0.18rem 0;
-    display: flex;
-    justify-content: space-between;
-}
-
-.loginLileft span {
-    background-image: url(/static/images/login.png);
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    display: inline-block;
-    background-size: 172px 32px;
-}
-
-// .loginUl li:nth-of-type(1) .loginLileft span {
-//     background-position: -74px -2px;
-// }
-
-// .loginUl li:nth-of-type(2) .loginLileft span {
-//     background-position: -50px -2px;
-// }
-
-// .loginUl li:nth-of-type(3) .loginLileft span {
-//     background-position: -100px -2px;
-// }
-
-// .loginUl li:last-of-type {
-//     border: none;
-// }
-
-.loginLileft {
-    display: flex;
-    width: 80%;
-}
-
-.loginLileft input {
-    height: 0.47rem;
-    font-size: 15px;
-    width: 80%;
-    padding-left: 0.1rem;
-}
-
-.loginLiRight {
-    display: flex;
-}
 
 .clean {
     width: 20px;
@@ -334,17 +320,6 @@ export default {
     /* Internet Explorer 10-11 */
     color: #cecece;
     font-size: 13px;
-}
-
-.validate {
-    font-size: 12px;
-    border: 1px solid #19ad6a;
-    border-radius: 30px;
-    line-height: 0.4rem;
-    color: #19ad6a;
-    height: 0.4rem;
-    width: 1.8rem;
-    text-align: center;
 }
 </style>
 

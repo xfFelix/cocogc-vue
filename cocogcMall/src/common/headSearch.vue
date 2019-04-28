@@ -92,8 +92,8 @@ export default {
         .home-smInput {
             display: flex;
             align-items: center;
-            width: 88%;
-            height: 0.5rem;
+            width: 100%;
+            height: 100%;
             .home-logo {
                 height: 0.38rem;
                 width: 0.42rem;
@@ -108,7 +108,7 @@ export default {
             }
             .home-searchI {
                 height: 100%;
-                width: 80%;
+                width: 88%;
                 display: flex;
                 align-items: center;
                 padding-left: 0.1rem;
@@ -141,6 +141,10 @@ export default {
                     /* Internet Explorer 10-11 */
                     color: #dfdfdf;
                     font-size: 0.26rem;
+                }
+                .el-autocomplete{
+                    width: 100%;
+                    height: 100%;
                 }
             }
         }
