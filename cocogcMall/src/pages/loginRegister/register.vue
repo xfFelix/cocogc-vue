@@ -321,17 +321,20 @@ export default {
   justify-content: space-between;
 }
 
-.loginLileft {
-  width: 100%;
-  span {
-    background-image: url(/static/images/login.png);
-    background-repeat: no-repeat;
-    width: 26px;
-    height: 25px;
-    display: inline-block;
-    background-size: 172px 32px;
+#register .loginUl li{
+  .loginLileft {
+    width: 100%;
+    span {
+      background-image: url(/static/images/login.png);
+      background-repeat: no-repeat;
+      width: 26px;
+      height: 25px;
+      display: inline-block;
+      background-size: 172px 32px;
+    }
   }
 }
+
 
 
 .loginUl li:nth-of-type(1) .loginLileft span {

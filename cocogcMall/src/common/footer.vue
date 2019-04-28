@@ -6,13 +6,14 @@
                 <span :class="isSelect == item.name ? 'active' : ''">
                     {{item.title}}
                 </span>
-                <span v-if="item.name === 'shopCart' && num" class="num">{{num}}</span>
+                <span v-if="item.name === 'shopCart' && token && num" class="num">{{num}}</span>
             </router-link>
         </div>
     </footer>
 </template>
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters} from 'vuex';
+import { getToken } from '@/util/common'
 export default {
     data() {
         return {
@@ -26,7 +27,8 @@ export default {
             isSelect: 'home',
             docmHeight: document.documentElement.clientHeight,  //默认屏幕高度
             showHeight: document.documentElement.clientHeight,   //实时屏幕高度
-            hideShow:true
+            hideShow:true,
+            token: getToken()
         }
     },
     created() {

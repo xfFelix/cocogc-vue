@@ -66,7 +66,7 @@ export default {
     computed: {
         ...mapGetters({
             userinfo: 'userinfo/getUserInfo'
-        })
+        }),
     },
     mounted() {
         //积分列表展示
@@ -76,7 +76,7 @@ export default {
             }
         })
 
-        if (this.userinfo) {
+        if (this.userinfo && this.token) {
             this.price(this.homeSel[0].integral, 'first');
             this.iSintegra = this.homeSel[0].integral.replace('~', '-');
         } else {

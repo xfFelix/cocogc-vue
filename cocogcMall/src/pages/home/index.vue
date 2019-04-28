@@ -19,7 +19,7 @@
         </div>
 
       <div class="ih-balanceW">
-        <div class="ih-balance" v-if="loScore">
+        <div class="ih-balance" v-if="token">
           <p class="ih-money">{{loScore.score}}</p>
           <p class="ih-moneya">椰子分</p>
         </div>
@@ -32,17 +32,10 @@
     <!-- 导航 -->
     <ul class="index-fastNav">
       <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
-        <!-- <router-link :to="item.path" v-if="item.id==4"> -->
           <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)">
             <p class="navImg imgBg" :class="item.imgBg"></p>
             <p class="ifa-name">{{item.name}}</p>
           </div>
-        <!-- </router-link> -->
-        <!-- <a :href='item.path' :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" v-else>
-          <p class="navImg imgBg" :class="item.imgBg"></p>
-          <p class="ifa-name">{{item.name}}</p>
-        </a> -->
-
       </li>
     </ul>
 

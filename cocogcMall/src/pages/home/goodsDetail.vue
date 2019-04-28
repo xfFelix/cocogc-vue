@@ -1255,19 +1255,4 @@ function areaResize(commId, vendorId) {
     z-index: 1;
 }
 
-.fixOut {
-    max-width: 450px;
-    width: 100%;
-    position: fixed;
-    height: 1px;
-    z-index: 200;
-}
-
-.relOut {
-    max-width: 450px;
-    width: 100%;
-    position: relative;
-    height: 1px;
-    background: red;
-}
 </style>
