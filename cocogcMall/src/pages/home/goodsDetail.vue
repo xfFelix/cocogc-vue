@@ -1268,6 +1268,5 @@ function areaResize(commId, vendorId) {
     width: 100%;
     position: relative;
     height: 1px;
-    background: red;
 }
 </style>
