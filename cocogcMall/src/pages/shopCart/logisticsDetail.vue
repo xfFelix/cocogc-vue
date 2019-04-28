@@ -74,7 +74,8 @@
 
         <div class="ld-contentWrap">
             <ul class="ld-content">
-              <li v-if="list.shippingNum && list.vendorId.includes('直营')">配送单号：<a :href="linkUrl">{{list.shippingNum}}</a></li>
+              <li v-if="list.shippingNum && list.vendorId.includes('直营')">配送单号：<a :href="linkUrl" style="text-decoration: underline;
+    color: blue;">{{list.shippingNum}}</a></li>
                 <li class="ld-contenLi" v-for="(item,index) in logisticList" :key="index">
                     <div class="ld-contenLeft" v-if="index==0">
                         <p class="ld-contenOrder"></p>

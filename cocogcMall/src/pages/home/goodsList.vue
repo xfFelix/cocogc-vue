@@ -51,7 +51,7 @@
             </p>
             <div class="home-iMoneyW">
               <span class="home-iMoneyL"></span>
-              <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span> 
+              <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
               <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">{{item.marketPrice|toDecimal2}}</span>
             </div>
           </div>
@@ -155,16 +155,16 @@
       window.scrollTo(0, this.getScrollto)
     },
     beforeRouteEnter(to, from, next) {
-      if (from.path.includes('layout')) {
-      console.log('1111')
+      // console.log('1111')
+      // if (from.path.includes('layout')) {
         next(vm => {
           vm.initData()
           vm.urlParams()
           vm.intersected()
         })
-      } else {
-        next()
-      }
+      // } else {
+      //   next()
+      // }
     },
     methods: {
       async loadBottom() {
@@ -333,8 +333,10 @@
         if (this.productTypeId == undefined) {
           this.productTypeId = ""
         }
+        console.log('end')
       },
       async intersected() {
+        console.log('start')
         this.allLoaded = true
         let data = await this.axios(jdTestUrl + api.keyword, {
           "categoryId": this.brandId,

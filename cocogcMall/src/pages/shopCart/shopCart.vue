@@ -10,7 +10,7 @@
 
         <div class="order-addressWN">
           <div v-if="addressDef != null">
-            <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}" replace>
+            <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}">
                 <div class="order-address">
                     <p class="order-addPerson">
                         <span>{{addressDef.name}}</span>
@@ -26,7 +26,7 @@
             </router-link>
           </div>
           <div v-else>
-            <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}" replace>
+            <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}">
               <div class="order-addressN" style="display: block;">
                     <span class="order-addNImg"></span>
                     <p>您还没有收货地址，点击添加</p>
@@ -215,7 +215,6 @@ export default {
     },
     activated () {
       this.addressDef = window.chooseAddress
-      console.log(this.getScrollCart)
       window.scrollTo(0, this.getScrollCart)
     },
     methods: {
@@ -465,59 +464,6 @@ export default {
     background-repeat: repeat-x;
     margin-left: -0.1rem;
     margin-bottom: 10px;
-}
-.order-addressWN {
-    margin-top: 0.2rem;
-    .order-addressN {
-        display: none;
-        text-align: center;
-        background: #fff;
-        padding: 0.7rem 0 0.78rem 0;
-        margin: 0 auto;
-        .order-addNImg {
-            width: 0.4rem;
-            height: 0.4rem;
-            background-image: url(/static/images/jl.png);
-            background-repeat: no-repeat;
-            background-size: 5.8rem 1.86rem;
-            background-position: -0.85rem -0.76rem;
-            display: inline-block;
-        }
-        p {
-            color: #999999;
-        }
-    }
-    .order-addressW {
-        background: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.4rem 0.33rem 0.5rem 0.39rem;
-        .order-address {
-            width: 4.9rem;
-            .order-addPerson {
-                margin-bottom: 0.33rem;
-                span:nth-of-type(1),
-                span:nth-of-type(2) {
-                    color: #000;
-                    font-size: 0.3rem;
-                }
-            }
-            .order-addInfo {
-                color: #666666;
-                font-size: 0.28rem;
-            }
-        }
-        .goTo {
-            width: 0.3rem;
-            height: 0.38rem;
-            background-position: -0.2rem -0.75rem;
-            background-image: url(/static/images/jl.png);
-            background-repeat: no-repeat;
-            background-size: 5.8rem 1.86rem;
-            display: inline-block;
-        }
-    }
 }
 
 .shop-headW {
@@ -901,6 +847,61 @@ export default {
             color: #fff;
             background: #32CE84;
             border-radius: 0 0 10px 0;
+        }
+    }
+}
+</style>
+<style lang="less" scoped>
+.order-addressWN {
+    margin-top: 0.2rem;
+    .order-addressN {
+        display: none;
+        text-align: center;
+        background: #fff;
+        padding: 0.7rem 0 0.78rem 0;
+        margin: 0 auto;
+        .order-addNImg {
+            width: 0.4rem;
+            height: 0.4rem;
+            background-image: url(/static/images/jl.png);
+            background-repeat: no-repeat;
+            background-size: 5.8rem 1.86rem;
+            background-position: -0.85rem -0.76rem;
+            display: inline-block;
+        }
+        p {
+            color: #999999;
+        }
+    }
+    .order-addressW {
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.4rem 0.33rem 0.5rem 0.39rem;
+        .order-address {
+            width: 4.9rem;
+            .order-addPerson {
+                margin-bottom: 0.33rem;
+                span:nth-of-type(1),
+                span:nth-of-type(2) {
+                    color: #000;
+                    font-size: 0.3rem;
+                }
+            }
+            .order-addInfo {
+                color: #666666;
+                font-size: 0.28rem;
+            }
+        }
+        .goTo {
+            width: 0.3rem;
+            height: 0.38rem;
+            background-position: -0.2rem -0.75rem;
+            background-image: url(/static/images/jl.png);
+            background-repeat: no-repeat;
+            background-size: 5.8rem 1.86rem;
+            display: inline-block;
         }
     }
 }
