@@ -254,6 +254,7 @@ export default {
             let _this = this;
             this.axios(infoURl + api.sms, {
                 mobile: _this.loginForm.userName,
+                captcha:_this.loginForm.captcha,
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {

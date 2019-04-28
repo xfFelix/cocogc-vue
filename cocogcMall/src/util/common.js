@@ -73,7 +73,9 @@ export const setToken = (token) => {
 
 export const delToken = () => {
   localStorage.removeItem("yeyun_token");
-  Vue.prototype.$cookies.remove("yeyun_token");
+  // Vue.prototype.$cookies.remove("yeyun_token");
+  Vue.prototype.$cookies.set("yeyun_token",'',-1, '/');
+  // Vue.prototype.$cookies.remove("yeyun_token", null,".cocogc.cn");
 }
 
 //检测数组是否包含
