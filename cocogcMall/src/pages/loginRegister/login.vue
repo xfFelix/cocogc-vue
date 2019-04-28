@@ -210,10 +210,6 @@ export default {
                 }
                 this.loginForm.smsCode = ''
             } else {
-                if (IsEmpty(this.loginForm.captcha) || this.loginForm.captcha.length < 4) {
-                    this.MessageBox("提示", "请输入正确的图片验证码。")
-                    return false;
-                }
                 if (IsEmpty(this.loginForm.smsCode)) {
                     this.MessageBox("提示", "短信验证码不能为空")
                     return false;
@@ -251,6 +247,10 @@ export default {
 
         // 短信验证码接口
         sms: function() {
+            if (IsEmpty(this.loginForm.captcha) || this.loginForm.captcha.length < 4) {
+                this.MessageBox("提示", "请输入正确的图片验证码。")
+                return false;
+            }
             let _this = this;
             this.axios(infoURl + api.sms, {
                 mobile: _this.loginForm.userName,
