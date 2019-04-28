@@ -74,7 +74,7 @@ const router = new Router({
           path: 'shopCart',
           name: 'shopCart',
           component: shopCart,
-          meta: { title: '购物车', requireAuth: true },
+          meta: { title: '购物车', requireAuth: true, keepAlive: true },
         },
         {
           path: 'account',

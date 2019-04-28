@@ -74,6 +74,7 @@
 
         <div class="ld-contentWrap">
             <ul class="ld-content">
+              <li v-if="list.shippingNum && list.vendorId.includes('直营')">配送单号：<a :href="linkUrl">{{list.shippingNum}}</a></li>
                 <li class="ld-contenLi" v-for="(item,index) in logisticList" :key="index">
                     <div class="ld-contenLeft" v-if="index==0">
                         <p class="ld-contenOrder"></p>
@@ -165,7 +166,8 @@ export default {
             logisClose: false,
             logisticList: [],
             showSendCode: false,
-            dataOrMsg:false
+            dataOrMsg:false,
+            linkUrl: 'http://m.kuaidi100.com/result.jsp?nu='
         };
     },
     mounted() {
@@ -183,6 +185,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                         _this.list = data.data;
+                        this.linkUrl = this.linkUrl + data.data.shippingNum
                         _this.orderList = data.data.goodsList
                         _this.list.goodsList.forEach((res) => {
                             _this.goodsTotal += res.buyNum;

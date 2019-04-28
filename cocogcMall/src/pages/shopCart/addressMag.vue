@@ -63,7 +63,7 @@ export default {
             fixedshow: false,
             delIndex: '',
             delId: '',
-            fromPath:this.$route.query.cart ? "?cart=" + this.$route.query.cart:""
+            fromPath:this.$route.query.cart || undefined
         };
     },
     mounted() {
@@ -76,7 +76,7 @@ export default {
         }),
         addressEditC(item, index) {
             window.addressInfo = item;
-            this.$router.push('addressEdit' + this.fromPath);
+            this.$router.push('addressEdit?cart=' + this.fromPath);
         },
         delAddress(item, index) {
             this.fixedshow = true;
@@ -84,10 +84,10 @@ export default {
             this.delId = item.id;
         },
         goAddressEdit() {
-            if(this.fromPath==''){
+            if(!this.fromPath){
                 this.$router.push('addressEdit?&addOrder=1');
             }else{
-                this.$router.push('addressEdit' + this.fromPath +'&addOrder=1');
+                this.$router.push('addressEdit?cart=' + this.fromPath +'&addOrder=1');
             }
         },
         //确定删除
@@ -137,9 +137,9 @@ export default {
                 })
         },
         jumpAddress(item) {
-            if(this.fromPath!=""){
+            if(this.fromPath){
                 window.chooseAddress = item;
-                this.$router.replace('/order');
+                this.$router.replace(this.fromPath);
             }
 
         }
