@@ -131,8 +131,7 @@ export default {
             this.axios(infoURl + api.login, {
                 mobile: _this.loginForm.userName,
                 passwd: _this.loginForm.passWord,
-                verify_code: _this.loginForm.smsCode,
-                captcha: _this.loginForm.captcha
+                verify_code: _this.loginForm.smsCode
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
