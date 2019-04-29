@@ -151,20 +151,20 @@
       }
     },
     activated() {
-      console.log(this.getScrollto)
-      window.scrollTo(0, this.getScrollto)
+      this.$nextTick(() =>{
+        window.scrollTo(0, this.getScrollto)
+      })
     },
     beforeRouteEnter(to, from, next) {
-      // console.log('1111')
-      // if (from.path.includes('layout')) {
+      if (from.path.includes('layout') || from.path === '/') {
         next(vm => {
           vm.initData()
           vm.urlParams()
           vm.intersected()
         })
-      // } else {
-      //   next()
-      // }
+      } else {
+        next()
+      }
     },
     methods: {
       async loadBottom() {

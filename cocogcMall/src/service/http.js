@@ -1,8 +1,4 @@
 import axios from 'axios'
-import {
-  Indicator,
-  Toast,
-} from "mint-ui";
 
 import { baseUrl } from '@/config'
 axios.defaults.timeout = 10000;
@@ -15,18 +11,14 @@ if (process.env.NODE_ENV === 'production') {
 //拦截器
 var _this = this;
 axios.interceptors.request.use(config => {
-  Indicator.open(' ');
   return config;
 }, error => {
-  Indicator.close()
   return Promise.reject(error)
 })
 
 axios.interceptors.response.use(config => {
-  Indicator.close()
   return config;
 }, error => {
-  Indicator.close()
   return Promise.reject(error)
 })
 
