@@ -245,7 +245,7 @@ export default {
             let _this = this;
             this.axios(testUrl + api.selectCarts, {
                 token: getToken(),
-                addressId: this.addressDef.id
+                addressId: this.addressDef ? this.addressDef.id : undefined
             },
                 'post')
                 .then((data) => {
