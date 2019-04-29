@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div>
         <router-view class="content"></router-view>
         <v-footer></v-footer>
     </div>
@@ -17,6 +17,6 @@ export default {
 <style>
 .content{
   padding-bottom: 50px;
-      background: #eef1f6;
+  background: #eef1f6;
 }
 </style>

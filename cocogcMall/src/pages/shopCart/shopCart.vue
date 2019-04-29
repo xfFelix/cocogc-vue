@@ -166,6 +166,7 @@ export default {
       }),
         countNum() {
             let num = 0
+            console.log('111')
             if (this.list) {
                 let buys = []
                 let total = this.list.reduce((state, item) => {
@@ -250,6 +251,11 @@ export default {
                 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
+                      let num = 0
+                      data.data.forEach((v, i) => {
+                        num += v.num
+                      })
+                      this.setNum(num)
                         if (callback)
                             callback(data.data);
                         //传给猜你喜欢
@@ -471,7 +477,7 @@ export default {
 
 <style lang="less">
 .shop {
-    padding-bottom: 1.4rem;
+    padding-bottom: calc(50px + 40px) !important;
 }
 .order-bottom {
     height: 0.1rem;
