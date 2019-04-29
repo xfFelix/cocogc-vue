@@ -150,7 +150,7 @@ export default {
                 color: #333333;
                 font-size: 13px;
                 line-height: 20px;
-                height: 38px;
+                height: 37px;
                 overflow: hidden;
                 word-break: break-all;
                 word-wrap: break-word;

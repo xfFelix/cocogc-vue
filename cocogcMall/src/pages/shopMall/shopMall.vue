@@ -352,10 +352,6 @@ export default {
           /* Internet Explorer 10-11 */
           font-size: 0.26rem;
         }
-        .el-autocomplete{
-          width: 100%;
-          height: 100%;
-        }
       }
     }
     .seachBnt {

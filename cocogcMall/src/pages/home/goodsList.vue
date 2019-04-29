@@ -488,7 +488,7 @@
         overflow: hidden;
         position: relative;
         line-height: 1.5em;
-        height: 3em;
+        height: 2.9em;
 
         &::after {
           content: '';

@@ -220,7 +220,9 @@ export default {
         .home-iMore {
             width: 5.4%;
             height: 0.58rem;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border: 1px solid #dfdfdf;
             border-radius: 1rem; // margin-right: 0.09rem;
             text-align: center;
@@ -229,7 +231,6 @@ export default {
                 width: 0.25rem;
                 height: 0.25rem;
                 display: inline-block;
-                margin: 0.18rem auto;
                 transition: all 0.4s;
             }
             .home-iMoreGoa {
@@ -315,7 +316,7 @@ export default {
             margin-top: 0.12rem;
             position: relative;
             line-height: 1.5em;
-            height: 3em;
+            height: 2.9em;
             overflow: hidden;
             word-break: break-all;
             word-wrap: break-word;

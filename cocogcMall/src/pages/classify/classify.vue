@@ -322,14 +322,6 @@ export default
                     color: #c5c5c5;
                     font-size: 0.26rem;
                 }
-                .el-autocomplete {
-                    width: 100%;
-                    height: 100%;
-                    input {
-                        width: 100%;
-                        height: 100%;
-                    }
-                }
             }
         }
 
