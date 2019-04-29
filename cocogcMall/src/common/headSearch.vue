@@ -6,16 +6,7 @@
                 <span class="j1Png home-logo"></span>
                 <p class="home-searchI">
                     <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont"/> -->
-                    <el-autocomplete
-                      v-model="searchCont"
-                      :fetch-suggestions="querySearchAsync"
-                      placeholder="请输入要搜索的内容"
-                      @select="handleSelect"
-                      :trigger-on-focus="false"
-                      :hide-loading="true"
-                      :debounce="1000"
-                      @keyup.enter.native="sendSearch"
-                    ></el-autocomplete>
+                    <el-autocomplete v-model="searchCont" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="sendSearch"></el-autocomplete>
                 </p>
             </div>
             <span class="home-smdel" @click="cleanInp" v-if="searchCont">
@@ -35,32 +26,32 @@ export default {
             searchCont: ''
         }
     },
-    methods:{
-        cleanInp(){
-            this.searchCont =""
+    methods: {
+        cleanInp() {
+            this.searchCont = ""
         },
-        sendSearch(){
-            this.$emit('searchChild',this.searchCont)
+        sendSearch() {
+            this.$emit('searchChild', this.searchCont)
         },
         async querySearchAsync(queryString, cb) {
-          if (queryString) {
-            // clearTimeout(this.timeout);
-            // this.timeout = setTimeout(async() => {
-              let restaurants = await this.axios(jdTestUrl + api.searchHint, {keyword: queryString}, 'get')
-              let list = []
-              restaurants.list.forEach((item, index)=> {
-                let cur = {}
-                cur.id = item.id
-                cur.value = item.name
-                cur.parentId = item.parentId
-                list.push(cur)
-              },{})
-              cb(list);
-            // }, 1000);
-          }
+            if (queryString) {
+                // clearTimeout(this.timeout);
+                // this.timeout = setTimeout(async() => {
+                let restaurants = await this.axios(jdTestUrl + api.searchHint, { keyword: queryString }, 'get')
+                let list = []
+                restaurants.list.forEach((item, index) => {
+                    let cur = {}
+                    cur.id = item.id
+                    cur.value = item.name
+                    cur.parentId = item.parentId
+                    list.push(cur)
+                }, {})
+                cb(list);
+                // }, 1000);
+            }
         },
         handleSelect(item) {
-          this.sendSearch()
+            this.sendSearch()
         },
     },
     mounted() {
@@ -69,12 +60,6 @@ export default {
 }
 </script>
 <style lang="less">
-.el-input{
-  height: 100%;
-  input{
-    height: 100%;
-  }
-}
 .home-sm {
     display: flex;
     justify-content: space-between;
@@ -142,10 +127,7 @@ export default {
                     color: #dfdfdf;
                     font-size: 0.26rem;
                 }
-                .el-autocomplete{
-                    width: 100%;
-                    height: 100%;
-                }
+                
             }
         }
 
