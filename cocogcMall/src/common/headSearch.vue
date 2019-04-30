@@ -5,11 +5,11 @@
             <div class="home-smInput">
                 <span class="j1Png home-logo"></span>
                 <p class="home-searchI">
-                    <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchCont"/> -->
-                    <el-autocomplete v-model="searchCont" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="sendSearch"></el-autocomplete>
+                    <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="kewWordC"/> -->
+                    <el-autocomplete v-model="kewWordC" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="sendSearch"></el-autocomplete>
                 </p>
             </div>
-            <span class="home-smdel" @click="cleanInp" v-if="searchCont">
+            <span class="home-smdel" @click="cleanInp" v-if="kewWordC">
                 <span class="j1Png home-smdelImg"></span>
             </span>
         </div>
@@ -21,17 +21,18 @@
 <script>
 import api from '@/service/api'
 export default {
-    data() {
-        return {
-            searchCont: ''
-        }
+    props: {
+      kewWordC: {
+        type: String,
+        default: ''
+      }
     },
     methods: {
         cleanInp() {
-            this.searchCont = ""
+            this.kewWordC = ""
         },
         sendSearch() {
-            this.$emit('searchChild', this.searchCont)
+            this.$emit('searchChild', this.kewWordC)
         },
         async querySearchAsync(queryString, cb) {
             if (queryString) {
@@ -54,9 +55,6 @@ export default {
             this.sendSearch()
         },
     },
-    mounted() {
-        this.searchCont = this.$route.query.keyWord
-    }
 }
 </script>
 <style lang="less">
@@ -127,7 +125,7 @@ export default {
                     color: #dfdfdf;
                     font-size: 0.26rem;
                 }
-                
+
             }
         }
 
