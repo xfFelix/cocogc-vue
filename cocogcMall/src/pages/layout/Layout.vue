@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :style="classifyFlag?'height:100%;':''">
         <router-view class="content"></router-view>
         <v-footer></v-footer>
     </div>
@@ -10,6 +10,16 @@ import Footer from '@/common/footer'
 export default {
   components: {
     "v-footer": Footer,
+  },
+  data:()=>({
+    classifyFlag:false
+  }),
+  mounted(){
+    if(this.$route.path=='/layout/classify'){
+        this.classifyFlag = true;
+    }else{
+        this.classifyFlag = false;
+    }
   }
 }
 </script>
