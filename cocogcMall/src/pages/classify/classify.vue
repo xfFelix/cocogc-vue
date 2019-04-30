@@ -1,5 +1,5 @@
 <template>
-    <div class="select page" style="padding-bottom:0px">
+    <div class="select page" style="position:relative;">
         <div class="select-head">
             <div class="home-smWrap">
                 <div class="home-search">
@@ -401,9 +401,6 @@ export default
         overflow: scroll;
     }
     .select-brand {
-        li:last-of-type {
-            padding-bottom: 50px;
-        }
         flex: 0 0 1.58rem;
         width: 1.58rem;
         .select-brandLi {
@@ -455,11 +452,6 @@ export default
         }
         .select-bGoodsT:nth-of-type(1) {
             margin-top: 0.34rem;
-        }
-        .select-bGoods {
-            .select-bGoodsT:last-of-type {
-                padding-bottom: 50px;
-            }
         }
     }
 }
