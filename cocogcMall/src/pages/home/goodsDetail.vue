@@ -375,7 +375,7 @@ export default {
             if (id > 0) {
                 this.attrs = at.slice(0);
                 this.goodsId = id;
-                this.$router.push('/goodsDetail/' + id);
+                this.$router.replace('/goodsDetail/' + id);
             }
         },
         findGoodsFromList(attr) {
