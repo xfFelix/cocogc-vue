@@ -166,6 +166,7 @@ export default {
       }),
         countNum() {
             let num = 0
+            console.log('111')
             if (this.list) {
                 let buys = []
                 let total = this.list.reduce((state, item) => {
@@ -186,8 +187,8 @@ export default {
             }
         },
     },
-    mounted() {
-        this.resetAddress()
+    async mounted() {
+        await this.resetAddress()
         var that = this;
         this.getCartGoodsList(function(data) {
             if (data == null) {
@@ -201,7 +202,19 @@ export default {
 
     },
     beforeRouteEnter(to, from, next) {
-      if (!from.path.includes('address')) {
+      if(from.path.includes('goodsDetail')){
+        next(vm => {
+          vm.getCartGoodsList((data) =>{
+              if (data == null) {
+                  vm.list = [];
+                  vm.setNum(0)
+              } else {
+                  vm.list = data;
+              }
+              vm.computeTotal();
+          });
+        })
+      }else if (!from.path.includes('address')) {
         next(vm => {
           vm.resetAddress()
         })
@@ -232,11 +245,17 @@ export default {
         getCartGoodsList(callback) {
             let _this = this;
             this.axios(testUrl + api.selectCarts, {
-                token: getToken()
+                token: getToken(),
+                addressId: this.addressDef ? this.addressDef.id : undefined
             },
                 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
+                      let num = 0
+                      data.data.forEach((v, i) => {
+                        num += v.num
+                      })
+                      this.setNum(num)
                         if (callback)
                             callback(data.data);
                         //传给猜你喜欢
@@ -317,6 +336,9 @@ export default {
             // }
             that.list.forEach(function(v) {
                 if (v.check) {
+                  if (!v.goods.stocks)  {
+                    return that.Toast(`${v.goods.name}库存不足`)
+                  }
                     var buy = {};
                     buy.goodsId = v.goodsId;
                     buy.nums = v.num;
@@ -325,7 +347,6 @@ export default {
             });
             if (that.selectAllGoods == 0) return false;
             if (buys.length <= 0) {
-                that.Toast("请选择结算商品！");
                 return false;
             }
             that.axios(testUrl + api.updateCart,
@@ -456,7 +477,7 @@ export default {
 
 <style lang="less">
 .shop {
-    padding-bottom: 1.4rem;
+    padding-bottom: calc(50px + 40px) !important;
 }
 .order-bottom {
     height: 0.1rem;
@@ -493,7 +514,19 @@ export default {
 .shop-content {
     position: relative;
     .shop-dStoreWW {
+      position: relative;
         margin-bottom: 0.3rem;
+        .z-mask{
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          background: rgba(238, 241, 256, 0.6);
+          color: #ccc;
+          text-align: center;
+          padding-top: 100px;
+        }
     }
     .shop-dStoreW {
         background: #fff;

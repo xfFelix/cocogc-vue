@@ -101,7 +101,7 @@ export default {
         { id: 3, name: "手机/配件", imgBg: 'ifa-imgBg03', path: '/goodsList?classfyId=9987' },
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
         { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil/?token=' + getToken() },
-        { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: 'javascript:;' },
+        { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: hostUrl + 'ticket/memberCard/?token=' + getToken() },
         { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: hostUrl + 'ticket/?token=' + getToken() },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: '/goodsList?classfyId=18591'},
         { id: 9, name: "机票酒店", imgBg: 'ifa-imgBg04', path: 'javascript:;' },

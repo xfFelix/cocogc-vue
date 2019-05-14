@@ -5,19 +5,17 @@
                 <h3>猜你喜欢</h3>
             </div>
             <div class="home-interWrap">
-                <div v-for="(item,index) in goodsList" :key="index">
-                    <div class="home-iGoodsW" @click="goDetail(item)">
-                        <div class="home-iGoods">
-                            <img v-lazy="item.image" alt="" />
-                        </div>
-                        <p class="home-iNmame">
-                            {{item.name}}
-                        </p>
-                        <div class="home-iMoneyW">
-                            <span class="home-iMoneyL"></span>
-                            <span class="home-iMoney">{{item.currentPrice|toDecimal2}}</span>
-                           <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">{{item.marketPrice|toDecimal2}}</span>
-                        </div>
+                <div class="home-iGoodsW" @click="goDetail(item)" v-for="(item,index) in goodsList" :key="index">
+                    <div class="home-iGoods">
+                        <img v-lazy="item.image" alt="" />
+                    </div>
+                    <p class="home-iNmame">
+                        {{item.name}}
+                    </p>
+                    <div class="home-iMoneyW">
+                        <span class="home-iMoneyL"></span>
+                        <span class="home-iMoney">{{item.currentPrice|toDecimal2}}</span>
+                        <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">{{item.marketPrice|toDecimal2}}</span>
                     </div>
                 </div>
             </div>
@@ -71,7 +69,7 @@ export default {
         },
     },
     mounted() {
-      this.guessLike()
+        this.guessLike()
     },
 
 }
@@ -103,7 +101,7 @@ export default {
             font-style: italic;
         }
         .home-iGoodsW {
-            float: left;
+            display: inline-block;
             width: 50%;
             padding: 0.32rem;
             box-sizing: border-box;
@@ -152,7 +150,7 @@ export default {
                 color: #333333;
                 font-size: 13px;
                 line-height: 20px;
-                height: 38px;
+                height: 37px;
                 overflow: hidden;
                 word-break: break-all;
                 word-wrap: break-word;
@@ -162,7 +160,7 @@ export default {
             .home-iMoneyW {
                 display: flex;
                 align-items: center;
-                font-size: 0.26rem ;
+                font-size: 0.26rem;
                 .home-iMoneyL {
                     width: 0.26rem;
                     height: 0.28rem;

@@ -231,7 +231,7 @@ export default {
                 if (data != null) {
                     this.setGoodsData(data);
                 } else {
-                    this.Toast("该商品不存在！");
+                    this.Toast("该商品已下架！");
                     this.$router.back();
                 }
             });
@@ -247,7 +247,7 @@ export default {
             if (data != null) {
                 that.setGoodsData(data);
             } else {
-                that.Toast("该商品不存在！");
+                that.Toast("该商品已下架！");
                 that.$router.back();
             }
         });
@@ -375,7 +375,7 @@ export default {
             if (id > 0) {
                 this.attrs = at.slice(0);
                 this.goodsId = id;
-                this.$router.push('/goodsDetail/' + id);
+                this.$router.replace('/goodsDetail/' + id);
             }
         },
         findGoodsFromList(attr) {

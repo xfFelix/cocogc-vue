@@ -7,6 +7,7 @@ dist/
 
 # Editor directories and files
 .idea
+dist.zip
 .vscode
 *.suo
 *.ntvs*
