@@ -18,7 +18,7 @@ export default (router) => {
         }
       }
     } catch(e) {
-      alert(e)
+      // alert(e)
     }
 
     try {
@@ -56,7 +56,7 @@ export default (router) => {
         return ;
       }
     } catch (e) {
-      alert(e)
+      // alert(e)
     }
 
     next()
