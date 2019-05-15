@@ -157,7 +157,7 @@ height: 45px;
     background-size: 5.8rem 1.86rem;
 }
   .navImg{
-    background-image: url(/static/images/banner.png);
+    background-image: url(/static/images/banner.png?_=1);
     background-repeat: no-repeat;
     background-size: 4.82rem 1.97rem;
     display: inline-block;
@@ -303,4 +303,3 @@ font-size: 14px;
     align-items: center;
     line-height: inherit;
 }
-                
