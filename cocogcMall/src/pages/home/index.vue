@@ -45,7 +45,7 @@
         <div class="swiper-container" style="height:2rem">
           <!-- 页面 -->
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item of banner" :key="item.title">
+            <div class="swiper-slide" v-for="(item, index) of banner" :key="index">
               <a :href="item.url">
                 <img :src="item.src" alt="">
               </a>
