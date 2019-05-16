@@ -42,7 +42,12 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/layout/home',
+      redirect: '/layout/home'
+      // beforeEnter: (to, from, next) => {
+      //   next({
+      //     path: '/layout/home'
+      //   })
+      // },
     },
     {
       path: '/layout',
