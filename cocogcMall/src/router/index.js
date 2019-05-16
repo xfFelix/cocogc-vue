@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '@/store/index'
 
 import home from '@/pages/home/index';
 import layoutIndex from '@/pages/home/layoutIndex';
@@ -57,7 +58,12 @@ const router = new Router({
         },
         {
           path: 'index',
-          redirect: 'home',
+          beforeEnter: (to, from, next) => {
+            store.dispatch('platform/setPlatform', 1)
+            next({
+              path: 'home'
+            })
+          },
         },
         {
           path: 'shopMall',

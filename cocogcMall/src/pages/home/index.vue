@@ -120,16 +120,17 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loScore: 'userinfo/getUserInfo'
+      loScore: 'userinfo/getUserInfo',
+      platform: 'platform/getPlatform'
     })
   },
   watch: {
-    'loScore.vendorId': {
+    platform: {
       handler(val) {
-        if (!val) {
-          this.fastList.splice(2,0,{ id: 3, name: "手机/配件", imgBg: 'ifa-imgBg03', path: '/goodsList?classfyId=9987' })
-        } else {
+        if (val) {
           this.fastList.splice(2,0,{ id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg00', path: `${infoURl}#!/pay?token=${getToken()}` })
+        } else {
+          this.fastList.splice(2,0,{ id: 3, name: "手机/配件", imgBg: 'ifa-imgBg03', path: '/goodsList?classfyId=9987' })
         }
       },
       immediate: true
@@ -145,7 +146,7 @@ export default {
   methods: {
     goLink(item) {
       if (+item.id === 3) {
-        if (this.loScore.vendorId) {
+        if (this.platform) {
           return window.location = item.path
         } else {
           return this.$router.push(item.path)
