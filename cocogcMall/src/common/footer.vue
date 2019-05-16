@@ -117,7 +117,7 @@ export default {
                 width: 0.42rem;
                 height: 0.42rem;
                 display: inline-block;
-                background-image: url(/static/images/banner.png);
+                background-image: url(/static/images/banner.png?_=1);
                 background-repeat: no-repeat;
                 background-size: 4.82rem 1.97rem;
                 position: relative;
