@@ -98,7 +98,6 @@ export default {
       fastList: [
         { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + getToken() },
         { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
-        { id: 3, name: "手机/配件", imgBg: 'ifa-imgBg03', path: '/goodsList?classfyId=9987' },
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
         { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil/?token=' + getToken() },
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: hostUrl + 'ticket/memberCard/?token=' + getToken() },
@@ -124,6 +123,18 @@ export default {
       loScore: 'userinfo/getUserInfo'
     })
   },
+  watch: {
+    'loScore.vendorId': {
+      handler(val) {
+        if (!val) {
+          this.fastList.splice(2,0,{ id: 3, name: "手机/配件", imgBg: 'ifa-imgBg03', path: '/goodsList?classfyId=9987' })
+        } else {
+          this.fastList.splice(2,0,{ id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg00', path: `${infoURl}#!/pay?token=${getToken()}` })
+        }
+      },
+      immediate: true
+    }
+  },
   mounted() {
     this.getBanner()
     this.rank();
@@ -133,7 +144,14 @@ export default {
   },
   methods: {
     goLink(item) {
-      if (item.id === 4 || item.id === 3) {
+      if (+item.id === 3) {
+        if (this.loScore.vendorId) {
+          return window.location = item.path
+        } else {
+          return this.$router.push(item.path)
+        }
+      }
+      if (item.id === 4) {
         return this.$router.push(item.path)
       }
       if(item.id === 7 || item.id === 8){
@@ -314,6 +332,13 @@ export default {
     .imgBg {
       width: 0.5rem;
       height: 0.5rem;
+    }
+
+    .ifa-imgBg00 {
+      background: url(/static/images/banner_index.png);
+      background-position: -3.51rem -0.1rem;
+      background-repeat: no-repeat;
+      background-size: 4.82rem 1.97rem;
     }
 
     .ifa-imgBg01 {

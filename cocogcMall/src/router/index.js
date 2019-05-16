@@ -42,12 +42,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      // redirect: '/layout/home'
-      beforeEnter: (to, from, next) => {
-        next({
-          path: '/layout/home'
-        })
-      }
+      redirect: '/layout/home'
     },
     {
       path: '/layout',
@@ -62,9 +57,7 @@ const router = new Router({
         },
         {
           path: 'index',
-          name: 'layoutIndex',
-          component: layoutIndex,
-          meta: { title: '首页:有信用卡',scrolltop: true },
+          redirect: 'home',
         },
         {
           path: 'shopMall',
