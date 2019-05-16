@@ -61,7 +61,7 @@ const router = new Router({
           beforeEnter: (to, from, next) => {
             store.dispatch('platform/setPlatform', 1)
             next({
-              path: 'home'
+              path: '/layout/home'
             })
           },
         },
