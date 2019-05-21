@@ -1,24 +1,24 @@
 <template>
     <div id="login">
-
         <head>
             <div class="headLogin">
                 <span class="back" @click="$router.go(-1)"></span>
+                修改支付密码
             </div>
         </head>
 
         <section>
             <ul class="loginUl">
-                <li>
+                <li v-if="userinfo.payPwd">
                     <div class="loginLileft">
-                        <span class="passWordIcon"></span>
-                        <input type="password" placeholder="请输入原密码" v-model.trim="password" :maxlength="6" pattern="[0-9]*">
+                        <!-- <span class="passWordIcon"></span> -->
+                        <input type="password" placeholder="请输入原密码(6位数字)" v-model.trim="password" :maxlength="6" pattern="[0-9]*">
                     </div>
                 </li>
                 <li>
                     <div class="loginLileft">
-                        <span class="passWordIcon"></span>
-                        <input type="password" :placeholder="userinfo.payPwd ? '请输入新密码' : '请输入支付密码'" v-model.trim="newPassword" :maxlength="6" pattern="[0-9]*">
+                        <!-- <span class="passWordIcon"></span> -->
+                        <input type="password" :placeholder="userinfo.payPwd ? '请输入新密码(6位数字)' : '请输入支付密码(6位数字)'" v-model.trim="newPassword" :maxlength="6" pattern="[0-9]*">
                     </div>
                 </li>
             </ul>
@@ -50,7 +50,12 @@ export default {
         setUserInfo: 'userinfo/setUserInfo'
       }),
       async changePwd() {
-        let validate = this.password.length === 6 && this.newPassword === this.password
+        let validate = false
+        if (this.userinfo.payPwd) {
+          validate = this.password.length === 6 && this.newPassword === this.password
+        } else {
+          validate = this.newPassword.length === 6
+        }
         if (!validate) return this.Toast('密码错误')
         const { default: { checkPayPwd }} = await import('@/service/api')
         let config = {
@@ -78,6 +83,8 @@ export default {
     background-size: 5.8rem 1.86rem;
     background-position: -0.2rem -0.74rem;
     transform: rotate(180deg);
+    position: absolute;
+    left: 15px;
 }
 
 #login {
@@ -92,20 +99,21 @@ export default {
     margin: 0 auto;
     max-width: 450px;
     head {
-        background: url(/static/images/regist.png) no-repeat;
         width: 100%;
-        height: 3.5rem;
+
         display: block;
-        background-size: 100% 100%;
         .headLogin {
             padding: 0.44rem 0.5rem;
-            font-size: 0.28rem;
+            font-size: 16px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            position: relative;
             .close {
                 width: 0.7rem;
                 height: 0.7rem;
+                position: absolute;
+                left: 0;
                 span {
                     width: 0.56rem;
                     height: 0.7rem;
@@ -128,12 +136,14 @@ export default {
 }
 
 .loginUl {
-    padding: 1.25rem 1rem 0 1rem;
+    padding: 1.25rem 0.5rem 1rem;
+    box-sizing: border-box;
     background: #fff;
     li {
         border-bottom: 1px solid #dfdfdf;
         height: 24px;
         padding: 0.18rem 0;
+        margin-top: 15px;
         display: flex;
         justify-content: space-between;
         .loginLileft {
@@ -221,9 +231,6 @@ export default {
     .smsIcon {
         background-position: -105px -3px;
     }
-    li:last-of-type {
-        border: none;
-    }
 }
 
 ::-webkit-input-placeholder {
@@ -254,6 +261,13 @@ export default {
 .bntWrap {
     background: #fff;
     padding-top: 0.47rem;
+    .bnt{
+      margin: 0 0.5rem;
+      border-radius: 5px;
+      box-sizing: border-box;
+      width: auto;
+      background: #30CE84;
+    }
 }
 
 .forgetPass {
