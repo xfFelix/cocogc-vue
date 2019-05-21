@@ -4,6 +4,7 @@ import cart from './modules/cart'
 import userinfo from './modules/userinfo'
 import scrollto from './modules/scrollto'
 import platform from './modules/platform'
+import order from './modules/order'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     cart,
     userinfo,
     scrollto,
-    platform
+    platform,
+    order
   }
 })

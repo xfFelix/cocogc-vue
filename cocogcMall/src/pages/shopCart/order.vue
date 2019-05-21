@@ -132,6 +132,7 @@
         </div>
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
             <div class="phonePay-bg" id="phonePay-sms" v-if="showSendCode">
+              <div v-if="userinfo.payValidType !== 1">
                 <p class="phonePay-title">
                     <span class="phoneChe-backW" @click="showSendCode = false">
                         <span class="phoneChe-back"></span>
@@ -146,6 +147,11 @@
                     <span class="sendPhoneSms" :style="{'background': validateFlag? 'green':'#dedede'}" @click="sendPhoneSms()">{{validate}}</span>
                 </p>
                 <button class="phonePay-confirm phonePay-conA" :disabled="btnDisabled" :class="smsCode?'light': ''" @click="sumitOrder">确认兑换</button>
+              </div>
+              <div v-else class="password-wrapper">
+                <h1>请输入支付密码</h1>
+                <password @confirm="sumitOrder"></password>
+              </div>
             </div>
         </transition>
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -199,7 +205,7 @@
         </transition>
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
           <div class="mobile-wrapper" v-if="data.show" @click="data.show = false">
-            <div class="wrapper" @click.stop="data.show = true">
+            <div class="wrapper" @click.stop="data.show = true" v-if="userinfo.payValidType !== 1">
               <h1>绑定手机号码</h1>
               <div class="item">
                 <span class="user"></span>
@@ -214,7 +220,21 @@
                 <button class="send-code" @click.stop="sendCode" :disabled="data.codeFlag">{{data.codeText}}</button>
               </div>
               <div class="item">
-                <button class="link-mobile" @click.stop="setMobile">绑定</button>
+                <button class="link-mobile" @click.stop="validateMobile">绑定</button>
+              </div>
+            </div>
+            <div class="wrapper" @click.stop="data.show = true" v-if="userinfo.payValidType === 1">
+              <h1>绑定支付密码</h1>
+              <div class="item">
+                <span class="pwd"></span>
+                <input type="tel" :minlength="6" :maxlength="6" placeholder="请输入原6位数字支付密码" v-model.trim="data.mobile" pattern="[1-9]*" autocomplete="off">
+              </div>
+              <div class="item border-1-px">
+                <span class="pwd"></span>
+                <input type="tel" :minlength="6" :maxlength="6" placeholder="请输入新6位数字支付密码" v-model.trim="data.code" pattern="[1-9]*" autocomplete="off">
+              </div>
+              <div class="item">
+                <button class="link-mobile" @click.stop="validatePwd">绑定</button>
               </div>
             </div>
           </div>
@@ -228,7 +248,7 @@ import BgMask from "@/common/BgMask"
 import Swiper from 'swiper';
 import api from '../../service/api';
 import ExchangeSu from "@/components/shopCart/ExchangeSu"
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { IsEmpty, getToken, IsMobile, IsChinaMobile, IsHKMobile } from "@/util/common";
 import axios from '@/service/http'
 import store from '@/store'
@@ -336,11 +356,23 @@ export default {
               }
           }, 1000)
       },
-      async setMobile() {
+      validateMobile() {
         if (this.telPlace == '86' && !IsChinaMobile(this.data.mobile)) return this.Toast('请输入国内手机号')
         if (this.telPlace == '852' && !IsHKMobile(this.data.mobile)) return this.Toast('请输入香港手机号')
         if (!IsMobile(this.data.mobile)) return this.Toast('请输入正确的手机号')
         if (!this.data.code) return this.Toast('请输入验证码')
+        this.setMobile()
+      },
+      async validatePwd () {
+        let validate = this.data.mobile.length === 6 && this.data.code.length === 6
+        if (!validate) return this.Toast('验证失败')
+        const { error_code, data, message} = await this.axios(infoURl + api.checkPayPwd, {token: getToken(), passwd: this.data.mobile, new_passwd: this.data.code}, 'post')
+        if (error_code) return this.Toast(message)
+        this.Toast(message)
+        this.data.show = false
+        this.$store.dispatch('userinfo/setUserInfo', data)
+      },
+      async setMobile() {
         let data = await this.axios(infoURl + api.bindMobile, { token: getToken(), mobile: this.data.mobile, code: this.data.code }, 'post')
         if (data.error_code) {
             return this.Toast(data.message)
@@ -398,9 +430,12 @@ export default {
 
         },
         dialogCode() {
-          if (!IsMobile(this.userinfo.userName)) {
-            console.log(this.userinfo.userName)
-            return this.data.show = true
+          if (this.userinfo.payValidType !== 1) {
+            if (!IsMobile(this.userinfo.userName)) {
+              return this.data.show = true
+            }
+          } else if (!this.userinfo.payPwd) {
+            this.data.show = true
           }
           if (this.info > 30000) {
             if (this.$store.state.userinfo.userinfo.isRealCert == 0) {
@@ -423,11 +458,14 @@ export default {
           } else {
             this.Toast(this.message)
           }
-
         },
         sumitOrder() {
+          if (this.userinfo.payValidType === 1) {
+            this.smsCode = this.$store.state.order.password
+          } else {
             this.btnDisabled = true
-            this.saveOrderByCart()
+          }
+          this.saveOrderByCart()
         },
         async getUserAddress() {
           var that = this;
@@ -582,6 +620,7 @@ export default {
                         _this.showSendCode = false;
                         _this.exchangeShow = true;
                         _this.parOrderId = orderId;
+                        this.clearPassword()
                     } else {
                       _this.Toast(data.message)
                     }
@@ -614,12 +653,16 @@ export default {
                     }
                 }, 1000)
             }
-        }
+        },
+        ...mapActions({
+          clearPassword: 'order/clearPassword'
+        })
     },
     components: {
         "header-top": headerTop,
         BgMask,
-        ExchangeSu
+        ExchangeSu,
+        Password: () => import(/* webpackPrefetch: true */ '@/common/Password')
     },
 }
 </script>
@@ -679,6 +722,9 @@ export default {
         }
         &.book{
           background-position: -103px -2px;
+        }
+        &.pwd{
+          background-position: -49px -2px;
         }
       }
       input{
@@ -997,6 +1043,19 @@ export default {
             -webkit-transform: rotate(180deg);
             transform: rotate(180deg);
         }
+    }
+    .password-wrapper{
+      h1{
+        padding: 15px 0;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        border-bottom: 1px solid #d3d3d3;
+      }
+      .code-wrapper{
+        margin: 20px 0 80px;
+        padding: 0 15px;
+      }
     }
 }
 

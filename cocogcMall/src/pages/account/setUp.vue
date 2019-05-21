@@ -32,7 +32,15 @@
             </li> -->
             <li class="one-bottom-px" @click="passupJump()">
                 <div>
-                    修改密码
+                    修改登录密码
+                </div>
+                <div>
+                    <span class="j1Png setUp-go"></span>
+                </div>
+            </li>
+            <li class="one-bottom-px" v-if="userinfo.payValidType === 1" @click="goPayPwd()">
+                <div>
+                    修改支付密码
                 </div>
                 <div>
                     <span class="j1Png setUp-go"></span>
@@ -72,16 +80,19 @@ export default {
     },
     methods: {
         addressJump() {
-            this.$router.push("/addressMag")
+          this.$router.push("/addressMag")
         },
         certJump() {
-            window.location.href = infoURl + "#!/cert?token=" + getToken();
+          window.location.href = infoURl + "#!/cert?token=" + getToken();
         },
         cardsJump() {
-            window.location.href = infoURl + "#!/pay?token=" + getToken();
+          window.location.href = infoURl + "#!/pay?token=" + getToken();
         },
         passupJump() {
-             window.location.href = infoURl + "#!/changePwd?token=" + getToken();
+          window.location.href = infoURl + "#!/changePwd?token=" + getToken();
+        },
+        goPayPwd() {
+          this.$router.push('/payPassword')
         },
         loginOut(){
             delToken();

@@ -181,7 +181,12 @@ const router = new Router({
       component: register,
       meta: { title: '注册' },
     },
-
+    {
+      path: '/payPassword',
+      name: 'payPassword',
+      component: () => import(/* webpackPrefetch: true */ '@/pages/password/pay'),
+      meta: { title: '支付密码', requireAuth: true },
+    },
   ],
 })
 

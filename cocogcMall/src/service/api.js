@@ -55,6 +55,7 @@ const searchItem = '/query/categoryId'
 const confirmReceived = 'api/confirmReceived' //确认收货
 const userSms = 'user/sms'
 const bindMobile = 'user/bindMobile'
+const checkPayPwd = 'user/editPayPwd'
 
 
 
@@ -100,5 +101,6 @@ export default {
   searchItem,
   confirmReceived,
   userSms,
-  bindMobile
+  bindMobile,
+  checkPayPwd
 }
