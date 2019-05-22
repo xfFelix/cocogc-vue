@@ -212,11 +212,11 @@
                 <select style="border:none;background:#fff;width: 50px;" v-model="telPlace">
                     <option :value="item.telRealVal" v-for="item in telList" :key="item.telRealVal">{{item.telShowVal}}</option>
                 </select>
-                <input type="tel" placeholder="请输入手机号" v-model="data.mobile" pattern="[1-9]*" autocomplete="off">
+                <input type="tel" placeholder="请输入手机号" v-model="data.mobile" pattern="[0-9]*" autocomplete="off">
               </div>
               <div class="item border-1-px">
                 <span class="book"></span>
-                <input type="text" placeholder="请输入验证码" v-model="data.code" pattern="[1-9]*" autocomplete="off">
+                <input type="text" placeholder="请输入验证码" v-model="data.code" pattern="[0-9]*" autocomplete="off">
                 <button class="send-code" @click.stop="sendCode" :disabled="data.codeFlag">{{data.codeText}}</button>
               </div>
               <div class="item">
@@ -227,11 +227,13 @@
               <h1>绑定支付密码</h1>
               <div class="item">
                 <span class="pwd"></span>
-                <input type="tel" :minlength="6" :maxlength="6" placeholder="请输入原6位数字支付密码" v-model.trim="data.mobile" pattern="[1-9]*" autocomplete="off">
+                <input type="tel" :class="{'text-security': isPassword}" :maxlength="6" placeholder="设置支付密码" v-model.trim="data.mobile" pattern="[0-9]*" autofocus="autofocus">
+                <span :class="isPassword? 'eye-open': 'eye-close'" @click="isPassword = !isPassword"></span>
               </div>
               <div class="item border-1-px">
                 <span class="pwd"></span>
-                <input type="tel" :minlength="6" :maxlength="6" placeholder="请输入新6位数字支付密码" v-model.trim="data.code" pattern="[1-9]*" autocomplete="off">
+                <input type="tel" :class="{'text-security': isPassword2}" :maxlength="6" placeholder="确认支付密码" v-model.trim="data.code" pattern="[0-9]*">
+                <span :class="isPassword2? 'eye-open': 'eye-close'" @click="isPassword2 = !isPassword2"></span>
               </div>
               <div class="item">
                 <button class="link-mobile" @click.stop="validatePwd">绑定</button>
@@ -275,7 +277,7 @@ export default {
             info: '',
             data: {
               mobile: '',
-              show: false,
+              show: true,
               code: '',
               codeText: '发送验证码',
               codeFlag: false
@@ -291,7 +293,9 @@ export default {
                 }
             ],
             telPlace: 86,
-            btnDisabled: false
+            btnDisabled: false,
+            isPassword: true,
+            isPassword2: true
         };
     },
     async beforeRouteEnter(to, from, next) {
@@ -364,9 +368,10 @@ export default {
         this.setMobile()
       },
       async validatePwd () {
-        let validate = this.data.mobile.length === 6 && this.data.code.length === 6
-        if (!validate) return this.Toast('验证失败')
-        const { error_code, data, message} = await this.axios(infoURl + api.checkPayPwd, {token: getToken(), passwd: this.data.mobile, new_passwd: this.data.code}, 'post')
+        let validate = false
+        validate = this.data.mobile.length === 6 && this.data.code === this.data.mobile
+        if (!validate) return this.Toast('请输入正确的6位数字密码')
+        const { error_code, data, message} = await this.axios(infoURl + api.checkPayPwd, {token: getToken(), new_passwd: this.data.code}, 'post')
         if (error_code) return this.Toast(message)
         this.Toast(message)
         this.data.show = false
@@ -435,7 +440,7 @@ export default {
               return this.data.show = true
             }
           } else if (!this.userinfo.payPwd) {
-            this.data.show = true
+            return this.data.show = true
           }
           if (this.info > 30000) {
             if (this.$store.state.userinfo.userinfo.isRealCert == 0) {
@@ -726,11 +731,22 @@ export default {
         &.pwd{
           background-position: -49px -2px;
         }
+        &.eye-open{
+          background-position: -23px -2px;
+        }
+        &.eye-close{
+          background-position: 2px -2px;
+        }
       }
       input{
         padding: 10px 0;
         margin-left: 10px;
         width: 100%;
+        font-size: 16px;
+        &.text-security{
+          text-security: disc;
+          -webkit-text-security: disc;
+        }
       }
       .send-code{
         position: absolute;

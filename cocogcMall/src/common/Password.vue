@@ -46,7 +46,9 @@ export default {
   outline: none;
   color: transparent;
   text-shadow: 0 0 0 transparent;
-  width: 100%;
+  width: 200%;
+  text-indent: -999em; /*文本向左缩进*/
+  margin-left: -100%; /*输入框光标起始点向左左移*/
   top: 0;
   z-index: -1;
   opacity: 0;

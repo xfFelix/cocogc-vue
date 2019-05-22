@@ -303,7 +303,7 @@ export default {
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
 .back {
     width: 0.22rem;
     height: 0.38rem;
