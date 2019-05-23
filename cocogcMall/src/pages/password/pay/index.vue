@@ -22,8 +22,14 @@ export default {
       num: 0,
       code: '',
       password: '',
-      newPassword: ''
+      newPassword: '',
+      redirect: ''
     }),
+    created () {
+      if (Object.keys(this.$route.query).length && this.$route.query.path) {
+        this.redirect = this.$route.query.path
+      }
+    },
     watch: {
       code (val) {
         if (val.length === 6) {
@@ -63,7 +69,11 @@ export default {
         }
         this.Toast(message)
         this.setUserInfo(data)
-        this.$router.go(-1)
+        if (this.redirect) {
+          window.location.href = this.redirect
+        } else {
+          this.$router.go(-1)
+        }
       },
       initData() {
         this.num = 0
@@ -76,9 +86,19 @@ export default {
             showCancelButton: true,
             confirmButtonText: '离开'
           })
-          if (/confirm/.test(res)) return this.$router.go(-1)
+          if (/confirm/.test(res)){
+            if (this.redirect) {
+              window.location.href = this.redirect
+            } else {
+              this.$router.go(-1)
+            }
+          }
         } else {
-          this.$router.go(-1)
+          if (this.redirect) {
+            window.location.href = this.redirect
+          } else {
+            this.$router.go(-1)
+          }
         }
       }
     }
