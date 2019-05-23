@@ -1,38 +1,10 @@
-Vue.directive('enter-number', {
-  inserted: function (el) {
-    el.addEventListener("keypress",function(e){
-      e = e || window.event
-      let charcode = typeof e.charCode == 'number' ? e.charCode : e.keyCode
-      let re = /\d/
-      if(!re.test(String.fromCharCode(charcode)) && charcode > 9 && !e.ctrlKey){
-          if(e.preventDefault){
-              e.preventDefault()
-          }else{
-              e.returnValue = false
-          }
-      }
-    })
-  }
-})
+import Vue from 'vue'
 
-Vue.directive('enter-number-2', {
+// 注册一个全局自定义指令 `v-focus`
+Vue.directive('focus', {
+  // 当被绑定的元素插入到 DOM 中时……
   inserted: function (el) {
-    el.addEventListener("keypress",function(e){
-      e = e || window.event
-      let charcode = typeof e.charCode == 'number' ? e.charCode : e.keyCode
-      let re = /\d/;
-      if(charcode == 46){
-        if(el.value.includes('.')){
-          e.preventDefault()
-        }
-        return
-      }else if(!re.test(String.fromCharCode(charcode)) && charcode > 9 && !e.ctrlKey){
-        if(e.preventDefault){
-          e.preventDefault()
-        }else{
-            e.returnValue = false
-        }
-      }
-    });
+    // 聚焦元素
+    el.focus()
   }
 })

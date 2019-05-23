@@ -19,6 +19,7 @@ import Tips from './common/tips'
 import NoData from './common/NoData'
 import FastClick from 'fastclick'
 import infiniteScroll from 'vue-infinite-scroll'
+// import './directives'
 Vue.use(infiniteScroll)
 // import Vconsole from 'vconsole'
 // new Vconsole();
