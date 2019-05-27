@@ -141,8 +141,6 @@ export default {
     this.rank();
     this.getNews();
   },
-  components: {
-  },
   methods: {
     goLink(item) {
       if (+item.id === 3) {
@@ -154,9 +152,6 @@ export default {
       }
       if (item.id === 4) {
         return this.$router.push(item.path)
-      }
-      if(item.id === 7 || item.id === 8){
-        return window.location = item.path
       }
       if (item.path === 'javascript:;'){
         return
