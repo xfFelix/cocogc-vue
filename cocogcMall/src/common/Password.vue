@@ -71,6 +71,8 @@ export default {
   padding-bottom: 0;
   font-size: 30px;
   color: #000;
+  -webkit-text-security: disc;
+  text-security: disc;
 }
 .code-input-main-item.active{
   border-bottom: solid #30CE84 1px;
