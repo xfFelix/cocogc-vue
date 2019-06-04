@@ -459,6 +459,9 @@ export default {
             //sessionStorage.setItem('buys', JSON.stringify(buys))
             //window.buys = buys;
             //放入购物车，其他的不选中
+            this.Indicator.open({
+              spinnerType: 'triple-bounce'
+            });
             this.axios(testUrl + api.updateCart,
                 {
                     token: getToken(),
@@ -466,6 +469,7 @@ export default {
                 },
                 'post')
                 .then((data) => {
+                    this.Indicator.close()
                     if (data.error_code == 0) {
                         that.$router.push('/order');
                     } else {
