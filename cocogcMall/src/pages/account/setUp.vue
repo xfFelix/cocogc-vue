@@ -30,7 +30,7 @@
                     <span class="j1Png setUp-go"></span>
                 </div>
             </li> -->
-            <li class="one-bottom-px" @click="passupJump()">
+            <li class="one-bottom-px" v-if="platform !== 1" @click="passupJump()">
                 <div>
                     修改登录密码
                 </div>
@@ -48,7 +48,7 @@
             </li>
         </ul>
 
-        <p class="button setUp-goback" @click="loginOut()">退出</p>
+        <p class="button setUp-goback" @click="loginOut()" v-if="platform !== 1">退出</p>
     </div>
 </template>
 <script>
@@ -67,7 +67,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            userinfo: 'userinfo/getUserInfo'
+            userinfo: 'userinfo/getUserInfo',
+            platform: 'platform/getPlatform'
         })
     },
     mounted() {

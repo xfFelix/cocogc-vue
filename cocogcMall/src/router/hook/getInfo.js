@@ -28,11 +28,12 @@ export default (router) => {
       if(info.error_code == 0)
       {
         store.dispatch('userinfo/setUserInfo', info.data);
-
-        //获取购物车数据
-        const cart = await axios(testUrl + api.totalCarts,{token: _token},'post');
-        if(cart.error_code == 0 && cart.data)
-          store.dispatch('cart/setNum', cart.data);
+        if (to.path.includes('layout')) {
+          //获取购物车数据
+          const cart = await axios(testUrl + api.totalCarts,{token: _token},'post');
+          if(cart.error_code == 0 && cart.data)
+            store.dispatch('cart/setNum', cart.data);
+        }
       }
       if (to.meta.requireAuth && info.error_code == 0)
       {
