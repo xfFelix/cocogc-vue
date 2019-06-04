@@ -349,6 +349,9 @@ export default {
             if (buys.length <= 0) {
                 return false;
             }
+            this.Indicator.open({
+              spinnerType: 'triple-bounce'
+            });
             that.axios(testUrl + api.updateCart,
                 {
                     token: getToken(),
@@ -356,6 +359,7 @@ export default {
                 },
                 'post')
                 .then((data) => {
+                    this.Indicator.close()
                     if (data.error_code == 0) {
                         //sessionStorage.setItem('buys', JSON.stringify(buys));
                         window.buys = buys;
