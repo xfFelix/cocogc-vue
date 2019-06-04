@@ -318,12 +318,16 @@ export default {
         },
         getGoodsInfo(goodId, callback) {
             if (goodId && goodId != "null") {
+              this.Indicator.open({
+                spinnerType: 'double-bounce'
+              });
                 this.axios(testUrl + api.goodsDetailInfo,
                     {
                         "id": goodId
                     },
                     'post')
                     .then((data) => {
+                      this.Indicator.close()
                         if (data.error_code == 0) {
                             if (callback)
                                 callback(data.data);
