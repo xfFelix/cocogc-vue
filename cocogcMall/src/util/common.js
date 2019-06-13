@@ -48,7 +48,14 @@ export const CheckPass = (s) => {
 
 //获取用户token
 export const getToken = () => {
-    var token = JSON.parse(localStorage.getItem("yeyun_token"))
+    var token = ''
+    try {
+      token = JSON.parse(localStorage.getItem("yeyun_token"))
+    } catch (e) {
+      token = localStorage.getItem("yeyun_token")
+      localStorage.setItem('yeyun_token', JSON.stringify(token))
+      token = JSON.parse(localStorage.getItem("yeyun_token"))
+    }
     if (IsEmpty(token)) {
         token = JSON.parse(Vue.prototype.$cookies.get("yeyun_token"))
         if (!IsEmpty(token)) {
