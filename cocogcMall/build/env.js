@@ -51,6 +51,5 @@ const stringified = Object.keys(raw).reduce((env, key) => {
     env[key] = JSON.stringify(raw[key]);
     return env;
   }, {})
-console.log(stringified)
 
 module.exports = stringified
