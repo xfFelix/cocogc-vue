@@ -1,4 +1,4 @@
-import {getToken, setToken, getParam} from '@/util/common'
+import {getToken, setToken, getParam,delToken} from '@/util/common'
 import api from '@/service/api'
 import axios from '@/service/http'
 import store from '@/store/index'
@@ -14,6 +14,8 @@ export default (router) => {
           {
             setToken(param.token);
             store.dispatch('userinfo/setUserInfo', user.data)
+          }else{
+            delToken(param.token);
           }
         }
       }
@@ -23,7 +25,6 @@ export default (router) => {
 
     try {
       var _token = getToken();
-
       const info = await axios(infoURl + api.info, {token: _token}, 'post');
       if(info.error_code == 0)
       {
@@ -35,8 +36,7 @@ export default (router) => {
             store.dispatch('cart/setNum', cart.data);
         }
       }
-      if (to.meta.requireAuth && info.error_code == 0)
-      {
+      if (to.meta.requireAuth && info.error_code == 0){
         //需要登录且已经登录
         //获取地址
         // if (/^\/layout\/shopCart$/.test(to.path))
@@ -48,13 +48,17 @@ export default (router) => {
         //     store.dispatch('userinfo/setAddress', address.data)
         //   }
         // }
-      }else if(to.meta.requireAuth && info.error_code != 0){
+      }else if(info.error_code != 0){
+        delToken(param.token);
         //需要登录且未登录，跳转登录
-        next({
-          path: '/login',
-          query: { redirect: to.fullPath }
-        });
-        return ;
+        if(to.meta.requireAuth){
+            next({
+              path: '/login',
+              query: { redirect: to.fullPath }
+            });
+            return ;
+        }
+        return
       }
     } catch (e) {
       // alert(e)
