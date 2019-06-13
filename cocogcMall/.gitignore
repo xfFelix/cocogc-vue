@@ -13,3 +13,5 @@ dist.zip
 *.ntvs*
 *.njsproj
 *.sln
+.env.*.local
+.env.local
