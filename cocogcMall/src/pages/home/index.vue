@@ -138,7 +138,7 @@ export default {
     vendorId: {
       handler(val) {
         if (val && val === 'da91f326aad84804981b5599d246f0e4') {
-          this.fastList.splice(8, 1,{ id: 8, name: "金币兑换", imgBg: 'ifa-imgBg13', path: `${hostUrl}ticket/changeCoin/home?venderId=${val}` })
+          this.fastList.splice(8, 1,{ id: 8, name: "金币兑换", imgBg: 'ifa-imgBg13', path: `${hostUrl}ticket/changeCoin/home?vendorId=${val}` })
         }
       },
       immediate: true
