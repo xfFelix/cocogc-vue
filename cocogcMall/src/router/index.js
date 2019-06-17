@@ -38,6 +38,7 @@ import getInfo from './hook/getInfo';
 import scrollTop from './hook/scrollTop'
 Vue.use(Router)
 
+import {getParam} from '@/util/common'
 const router = new Router({
   // mode: 'history',
   routes: [
@@ -59,6 +60,7 @@ const router = new Router({
         {
           path: 'index',
           beforeEnter: (to, from, next) => {
+            store.dispatch('platform/setVenderId', getParam().venderId)
             store.dispatch('platform/setPlatform', 1)
             next({
               path: '/layout/home'
