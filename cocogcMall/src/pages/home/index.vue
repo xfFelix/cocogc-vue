@@ -114,8 +114,7 @@ export default {
       token: getToken(),
       banner: [],
       newsList:[],
-      autoplay: false,
-      vendorId: ''
+      autoplay: false
     }
   },
   created() {
@@ -124,7 +123,7 @@ export default {
     ...mapGetters({
       loScore: 'userinfo/getUserInfo',
       platform: 'platform/getPlatform',
-      venderId: 'platform/getVenderId'
+      vendorId: 'platform/getVendorId'
     })
   },
   watch: {
@@ -136,7 +135,7 @@ export default {
       },
       immediate: true
     },
-    venderId: {
+    vendorId: {
       handler(val) {
         if (val && val === 'da91f326aad84804981b5599d246f0e4') {
           this.fastList.splice(8, 1,{ id: 8, name: "金币兑换", imgBg: 'ifa-imgBg13', path: `${hostUrl}ticket/changeCoin/home?venderId=${val}` })

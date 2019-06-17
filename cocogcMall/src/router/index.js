@@ -60,7 +60,7 @@ const router = new Router({
         {
           path: 'index',
           beforeEnter: (to, from, next) => {
-            store.dispatch('platform/setVenderId', getParam().venderId)
+            store.dispatch('platform/setVendorId', getParam().vendorId)
             store.dispatch('platform/setPlatform', 1)
             next({
               path: '/layout/home'
