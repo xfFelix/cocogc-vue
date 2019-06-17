@@ -150,8 +150,9 @@
               </div>
               <div v-else class="password-wrapper">
                 <h1>请输入支付密码</h1>
-                <password @confirm="sumitOrder"></password>
+                <password @confirm="sumitOrder" class="password"></password>
               </div>
+              <div class="fail-text">{{failText}}</div>
             </div>
         </transition>
         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -295,7 +296,8 @@ export default {
             telPlace: 86,
             btnDisabled: false,
             isPassword: true,
-            isPassword2: true
+            isPassword2: true,
+            failText: ''
         };
     },
     async beforeRouteEnter(to, from, next) {
@@ -627,7 +629,9 @@ export default {
                         _this.parOrderId = orderId;
                         this.clearPassword()
                     } else {
-                      _this.Toast(data.message)
+                      this.clearPassword()
+                      this.smsCode = ''
+                      this.failText = data.message
                     }
                 });
         },
@@ -1025,6 +1029,7 @@ export default {
     right: 0;
     z-index: 101;
     background: #F3F4F6;
+    height: 200px;
     input {
         width: 65%;
         height: 23px;
@@ -1072,6 +1077,13 @@ export default {
         margin: 20px 0 80px;
         padding: 0 15px;
       }
+      .password{
+        margin-bottom: 0;
+      }
+    }
+    .fail-text{
+      padding: 25px 10px;
+      color: #ea5a5a;
     }
 }
 
