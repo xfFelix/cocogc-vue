@@ -341,10 +341,15 @@ export default {
       background-position: -2.34rem -0.11rem;
     }
     .ifa-imgBg02 {
-      background-position: -2.92rem -0.11rem;
+      // background-position: -3.44rem -0.1rem;
+      background: url(/static/images/recharge.png);
+      background-repeat: no-repeat;
+      background-size: 0.56rem 0.56rem;
+      // width: 0.6rem;
+      // height: 0.6rem;
     }
     .ifa-imgBg03 {
-      background-position: -3.44rem -0.1rem;
+      background-position: -2.92rem -0.11rem;
     }
     .ifa-imgBg04 {
       background-position: -4.12rem -0.08rem;
