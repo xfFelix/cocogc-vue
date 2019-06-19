@@ -98,9 +98,9 @@ export default {
       fastList: [
         { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + getToken() },
         { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
-        { id: 3, name: "手机/配件", imgBg: 'ifa-imgBg03', path: '/goodsList?classfyId=9987' },
+        { id: 3, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' },
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
-        { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' },
+        { id: 5, name: "生活缴费", imgBg: 'ifa-imgBg14', path: 'javascript:;' },
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: hostUrl + 'ticket/memberCard'},
         { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: `${hostUrl}ticket/static/ticket.html` },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: `${hostUrl}ticket/static/food.html` },
@@ -131,6 +131,7 @@ export default {
       handler(val) {
         if (val) {
           this.fastList.splice(2,1,{ id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg00', path: `${infoURl}#!/pay?token=${getToken()}` })
+          this.fastList.splice(4,1,{ id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' })
         }
       },
       immediate: true
@@ -388,6 +389,11 @@ export default {
     }
     .ifa-imgBg13 {
       background: url(/static/images/coin.png);
+      background-repeat: no-repeat;
+      background-size: 0.5rem 0.5rem;
+    }
+    .ifa-imgBg14 {
+      background: url(/static/images/life.png);
       background-repeat: no-repeat;
       background-size: 0.5rem 0.5rem;
     }
