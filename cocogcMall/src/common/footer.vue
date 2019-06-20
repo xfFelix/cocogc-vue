@@ -17,13 +17,13 @@ import { getToken } from '@/util/common'
 export default {
     data() {
         return {
-            tableList: [
-                { title: '首页', path: 'home', icon: 'navGo01', iconGreen: 'navGo11', name: 'home' },
-                { title: '商城', path: 'shopMall', icon: 'navGo02', iconGreen: 'navGo12', name: 'shopMall' },
-                { title: '分类', path: 'classify', icon: 'navGo03', iconGreen: 'navGo13', name: 'classify' },
-                { title: '购物车', path: 'shopCart', icon: 'navGo04', iconGreen: 'navGo14', name: 'shopCart' },
-                { title: '我的', path: 'account', icon: 'navGo05', iconGreen: 'navGo15', name: 'account' },
-            ],
+            // tableList: [
+            //     { title: '首页', path: 'home', icon: 'navGo01', iconGreen: 'navGo11', name: 'home' },
+            //     { title: '商城', path: 'shopMall', icon: 'navGo02', iconGreen: 'navGo12', name: 'shopMall' },
+            //     { title: '分类', path: 'classify', icon: 'navGo03', iconGreen: 'navGo13', name: 'classify' },
+            //     { title: '购物车', path: 'shopCart', icon: 'navGo04', iconGreen: 'navGo14', name: 'shopCart' },
+            //     { title: '我的', path: 'account', icon: 'navGo05', iconGreen: 'navGo15', name: 'account' },
+            // ],
             isSelect: 'home',
             docmHeight: document.documentElement.clientHeight,  //默认屏幕高度
             showHeight: document.documentElement.clientHeight,   //实时屏幕高度
@@ -36,7 +36,8 @@ export default {
     },
     computed: {
       ...mapGetters({
-        num: 'cart/getNum'
+        num: 'cart/getNum',
+        tableList: 'tab/getList'
       })
     },
     watch: {

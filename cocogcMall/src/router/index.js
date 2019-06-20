@@ -34,17 +34,22 @@ import passSetSucess from '@/pages/loginRegister/passSetSucess';
 import register from '@/pages/loginRegister/register';
 
 import Layout from '@/pages/layout/Layout'
+/**
+ * 商户id首页
+ */
+import haishangbaoye from '@/pages/business/haishangbaoye'
+
 import getInfo from './hook/getInfo';
 import scrollTop from './hook/scrollTop'
+import getVendorId from './hook/getVendorId'
 Vue.use(Router)
 
-import {getParam} from '@/util/common'
 const router = new Router({
   // mode: 'history',
   routes: [
     {
       path: '/',
-      redirect: '/layout/home'
+      redirect: '/layout/index'
     },
     {
       path: '/layout',
@@ -55,16 +60,42 @@ const router = new Router({
           path: 'home',
           name: 'home',
           component: home,
+          beforeEnter: (to, from, next) => {
+            const platform = store.state.platform.platform
+            if (platform) {
+              next({
+                redirect: '/layout/index'
+              })
+            } else {
+              next()
+            }
+          },
           meta: { title: '首页:无信用卡',scrolltop: true },
         },
         {
           path: 'index',
           beforeEnter: (to, from, next) => {
-            store.dispatch('platform/setVendorId', getParam().vendorId)
             store.dispatch('platform/setPlatform', 1)
-            next({
-              path: '/layout/home'
-            })
+            const vendorId = store.state.platform.vendorId || store.state.userinfo.userinfo.vendorId
+            const routeList = router.options.routes[1].children
+            if (!vendorId) {
+              next({
+                path: '/layout/home'
+              })
+            } else {
+              routeList.forEach(item => {
+                if (item.path === vendorId) {
+                  store.dispatch('tab/setList', {path: vendorId})
+                  next({
+                    path: `/layout/${vendorId}`
+                  })
+                } else {
+                  next({
+                    path: '/layout/home'
+                  })
+                }
+              })
+            }
           },
         },
         {
@@ -94,6 +125,12 @@ const router = new Router({
           name: 'classify',
           component: classify,
           meta: { title: '分类', keepAlive: true  },
+        },
+        {
+          path: 'haishangbaoye',
+          name: 'home',
+          component: haishangbaoye,
+          meta: { title: '商户首页' },
         }
       ]
     },
@@ -209,4 +246,5 @@ const router = new Router({
 // })
 getInfo(router)
 scrollTop(router)
+getVendorId(router)
 export default router
