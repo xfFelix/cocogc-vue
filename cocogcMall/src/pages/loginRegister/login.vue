@@ -203,12 +203,33 @@ export default {
             }
 
             if (this.smsFlag === false) {
-                if (IsEmpty(this.loginForm.passWord) || !CheckPass(this.loginForm.passWord)) {
-                    this.MessageBox("提示", "用户名或密码错误")
+                if (IsEmpty(this.loginForm.passWord)){
+                    this.MessageBox("提示", "请输入登录密码");
+                    return false;
+                }
+                if (!CheckPass(this.loginForm.passWord)) {
+                    this.MessageBox.confirm('', {
+                        message: '手机号或登录密码错误。',
+                        title: '登录失败',
+                        confirmButtonText: '忘记密码',
+                        cancelButtonText: '重新输入'
+                    }).then(action => {
+                        this.$router.push('/passSetUp');
+                    }).catch(action => {
+                        this.loginForm.passWord = '';
+                    })
                     return false;
                 }
                 this.loginForm.smsCode = ''
             } else {
+                if (IsEmpty(this.loginForm.captcha)) {
+                    this.MessageBox("提示", "请输入图形验证码");
+                    return false;
+                }
+                if(this.loginForm.captcha.length < 4){
+                  this.MessageBox("提示", "请输入正确的图形验证码。")
+                  return false;
+                }
                 if (IsEmpty(this.loginForm.smsCode)) {
                     this.MessageBox("提示", "短信验证码不能为空")
                     return false;
@@ -246,9 +267,13 @@ export default {
 
         // 短信验证码接口
         sms: function() {
-            if (IsEmpty(this.loginForm.captcha) || this.loginForm.captcha.length < 4) {
-                this.MessageBox("提示", "请输入正确的图片验证码。")
+            if (IsEmpty(this.loginForm.captcha)) {
+                this.MessageBox("提示", "请输入图形验证码。")
                 return false;
+            }
+            if(this.loginForm.captcha.length < 4){
+              this.MessageBox("提示", "请输入正确的图形验证码。")
+              return false;
             }
             let _this = this;
             this.axios(infoURl + api.sms, {
