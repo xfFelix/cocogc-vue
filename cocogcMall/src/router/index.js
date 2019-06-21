@@ -51,12 +51,13 @@ const router = new Router({
             const platform = store.state.platform.platform
             if (platform) {
               const vendorId = store.state.platform.vendorId || store.state.userinfo.userinfo.vendorId
-              if (vendorId === 'haishangbaoye') {
-                return import('@/pages/business/haishangbaoye')
-              } else if (vendorId === 'da91f326aad84804981b5599d246f0e4') {
-                return import('@/pages/business/da91f326aad84804981b5599d246f0e4')
-              } else {
-                return import('@/pages/business/Business')
+              switch (vendorId) {
+                case 'haishangbaoye':
+                  return import('@/pages/business/haishangbaoye')
+                case 'da91f326aad84804981b5599d246f0e4':
+                  return import('@/pages/business/da91f326aad84804981b5599d246f0e4')
+                default:
+                  return import('@/pages/business/Business')
               }
             }
             return import('@/pages/home/index')

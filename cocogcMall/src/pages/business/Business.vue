@@ -121,8 +121,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loScore: 'userinfo/getUserInfo',
-      platform: 'platform/getPlatform'
+      loScore: 'userinfo/getUserInfo'
     })
   },
   mounted() {
@@ -132,13 +131,6 @@ export default {
   },
   methods: {
     goLink(item) {
-      if (+item.id === 3) {
-        if (this.platform) {
-          return window.location = item.path
-        } else {
-          return this.$router.push(item.path)
-        }
-      }
       if (item.id === 4) {
         return this.$router.push(item.path)
       }

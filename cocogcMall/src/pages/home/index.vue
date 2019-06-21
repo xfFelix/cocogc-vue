@@ -121,35 +121,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loScore: 'userinfo/getUserInfo',
-      platform: 'platform/getPlatform',
-      vendorUid: 'platform/getVendorUid',
-      vendorId: 'platform/getVendorId'
+      loScore: 'userinfo/getUserInfo'
     })
   },
-  // watch: {
-  //   platform: {
-  //     handler(val) {
-  //       if (val) {
-  //         this.fastList.splice(2,1,{ id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg00', path: `${infoURl}#!/pay?token=${getToken()}` })
-  //         this.fastList.splice(4,1,{ id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' })
-  //       }
-  //     },
-  //     immediate: true
-  //   },
-  //   vendorId: {
-  //     handler(val) {
-  //       if (val && val === 'da91f326aad84804981b5599d246f0e4') {
-  //         let path = `${hostUrl}ticket/changeCoin/home?vendorId=${val}`
-  //         if (this.vendorUid) {
-  //           path = `${path}&vendorUid=${this.vendorUid}`
-  //         }
-  //         this.fastList.splice(8, 1,{ id: 8, name: "金币兑换", imgBg: 'ifa-imgBg13', path })
-  //       }
-  //     },
-  //     immediate: true
-  //   }
-  // },
   mounted() {
     this.getBanner()
     this.rank();
@@ -157,13 +131,6 @@ export default {
   },
   methods: {
     goLink(item) {
-      if (+item.id === 3) {
-        if (this.platform) {
-          return window.location = item.path
-        } else {
-          return this.$router.push(item.path)
-        }
-      }
       if (item.id === 4) {
         return this.$router.push(item.path)
       }

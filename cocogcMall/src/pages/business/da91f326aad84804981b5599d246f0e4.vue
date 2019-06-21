@@ -104,7 +104,7 @@ export default {
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: hostUrl + 'ticket/memberCard'},
         { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: `${hostUrl}ticket/static/ticket.html` },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: `${hostUrl}ticket/static/food.html` },
-        { id: 9, name: "机票酒店", imgBg: 'ifa-imgBg04', path: 'javascript:;' },
+        { id: 9, name: "金币兑换", imgBg: 'ifa-imgBg13', path: this.$store.state.platform.vendorUid ? `${hostUrl}ticket/changeCoin/home?vendorId=${this.$store.state.platform.vendorId}&vendorUid=${this.$store.state.platform.vendorUid}` :`${hostUrl}ticket/changeCoin/home?vendorId=${this.$store.state.platform.vendorId}`},
         { id: 10, name: "周大福金饰", imgBg: 'ifa-imgBg08', path: 'javascript:;' },
         { id: 11, name: "小米有品", imgBg: 'ifa-imgBg10', path: 'javascript:;' },
         { id: 12, name: "网易严选", imgBg: 'ifa-imgBg11', path: 'javascript:;' },
@@ -121,25 +121,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loScore: 'userinfo/getUserInfo',
-      platform: 'platform/getPlatform',
-      vendorUid: 'platform/getVendorUid',
-      vendorId: 'platform/getVendorId'
+      loScore: 'userinfo/getUserInfo'
     })
-  },
-  watch: {
-    vendorId: {
-      handler(val) {
-        if (val) {
-          let path = `${hostUrl}ticket/changeCoin/home?vendorId=${val}`
-          if (this.vendorUid) {
-            path = `${path}&vendorUid=${this.vendorUid}`
-          }
-          this.fastList.splice(8, 1,{ id: 9, name: "金币兑换", imgBg: 'ifa-imgBg13', path })
-        }
-      },
-      immediate: true
-    }
   },
   mounted() {
     this.getBanner()
@@ -148,13 +131,6 @@ export default {
   },
   methods: {
     goLink(item) {
-      if (+item.id === 3) {
-        if (this.platform) {
-          return window.location = item.path
-        } else {
-          return this.$router.push(item.path)
-        }
-      }
       if (item.id === 4) {
         return this.$router.push(item.path)
       }
