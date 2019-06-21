@@ -2,10 +2,12 @@ import local from '@/util/local'
 
 let defaultPlatform = 0
 let defaultVendorId = ''
+let defaultVendorUid = ''
 try{
   if (local.get('platform')) {
     defaultPlatform = local.get('platform')
     defaultVendorId = local.get('vendorId')
+    defaultVendorUid = local.get('vendorUid')
   }
 } catch(e) {
   console.error(e)
@@ -13,7 +15,8 @@ try{
 
 const state = {
   platform: defaultPlatform,
-  vendorId: defaultVendorId
+  vendorId: defaultVendorId,
+  vendorUid: defaultVendorUid
 }
 
 // getters
@@ -23,6 +26,9 @@ const getters = {
   },
   getVendorId: state => {
     return state.vendorId
+  },
+  getVendorUid: state => {
+    return state.vendorUid
   }
 }
 
@@ -33,6 +39,9 @@ const actions = {
   },
   setVendorId ({state, commit}, vendorId) {
     commit('setVendorId', vendorId)
+  },
+  setVendorUid ({state, commit}, vendorUid) {
+    commit('setVendorUid', vendorUid)
   }
 }
 
@@ -50,6 +59,14 @@ const mutations = {
     state.vendorId = vendorId
     try {
       local.set('vendorId',vendorId)
+    }catch(e) {
+      console.error(e)
+    }
+  },
+  setVendorUid(state, vendorUid) {
+    state.vendorUid = vendorUid
+    try {
+      local.set('vendorUid',vendorUid)
     }catch(e) {
       console.error(e)
     }
