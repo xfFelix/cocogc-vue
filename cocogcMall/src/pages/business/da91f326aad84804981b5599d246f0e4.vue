@@ -98,9 +98,9 @@ export default {
       fastList: [
         { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + getToken() },
         { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
-        { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' },
+        { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg00', path: `${infoURl}#!/pay?token=${getToken()}` },
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
-        { id: 13, name: "生活缴费", imgBg: 'ifa-imgBg14', path: 'javascript:;' },
+        { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' },
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: hostUrl + 'ticket/memberCard'},
         { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: `${hostUrl}ticket/static/ticket.html` },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: `${hostUrl}ticket/static/food.html` },
@@ -127,29 +127,20 @@ export default {
       vendorId: 'platform/getVendorId'
     })
   },
-  // watch: {
-  //   platform: {
-  //     handler(val) {
-  //       if (val) {
-  //         this.fastList.splice(2,1,{ id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg00', path: `${infoURl}#!/pay?token=${getToken()}` })
-  //         this.fastList.splice(4,1,{ id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' })
-  //       }
-  //     },
-  //     immediate: true
-  //   },
-  //   vendorId: {
-  //     handler(val) {
-  //       if (val && val === 'da91f326aad84804981b5599d246f0e4') {
-  //         let path = `${hostUrl}ticket/changeCoin/home?vendorId=${val}`
-  //         if (this.vendorUid) {
-  //           path = `${path}&vendorUid=${this.vendorUid}`
-  //         }
-  //         this.fastList.splice(8, 1,{ id: 8, name: "金币兑换", imgBg: 'ifa-imgBg13', path })
-  //       }
-  //     },
-  //     immediate: true
-  //   }
-  // },
+  watch: {
+    vendorId: {
+      handler(val) {
+        if (val) {
+          let path = `${hostUrl}ticket/changeCoin/home?vendorId=${val}`
+          if (this.vendorUid) {
+            path = `${path}&vendorUid=${this.vendorUid}`
+          }
+          this.fastList.splice(8, 1,{ id: 9, name: "金币兑换", imgBg: 'ifa-imgBg13', path })
+        }
+      },
+      immediate: true
+    }
+  },
   mounted() {
     this.getBanner()
     this.rank();

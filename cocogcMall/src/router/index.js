@@ -2,13 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store/index'
 
-import home from '@/pages/home/index';
-import layoutIndex from '@/pages/home/layoutIndex';
 import goodsDetail from '@/pages/home/goodsDetail'; //商品详情页
 import goodsList from '@/pages/home/goodsList'; //列表页
 import searchPage from '@/pages/home/searchPage'; //列表页
-
-
 
 import classify from '@/pages/classify/classify';
 import shopMall from '@/pages/shopMall/shopMall';
@@ -18,15 +14,11 @@ import setUp from '@/pages/account/setUp';
 import addressMag from '@/pages/shopCart/addressMag';
 import addressEdit from '@/pages/shopCart/addressEdit';
 
-
-
 import shopCart from '@/pages/shopCart/shopCart';
 import order from '@/pages/shopCart/order';
 import orderManage from '@/pages/shopCart/orderManage';
 import orderDetails from '@/pages/shopCart/orderDetails';
 import logisticsDetail from '@/pages/shopCart/logisticsDetail';
-
-
 
 import login from '@/pages/loginRegister/login';
 import passSetUp from '@/pages/loginRegister/passSetUp';
@@ -34,10 +26,6 @@ import passSetSucess from '@/pages/loginRegister/passSetSucess';
 import register from '@/pages/loginRegister/register';
 
 import Layout from '@/pages/layout/Layout'
-/**
- * 商户id首页
- */
-import haishangbaoye from '@/pages/business/haishangbaoye'
 
 import getInfo from './hook/getInfo';
 import scrollTop from './hook/scrollTop'
@@ -49,7 +37,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/layout/index'
+      redirect: '/layout/home'
     },
     {
       path: '/layout',
@@ -59,16 +47,19 @@ const router = new Router({
         {
           path: 'home',
           name: 'home',
-          component: home,
-          beforeEnter: (to, from, next) => {
+          component: () => {
             const platform = store.state.platform.platform
             if (platform) {
-              next({
-                redirect: '/layout/index'
-              })
-            } else {
-              next()
+              const vendorId = store.state.platform.vendorId || store.state.userinfo.userinfo.vendorId
+              if (vendorId === 'haishangbaoye') {
+                return import('@/pages/business/haishangbaoye')
+              } else if (vendorId === 'da91f326aad84804981b5599d246f0e4') {
+                return import('@/pages/business/da91f326aad84804981b5599d246f0e4')
+              } else {
+                return import('@/pages/business/Business')
+              }
             }
+            return import('@/pages/home/index')
           },
           meta: { title: '首页:无信用卡',scrolltop: true },
         },
@@ -76,26 +67,9 @@ const router = new Router({
           path: 'index',
           beforeEnter: (to, from, next) => {
             store.dispatch('platform/setPlatform', 1)
-            const vendorId = store.state.platform.vendorId || store.state.userinfo.userinfo.vendorId
-            const routeList = router.options.routes[1].children
-            if (!vendorId) {
-              next({
-                path: '/layout/home'
-              })
-            } else {
-              routeList.forEach(item => {
-                if (item.path === vendorId) {
-                  store.dispatch('tab/setList', {path: vendorId})
-                  next({
-                    path: `/layout/${vendorId}`
-                  })
-                } else {
-                  next({
-                    path: '/layout/home'
-                  })
-                }
-              })
-            }
+            next({
+              path: '/layout/home'
+            })
           },
         },
         {
@@ -125,12 +99,6 @@ const router = new Router({
           name: 'classify',
           component: classify,
           meta: { title: '分类', keepAlive: true  },
-        },
-        {
-          path: 'haishangbaoye',
-          name: 'home',
-          component: haishangbaoye,
-          meta: { title: '商户首页' },
         }
       ]
     },
