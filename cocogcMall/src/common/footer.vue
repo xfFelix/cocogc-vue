@@ -36,7 +36,8 @@ export default {
     },
     computed: {
       ...mapGetters({
-        num: 'cart/getNum'
+        num: 'cart/getNum',
+        // tableList: 'tab/getList'
       })
     },
     watch: {

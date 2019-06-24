@@ -2,13 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store/index'
 
-import home from '@/pages/home/index';
-import layoutIndex from '@/pages/home/layoutIndex';
 import goodsDetail from '@/pages/home/goodsDetail'; //商品详情页
 import goodsList from '@/pages/home/goodsList'; //列表页
 import searchPage from '@/pages/home/searchPage'; //列表页
-
-
 
 import classify from '@/pages/classify/classify';
 import shopMall from '@/pages/shopMall/shopMall';
@@ -18,15 +14,11 @@ import setUp from '@/pages/account/setUp';
 import addressMag from '@/pages/shopCart/addressMag';
 import addressEdit from '@/pages/shopCart/addressEdit';
 
-
-
 import shopCart from '@/pages/shopCart/shopCart';
 import order from '@/pages/shopCart/order';
 import orderManage from '@/pages/shopCart/orderManage';
 import orderDetails from '@/pages/shopCart/orderDetails';
 import logisticsDetail from '@/pages/shopCart/logisticsDetail';
-
-
 
 import login from '@/pages/loginRegister/login';
 import passSetUp from '@/pages/loginRegister/passSetUp';
@@ -34,11 +26,12 @@ import passSetSucess from '@/pages/loginRegister/passSetSucess';
 import register from '@/pages/loginRegister/register';
 
 import Layout from '@/pages/layout/Layout'
+
 import getInfo from './hook/getInfo';
 import scrollTop from './hook/scrollTop'
+import getVendorId from './hook/getVendorId'
 Vue.use(Router)
 
-import {getParam} from '@/util/common'
 const router = new Router({
   // mode: 'history',
   routes: [
@@ -54,13 +47,27 @@ const router = new Router({
         {
           path: 'home',
           name: 'home',
-          component: home,
+          component: () => {
+            const { HAI_SHANG_VENDOR_ID, COIN_VENDOR_ID } = process.env
+            const platform = store.state.platform.platform
+            if (platform) {
+              const vendorId = store.state.platform.vendorId || store.state.userinfo.userinfo.vendorId
+              switch (vendorId) {
+                case HAI_SHANG_VENDOR_ID:
+                  return import(`@/pages/business/${HAI_SHANG_VENDOR_ID}`)
+                case COIN_VENDOR_ID:
+                  return import(`@/pages/business/${COIN_VENDOR_ID}`)
+                default:
+                  return import('@/pages/business/Business')
+              }
+            }
+            return import('@/pages/home/index')
+          },
           meta: { title: '首页:无信用卡',scrolltop: true },
         },
         {
           path: 'index',
           beforeEnter: (to, from, next) => {
-            store.dispatch('platform/setVendorId', getParam().vendorId)
             store.dispatch('platform/setPlatform', 1)
             next({
               path: '/layout/home'
@@ -209,4 +216,5 @@ const router = new Router({
 // })
 getInfo(router)
 scrollTop(router)
+getVendorId(router)
 export default router

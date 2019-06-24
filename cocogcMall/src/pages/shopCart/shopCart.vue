@@ -251,11 +251,15 @@ export default {
                 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                      let num = 0
-                      data.data.forEach((v, i) => {
-                        num += v.num
-                      })
-                      this.setNum(num)
+                      if (!data.data) {
+                        callback(data.data);
+                      } else {
+                        let num = 0
+                        data.data.forEach((v, i) => {
+                          num += v.num
+                        })
+                        this.setNum(num)
+                      }
                         if (callback)
                             callback(data.data);
                         //传给猜你喜欢
@@ -282,10 +286,12 @@ export default {
                 confirm => {
                     var that = this;
                     var ids = [];
-                    that.list.forEach((res) => {
+                    let arrIndex = []
+                    that.list.forEach((res, index) => {
                         if (res.check == true) {
                             ids.push(res.id);
                         }
+                        arrIndex.push(index)
                     });
                     if (ids.length > 0) {
                         that.axios(testUrl + api.removeCarts,

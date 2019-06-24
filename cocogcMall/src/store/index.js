@@ -5,6 +5,7 @@ import userinfo from './modules/userinfo'
 import scrollto from './modules/scrollto'
 import platform from './modules/platform'
 import order from './modules/order'
+import tab from './modules/tab'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     userinfo,
     scrollto,
     platform,
-    order
+    order,
+    tab
   }
 })

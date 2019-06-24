@@ -96,16 +96,14 @@ export default {
   data() {
     return {
       fastList: [
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + getToken() },
         { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
-        { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' },
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
-        { id: 13, name: "生活缴费", imgBg: 'ifa-imgBg14', path: 'javascript:;' },
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: hostUrl + 'ticket/memberCard'},
         { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: `${hostUrl}ticket/static/ticket.html` },
+        { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: `${hostUrl}ticket/static/food.html` },
+        { id: 13, name: "生活缴费", imgBg: 'ifa-imgBg14', path: 'javascript:;' },
         { id: 9, name: "机票酒店", imgBg: 'ifa-imgBg04', path: 'javascript:;' },
-        { id: 10, name: "周大福金饰", imgBg: 'ifa-imgBg08', path: 'javascript:;' },
         { id: 11, name: "小米有品", imgBg: 'ifa-imgBg10', path: 'javascript:;' },
         { id: 12, name: "网易严选", imgBg: 'ifa-imgBg11', path: 'javascript:;' },
       ],
@@ -121,7 +119,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loScore: 'userinfo/getUserInfo'
+      loScore: 'userinfo/getUserInfo',
     })
   },
   mounted() {
