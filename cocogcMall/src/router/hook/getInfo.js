@@ -58,7 +58,6 @@ export default (router) => {
             });
             return ;
         }
-        return
       }
     } catch (e) {
       // alert(e)
