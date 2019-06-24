@@ -170,6 +170,10 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: login,
+      beforeEnter: (to, from, next) => {
+        localStorage.clear()
+        next()
+      },
       meta: { title: '登录' },
     },
     {
