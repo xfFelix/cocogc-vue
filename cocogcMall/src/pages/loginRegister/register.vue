@@ -215,7 +215,7 @@ export default {
         return false;
       }
       if (!CheckPass(this.register.inputPass)) {
-        this.MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
+        this.MessageBox("提示", "请输入6-20位数字与字母的组合。")
         return false;
       }
       this.regist();
