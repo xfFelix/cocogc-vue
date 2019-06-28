@@ -155,7 +155,7 @@ export default {
               }
             }, 1000)
           } else {
-              MessageBox.alert(data.message).then(action => {
+              MessageBox.alert(data.error_code==3?'图片验证码输入错误':data.message).then(action => {
                     this.validateImgClick();
                     this.register.captcha = ''
               });
