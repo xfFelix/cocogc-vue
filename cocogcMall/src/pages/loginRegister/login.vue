@@ -15,12 +15,13 @@
                 <li>
                     <div class="loginLileft" style="width:100%;">
                         <span class="loginIcon"></span>
-                        <div style="position:relative;display: flex;">
-                            <select style="border:none;background:#fff;" v-on:change="indexSelect($event)">
+                        <div class="mobile-wrapper">
+                            <select style="height:100%;border:none;background:#fff;appearance:none;" v-on:change="indexSelect($event)">
                                 <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
                             </select>
+                            <img src="../../../static/images/select-down.png" style="width: 10px;height: 5px;" alt="">
                         </div>
-                        <input type="number" placeholder="请输入注册手机号码" v-model.trim="loginForm.userName" @input="phoneInp($event)" style="width:60%;">
+                        <input type="number" @blur="scrollTop()" placeholder="请输入注册手机号码" v-model.trim="loginForm.userName" @input="phoneInp($event)" style="width:60%;">
                     </div>
                     <div class="loginLiRight">
                         <span class="clean" @click="phoneClean()" v-if="phoneCleanShow"></span>
@@ -29,8 +30,8 @@
                 <li v-if="smsFlag===false">
                     <div class="loginLileft">
                         <span class="passWordIcon"></span>
-                        <input type="password" placeholder="请输入密码" v-model.trim="loginForm.passWord" @input="passInp($event)" v-if="passShow == false">
-                        <input type="text" placeholder="请输入密码" v-model.trim="loginForm.passWord" @input="passInp($event)" v-if="passShow == true">
+                        <input type="password" @blur="scrollTop()" placeholder="请输入密码" v-model.trim="loginForm.passWord" @input="passInp($event)" v-if="passShow == false">
+                        <input type="text" @blur="scrollTop()" placeholder="请输入密码" v-model.trim="loginForm.passWord" @input="passInp($event)" v-if="passShow == true">
                     </div>
 
                     <div class="loginLiRight">
@@ -42,9 +43,9 @@
 
                 <li v-if="smsFlag">
                     <div class="loginLileft" style="width:100%;justify-content: space-between;">
-                        <div style="display: flex; width: 100%;align-items: center;">
+                        <div style="display: flex; width: 100%;align-items: center;height: 100%;">
                             <span class="pictureIcon"></span>
-                            <input type="text" name="captcha" id="captcha" maxlength="4" placeholder="验证码" v-model.trim="loginForm.captcha">
+                            <input @blur="scrollTop()" type="text" name="captcha" id="captcha" maxlength="4" placeholder="验证码" v-model.trim="loginForm.captcha">
                         </div>
                         <div>
                             <img :src="validateImgSrc" class="img_captcha" @click="validateImgClick()">
@@ -55,7 +56,7 @@
                 <li v-if="smsFlag">
                     <div class="loginLileft">
                         <span class="smsIcon"></span>
-                        <input type="number" placeholder="请输入短信验证码" v-model.trim="loginForm.smsCode">
+                        <input type="number" @blur="scrollTop()" placeholder="请输入短信验证码" v-model.trim="loginForm.smsCode">
                     </div>
                     <div class="loginLiRight">
                         <span class="validate" @click="validateCli()">{{validate}}</span>
@@ -64,13 +65,13 @@
             </ul>
         </section>
 
-        <p class="bntWrap" @click="loginBnt()">
-            <span class="bnt">登录</span>
+        <p class="bntWrap">
+            <span class="bnt" style="width: 6rem;" @click="loginBnt()">登录</span>
         </p>
         <p class="forgetPass" v-if="smsFlag">
             <span @click="usePassWord()">使用密码登录</span>
         </p>
-        <div class="forgetPass" v-if="smsFlag===false">
+        <div class="code-hint" v-if="smsFlag===false">
             <span @click="smsFlag=true">使用短信登录</span>&nbsp;&nbsp;
             <span @click="forgerPass()">忘记密码？</span>
         </div>
@@ -80,6 +81,7 @@
 
 <script>
 import api from "@/service/api";
+import blurMix from '@/util/blurMix'
 import { IsEmpty, IsMobile, CheckPass, setToken, IsChinaMobile, IsHKMobile } from "@/util/common";
 
 export default {
@@ -113,6 +115,7 @@ export default {
             telPlace: 86
         };
     },
+    mixins: [blurMix],
     computed: {
 
 
@@ -383,21 +386,23 @@ export default {
 .register {
     line-height: 0.7rem;
     color: #333333;
-    font-size: 0.3rem;
+    font-size: .34rem;
 }
 
 .loginUl {
-    padding: 1.25rem 1rem 0 1rem;
+    padding: 1.25rem .9rem 0;
     background: #fff;
     li {
         border-bottom: 1px solid #dfdfdf;
-        height: 24px;
-        padding: 0.18rem 0;
+        height: 48px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         .loginLileft {
             display: flex;
+            align-items: center;
             width: 80%;
+            height: 100%;
             span {
 
                 background-image: url(/static/images/login.png);
@@ -408,10 +413,17 @@ export default {
                 background-size: 172px 32px;
             }
             input {
-                height: 23px;
-                font-size: 15px;
+                height: 100%;
+                display: block;
+                font-size: 16px;
                 width: 80%;
                 padding-left: 0.1rem;
+            }
+            .mobile-wrapper{
+              position: relative;
+              display: flex;
+              align-items: center;
+              height: 100%;
             }
         }
         .loginLiRight {
@@ -520,6 +532,17 @@ export default {
     font-size: 15px;
     color: #999999;
     margin: 0.5rem 0;
+}
+.code-hint{
+  display: flex;
+  justify-content: space-between;
+  color: #999999;
+  font-size: 15px;
+  padding: 0 50px;
+  margin: 0.5rem 0;
+  span{
+    white-space: nowrap;
+  }
 }
 
 

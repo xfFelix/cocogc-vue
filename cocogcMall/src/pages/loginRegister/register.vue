@@ -14,20 +14,21 @@
           <li>
             <div class="loginLileft">
               <span></span>
-              <div style="position:relative;display: flex;">
-                <select style="border:none;background:#fff;" v-on:change="indexSelect($event)">
+              <div style="position:relative;display: flex;align-items: center;height: 100%;">
+                <select style="border:none;background:#fff;height:100%;appearance: none;" v-on:change="indexSelect($event)">
                   <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
                 </select>
+                <img src="../../../static/images/select-down.png" style="width: 10px;height:5px;" alt="">
               </div>
-              <input type="number" placeholder="请输入手机号码" v-model.trim="register.userName" style="width:60%">
+              <input @blur="scrollTop()" type="number" placeholder="请输入手机号码" v-model.trim="register.userName" style="width:60%">
             </div>
           </li>
 
           <li>
             <div class="loginLileft" style="width:100%;justify-content: space-between;">
-              <div style="display: flex; width: 100%;align-items: center;">
+              <div style="display: flex; width: 100%;align-items: center;height:100%;">
                 <span></span>
-                <input type="text" name="captcha" id="captcha" maxlength="4" placeholder="验证码" v-model.trim="register.captcha">
+                <input @blur="scrollTop()" type="text" name="captcha" id="captcha" maxlength="4" placeholder="验证码" v-model.trim="register.captcha">
               </div>
               <div>
                 <img :src="validateImgSrc" class="img_captcha" @click="validateImgClick()">
@@ -38,7 +39,7 @@
           <li>
             <div class="loginLileft">
               <span></span>
-              <input type="text" placeholder="请输入验证码" v-model.trim="register.msgValidate">
+              <input @blur="scrollTop()" type="text" placeholder="请输入验证码" v-model.trim="register.msgValidate">
             </div>
             <div class="loginLiRight">
               <span class="validate" @click="validateCli()">{{validate}}</span>
@@ -48,8 +49,8 @@
           <li>
             <div class="loginLileft" style="width:92%;">
               <span></span>
-              <input type="password" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == false" style="width:86%;">
-              <input type="text" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == true" style="width:86%;">
+              <input @blur="scrollTop()" type="password" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == false" style="width:86%;">
+              <input @blur="scrollTop()" type="text" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == true" style="width:86%;">
             </div>
             <div class="loginLiRight">
               <span class="eyeImgClose" v-if="eyeImgState == false" @click="eyeImgOpen"></span>
@@ -73,11 +74,11 @@
 
 <script>
 import api from "@/service/api";
+import blurMix from '@/util/blurMix'
 import { IsEmpty, IsMobile, CheckPass, IsHKMobile, IsChinaMobile } from "@/util/common"
 
-
-
 export default {
+  mixins: [blurMix],
   data() {
     return {
       eyeImgState: false,
@@ -309,21 +310,22 @@ export default {
 }
 
 .loginUl {
-  padding: 0.75rem 1rem 0 1rem;
+  padding: 0.75rem 0.7rem 0;
   margin-bottom: 0.2rem;
 }
 
 .loginUl li {
   border-bottom: 1px solid #dfdfdf;
-  height: 24px;
-  padding: 0.18rem 0;
+  height: 48px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
 #register .loginUl li{
   .loginLileft {
     width: 100%;
+    height: 100%;
     span {
       background-image: url(/static/images/login.png);
       background-repeat: no-repeat;
@@ -363,7 +365,7 @@ export default {
 }
 
 .loginLileft input {
-  height: 0.47rem;
+  height: 100%;
   font-size: 15px;
   width: 80%;
   padding-left: 0.1rem;

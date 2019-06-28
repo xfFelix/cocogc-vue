@@ -24,7 +24,7 @@
           <p class="ih-moneya">椰子分</p>
         </div>
         <div class="ih-balance" v-else>
-          <router-link :to="{path:'/login'}" class="ih-nologin">登录查看</router-link>
+          <router-link :to="{path:'/login'}" class="ih-nologin">登录</router-link>
         </div>
       </div>
     </div>

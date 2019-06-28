@@ -3,7 +3,7 @@
         <div class="account-head">
             <div class="acc-headCSMW">
                 <div class="acc-headCSM">
-                    <span class="acc-headSet" @click="$router.push('/setUp')"></span>
+                    <img src="../../../static/images/user-set.png" class="acc-headSet"  @click="$router.push('/setUp')" />
                 </div>
             </div>
             <div class="acc-headInfo">
@@ -239,20 +239,14 @@ export default {
             padding-right: 0.2rem;
             .acc-headCrown,
             .acc-headSet {
-                width: 0.42rem;
-                height: 0.42rem;
                 display: inline-block;
-                background-image: url("../../../static/images/account.png");
-                background-repeat: no-repeat;
-                background-size: 3.12rem 2.95rem;
-                margin: 0 0.15rem;
                 position: relative;
+                width: 30px;
+                height: 30px;
+                opacity: 0.5;
             }
             .acc-headCrown {
                 background-position: -0.17rem -1.09rem;
-            }
-            .acc-headSet {
-                background-position: -0.73rem -1.09rem;
             }
         }
     }
