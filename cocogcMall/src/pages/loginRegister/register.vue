@@ -155,7 +155,10 @@ export default {
               }
             }, 1000)
           } else {
-            this.Toast(data.message)
+              MessageBox.alert(data.message).then(action => {
+                    this.validateImgClick();
+                    this.register.captcha = ''
+              });
           }
         })
         .catch((data) => {
@@ -188,20 +191,27 @@ export default {
       }
 
       if (this.telPlace == '86' && !IsChinaMobile(this.register.userName)) {
-        this.MessageBox("提示", "手机号码格式错误");
+        this.MessageBox("提示", "手机号码输入错误");
         return false;
       }
-
       if (this.telPlace == '852' && !IsHKMobile(this.register.userName)) {
-        this.MessageBox("提示", "香港手机号码格式错误");
+        this.MessageBox("提示", "香港手机号码输入错误");
         return false;
       }
-      if (IsEmpty(this.register.captcha) || this.register.captcha.length < 4) {
-        this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
+      if (IsEmpty(this.register.captcha)) {
+        this.MessageBox("提示", "请输入图片验证码。")
         return false;
       }
-      if (IsEmpty(this.register.msgValidate) || this.register.msgValidate.length < 4) {
-        this.MessageBox("短信验证码错误", "请输入有效的短信验证码。")
+      if (this.register.captcha.length < 4) {
+        this.MessageBox("提示", "图片验证码输入错误。")
+        return false;
+      }
+      if (IsEmpty(this.register.msgValidate)) {
+        this.MessageBox("提示", "请输入短信验证码。")
+        return false;
+      }
+      if (this.register.msgValidate.length < 4) {
+        this.MessageBox("提示", "短信验证码输入错误")
         return false;
       }
       if (!CheckPass(this.register.inputPass)) {
@@ -222,16 +232,20 @@ export default {
       }
 
       if (this.telPlace == '86' && !IsChinaMobile(this.register.userName)) {
-        this.MessageBox("提示", "手机号码格式错误");
+        this.MessageBox("提示", "手机号码输入错误");
         return false;
       }
 
       if (this.telPlace == '852' && !IsHKMobile(this.register.userName)) {
-        this.MessageBox("提示", "手机号码格式错误");
+        this.MessageBox("提示", "香港手机号码输入错误");
         return false;
       }
-      if (IsEmpty(this.register.captcha) && this.register.captcha.length < 4) {
-        this.MessageBox("验证码格式错误", "请输入正确的图片验证码。")
+      if (IsEmpty(this.register.captcha)) {
+        this.MessageBox("提示", "请输入图片验证码。")
+        return false;
+      }
+      if (this.register.captcha.length < 4) {
+        this.MessageBox("提示", "图片验证码输入错误")
         return false;
       }
       if (this.validateFlag == 1) {
