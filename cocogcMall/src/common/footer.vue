@@ -105,7 +105,6 @@ export default {
     position: fixed;
     .navTabWrap {
         width: 25%;
-
         .navTab {
             text-align: center;
             flex-direction: column;
@@ -128,7 +127,7 @@ export default {
             .num {
               position: absolute;
               right: 17px;top: 1px;
-              padding: 1px 3px;
+              padding: 1px 5px;
               background: #fb5c5c;
               color: #fff;
               border-radius: 50%;

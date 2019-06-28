@@ -197,11 +197,11 @@ export default {
                 return false;
             }
             if (this.telPlace == '86' && !IsChinaMobile(this.loginForm.userName)) {
-                this.MessageBox("提示", "手机号码格式错误");
+                this.MessageBox("提示", "手机号码输入错误");
                 return false;
             }
             if (this.telPlace == '852' && !IsHKMobile(this.loginForm.userName)) {
-                this.MessageBox("提示", "手机号码格式错误");
+                this.MessageBox("提示", "手机号码输入错误");
                 return false;
             }
 
@@ -212,7 +212,7 @@ export default {
                 }
                 if (!CheckPass(this.loginForm.passWord)) {
                     this.MessageBox.confirm('', {
-                        message: '手机号或登录密码错误。',
+                        message: '手机号或登录密码输入错误。',
                         title: '登录失败',
                         confirmButtonText: '忘记密码',
                         cancelButtonText: '重新输入'
@@ -226,15 +226,15 @@ export default {
                 this.loginForm.smsCode = ''
             } else {
                 if (IsEmpty(this.loginForm.captcha)) {
-                    this.MessageBox("提示", "请输入图形验证码");
+                    this.MessageBox("提示", "请输入图片验证码");
                     return false;
                 }
                 if(this.loginForm.captcha.length < 4){
-                  this.MessageBox("提示", "请输入正确的图形验证码。")
+                  this.MessageBox("提示", "图片验证码输入错误。")
                   return false;
                 }
                 if (IsEmpty(this.loginForm.smsCode)) {
-                    this.MessageBox("提示", "短信验证码不能为空")
+                    this.MessageBox("提示", "请输入短信验证码")
                     return false;
                 }
                 this.loginForm.passWord = ''
@@ -256,11 +256,11 @@ export default {
                 return false;
             }
             if (this.telPlace == '86' && !IsChinaMobile(this.loginForm.userName)) {
-                this.MessageBox("提示", "手机号码格式错误");
+                this.MessageBox("提示", "手机号码输入错误");
                 return false;
             }
             if (this.telPlace == '852' && !IsHKMobile(this.loginForm.userName)) {
-                this.MessageBox("提示", "手机号码格式错误");
+                this.MessageBox("提示", "手机号码输入错误");
                 return false;
             }
             if (this.validateFlag == 1) {
@@ -271,11 +271,11 @@ export default {
         // 短信验证码接口
         sms: function() {
             if (IsEmpty(this.loginForm.captcha)) {
-                this.MessageBox("提示", "请输入图形验证码。")
+                this.MessageBox("提示", "请输入图片验证码。")
                 return false;
             }
             if(this.loginForm.captcha.length < 4){
-              this.MessageBox("提示", "请输入正确的图形验证码。")
+              this.MessageBox("提示", "图片验证码输入错误。")
               return false;
             }
             let _this = this;
@@ -301,7 +301,10 @@ export default {
                             }
                         }, 1000)
                     } else {
-                        this.MessageBox("提示", data.message)
+                        MessageBox.alert(data.error_code==1?'图片验证码输入错误':data.message).then(action => {
+                             this.validateImgClick();
+                             this.loginForm.captcha = '';
+                        });
                     }
                 })
                 .catch((data) => {
