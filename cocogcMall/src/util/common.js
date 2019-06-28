@@ -56,18 +56,22 @@ export const getToken = () => {
       localStorage.setItem('yeyun_token', JSON.stringify(token))
       token = JSON.parse(localStorage.getItem("yeyun_token"))
     }
-    if (IsEmpty(token)) {
-        token = JSON.parse(Vue.prototype.$cookies.get("yeyun_token"))
-        if (!IsEmpty(token)) {
-            localStorage.setItem("yeyun_token", JSON.stringify(token));
-        }
-    } else {
-        Vue.prototype.$cookies.set("yeyun_token", JSON.stringify(token),30,null,".cocogc.cn");
+    try {
+      if (IsEmpty(token)) {
+          token = JSON.parse(Vue.prototype.$cookies.get("yeyun_token"))
+          if (!IsEmpty(token)) {
+              localStorage.setItem("yeyun_token", JSON.stringify(token));
+          }
+      } else {
+          Vue.prototype.$cookies.set("yeyun_token", JSON.stringify(token),30,null,".cocogc.cn");
+      }
+    } catch (e) {
+      console.error('Cookie: 无效的token')
     }
     return token;
 }
 
-//获取用户token
+//设置用户token
 export const setToken = (token) => {
   if (token) {
     Vue.prototype.$cookies.set("yeyun_token", JSON.stringify(token),30,null,".cocogc.cn");
