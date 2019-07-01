@@ -8,3 +8,11 @@ Vue.directive('focus', {
     el.focus()
   }
 })
+
+Vue.directive('blur', {
+  inserted: function (el) {
+    el.blur()
+    console.log('blur1111111111')
+    window.scrollTo(0, 0)
+  }
+})

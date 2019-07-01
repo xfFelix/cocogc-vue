@@ -11,25 +11,25 @@
             <ul class="loginUl">
                 <li>
                     <div class="loginLileft">
-                        <input type="text" placeholder="手机号" v-model.trim="passSet.userName" @input="phoneInp($event)">
+                        <input @blur="scrollTop()" type="text" placeholder="请输入手机号" v-model.trim="passSet.userName" @input="phoneInp($event)">
                     </div>
                 </li>
 
                 <li>
                     <div class="loginLileft">
-                        <input type="password" placeholder="设置新密码" v-model.trim="passSet.passWord">
+                        <input @blur="scrollTop()" type="password" placeholder="设置新密码" v-model.trim="passSet.passWord">
 
                     </div>
                 </li>
 
                 <li>
                     <div class="loginLileft">
-                        <input type="password" placeholder="确认密码" v-model.trim="passSet.passConfirm">
+                        <input @blur="scrollTop()" type="password" placeholder="确认密码" v-model.trim="passSet.passConfirm">
                     </div>
                 </li>
                 <li>
                     <div class="loginLileft">
-                        <input type="text" placeholder="请输入验证码" v-model.trim="passSet.inputValid">
+                        <input @blur="scrollTop()" type="text" placeholder="请输入验证码" v-model.trim="passSet.inputValid">
                     </div>
 
                     <div class="loginLiRight">
@@ -50,9 +50,11 @@
 
 <script>
 import { IsEmpty, IsMobile, CheckPass } from "@/util/common"
+import blurMix from '@/util/blurMix'
 import api from "@/service/api";
 
 export default {
+    mixins: [blurMix],
     data() {
         return {
             phoneCleanShow: false,
@@ -164,6 +166,7 @@ export default {
                 this.MessageBox("密码错误", "密码设置不一致")
                 return false;
             }
+            if (!this.passSet.inputValid) return this.MessageBox("验证码错误", "验证码为空")
             this.passSetUp();
         }
     },

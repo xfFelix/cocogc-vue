@@ -8,6 +8,7 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "node build/build.js",
+    "test": "npm run build --test",
     "zip": "node build/build.js && rm -rf dist.zip && zip -r mall.zip dist",
     "commit": "git-cz"
   },

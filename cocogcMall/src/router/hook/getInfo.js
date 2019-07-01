@@ -49,7 +49,7 @@ export default (router) => {
         //   }
         // }
       }else if(info.error_code != 0){
-        delToken(param.token);
+        delToken(_token);
         //需要登录且未登录，跳转登录
         if(to.meta.requireAuth){
             next({
@@ -58,7 +58,6 @@ export default (router) => {
             });
             return ;
         }
-        return
       }
     } catch (e) {
       // alert(e)

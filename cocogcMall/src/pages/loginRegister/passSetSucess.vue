@@ -9,7 +9,7 @@
                 <span></span>
             </div>
             <div class="sucessInfo">恭喜您！密码设置成功。</div>
-            <p class="bnt">立即登录</p>
+            <p class="bnt" @click="$router.push('/login')">立即登录</p>
         </div>
 
     </transition>

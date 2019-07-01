@@ -3,7 +3,7 @@
         <div class="account-head">
             <div class="acc-headCSMW">
                 <div class="acc-headCSM">
-                    <span class="acc-headSet" @click="$router.push('/setUp')"></span>
+                    <img src="../../../static/images/user-set.png" class="acc-headSet"  @click="$router.push('/setUp')" />
                 </div>
             </div>
             <div class="acc-headInfo">
@@ -125,8 +125,8 @@ export default {
             userName: '',
             jumpList: [
                 { name: '我的椰子分', scoreShow: true, path: infoURl + "#!/slogs?token=" + getToken(), bgImg: "acc-contentLog01" },
-                // { name: '信用卡还款', scoreShow: false, path: infoURl + "#!/pay?back=pay&token=" + getToken(), bgImg: "acc-contentLog02" },
-                { name: '黄金兑换', scoreShow: false, path: infoURl + "#!/goldChange?token=" + getToken(), bgImg: "acc-contentLog03" },
+                // { name: '黄金兑换', scoreShow: false, path: infoURl + "#!/goldChange?token=" + getToken(), bgImg: "acc-contentLog03" },
+                { name: '信用卡还款', scoreShow: false, path: infoURl + "#!/pay?back=pay&token=" + getToken(), bgImg: "acc-contentLog02" },
                 { name: '话费充值', scoreShow: false, path: infoURl + "#!/phoneBill?token=" + getToken(), bgImg: "acc-contentLog04" },
                 { name: '门票兑换记录', scoreShow: false, path: hostUrl + 'ticket/order/list?token=' + getToken() , bgImg: "acc-contentLog09" },
             ],
@@ -239,25 +239,22 @@ export default {
             padding-right: 0.2rem;
             .acc-headCrown,
             .acc-headSet {
-                width: 0.42rem;
-                height: 0.42rem;
                 display: inline-block;
-                background-image: url("../../../static/images/account.png");
-                background-repeat: no-repeat;
-                background-size: 3.12rem 2.95rem;
-                margin: 0 0.15rem;
-                position: relative;
+                position: absolute;
+                width: 35px;
+                height: 30px;
+                top: 15px;
+                right: 19px;
+                opacity: 0.5;
             }
             .acc-headCrown {
                 background-position: -0.17rem -1.09rem;
-            }
-            .acc-headSet {
-                background-position: -0.73rem -1.09rem;
             }
         }
     }
     .acc-headInfo {
         display: flex;
+        margin-top: 10px;
         .acc-headImgW {
             width: 1.1rem;
             height: 1.1rem;
