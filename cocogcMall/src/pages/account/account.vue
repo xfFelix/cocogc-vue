@@ -240,9 +240,11 @@ export default {
             .acc-headCrown,
             .acc-headSet {
                 display: inline-block;
-                position: relative;
-                width: 30px;
+                position: absolute;
+                width: 35px;
                 height: 30px;
+                top: 15px;
+                right: 19px;
                 opacity: 0.5;
             }
             .acc-headCrown {
@@ -252,6 +254,7 @@ export default {
     }
     .acc-headInfo {
         display: flex;
+        margin-top: 10px;
         .acc-headImgW {
             width: 1.1rem;
             height: 1.1rem;
