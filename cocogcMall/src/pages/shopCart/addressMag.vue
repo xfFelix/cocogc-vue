@@ -72,7 +72,7 @@ export default {
 
     methods: {
         ...mapActions({
-          removeAddressById: 'userinfo/removeAddressById'
+          removeAddressById: 'userinfo/removeAddress'
         }),
         addressEditC(item, index) {
             window.addressInfo = item;
@@ -128,7 +128,10 @@ export default {
                         _this.addressList.splice(this.delIndex, 1);
                         _this.Toast('删除成功')
                         console.log(this.delId)
-                        // this.removeAddressById(this.delId)
+                        this.removeAddressById(this.delId)
+                        if (this.delId === window.chooseAddress.id) {
+                          window.chooseAddress = null
+                        }
                     } else {
                         _this.Toast(data.message)
                     }
