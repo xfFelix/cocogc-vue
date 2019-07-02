@@ -144,8 +144,19 @@ export default {
     },
     computed: {
         ...mapGetters({
-            userinfo: 'userinfo/getUserInfo'
+            userinfo: 'userinfo/getUserInfo',
+            platform: 'platform/getPlatform'
         })
+    },
+    watch: {
+      platform: {
+        handler (val) {
+          if (!val) {
+            this.jumpList.splice(1, 1)
+          }
+        },
+        immediate: true
+      }
     },
     created() {
       this.getOrderTotals()
