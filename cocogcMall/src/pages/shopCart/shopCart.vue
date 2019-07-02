@@ -64,8 +64,8 @@
                                 <p class="shop-selGoodsC">{{items.goods!=null?items.goods.attrs:''}}</p>
                                 <div class="shop-selGoodsN">
                                     <div>
-                                        <span class="shop-selGoodsS">{{items.goods.currentPrice|toDecimal2Fp}}.</span>
-                                        <span class="shop-selGoodsS">{{items.goods.currentPrice|toDecimal2Ap}}</span>
+                                        <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Fp}}.</span>
+                                        <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Ap}}</span>
                                     </div>
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
@@ -244,12 +244,15 @@ export default {
         },
         getCartGoodsList(callback) {
             let _this = this;
+            this.Indicator.open({
+              spinnerType: 'double-bounce'
+            });
             this.axios(testUrl + api.selectCarts, {
                 token: getToken(),
                 addressId: this.addressDef ? this.addressDef.id : undefined
-            },
-                'post')
+            }, 'post')
                 .then((data) => {
+                    this.Indicator.close()
                     if (data.error_code == 0) {
                       if (!data.data) {
                         callback(data.data);
