@@ -58,6 +58,8 @@
           <!-- </router-link> -->
         </div>
         <no-data :data="goodsList"></no-data>
+        <div class="spinWrap" v-if="tenFlag&&goodsList.length"><mt-spinner :size="12"  type="snake"></mt-spinner>&nbsp;&nbsp;正在加载中...</div>
+        <div class="spinWrap" v-if="!tenFlag&&goodsList.length">没有更多数据了~~</div>
       </div>
     <!-- <observer @intersect="intersected"></observer> -->
   </div>
@@ -80,6 +82,7 @@
       return {
         // observer: null,
         searchCont: '',
+        tenFlag:false,
         homeSel: [{
             id: 0,
             integral: '0~' + parseInt(this.$store.getters['userinfo/getUserInfo'].score),
@@ -352,7 +355,12 @@
         if (data.code == 0) {
           this.goodsList = this.goodsList.concat(data.list);
           this.pages += 1;
-          this.allLoaded = !(data.list.length === this.pages_size)
+          this.allLoaded = !(data.list.length === this.pages_size);
+          if(data.list.length>9){
+            this.tenFlag = true;
+          }else{
+            this.tenFlag = false;
+          }
         } else {
           this.Toast(data.message);
         }
@@ -388,8 +396,8 @@
           padding: 0.5rem 0 0.18rem 0;
 
           p {
-                            display: inline-flex;
-    flex-direction: column;
+              display: inline-flex;
+              flex-direction: column;
           }
 
           .gl-orderBg {
@@ -610,5 +618,12 @@
     color: #30ce84;
   }
 
-
+    .spinWrap{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      line-height: 32px;
+      font-size: 14px;
+    }
 </style>

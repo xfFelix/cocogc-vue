@@ -33,6 +33,8 @@
             </div>
         </div>
         <no-data :data="goodsList"></no-data>
+        <div class="spinWrap" v-if="tenFlag&&goodsList.length"><mt-spinner :size="12"  type="snake"></mt-spinner>&nbsp;&nbsp;正在加载中...</div>
+        <div class="spinWrap" v-if="!tenFlag&&goodsList.length">没有更多数据了~~</div>
     </div>
 </template>
 <script>
@@ -60,7 +62,8 @@ export default {
             page: 1,
             rows: 10,
             offset: 0,
-            allLoaded: false
+            allLoaded: false,
+            tenFlag:false
         }
     },
     computed: {
@@ -178,7 +181,14 @@ export default {
                         }
                         this.allLoaded = !(data.list.length === this.rows)
                         this.page ++
-                        this.offset = 1+this.rows*(this.page-1)
+                        this.offset = 1+this.rows*(this.page-1);
+
+                        if(data.list.length>9){
+                          this.tenFlag = true;
+                        }else{
+                          this.tenFlag = false;
+                        }
+
                     } else {
                         this.Toast(data.message)
                     }
@@ -351,6 +361,14 @@ export default {
         padding: 0.33rem 0;
         text-align: center;
         font-size: 0.3rem; // margin-bottom: 49px;
+    }
+    .spinWrap{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      line-height: 32px;
+      font-size: 14px;
     }
 }
 </style>
