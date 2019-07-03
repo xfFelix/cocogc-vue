@@ -6,14 +6,14 @@
                 <span class="j1Png home-logo"></span>
                 <p class="home-searchI">
                     <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="kewWordC"/> -->
-                    <el-autocomplete v-model="kewWordC" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="sendSearch"></el-autocomplete>
+                    <el-autocomplete v-model="kewWordC" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="goSearch()"></el-autocomplete>
                 </p>
             </div>
             <span class="home-smdel" @click="cleanInp" v-if="kewWordC">
                 <span class="j1Png home-smdelImg"></span>
             </span>
         </div>
-        <div class="home-smClose" @click="sendSearch()">
+        <div class="home-smClose" @click="sendSearch()" ref="searchInput">
             搜索
         </div>
     </div>
@@ -30,6 +30,10 @@ export default {
     methods: {
         cleanInp() {
             this.kewWordC = ""
+        },
+        goSearch() {
+          this.sendSearch()
+          document.activeElement.blur();
         },
         sendSearch() {
             this.$emit('searchChild', this.kewWordC)
