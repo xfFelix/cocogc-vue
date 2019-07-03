@@ -658,7 +658,7 @@ export default {
                         .shop-selGoodsOW {
                             width: 1.68rem;
                             height: 0.48rem;
-                            line-height: 0.48rem;
+                            // line-height: 0.48rem;
                             border: 1px solid #dfdfdf;
                             margin-right: 0.22rem;
                             input {
@@ -670,6 +670,7 @@ export default {
                                 text-align: center;
                                 display: flex;
                                 align-self: center;
+                                box-sizing: border-box;
                             }
                             .decNum {
                                 float: left;
