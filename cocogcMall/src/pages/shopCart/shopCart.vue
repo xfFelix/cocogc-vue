@@ -83,10 +83,14 @@
 
         </div>
 
-        <div class="shopEmpty" v-if="list.length == 0">
-            <p>购物车竟然是空的~~</p>
-            <!-- <p>再忙也记得买点什么犒赏自己</p> -->
+        <div class="shopEmpty" v-if="num && !list.length">
+            <p>购物车加载中~~</p>
         </div>
+
+        <div class="shopEmpty" v-if="!num">
+            <p>购物车竟然是空的~~</p>
+        </div>
+
 
         <div class="inputNum" v-if="inputNumShow">
             <div class="inputNumInfo">
@@ -162,11 +166,11 @@ export default {
     },
     computed: {
       ...mapGetters({
-        getScrollCart: 'scrollto/getScrollCart'
+        getScrollCart: 'scrollto/getScrollCart',
+        num: 'cart/getNum'
       }),
         countNum() {
             let num = 0
-            console.log('111')
             if (this.list) {
                 let buys = []
                 let total = this.list.reduce((state, item) => {
@@ -654,7 +658,7 @@ export default {
                         .shop-selGoodsOW {
                             width: 1.68rem;
                             height: 0.48rem;
-                            line-height: 0.48rem;
+                            // line-height: 0.48rem;
                             border: 1px solid #dfdfdf;
                             margin-right: 0.22rem;
                             input {
@@ -666,6 +670,7 @@ export default {
                                 text-align: center;
                                 display: flex;
                                 align-self: center;
+                                box-sizing: border-box;
                             }
                             .decNum {
                                 float: left;
