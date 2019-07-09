@@ -104,7 +104,7 @@ export default {
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: hostUrl + 'ticket/memberCard'},
         { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: `${hostUrl}ticket/static/ticket.html` },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: `${hostUrl}ticket/static/food.html` },
-        { id: 9, name:  this.$store.state.userinfo.coinAlisa ? '元宝兑换' : '金币兑换', imgBg: 'ifa-imgBg13',
+        { id: 9, name: '金币兑换', imgBg: 'ifa-imgBg13',
         path: this.$store.state.platform.vendorUid ? `${hostUrl}ticket/changeCoin/home?vendorId=${this.$store.state.platform.vendorId}&vendorUid=${this.$store.state.platform.vendorUid}` :`${hostUrl}ticket/changeCoin/home?vendorId=${this.$store.state.platform.vendorId}`},
         { id: 10, name: "周大福金饰", imgBg: 'ifa-imgBg08', path: 'javascript:;' },
         { id: 11, name: "小米有品", imgBg: 'ifa-imgBg10', path: 'javascript:;' },
