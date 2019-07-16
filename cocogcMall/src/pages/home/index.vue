@@ -365,7 +365,7 @@ export default {
       background-size: 0.5rem 0.5rem;
     }
     .ifa-imgBg14 {
-      background: url(/static/images/life.png);
+      background: url(/static/images/life.png?v=1.0);
       background-repeat: no-repeat;
       background-size: 0.5rem 0.5rem;
     }
