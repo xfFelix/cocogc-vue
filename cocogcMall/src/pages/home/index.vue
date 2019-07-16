@@ -100,7 +100,7 @@ export default {
         { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
         { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' },
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
-        { id: 13, name: "生活缴费", imgBg: 'ifa-imgBg14', path: 'javascript:;' },
+        { id: 13, name: "生活缴费", imgBg: 'ifa-imgBg14', path: `${hostUrl}ticket/life` },
         { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: hostUrl + 'ticket/memberCard'},
         { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: `${hostUrl}ticket/static/ticket.html` },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: `${hostUrl}ticket/static/food.html` },
