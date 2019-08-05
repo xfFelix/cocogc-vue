@@ -334,7 +334,7 @@ export default {
 
         },
         //结算
-        settleGoods() {
+        async settleGoods() {
             var that = this;
             var buys = [];
             // if (this.$store.state.userinfo.userinfo.isRealCert == 0) {
@@ -361,6 +361,12 @@ export default {
             if (that.selectAllGoods == 0) return false;
             if (buys.length <= 0) {
                 return false;
+            }
+            if (!window.chooseAddress) {
+              window.chooseAddress = await this.$store.dispatch('userinfo/checkAddress')
+              if (!window.chooseAddress) {
+                return this.Toast('请选择配送地址!');
+              }
             }
             this.Indicator.open({
               spinnerType: 'triple-bounce'
