@@ -1,0 +1,236 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>友谊日</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1244015_taaw89pdwhh.css">
+  <style>
+    /* http://meyerweb.com/eric/tools/css/reset/
+      v2.0 | 20110126
+      License: none (public domain)
+    */
+
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+  </style>
+  <style>
+    .wrapper{
+      width: 100%;
+      max-width: 561px;
+      position: relative;
+      margin: auto;
+    }
+    .back{
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 20px;
+      background: rgba(0, 0, 0, .4);
+      border-radius: 50%;
+      position: absolute;
+      top: 15px;
+      left: 10px;
+      color: #fff;
+    }
+    .more{
+      width: 15%;
+      height: 1.2%;
+      position: absolute;
+      right: 3.2%;
+      background: transparent;
+    }
+    .first-more{
+      top: 16.8%;
+    }
+    .second-more{
+      top: 43.89%;
+    }
+    .thrid-more{
+      top: 71%;
+    }
+    .left-7{
+      left: 7%;
+    }
+    .right-7{
+      right: 7%;
+    }
+    .item{
+      background: transparent;
+      width: 39%;
+      position: absolute;
+      height: 10.4%;
+      box-sizing: border-box;
+      padding: 2% 4% 0;
+    }
+    .item .product-img{
+      width: 100%;
+      height: 50%;
+      border: 1px solid #89B2D4;
+      border-radius: 10px;
+    }
+    .item .name{
+      font-size: 70%;
+      font-weight: 600;
+      color: #0039A2;
+      margin: 4% 2% 0;
+      line-height: 1.5;
+      height: 26%;
+      white-space: nowrap;
+    }
+    .item .btn{
+      background: #3F4374;
+      color: #D6E0F2;
+      text-align: center;
+      padding: 8% 0;
+      border-radius: 5px;
+      font-size: 74%;
+      width: 87%;
+      margin: 6% auto;
+      white-space: nowrap;
+      word-break: keep-all;
+      word-wrap: normal;
+    }
+    .top-397{
+      top: 19%;
+    }
+    .top-632{
+      top: 30.2%;
+    }
+    .top-966{
+      top: 46%;
+    }
+    .top-1202{
+      top: 57.25%;
+    }
+    .top-1535{
+      top: 73.15%;
+    }
+    .top-1770{
+      top: 84.28%;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <img src="./images/product-bg.jpg" alt=" " style="width: 100%;display:block;border:none;">
+    <div class="back iconfont" onclick="goBack()">&#xe61e;</div>
+    <div class="more first-more" onclick="goList('654')"></div>
+    <div class="item left-7 top-397" onclick="goDetail('171212')">
+      <img src="./images/product_camera.png" alt=" " class="product-img">
+      <p class="name">富士INSTAX 立拍立得<br/>一次成像相机<br/>HelloKitty特别定制版</p>
+      <div class="btn">椰子分 684.00</div>
+    </div>
+    <div class="item right-7 top-397" onclick="goDetail('169870')">
+      <img src="./images/product_suoni.png" alt=" " class="product-img">
+      <p class="name">索尼SONY 数码单反<br/>4D对焦 全画幅<br/>ILCA-99M2</p>
+      <div class="btn">椰子分 19649.00</div>
+    </div>
+    <div class="item left-7 top-632" onclick="goDetail('128349')">
+      <img src="./images/product_print.png" alt=" " class="product-img">
+      <p class="name">宝丽来Polaroid<br/>ZIP照片打印机</p>
+      <div class="btn">椰子分 599.00</div>
+    </div>
+    <div class="item right-7 top-632" onclick="goDetail('35133')">
+      <img src="./images/product_baolilai.png" alt=" " class="product-img">
+      <p class="name">宝丽来Polaroid<br/>拍立得相机<br>Z2300</p>
+      <div class="btn">椰子分 999.00</div>
+    </div>
+    <div class="more second-more" onclick="goList('828')"></div>
+    <div class="item left-7 top-966" onclick="goDetail('10204')">
+      <img src="./images/product_game.png" alt=" " class="product-img">
+      <p class="name">索尼SONY PS4 Pro<br/>国行游戏机 1TB</p>
+      <div class="btn">椰子分 1999.00</div>
+    </div>
+    <div class="item right-7 top-966" onclick="goDetail('147025')">
+      <img src="./images/product_chess.png" alt=" " class="product-img">
+      <p class="name">先行者 围棋五子棋桌游<br/>F-9 大号折叠</p>
+      <div class="btn">椰子分 79.50</div>
+    </div>
+    <div class="item left-7 top-1202" onclick="goDetail('169827')">
+      <img src="./images/product_vr.png" alt=" " class="product-img">
+      <p class="name">创维Skyworth VR一体机<br/>S8000</p>
+      <div class="btn">椰子分 3499.00</div>
+    </div>
+    <div class="item right-7 top-1202" onclick="goDetail('173715')">
+      <img src="./images/product_media.png" alt=" " class="product-img">
+      <p class="name">索尼SONY 多点触控<br/>智能多媒体娱乐终端<br/>G1109 Xperia Touch</p>
+      <div class="btn">椰子分 12999.00</div>
+    </div>
+    <div class="more thrid-more" onclick="goList('1583')"></div>
+    <div class="item left-7 top-1535" onclick="goDetail('177262')">
+      <img src="./images/product_tissue.png" alt=" " class="product-img">
+      <p class="name">心相印 茶语丝享软抽<br/>茶语抽纸整箱装<br/>120抽*3层*20包</p>
+      <div class="btn">椰子分 65.55</div>
+    </div>
+    <div class="item right-7 top-1535" onclick="goDetail('156935')">
+      <img src="./images/product_chocolate.png" alt=" " class="product-img">
+      <p class="name">Ferrero 费列罗臻品<br/>糖果巧克力礼盒<br/>24粒装259.2g</p>
+      <div class="btn">椰子分 110.00</div>
+    </div>
+    <div class="item left-7 top-1770" onclick="goDetail('157296')">
+      <img src="./images/product_food.png" alt=" " class="product-img">
+      <p class="name">俏香阁 年货坚果大礼包<br/>8袋装 1403g/盒</p>
+      <div class="btn">椰子分 128.50</div>
+    </div>
+    <div class="item right-7 top-1770" onclick="goDetail('177507')">
+      <img src="./images/product_wine.png" alt=" " class="product-img">
+      <p class="name">Robert Oatley 澳洲原装<br/>进口  赤霞珠 干红葡萄酒</p>
+      <div class="btn">椰子分 1987.20</div>
+    </div>
+  </div>
+  <script>
+    function goList(id) {
+      window.location.href = 'https://mall.cocogc.cn/#/goodsList?classfyId=' + id
+    }
+    function goDetail(id) {
+      window.location.href = 'https://mall.cocogc.cn/#/goodsDetail/' + id
+    }
+    function goBack() {
+      window.history.back()
+    }
+  </script>
+</body>
+</html>

@@ -102,7 +102,7 @@ export default {
         { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: `${hostUrl}ticket/static/ticket.html` },
         { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' },
         { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: `${hostUrl}ticket/static/food.html` },
-        { id: 13, name: "生活缴费", imgBg: 'ifa-imgBg14', path: 'javascript:;' },
+        { id: 13, name: "生活缴费", imgBg: 'ifa-imgBg14', path: `${hostUrl}ticket/life` },
         { id: 9, name: "机票酒店", imgBg: 'ifa-imgBg04', path: 'javascript:;' },
         { id: 11, name: "小米有品", imgBg: 'ifa-imgBg10', path: 'javascript:;' },
         { id: 12, name: "网易严选", imgBg: 'ifa-imgBg11', path: 'javascript:;' },
@@ -363,7 +363,7 @@ export default {
       background-size: 0.5rem 0.5rem;
     }
     .ifa-imgBg14 {
-      background: url(/static/images/life.png);
+      background: url(/static/images/life.png?v=1.0);
       background-repeat: no-repeat;
       background-size: 0.5rem 0.5rem;
     }
