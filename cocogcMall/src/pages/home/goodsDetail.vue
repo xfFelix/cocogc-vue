@@ -442,6 +442,12 @@ export default {
                 this.confirmBack()
                 return;
             }
+            if (!window.chooseAddress) {
+              window.chooseAddress = await this.$store.dispatch('userinfo/checkAddress')
+              if (!window.chooseAddress) {
+                return this.Toast('请选择配送地址!');
+              }
+            }
             var that = this;
 
             if (!getToken()) {
