@@ -935,6 +935,7 @@ function areaResize(commId, vendorId) {
                         border: 1px solid #dadada;
                         padding: 3px 7px 2px 7px;
                         padding: 0.1rem 0.2rem;
+                        word-break: break-all;
                     }
                 }
             }
