@@ -123,7 +123,9 @@ export default {
       }, 'post')
         .then((data) => {
           if (data.error_code == 0) {
-            this.$router.push('/login');
+            this.MessageBox("","注册成功，去登录").then(action => {
+                this.$router.push('/login');
+            })
           } else {
             this.Toast(data.message)
           }
