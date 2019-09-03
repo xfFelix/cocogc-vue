@@ -179,7 +179,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 #passSetUp {
     background: #fff;
     position: absolute;

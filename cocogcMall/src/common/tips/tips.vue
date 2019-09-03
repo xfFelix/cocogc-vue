@@ -49,7 +49,7 @@
         <p @click="confirmHide" class="confirmHideA">确定</p>
       </div>
 
-      <!-- 
+      <!--
                 <div class="passSetFail" v-if="showType==3">
                   <p>请填写正确的手机号码;</p>
                   <p>请填写正确的短信验证码;</p>
@@ -85,7 +85,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 .passSetFail {
   background: #fff;
   width: 76%;

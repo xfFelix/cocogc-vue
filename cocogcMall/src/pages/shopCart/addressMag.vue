@@ -156,7 +156,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .address-content {
     li {
         background: #fff;

@@ -127,7 +127,7 @@ export default {
     }
 };
 </script>
-<style lang="less">
+<style lang="scss">
 .setUp-content {
     background: #fff;
     margin-top: 0.2rem;

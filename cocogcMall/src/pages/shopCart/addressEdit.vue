@@ -202,7 +202,7 @@ export default {
     }
 };
 </script>
-<style lang="less">
+<style lang="scss">
 .addEdit-contentWrap {
     background: #fff;
     margin: 0.2rem 0.28rem;

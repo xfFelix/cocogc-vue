@@ -266,7 +266,7 @@ export default {
 </script>
 
 
-<style lang="less">
+<style lang="scss">
 #register {
   background: #fff; // position: absolute;
   // bottom: 0;

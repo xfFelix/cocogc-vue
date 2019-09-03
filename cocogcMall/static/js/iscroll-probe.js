@@ -653,7 +653,7 @@ IScroll.prototype = {
 
 		this.scrollTo(newX, newY);	// ensures that the last position is rounded
 
-		// we scrolled less than 10 pixels
+		// we scrolled scss than 10 pixels
 		if ( !this.moved ) {
 			if ( this.options.tap ) {
 				utils.tap(e, this.options.tap);
@@ -778,7 +778,7 @@ IScroll.prototype = {
 
 		this.hasHorizontalScroll	= this.options.scrollX && this.maxScrollX < 0;
 		this.hasVerticalScroll		= this.options.scrollY && this.maxScrollY < 0;
-		
+
 		if ( !this.hasHorizontalScroll ) {
 			this.maxScrollX = 0;
 			this.scrollerWidth = this.wrapperWidth;
@@ -792,7 +792,7 @@ IScroll.prototype = {
 		this.endTime = 0;
 		this.directionX = 0;
 		this.directionY = 0;
-		
+
 		if(utils.hasPointer && !this.options.disablePointer) {
 			// The wrapper should have `touchAction` property for using pointerEvent.
 			this.wrapper.style[utils.style.touchAction] = utils.getTouchAction(this.options.eventPassthrough, true);
@@ -811,7 +811,7 @@ IScroll.prototype = {
 
 // INSERT POINT: _refresh
 
-	},	
+	},
 
 	on: function (type, fn) {
 		if ( !this._events[type] ) {
@@ -1647,7 +1647,7 @@ IScroll.prototype = {
 			if ( now >= destTime ) {
 				that.isAnimating = false;
 				that._translate(destX, destY);
-				
+
 				if ( !that.resetPosition(that.options.bounceTime) ) {
 					that._execEvent('scrollEnd');
 				}

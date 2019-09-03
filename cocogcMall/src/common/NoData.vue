@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .no-data{
   display: flex;
   width: 100%;

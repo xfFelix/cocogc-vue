@@ -211,7 +211,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .link-url{
   color:rgb(255,255,255);
   margin-right:100px;

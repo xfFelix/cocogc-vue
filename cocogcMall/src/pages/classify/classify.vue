@@ -194,7 +194,7 @@ export default
     };
 </script>
 
-<style lang="less">
+<style lang="scss">
 .el-input {
     height: 100%;
     input {

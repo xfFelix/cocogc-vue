@@ -498,7 +498,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss">
 .shop {
     padding-bottom: calc(50px + 40px) !important;
 }
@@ -908,7 +908,7 @@ export default {
     }
 }
 </style>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .order-addressWN {
     margin-top: 0.2rem;
     .order-addressN {

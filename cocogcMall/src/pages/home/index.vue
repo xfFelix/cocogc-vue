@@ -210,7 +210,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@import '../../scss/mixin.scss';
 .link-url{
   color:rgb(255,255,255);
   margin-right:100px;
@@ -219,12 +220,19 @@ export default {
   }
 }
 .index-head {
-  background: url("/static/images/indexBg.jpg") no-repeat;
-  background-size: 100% 100%;
-  height: 1.82rem;
-  padding: 0.55rem 0;
+  width: 100%;
+  background: url("/static/images/home/bg.png") no-repeat;
+  background-size: 100% auto;
+  position: relative;
+  &::before{
+    display: block;
+    content: ' ';
+    padding-top: 70.6%;
+    position: absolute;
+  }
   .ih-noticeW {
     width: 88%;
+    padding-top: px2rem(30);
     background: rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
