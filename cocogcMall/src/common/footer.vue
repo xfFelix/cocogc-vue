@@ -175,7 +175,7 @@ export default {
 @media screen and (min-width: 600px) {
   .tabs {
     max-width: 450px;
-    left: 50%;
+    left: 50% !important;
     transform: translateX(-50%);
   }
 }
