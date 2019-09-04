@@ -3,7 +3,6 @@
 
         <head>
             <div class="registHead" @click="$router.back(-1)">
-
             </div>
         </head>
 
@@ -11,36 +10,60 @@
             <ul class="loginUl">
                 <li>
                     <div class="loginLileft">
-                        <input @blur="scrollTop()" type="text" placeholder="请输入手机号" v-model.trim="passSet.userName" @input="phoneInp($event)">
+                        <span class="identImg telIcon"></span>
+                         <div class="select-wrap">
+                            <select class="select-index" v-on:change="indexSelect($event)">
+                              <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
+                            </select>
+                            <img src="../../../static/images/select-down.png" style="width: 10px;height:5px;" alt="">
+                          </div>
+                        <input @blur="scrollTop()" type="tel" placeholder="请输入手机号" v-model.trim="formMsg.userName" @input="telInp($event)">
+                    </div>
+                    <div class="loginLiRight">
+                        <span class="clean" @click="telClean()" v-if="clean.telCleanShow"></span>
                     </div>
                 </li>
 
                 <li>
                     <div class="loginLileft">
-                        <input @blur="scrollTop()" type="password" placeholder="设置新密码" v-model.trim="passSet.passWord">
-
+                        <span class="identImg passWordIcon"></span>
+                        <input @blur="scrollTop()" type="password" placeholder="设置新密码" v-model.trim="formMsg.passWord"  v-if="passInpShow == false" @input="passInp($event)">
+                        <input @blur="scrollTop()" type="text" placeholder="设置新密码" v-model.trim="formMsg.passWord" v-if="passInpShow == true"  @input="passInp($event)">
+                    </div>
+                    <div class="loginLiRight">
+                        <span class="clean" @click="passClean()" v-if="clean.passCleanShow"></span>
+                        <span class="eyeImgClose" v-if="eyeImgState == false" @click="eyeImgOpen"></span>
+                        <span class="eyeImgOpen" v-if="eyeImgState == true" @click="eyeImgClose"></span>
                     </div>
                 </li>
 
-                <li>
+                 <li>
                     <div class="loginLileft">
-                        <input @blur="scrollTop()" type="password" placeholder="确认密码" v-model.trim="passSet.passConfirm">
+                        <span class="identImg passWordIcon"></span>
+                        <input @blur="scrollTop()" type="password" placeholder="确认密码" v-model.trim="formMsg.passConfirm" v-if="passInpConShow == false" @input="passConfirmInp($event)">
+                        <input @blur="scrollTop()" type="text" placeholder="确认密码" v-model.trim="formMsg.passConfirm" v-if="passInpConShow == true"  @input="passConfirmInp($event)">
+                    </div>
+                    <div class="loginLiRight">
+                        <span class="clean" @click="passConfirmClean()" v-if="clean.passConfirmShow"></span>
+                        <span class="eyeImgClose" v-if="eyeImgConState == false" @click="eyeImgConOpen"></span>
+                        <span class="eyeImgOpen" v-if="eyeImgConState == true" @click="eyeImgConClose"></span>
                     </div>
                 </li>
                 <li>
                     <div class="loginLileft">
-                        <input @blur="scrollTop()" type="text" placeholder="请输入验证码" v-model.trim="passSet.inputValid">
+                        <span class="identImg smsIcon"></span>
+                        <input @blur="scrollTop()" type="text" placeholder="请输入验证码" v-model.trim="formMsg.smsValid" @input="smsValidInp($event)">
                     </div>
 
                     <div class="loginLiRight">
-                        <span class="validate" @click="validateCli()">{{validate}}</span>
+                        <span class="clean" @click="smsClean()" v-if="clean.smsCleanShow"></span>
+                        <span class="validate" @click="validateCli()" :class="sendSmsColor?'validateCan':'validateNo'">{{validate}}</span>
                     </div>
-
                 </li>
             </ul>
         </section>
 
-        <p class="bnt" @click="passSetBnt()">
+        <p class="bnt" @click="passSetBnt()" :class="forgerBntColor?'canBnt':'noBnt'">
             下一步
         </p>
 
@@ -49,35 +72,70 @@
 
 
 <script>
-import { IsEmpty, IsMobile, CheckPass } from "@/util/common"
-import blurMix from '@/util/blurMix'
+import { IsEmpty, IsMobile, CheckPass ,IsHKMobile, IsChinaMobile } from "@/util/common"
+import blurMix from '@/util/blurMix';
+import loginMix from '@/util/loginMix'
 import api from "@/service/api";
 
 export default {
-    mixins: [blurMix],
+    mixins: [blurMix,loginMix],
     data() {
         return {
-            phoneCleanShow: false,
+            telCleanShow: false,
             validate: "获取验证码",
             validateFlag: 1,
-            passSet: {
+            formMsg: {
                 userName: '',
                 passWord: '',
                 passConfirm: '',
-                inputValid: '',
+                smsValid: '',
             }
         };
     },
-
+     computed: {
+       sendSmsColor:function(){
+          let comFalg = this.computFalg()
+          if(this.validateFlag==0){
+            return false
+          }else{
+            return comFalg
+          }
+      },
+      forgerBntColor:function(){
+        let forgetCloFlag = false;
+        let smsCloFlag = false;
+        let comFalg = this.computFalg()
+        if (!IsEmpty(this.formMsg.smsValid)) {
+            smsCloFlag = true;
+        }
+        forgetCloFlag = smsCloFlag && comFalg
+        return forgetCloFlag
+      }
+     },
     methods: {
+        computFalg:function(){
+          let passColFlag = false;
+          let passConCloFlag = false;
+          let telCloFlag = false;
+          if (!IsEmpty(this.formMsg.userName)) {
+             telCloFlag = true;
+          }
+          if (!IsEmpty(this.formMsg.passWord)) {
+            passColFlag = true;
+          }
+          if (!IsEmpty(this.formMsg.passConfirm)) {
+              passConCloFlag = true;
+          }
+          return  passColFlag && passConCloFlag && telCloFlag
+      },
         // 忘记密码接口
         passSetUp: function() {
             let _this = this;
             this.axios(infoURl + api.forget, {
-                mobile: _this.passSet.userName,
-                passwd: _this.passSet.passWord,
-                confirm_passwd: _this.passSet.passConfirm,
-                verify_code: _this.passSet.inputValid
+                mobile: _this.formMsg.userName,
+                passwd: _this.formMsg.passWord,
+                confirm_passwd: _this.formMsg.passConfirm,
+                verify_code: _this.formMsg.smsValid
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
@@ -94,7 +152,7 @@ export default {
         sms: function() {
             let _this = this;
             this.axios(infoURl + api.sms, {
-                mobile: _this.passSet.userName,
+                mobile: _this.formMsg.userName,
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
@@ -122,25 +180,23 @@ export default {
                 })
         },
 
-        phoneClean: function() {
-            this.passSet.userName = ''
-        },
-        phoneInp: function(ev) {
-            this.phoneCleanShow = true;
-        },
         /*
           短信验证码按钮
         */
         validateCli: function() {
-            if (IsEmpty(this.passSet.userName) || !IsMobile(this.passSet.userName)) {
-                this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
-                return false;
+            if (this.telPlace == '86' && !IsChinaMobile(this.formMsg.userName)) {
+              this.MessageBox("提示", "手机号码输入错误");
+              return false;
             }
-            if (!CheckPass(this.passSet.passWord)) {
+            if (this.telPlace == '852' && !IsHKMobile(this.formMsg.userName)) {
+              this.MessageBox("提示", "香港手机号码输入错误");
+              return false;
+            }
+            if (!CheckPass(this.formMsg.passWord)) {
                 this.MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
                 return false;
             }
-            if (this.passSet.passWord !== this.passSet.passConfirm) {
+            if (this.formMsg.passWord !== this.formMsg.passConfirm) {
                 this.MessageBox("密码错误", "密码设置不一致")
                 return false;
             }
@@ -154,19 +210,23 @@ export default {
             设置成功下一步
         */
         passSetBnt: function() {
-            if (IsEmpty(this.passSet.userName) || !IsMobile(this.passSet.userName)) {
-                this.MessageBox("手机号码错误", "请输入有效的11位手机号码。")
-                return false;
+            if (this.telPlace == '86' && !IsChinaMobile(this.formMsg.userName)) {
+              this.MessageBox("提示", "手机号码输入错误");
+              return false;
             }
-            if (!CheckPass(this.passSet.passWord)) {
+            if (this.telPlace == '852' && !IsHKMobile(this.formMsg.userName)) {
+              this.MessageBox("提示", "香港手机号码输入错误");
+              return false;
+            }
+            if (!CheckPass(this.formMsg.passWord)) {
                 this.MessageBox("密码格式错误", "请输入6-20位数字与字母的组合。")
                 return false;
             }
-            if (this.passSet.passWord !== this.passSet.passConfirm) {
+            if (this.formMsg.passWord !== this.formMsg.passConfirm) {
                 this.MessageBox("密码错误", "密码设置不一致")
                 return false;
             }
-            if (!this.passSet.inputValid) return this.MessageBox("验证码错误", "验证码为空")
+            if (!this.formMsg.smsValid) return this.MessageBox("验证码错误", "验证码为空")
             this.passSetUp();
         }
     },
@@ -179,7 +239,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 #passSetUp {
     background: #fff;
     position: absolute;
@@ -199,48 +259,77 @@ export default {
         background-size: 100% 100%;
         position: relative;
     }
-
     .loginUl {
         padding: 1.25rem 1rem 0 1rem;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.66rem;
         li {
             border-bottom: 1px solid #dfdfdf;
-            height: 0.48rem;
-            padding: 0.18rem 0;
+            height:1.12rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             .loginLileft {
                 display: flex;
+                align-items: center;
+                height: 100%;
                 width: 100%;
-                span {
-                    background-image: url(/static/images/login.png);
-                    background-repeat: no-repeat;
-                    width: 24px;
-                    height: 24px;
-                    display: inline-block;
-                    background-size: 172px 32px;
+                .identImg {
+                  background-repeat: no-repeat;
+                  display: inline-block;
+                  background-size:100% 100%;
                 }
                 input {
-                    height: 0.47rem;
+                    height: 100%;
                     font-size: 15px;
+                    padding-left:15px;
+                    flex: 1;
                     width: 100%;
-                    padding-left: 0.1rem;
+                }
+                .select-wrap{
+                  position:relative;
+                  display: flex;
+                  align-items: center;
+                  height: 100%;
+                  .select-index{
+                    border:none;
+                    background:#fff;
+                    height:100%;
+                    appearance: none;
+                    margin-left:16px;
+                  }
+                  &::after{
+                    height: 22px;
+                    width: 1px;
+                    margin-left: 10px;
+                    content: '';
+                    background: #E0E0E0;
+                    display: inline-block;
+                  }
                 }
             }
+             .loginLiRight {
+                display: flex;
+                align-items: center;
+              }
         }
         li:last-of-type {
-            .loginLileft {
-                width: 68%;
-            }
             .loginLiRight {
                 .validate {
-                    padding: 1px 6px;
-                    font-size: 12px;
-                    border: 1px solid #19ad6a;
-                    border-radius: 30px;
-                    text-align: center;
-                    color: #19ad6a;
+                      font-size: 13px;
+                      border-radius: 30px;
+                      line-height: 0.58rem;
+                      width: 1.8rem;
+                      text-align: center;
+                      margin-left: 8px;
+                }
+                .validateNo{
+                  border: #414141;
+                  color: #fff;
+                  background: #D3D3D3;
+                }
+                .validateCan{
+                  border: 1px solid #19ad6a;
+                  color: #19ad6a;
                 }
             }
         }
@@ -256,73 +345,11 @@ export default {
     background-size: 5.8rem 1.86rem;
     background-position: -0.2rem -0.74rem;
     position: absolute;
-    left: 0.32rem;
-    top: 0.56rem;
+    left: 0.5rem;
+    top: 0.6rem;
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
 }
 
-
-.clean {
-    width: 20px;
-    height: 20px;
-    background: #ddd;
-    display: inline-block;
-    border-radius: 50%;
-    position: relative;
-}
-
-.clean::before {
-    content: "";
-    transform: rotate(45deg);
-    top: 10px;
-    left: 3px;
-    width: 14px;
-    height: 1px;
-    display: block;
-    background: #fff;
-    position: absolute;
-}
-
-.clean::after {
-    content: "";
-    transform: rotate(-45deg);
-    top: 10px;
-    left: 3px;
-    width: 14px;
-    height: 1px;
-    display: block;
-    background: #fff;
-    position: absolute;
-}
-
-
-
-
-
-::-webkit-input-placeholder {
-    /* WebKit, Blink, Edge */
-    color: #cecece;
-    font-size: 13px;
-}
-
-:-moz-placeholder {
-    /* Mozilla Firefox 4 to 18 */
-    color: #cecece;
-    font-size: 13px;
-    ;
-}
-
-::-moz-placeholder {
-    /* Mozilla Firefox 19+ */
-    color: #cecece;
-    font-size: 13px;
-}
-
-:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: #cecece;
-    font-size: 13px;
-}
 </style>
 
