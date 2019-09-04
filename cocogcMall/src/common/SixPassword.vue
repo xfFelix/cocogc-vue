@@ -27,7 +27,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .six-password-wrapper{
   width: 75%;
   height: 44px;

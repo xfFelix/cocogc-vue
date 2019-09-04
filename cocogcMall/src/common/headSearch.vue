@@ -61,7 +61,7 @@ export default {
     },
 }
 </script>
-<style lang="less">
+<style lang="scss">
 .home-sm {
     display: flex;
     justify-content: space-between;

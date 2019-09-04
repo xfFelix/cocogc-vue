@@ -10,64 +10,64 @@
             </div>
         </head>
 
-        <ul class="loginUl">
-            <li>
-                <div class="loginLileft" style="width:100%;">
-                    <span class="telIcon"></span>
-                    <div class="mobile-wrapper">
-                        <select style="height:100%;border:none;background:#fff;appearance:none;" v-on:change="indexSelect($event)">
-                            <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
-                        </select>
-                        <img src="../../../static/images/select-down.png" style="width: 10px;height: 5px;" alt="">
-                    </div>
-                    <input type="tel" @blur="scrollTop()" placeholder="请输入注册手机号码" v-model.trim="formMsg.userName" @input="telInp($event)">
-                </div>
-                <div class="loginLiRight">
-                    <span class="clean" @click="telClean()" v-if="clean.telCleanShow"></span>
-                </div>
-            </li>
-            <li v-if="smsFlag===false">
-                <div class="loginLileft">
-                    <span class="passWordIcon"></span>
-                    <input type="password" @blur="scrollTop()" placeholder="请输入密码" v-model.trim="formMsg.passWord" @input="passInp($event)" v-if="passInpShow == false">
-                    <input type="text" @blur="scrollTop()" placeholder="请输入密码" v-model.trim="formMsg.passWord" @input="passInp($event)" v-if="passInpShow == true">
-                </div>
-                <div class="loginLiRight">
-                    <span class="clean" @click="passClean()" v-if="clean.passCleanShow"></span>
-                    <span class="eyeImgClose" v-if="eyeImgState == false" @click="eyeImgOpen"></span>
-                    <span class="eyeImgOpen" v-if="eyeImgState == true" @click="eyeImgClose"></span>
-                </div>
-            </li>
-
-            <li v-if="smsFlag">
-                <div class="loginLileft" style="width:100%;justify-content: space-between;">
-                    <div style="display: flex; width: 100%;align-items: center;height: 100%;">
-                        <span class="vailIcon"></span>
-                        <input @blur="scrollTop()" type="text" name="captcha" id="captcha" maxlength="4" placeholder="验证码" v-model.trim="formMsg.imgValid" @input="imgValidInp($event)">
+        <section>
+            <ul class="loginUl">
+                <li>
+                    <div class="loginLileft" style="width:100%;">
+                        <span class="loginIcon"></span>
+                        <div class="mobile-wrapper">
+                            <select style="height:100%;border:none;background:#fff;appearance:none;" v-on:change="indexSelect($event)">
+                                <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
+                            </select>
+                            <img src="../../../static/images/select-down.png" style="width: 10px;height: 5px;" alt="">
+                        </div>
+                        <input type="number" @blur="scrollTop()" placeholder="请输入注册手机号码" v-model.trim="loginForm.userName" @input="phoneInp($event)" style="width:60%;">
                     </div>
                     <div class="loginLiRight">
-                        <span class="clean" @click="imgValidClean()" v-if="clean.imgValidCleanShow"></span>
-                        <img :src="validateImgSrc" class="img_captcha" @click="validateImgClick()">
+                        <span class="clean" @click="phoneClean()" v-if="phoneCleanShow"></span>
                     </div>
-                </div>
-            </li>
+                </li>
+                <li v-if="smsFlag===false">
+                    <div class="loginLileft">
+                        <span class="passWordIcon"></span>
+                        <input type="password" @blur="scrollTop()" placeholder="请输入密码" v-model.trim="loginForm.passWord" @input="passInp($event)" v-if="passShow == false">
+                        <input type="text" @blur="scrollTop()" placeholder="请输入密码" v-model.trim="loginForm.passWord" @input="passInp($event)" v-if="passShow == true">
+                    </div>
 
-              <li v-if="smsFlag">
-                  <div class="loginLileft">
-                      <span class="smsIcon"></span>
-                      <input type="text" @blur="scrollTop()" placeholder="请输入短信验证码" v-model.trim="formMsg.smsValid" @input="smsValidInp($event)">
-                  </div>
-                  <div class="loginLiRight">
-                      <span class="clean" @click="smsClean()" v-if="clean.smsCleanShow"></span>
-                      <span class="validate" :class="sendSmsColor?'validateCan':'validateNo'" @click="validateCli()">{{validate}}</span>
-                  </div>
-              </li>
+                    <div class="loginLiRight">
+                        <span class="clean" @click="passwordClean()" v-if="passCleanShow"></span>
+                        <span class="eyeImgClose" v-if="eyeImgState == false" @click="eyeImgOpen"></span>
+                        <span class="eyeImgOpen" v-if="eyeImgState == true" @click="eyeImgClose"></span>
+                    </div>
+                </li>
+
+                <li v-if="smsFlag">
+                    <div class="loginLileft" style="width:100%;justify-content: space-between;">
+                        <div style="display: flex; width: 100%;align-items: center;height: 100%;">
+                            <span class="pictureIcon"></span>
+                            <input @blur="scrollTop()" type="text" name="captcha" id="captcha" maxlength="4" placeholder="验证码" v-model.trim="loginForm.captcha">
+                        </div>
+                        <div>
+                            <img :src="validateImgSrc" class="img_captcha" @click="validateImgClick()">
+                        </div>
+                    </div>
+                </li>
+
+                <li v-if="smsFlag">
+                    <div class="loginLileft">
+                        <span class="smsIcon"></span>
+                        <input type="number" @blur="scrollTop()" placeholder="请输入短信验证码" v-model.trim="loginForm.smsCode">
+                    </div>
+                    <div class="loginLiRight">
+                        <span class="validate" @click="validateCli()">{{validate}}</span>
+                    </div>
+                </li>
             </ul>
+        </section>
 
         <p class="bntWrap">
-            <span class="bnt"  :class="loginBntColor?'canBnt':'noBnt'" @click="loginBnt()">登录</span>
+            <span class="bnt" style="width: 6rem;" @click="loginBnt()">登录</span>
         </p>
-
         <p class="forgetPass" v-if="smsFlag">
             <span @click="usePassWord()">使用密码登录</span>
         </p>
@@ -81,86 +81,60 @@
 
 <script>
 import api from "@/service/api";
-import blurMix from '@/util/blurMix';
-import loginMix from '@/util/loginMix';
-import { IsEmpty, CheckPass, setToken, IsChinaMobile, IsHKMobile } from "@/util/common";
+import blurMix from '@/util/blurMix'
+import { IsEmpty, IsMobile, CheckPass, setToken, IsChinaMobile, IsHKMobile } from "@/util/common";
 
 export default {
     data() {
         return {
+            eyeImgState: false,
+            passShow: false,
+            phoneCleanShow: false,
+            passCleanShow: false,
+            vaildCleanShow: false,
             validateImgSrc: infoURl + 'user/captcha?' + (new Date()),
-            formMsg: {
+            loginForm: {
                 userName: '',
                 passWord: '',
-                smsValid: '',
-                imgValid: '',
+                smsCode: '',
+                captcha: '',
             },
             validate: "获取验证码",
             validateFlag: 1,
             smsFlag: true,
+            telList: [
+                {
+                    telRealVal: 86,
+                    telShowVal: '+86 中国',
+                },
+                {
+                    telRealVal: 852,
+                    telShowVal: '+852 香港',
+                }
+            ],
+            telPlace: 86
         };
     },
-    mixins: [blurMix,loginMix],
+    mixins: [blurMix],
     computed: {
-      sendSmsColor:function(){
-          let computedFalg = false;
-          computedFalg = this.computFalg();
-          if(this.validateFlag==0){
-            return false
-          }else{
-            return computedFalg
-          }
-      },
-      loginBntColor:function(){
-        let loginCloFlag = false;
-        let smsCloFlag = false;
-        let passCloFlag = false;
-        let telCloFlag = false;
-        let computedFalg = false;
 
-        computedFalg = this.computFalg();
-        if (!IsEmpty(this.formMsg.smsValid)) {
-            smsCloFlag = true;
-        }
 
-        if (!IsEmpty(this.formMsg.userName)) {
-            telCloFlag = true;
-        }
-        if (!IsEmpty(this.formMsg.passWord)) {
-            passCloFlag = true;
-        }
-
-        if(!this.smsFlag){
-          loginCloFlag = telCloFlag && passCloFlag;
-        }else{
-          loginCloFlag = computedFalg && smsCloFlag;
-        }
-        return loginCloFlag
-      }
     },
     methods: {
-        computFalg:function(){
-            let captchaColFlag = false;
-            let telCloFlag = false;
-            if (!IsEmpty(this.formMsg.userName)) {
-                telCloFlag = true;
-            }
-            if (!IsEmpty(this.formMsg.imgValid)) {
-               captchaColFlag = true;
-            }
-            return  telCloFlag && captchaColFlag
-        },
         // 图片验证码
         validateImgClick: function() {
             this.validateImgSrc = infoURl + 'user/captcha?' + (new Date());
+        },
+        indexSelect(event) {
+            this.telPlace = event.target.value;
         },
         // 登录
         login: function() {
             let _this = this;
             this.axios(infoURl + api.login, {
-                mobile: _this.formMsg.userName,
-                passwd: _this.formMsg.passWord,
-                verify_code: _this.formMsg.smsValid
+                mobile: _this.loginForm.userName,
+                passwd: _this.loginForm.passWord,
+                verify_code: _this.loginForm.smsCode
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
@@ -181,7 +155,7 @@ export default {
                             }).then(action => {
                                 this.$router.push('/passSetUp');
                             }).catch(action => {
-                                this.formMsg.passWord = '';
+                                this.loginForm.passWord = '';
                             })
                         } else {
                             this.MessageBox("提示", data.message)
@@ -193,27 +167,50 @@ export default {
         goBack() {
             this.$router.back();
         },
+        //眼睛和清空
+        eyeImgClose: function() {
+            this.eyeImgState = false;
+            this.passShow = false;
+        },
+        eyeImgOpen: function() {
+            this.eyeImgState = true;
+            this.passShow = true;
+        },
+        phoneClean: function() {
+            this.loginForm.userName = ''
+        },
+        passwordClean: function() {
+            this.loginForm.passWord = ''
+        },
+        phoneInp: function(ev) {
+            this.phoneCleanShow = true;
+        },
+        passInp: function(ev) {
+            this.passCleanShow = true;
+        },
+
+
         //登录按钮
         loginBnt: function() {
-            if (IsEmpty(this.formMsg.userName)) {
+            if (IsEmpty(this.loginForm.userName)) {
                 this.MessageBox("提示", "手机号码不能为空")
                 return false;
             }
-            if (this.telPlace == '86' && !IsChinaMobile(this.formMsg.userName)) {
+            if (this.telPlace == '86' && !IsChinaMobile(this.loginForm.userName)) {
                 this.MessageBox("提示", "手机号码输入错误");
                 return false;
             }
-            if (this.telPlace == '852' && !IsHKMobile(this.formMsg.userName)) {
+            if (this.telPlace == '852' && !IsHKMobile(this.loginForm.userName)) {
                 this.MessageBox("提示", "手机号码输入错误");
                 return false;
             }
 
             if (this.smsFlag === false) {
-                if (IsEmpty(this.formMsg.passWord)){
+                if (IsEmpty(this.loginForm.passWord)){
                     this.MessageBox("提示", "请输入登录密码");
                     return false;
                 }
-                if (!CheckPass(this.formMsg.passWord)) {
+                if (!CheckPass(this.loginForm.passWord)) {
                     this.MessageBox.confirm('', {
                         message: '手机号或登录密码输入错误。',
                         title: '登录失败',
@@ -222,25 +219,25 @@ export default {
                     }).then(action => {
                         this.$router.push('/passSetUp');
                     }).catch(action => {
-                        this.formMsg.passWord = '';
+                        this.loginForm.passWord = '';
                     })
                     return false;
                 }
-                this.formMsg.smsValid = ''
+                this.loginForm.smsCode = ''
             } else {
-                if (IsEmpty(this.formMsg.imgValid)) {
+                if (IsEmpty(this.loginForm.captcha)) {
                     this.MessageBox("提示", "请输入图片验证码");
                     return false;
                 }
-                if(this.formMsg.imgValid.length < 4){
+                if(this.loginForm.captcha.length < 4){
                   this.MessageBox("提示", "图片验证码输入错误。")
                   return false;
                 }
-                if (IsEmpty(this.formMsg.smsValid)) {
+                if (IsEmpty(this.loginForm.smsCode)) {
                     this.MessageBox("提示", "请输入短信验证码")
                     return false;
                 }
-                this.formMsg.passWord = ''
+                this.loginForm.passWord = ''
             }
             this.login();
         },
@@ -249,17 +246,21 @@ export default {
         forgerPass: function() {
             this.$router.push('/passSetUp');
         },
+        reInput: function() {
+            this.loginForm.passWord = '';
+        },
+
         validateCli: function() {
-            if (IsEmpty(this.formMsg.userName)) {
+            if (IsEmpty(this.loginForm.userName)) {
                 this.MessageBox("提示", "手机号码不能为空")
                 return false;
             }
-            if (this.telPlace == '86' && !IsChinaMobile(this.formMsg.userName)) {
+            if (this.telPlace == '86' && !IsChinaMobile(this.loginForm.userName)) {
                 this.MessageBox("提示", "手机号码输入错误");
                 return false;
             }
-            if (this.telPlace == '852' && !IsHKMobile(this.formMsg.userName)) {
-                this.MessageBox("提示", "香港手机号码输入错误");
+            if (this.telPlace == '852' && !IsHKMobile(this.loginForm.userName)) {
+                this.MessageBox("提示", "手机号码输入错误");
                 return false;
             }
             if (this.validateFlag == 1) {
@@ -269,18 +270,18 @@ export default {
 
         // 短信验证码接口
         sms: function() {
-            if (IsEmpty(this.formMsg.imgValid)) {
+            if (IsEmpty(this.loginForm.captcha)) {
                 this.MessageBox("提示", "请输入图片验证码。")
                 return false;
             }
-            if(this.formMsg.imgValid.length < 4){
+            if(this.loginForm.captcha.length < 4){
               this.MessageBox("提示", "图片验证码输入错误。")
               return false;
             }
             let _this = this;
             this.axios(infoURl + api.sms, {
-                mobile: _this.formMsg.userName,
-                captcha:_this.formMsg.imgValid,
+                mobile: _this.loginForm.userName,
+                captcha:_this.loginForm.captcha,
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
@@ -302,7 +303,7 @@ export default {
                     } else {
                         MessageBox.alert(data.error_code==1?'图片验证码输入错误':data.message).then(action => {
                              this.validateImgClick();
-                             this.formMsg.imgValid = '';
+                             this.loginForm.captcha = '';
                         });
                     }
                 })
@@ -312,8 +313,10 @@ export default {
         },
         usePassWord() {
             this.smsFlag = false;
-            this.formMsg.imgValid = '';
+            this.loginForm.captcha = '';
         }
+    },
+    mounted() {
     },
     beforeRouteLeave(to, from, next) {
         if (/\/setUp/.test(to.path)) {
@@ -324,11 +327,14 @@ export default {
         }
         next()
     },
+    components: {
+
+    }
 };
 </script>
 
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .back {
     width: 0.22rem;
     height: 0.38rem;
@@ -379,6 +385,7 @@ export default {
     }
 }
 
+
 .register {
     line-height: 0.7rem;
     color: #333333;
@@ -390,59 +397,137 @@ export default {
     background: #fff;
     li {
         border-bottom: 1px solid #dfdfdf;
-        height: 56px;
+        height: 48px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         .loginLileft {
             display: flex;
             align-items: center;
-            width: 100%;
+            width: 80%;
             height: 100%;
             span {
+
+                background-image: url(/static/images/login.png);
                 background-repeat: no-repeat;
+                width: 26px;
+                height: 25px;
                 display: inline-block;
-                background-size:100% 100%;
+                background-size: 172px 32px;
             }
             input {
                 height: 100%;
                 display: block;
                 font-size: 16px;
-                width: 100%;
-                  flex: 1;
-                padding-left: 15px;
+                width: 80%;
+                padding-left: 0.1rem;
             }
             .mobile-wrapper{
               position: relative;
               display: flex;
               align-items: center;
               height: 100%;
-              margin-left: 16px;
-              &::after{
-                height: 22px;
-                width: 1px;
-                margin-left: 10px;
-                content: '';
-                background: #E0E0E0;
-                display: inline-block;
-              }
             }
         }
         .loginLiRight {
             display: flex;
-            align-items: center;
+            .clean {
+                width: 20px;
+                height: 20px;
+                background: #ddd;
+                display: inline-block;
+                border-radius: 50%;
+                position: relative;
+            }
 
-            .img_captcha{
-                width: 1.34rem;
-                margin-left: 8px;
+            .clean::before {
+                content: "";
+                transform: rotate(45deg);
+                top: 10px;
+                left: 3px;
+                width: 14px;
+                height: 1px;
+                display: block;
+                background: #fff;
+                position: absolute;
+            }
+
+            .clean::after {
+                content: "";
+                transform: rotate(-45deg);
+                top: 10px;
+                left: 3px;
+                width: 14px;
+                height: 1px;
+                display: block;
+                background: #fff;
+                position: absolute;
+            }
+            .eyeImgClose,
+            .eyeImgOpen {
+                background-image: url(/static/images/login.png);
+                background-repeat: no-repeat;
+                width: 23px;
+                height: 23px;
+                display: inline-block;
+                background-size: 172px 32px;
+                margin-left: 4px;
+            }
+
+            .eyeImgClose {
+                background-position: -1px -8px;
+            }
+
+            .eyeImgOpen {
+                background-position: -27px -8px;
             }
         }
     }
+    .loginIcon {
+        background-position: -80px -3px;
+    }
+    .passWordIcon {
+        background-position: -52px -3px;
+    }
+    .pictureIcon {
+        background-position: -133px -3px;
+    }
+    .smsIcon {
+        background-position: -105px -3px;
+    }
+    li:last-of-type {
+        border: none;
+    }
+}
+
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #cecece;
+    font-size: 13px;
+}
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #cecece;
+    font-size: 13px;
+    ;
+}
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #cecece;
+    font-size: 13px;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #cecece;
+    font-size: 13px;
 }
 
 .bntWrap {
     background: #fff;
-    padding-top: 0.8rem;
+    padding-top: 0.47rem;
 }
 
 .forgetPass {
@@ -463,26 +548,80 @@ export default {
   }
 }
 
+
+.tipBg {
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+    .toast {
+        background: #fff;
+        width: 65%;
+        height: 15%;
+        border-radius: 5px;
+        font-size: 14px;
+        padding: 15px 25px;
+        p {
+            line-height: 25px;
+        }
+        p:nth-of-type(1) {
+            color: #333333;
+            font-size: 15px;
+            font-weight: bolder;
+        }
+        p:nth-of-type(2) {
+            color: #999999;
+        }
+        p:nth-of-type(3) {
+            color: #1685e9;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+        .failNext {
+            display: flex;
+            justify-content: space-around;
+        }
+    }
+}
+
 .validate {
-    font-size: 13px;
+    font-size: 12px;
+    border: 1px solid #19ad6a;
     border-radius: 30px;
-    line-height: 0.58rem;
+    line-height: 0.4rem;
+    color: #19ad6a;
+    height: 0.4rem;
     width: 1.8rem;
     text-align: center;
-    margin-left: 8px;
 }
 
-.validateNo{
- border: #414141;
-  color: #fff;
-  background: #D3D3D3;
+.toastMsg {
+    background: #fff;
+    width: 65%;
+    height: 15%;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 15px 25px;
 }
-.validateCan{
- border: 1px solid #19ad6a;
-  color: #19ad6a;
+
+.fade-enter-active {
+    transition: 0.1s ease-out;
 }
 
+.fade-enter {
+    opacity: 0;
+    transform: scale(1.2);
+}
 
-
+.fade-leave-to {
+    opacity: 0;
+    transform: scale(0.8);
+}
 </style>
 

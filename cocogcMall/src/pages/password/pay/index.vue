@@ -104,7 +104,7 @@ export default {
     }
 };
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .pay-password-wrapper{
   min-height: 100%;
   header{

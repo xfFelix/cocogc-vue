@@ -248,7 +248,7 @@ export default {
     }
 };
 </script>
-<style lang="less">
+<style lang="scss">
 .order-goodsMW {
     background: #fff;
     margin-top: 0.2rem;

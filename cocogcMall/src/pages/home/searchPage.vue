@@ -20,8 +20,8 @@
 
                 </div>
                 <ul class="seach-list" >
-                    <li v-for="(item,index) in list.recent" 
-                        :key="index" 
+                    <li v-for="(item,index) in list.recent"
+                        :key="index"
                         :class="recordFlag?'recodeActive':'recodeNo'" >
                         {{item}}
                         <span class="j1Png colseRecord" v-if="recordFlag==true" @click="delThisRecode(item,index)"></span>
@@ -68,7 +68,7 @@ export default {
                 integral: ["我能兑换", "全部", "0-50", "50-200", "200-1000", "1000-5000", "5000以上","我能兑换"]
             },
             recordFlag: false,
-           
+
         }
     },
 
@@ -95,7 +95,7 @@ this.recordFlag = false
     }
 }
 </script>
-<style lang="less">
+<style lang="scss">
 .searchPage {
     padding-top: 0.44rem;
     background: #fff;

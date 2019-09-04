@@ -90,7 +90,7 @@ export default {
     },
 }
 </script>
-<style lang="less">
+<style lang="scss" scoped>
 .tabs {
     width: 100%;
     height: 49px; // position: absolute!important;
@@ -114,7 +114,7 @@ export default {
             height: 100%;
             position: relative;
             .navImg {
-                width: 0.42rem;
+                width: 0.44rem;
                 height: 0.42rem;
                 display: inline-block;
                 background-image: url(/static/images/banner.png?_=1);
@@ -137,10 +137,12 @@ export default {
                 background-position: -0.1rem -0.73rem;
             }
             .navGo02 {
-                background-position: -0.65rem -0.73rem;
+                background-image: url(/static/images/home/supermarket.png);
+                background-size: 100% 100%;
             }
             .navGo03 {
-                background-position: -1.17rem -0.73rem;
+                background-image: url(/static/images/home/classify.png);
+                background-size: 100% 100%;
             }
             .navGo04 {
                 background-position: -1.71rem -0.73rem;
@@ -152,10 +154,12 @@ export default {
                 background-position: -0.1rem -1.29rem;
             }
             .navGo12 {
-                background-position: -0.65rem -1.29rem;
+                background-image: url(/static/images/home/supermarket-actived.png);
+                background-size: 100% 100%;
             }
             .navGo13 {
-                background-position: -1.17rem -1.29rem;
+                background-image: url(/static/images/home/classify-actived.png);
+                background-size: 100% 100%;
             }
             .navGo14 {
                 background-position: -1.71rem -1.29rem;
@@ -171,7 +175,7 @@ export default {
 @media screen and (min-width: 600px) {
   .tabs {
     max-width: 450px;
-    left: 50%;
+    left: 50% !important;
     transform: translateX(-50%);
   }
 }

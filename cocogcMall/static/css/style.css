@@ -260,9 +260,9 @@ body{
   position: relative;
 }
 .v-modal{
-  margin: 0 auto;
-  right: 0;
-  max-width: 450px;
+margin: 0 auto;
+right: 0;
+max-width: 450px;
 }
 .mint-msgbox{
       max-width: 375px;
@@ -303,68 +303,3 @@ font-size: 14px;
     align-items: center;
     line-height: inherit;
 }
-
-
-/****** 登录注册 ******/
-.telIcon {
-  width: 16px;
-  height: 22px;
-  background-image: url(/static/images/login-tel.png);
-}
-.passWordIcon {
-  width: 16px;
-  height: 22px;
-  background-image: url(/static/images/login-password.png);
-}
-.vailIcon {
-  width: 19px;
-  height: 19px;
-  background-image: url(/static/images/login-vail.png);
-}
-.smsIcon {
-  width: 19px;
-  height: 19px;
-  background-image: url(/static/images/login-msg.png);
-}
-.canBnt{
-  background: -webkit-linear-gradient(left, #51E59E , #30CE84); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(right, #51E59E, #30CE84); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(right, #51E59E, #30CE84); /* Firefox 3.6 - 15 */
-  background: linear-gradient(to right, #51E59E , #30CE84); /* 标准的语法 */
-  width: 6rem;
-}
-
-.noBnt{
-  background: -webkit-linear-gradient(left, #B9F5D8 , #ACEBCE); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(right, #B9F5D8, #ACEBCE); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(right, #B9F5D8, #ACEBCE); /* Firefox 3.6 - 15 */
-  background: linear-gradient(to right, #B9F5D8 , #ACEBCE); /* 标准的语法 */
-  width: 6rem;
-}
-.clean {
-  width: 16px;
-  height: 16px;
-  background-repeat: no-repeat;
-  display: inline-block;
-  background-size:100% 100%;
-  background-image: url(/static/images/login-clean.png);
-}
-.eyeImgClose,
-.eyeImgOpen {
-  background-image: url(/static/images/login.png);
-  background-repeat: no-repeat;
-  width: 23px;
-  height: 23px;
-  display: inline-block;
-  background-size: 172px 32px;
-  margin-left: 8px;
-}
-
-.eyeImgClose {
-  background-position: -1px -8px;
-}
-
-.eyeImgOpen {
-  background-position: -27px -8px;
-}
-

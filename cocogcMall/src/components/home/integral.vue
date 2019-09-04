@@ -203,7 +203,7 @@ export default {
 
 }
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .home-integralW {
     width: 100%;
     background: #fff;
@@ -370,5 +370,31 @@ export default {
       line-height: 32px;
       font-size: 14px;
     }
+}
+.home-rank,
+.home-integralW {
+  .home-hSE {
+    font-size: 0.24rem;
+    color: #999999;
+    margin: 0 0 0.49rem 0.35rem;
+  }
+  .home-rHM {
+    margin: 0.44rem 0 0.12rem 0.35rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3 {
+      font-size: 0.36rem;
+    }
+    .home-rMore {
+      background-image: url(/static/images/jl.png);
+      background-repeat: no-repeat;
+      background-position: -4.81rem -0.26rem;
+      background-size: 6rem 1.86rem;
+      width: 0.34rem;
+      height: 0.27rem;
+      margin-right: 0.44rem;
+    }
+  }
 }
 </style>

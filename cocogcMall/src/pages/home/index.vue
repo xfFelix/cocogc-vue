@@ -1,7 +1,8 @@
 <template>
   <div class="index" id="index">
     <!-- 头部 -->
-    <div class="index-head">
+    <div style="background: #fff;">
+      <div class="index-head">
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
@@ -21,7 +22,7 @@
       <div class="ih-balanceW">
         <div class="ih-balance" v-if="token">
           <p class="ih-money">{{loScore.score}}</p>
-          <p class="ih-moneya">椰子分</p>
+          <p class="ih-moneya">椰子分余额</p>
         </div>
         <div class="ih-balance" v-else>
           <router-link :to="{path:'/login'}" class="ih-nologin">登录</router-link>
@@ -29,39 +30,39 @@
       </div>
     </div>
 
-    <!-- 导航 -->
-    <ul class="index-fastNav">
-      <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
-          <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)">
-            <p class="navImg imgBg" :class="item.imgBg"></p>
-            <p class="ifa-name">{{item.name}}</p>
-          </div>
-      </li>
-    </ul>
-
-    <!-- 图片 -->
-    <div class="index-swipeW">
-      <div class="index-swipe">
-        <div class="swiper-container" style="height:2rem">
-          <!-- 页面 -->
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(item, index) of banner" :key="index">
-              <a :href="item.url">
-                <img :src="item.src" alt="">
-              </a>
+      <!-- 导航 -->
+      <ul class="index-fastNav">
+        <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
+            <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)">
+              <img :src="`/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png`" alt="" class="iconImg">
+              <p class="ifa-name" :style="!item.active && 'color: #cecece'">{{item.name}}</p>
             </div>
+        </li>
+      </ul>
+
+      <!-- 图片 -->
+      <div class="index-swipeW">
+        <div class="index-swipe">
+          <div class="swiper-container" style="height:2rem">
+            <!-- 页面 -->
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="(item, index) of banner" :key="index">
+                <a :href="item.url">
+                  <img :src="item.src" alt="">
+                </a>
+              </div>
+            </div>
+            <!-- 分页器 -->
+            <div class="swiper-pagination"></div>
           </div>
-          <!-- 分页器 -->
-          <div class="swiper-pagination"></div>
         </div>
       </div>
     </div>
 
     <!-- 热门爆款 -->
-    <div class="index-hotGoods">
+    <!-- <div class="index-hotGoods">
       <div class="ihot-title">
         <h3>热门爆款</h3>
-        <!-- <router-link :to="{path:'/goodsList',query:{salesVolume:'y'}}">查看更多</router-link> -->
       </div>
       <div class="ihot-goodsW">
         <div class="ihot-goods" v-for="(item,index) in goodsList.slice(0, 6)" :key="index">
@@ -79,12 +80,14 @@
         </div>
       </div>
 
-    </div>
+    </div> -->
+    <!-- 积分区间 -->
+    <v-integral></v-integral>
   </div>
 </template>
 
 <script>
-
+import Integral from '../../components/home/integral.vue'
 import Swiper from 'swiper';
 import api from '../../service/api';
 import { mapGetters } from 'vuex';
@@ -93,21 +96,24 @@ import mixin from '@/util/mixin'
 export default {
   name: 'index',
   mixins: [mixin],
+  components: {
+    "v-integral": Integral
+  },
   data() {
     return {
       fastList: [
-        { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: infoURl + '#!/goldChange?token=' + getToken() },
-        { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: infoURl + '#!/phoneBill?token=' + getToken() },
-        { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil' },
-        { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
-        { id: 13, name: "生活缴费", imgBg: 'ifa-imgBg14', path: `${hostUrl}ticket/life` },
-        { id: 6, name: "会员卡券", imgBg: 'ifa-imgBg07', path: hostUrl + 'ticket/memberCard'},
-        { id: 7, name: "海南旅游", imgBg: 'ifa-imgBg06', path: `${hostUrl}ticket/static/ticket.html` },
-        { id: 8, name: "海南特产", imgBg: 'ifa-imgBg05', path: `${hostUrl}ticket/static/food.html` },
-        { id: 9, name: "机票酒店", imgBg: 'ifa-imgBg04', path: 'javascript:;' },
-        { id: 10, name: "周大福金饰", imgBg: 'ifa-imgBg08', path: 'javascript:;' },
-        { id: 11, name: "小米有品", imgBg: 'ifa-imgBg10', path: 'javascript:;' },
-        { id: 12, name: "网易严选", imgBg: 'ifa-imgBg11', path: 'javascript:;' },
+        { id: 1, name: "黄金兑换", img: 'gold', active: true, path: infoURl + '#!/goldChange?token=' + getToken() },
+        { id: 2, name: "话费充值", img: 'recharge', active: true, path: infoURl + '#!/phoneBill?token=' + getToken() },
+        { id: 5, name: "加油卡充值", img: 'oil', active: true, path: hostUrl + 'ticket/oil' },
+        { id: 4, name: "小椰超市", img: 'jd', active: true, path: '/layout/shopMall'},
+        { id: 13, name: "生活缴费", img: 'life', active: true, path: `${hostUrl}ticket/life` },
+        { id: 6, name: "会员卡券", img: 'vip', active: true, path: hostUrl + 'ticket/memberCard'},
+        { id: 7, name: "海南旅游", img: 'travel', active: true, path: `${hostUrl}ticket/static/ticket.html` },
+        { id: 8, name: "海南特产", img: 'food', active: true, path: `${hostUrl}ticket/static/food.html` },
+        { id: 9, name: "机票酒店", img: 'air', active: false, path: 'javascript:;' },
+        { id: 10, name: "周大福金饰", img: 'zdf', active: false, path: 'javascript:;' },
+        { id: 11, name: "游戏周边", img: 'game', active: false, path: 'javascript:;' },
+        { id: 12, name: "网易严选", img: 'wangyi', active: false, path: 'javascript:;' },
       ],
       goodsList: [],
       loginFlag: false,
@@ -210,7 +216,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@import '../../scss/mixin.scss';
 .link-url{
   color:rgb(255,255,255);
   margin-right:100px;
@@ -219,10 +226,16 @@ export default {
   }
 }
 .index-head {
-  background: url("/static/images/indexBg.jpg") no-repeat;
-  background-size: 100% 100%;
-  height: 1.82rem;
-  padding: 0.55rem 0;
+  width: 100%;
+  background: url("/static/images/home/bg.png") no-repeat;
+  background-size: 100% auto;
+  position: relative;
+  overflow: hidden;
+  &::before{
+    display: block;
+    content: ' ';
+    padding-top: 70.6%;
+  }
   .ih-noticeW {
     width: 88%;
     background: rgba(0, 0, 0, 0.15);
@@ -230,8 +243,11 @@ export default {
     align-items: center;
     justify-content: space-between;
     height: 0.6rem;
-    margin: 0 auto;
+    margin: px2rem(30) auto 0;
     line-height: 0.6rem;
+    position: absolute;
+    top: 0;
+    left: 6%;
     .ih-notice {
       color: #fff;
       font-size: 0.26rem;
@@ -261,9 +277,11 @@ export default {
   .ih-balanceW {
     display: flex;
     width: 80%;
-    margin-left: 1.23rem;
+    margin-left: 1.4rem;
     justify-content: space-between;
     margin-top: 0.45rem;
+    position: absolute;
+    top: px2rem(60);
     .ih-balance {
       p {
         // margin-top: -0.1rem;
@@ -272,12 +290,12 @@ export default {
         text-align: center;
       }
       .ih-money {
-        font-size: 0.48rem;
+        font-size: px2rem(24);
         font-weight: bold;
         margin-top: -0.1rem;
       }
       .ih-moneya {
-        font-size: 0.24rem;
+        font-size: px2rem(12);
         font-weight: bold;
         margin-top: -0.05rem;
         text-align: left;
@@ -298,78 +316,22 @@ export default {
 .index-fastNav {
   font-size: 0.24rem;
   color: #000;
-  padding: 0 0.3rem 0.2rem 0.3rem;
-  margin-bottom: 0.2rem;
+  margin: 0 px2rem(10) 0.2rem px2rem(10);
   background: #fff;
+  border-radius:25px 25px 0px 0px;
+  padding-top: px2rem(6);
+  position: absolute;
+  top: px2rem(148);
   .ifa-fastNavLi {
     width: 25%;
     text-align: center;
-    margin: 0.34rem 0 0.1rem 0;
+    margin: px2rem(14) 0 0.1rem 0;
     display: inline-block;
-    .imgBg {
-      width: 0.5rem;
-      height: 0.5rem;
+    .iconImg{
+      width: px2rem(40);
+      height: px2rem(40);
+      margin: auto;
     }
-
-    .ifa-imgBg00 {
-      background: url(/static/images/banner_index.png);
-      background-position: -3.51rem -0.1rem;
-      background-repeat: no-repeat;
-      background-size: 4.82rem 1.97rem;
-    }
-
-    .ifa-imgBg01 {
-      background-position: -2.34rem -0.11rem;
-    }
-    .ifa-imgBg02 {
-      // background-position: -3.44rem -0.1rem;
-      background: url(/static/images/recharge.png);
-      background-repeat: no-repeat;
-      background-size: 0.56rem 0.56rem;
-      // width: 0.6rem;
-      // height: 0.6rem;
-    }
-    .ifa-imgBg03 {
-      background-position: -2.92rem -0.11rem;
-    }
-    .ifa-imgBg04 {
-      background-position: -4.12rem -0.08rem;
-    }
-    .ifa-imgBg05 {
-      background-position: -2.69rem -0.7rem;
-    }
-    .ifa-imgBg06 {
-      background-position: -3.23rem -0.7rem;
-    }
-    .ifa-imgBg07 {
-      background-position: -3.79rem -0.7rem;
-    }
-    .ifa-imgBg08 {
-      background-position: -4.34rem -0.7rem;
-    }
-    .ifa-imgBg09 {
-      background-position: -2.69rem -1.34rem;
-    }
-    .ifa-imgBg10 {
-      background-position: -3.23rem -1.34rem;
-    }
-    .ifa-imgBg11 {
-      background-position: -3.77rem -1.34rem;
-    }
-    .ifa-imgBg12 {
-      background-position: -4.34rem -1.34rem;
-    }
-    .ifa-imgBg13 {
-      background: url(/static/images/coin.png);
-      background-repeat: no-repeat;
-      background-size: 0.5rem 0.5rem;
-    }
-    .ifa-imgBg14 {
-      background: url(/static/images/life.png?v=1.0);
-      background-repeat: no-repeat;
-      background-size: 0.5rem 0.5rem;
-    }
-
 
     .ifa-ImgW {
       width: 0.5rem;
@@ -378,15 +340,21 @@ export default {
       position: relative;
     }
     .ifa-name {
-      padding: 0.15rem 0 0.05rem 0;
+      padding: px2rem(9) 0 0 0;
+      font-size: 11px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      color:rgba(51,51,51,1);
     }
   }
 }
 
 .index-swipeW {
-  margin-bottom: 0.2rem;
+  margin: px2rem(160) px2rem(10) px2rem(10) px2rem(10);
+  padding-bottom: px2rem(25);
   img {
     width: 100%;
+    border-radius:10px;
   }
 }
 

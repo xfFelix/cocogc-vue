@@ -9,62 +9,59 @@
         </div>
       </head>
 
+      <section>
         <ul class="loginUl">
           <li>
             <div class="loginLileft">
-              <span class="telIcon"></span>
-              <div class="select-wrap">
-                <select class="select-index" v-on:change="indexSelect($event)">
+              <span></span>
+              <div style="position:relative;display: flex;align-items: center;height: 100%;">
+                <select style="border:none;background:#fff;height:100%;appearance: none;" v-on:change="indexSelect($event)">
                   <option :value="item.telRealVal" v-for="(item,index) in telList" :key="index">{{item.telShowVal}}</option>
                 </select>
-                <img src="../../../static/images/select-down.png" style="width: 10px;height:5px;margin:0 5px;" alt="">
+                <img src="../../../static/images/select-down.png" style="width: 10px;height:5px;" alt="">
               </div>
-              <input @blur="scrollTop()"  @input="telInp($event)"  type="tel" placeholder="请输入手机号码" v-model.trim="formMsg.userName">
-            </div>
-            <div class="loginLiRight">
-              <span class="clean" @click="telClean()" v-if="clean.telCleanShow"></span>
+              <input @blur="scrollTop()" type="number" placeholder="请输入手机号码" v-model.trim="register.userName" style="width:60%">
             </div>
           </li>
+
           <li>
             <div class="loginLileft" style="width:100%;justify-content: space-between;">
               <div style="display: flex; width: 100%;align-items: center;height:100%;">
-                <span class="vailIcon"></span>
-                <input @blur="scrollTop()" type="text" name="captcha" id="captcha" maxlength="4" placeholder="验证码" v-model.trim="formMsg.imgValid"  @input="imgValidInp($event)">
+                <span></span>
+                <input @blur="scrollTop()" type="text" name="captcha" id="captcha" maxlength="4" placeholder="验证码" v-model.trim="register.captcha">
               </div>
-            </div>
-             <div class="loginLiRight">
-                <span class="clean" @click="imgValidClean()" v-if="clean.imgValidCleanShow"></span>
+              <div>
                 <img :src="validateImgSrc" class="img_captcha" @click="validateImgClick()">
               </div>
+            </div>
           </li>
 
           <li>
             <div class="loginLileft">
-              <span class="smsIcon"></span>
-              <input @blur="scrollTop()" type="text" placeholder="请输入验证码" v-model.trim="formMsg.smsValid" @input="smsValidInp($event)">
+              <span></span>
+              <input @blur="scrollTop()" type="text" placeholder="请输入验证码" v-model.trim="register.msgValidate">
             </div>
             <div class="loginLiRight">
-              <span class="clean" @click="smsClean()" v-if="clean.smsCleanShow"></span>
-              <span class="validate" @click="validateCli()" :class="sendSmsColor?'validateCan':'validateNo'" >{{validate}}</span>
+              <span class="validate" @click="validateCli()">{{validate}}</span>
             </div>
           </li>
+
           <li>
             <div class="loginLileft" style="width:92%;">
-              <span class="passWordIcon"></span>
-              <input @blur="scrollTop()" type="password" placeholder="请设置6-20位数字+字母密码" v-model.trim="formMsg.passWord" v-if="passInpShow == false" style="width:86%;"  @input="passInp($event)">
-              <input @blur="scrollTop()" type="text" placeholder="请设置6-20位数字+字母密码" v-model.trim="formMsg.passWord" v-if="passInpShow == true" style="width:86%;"  @input="passInp($event)">
+              <span></span>
+              <input @blur="scrollTop()" type="password" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == false" style="width:86%;">
+              <input @blur="scrollTop()" type="text" placeholder="请设置6-20位数字+字母密码" v-model.trim="register.inputPass" v-if="passShow == true" style="width:86%;">
             </div>
             <div class="loginLiRight">
-              <span class="clean" @click="passClean()" v-if="clean.passCleanShow"></span>
               <span class="eyeImgClose" v-if="eyeImgState == false" @click="eyeImgOpen"></span>
               <span class="eyeImgOpen" v-if="eyeImgState == true" @click="eyeImgClose"></span>
             </div>
           </li>
         </ul>
-
+      </section>
 
       <div class="loginBntWrap">
-        <span id="loginBnt" class="bnt"  @click="registerBnt()" :class="registBntColor?'canBnt':'noBnt'">注册</span>
+        <span id="loginBnt" @click="registerBnt()">注册</span>
       </div>
       <p class="forgetPass">
         <router-link to="/login">已有账号</router-link>
@@ -77,64 +74,38 @@
 
 <script>
 import api from "@/service/api";
-import blurMix from '@/util/blurMix';
-import loginMix from '@/util/loginMix';
-import { IsEmpty, CheckPass, IsHKMobile, IsChinaMobile } from "@/util/common"
+import blurMix from '@/util/blurMix'
+import { IsEmpty, IsMobile, CheckPass, IsHKMobile, IsChinaMobile } from "@/util/common"
 
 export default {
-  mixins: [blurMix,loginMix],
+  mixins: [blurMix],
   data() {
     return {
+      eyeImgState: false,
+      passShow: false,
       validate: "获取验证码",
       validateFlag: 1,
       validateImgSrc: '',
-      formMsg: {
+      register: {
         userName: '',
-        imgValid: '',
-        smsValid: '',
-        passWord: ""
+        captcha: '',
+        msgValidate: '',
+        inputPass: ""
       },
+      telList: [
+        {
+          telRealVal: 86,
+          telShowVal: '+86　中国',
+        },
+        {
+          telRealVal: 852,
+          telShowVal: '+852 香港',
+        }
+      ],
+      telPlace: 86
     };
   },
-    computed: {
-      sendSmsColor:function(){
-          let computedFalg = false;
-          computedFalg = this.computFalg();
-          if(this.validateFlag==0){
-            return false
-          }else{
-            return computedFalg
-          }
-      },
-      registBntColor:function(){
-        let registCloFlag = false;
-        let smsCloFlag = false;
-        let passCloFlag = false;
-        let computedFalg = false;
-
-        computedFalg = this.computFalg();
-        if (!IsEmpty(this.formMsg.smsValid)) {
-            smsCloFlag = true;
-        }
-        if (!IsEmpty(this.formMsg.passWord)) {
-            passCloFlag = true;
-        }
-        registCloFlag = computedFalg && smsCloFlag && passCloFlag;
-        return registCloFlag
-      }
-    },
   methods: {
-      computFalg:function(){
-        let captchaColFlag = false;
-        let telCloFlag = false;
-        if (!IsEmpty(this.formMsg.userName)) {
-            telCloFlag = true;
-        }
-        if (!IsEmpty(this.formMsg.imgValid)) {
-          captchaColFlag = true;
-        }
-        return  telCloFlag && captchaColFlag
-    },
     indexSelect(event) {
       this.telPlace = event.target.value;
     },
@@ -144,11 +115,11 @@ export default {
     regist: function() {
       let _this = this;
       this.axios(infoURl + api.register, {
-        mobile: this.formMsg.userName,
-        passwd: this.formMsg.passWord,
-        confirm_passwd: this.formMsg.passWord,
-        verify_code: this.formMsg.smsValid,
-        captcha: this.formMsg.imgValid
+        mobile: this.register.userName,
+        passwd: this.register.inputPass,
+        confirm_passwd: this.register.inputPass,
+        verify_code: this.register.msgValidate,
+        captcha: this.register.captcha
       }, 'post')
         .then((data) => {
           if (data.error_code == 0) {
@@ -166,8 +137,8 @@ export default {
     regsms: function() {
       let _this = this;
       this.axios(infoURl + api.regsms, {
-        mobile: this.formMsg.userName,
-        captcha: this.formMsg.imgValid,
+        mobile: this.register.userName,
+        captcha: this.register.captcha,
       }, 'post')
         .then((data) => {
           if (data.error_code == 0) {
@@ -189,7 +160,7 @@ export default {
           } else {
               MessageBox.alert(data.error_code==3?'图片验证码输入错误':data.message).then(action => {
                     this.validateImgClick();
-                    this.formMsg.imgValid = ''
+                    this.register.captcha = ''
               });
           }
         })
@@ -203,40 +174,50 @@ export default {
       this.validateImgSrc = infoURl + 'user/captcha?' + (new Date());
     },
 
+    eyeImgClose: function() {
+      this.eyeImgState = false;
+      this.passShow = false;
+
+    },
+    eyeImgOpen: function() {
+      this.eyeImgState = true;
+      this.passShow = true;
+    },
+
     /*
         注册按钮
     */
     registerBnt: function() {
-      if (IsEmpty(this.formMsg.userName)) {
+      if (IsEmpty(this.register.userName)) {
         this.MessageBox("提示", "手机号码不能为空")
         return false;
       }
 
-      if (this.telPlace == '86' && !IsChinaMobile(this.formMsg.userName)) {
+      if (this.telPlace == '86' && !IsChinaMobile(this.register.userName)) {
         this.MessageBox("提示", "手机号码输入错误");
         return false;
       }
-      if (this.telPlace == '852' && !IsHKMobile(this.formMsg.userName)) {
+      if (this.telPlace == '852' && !IsHKMobile(this.register.userName)) {
         this.MessageBox("提示", "香港手机号码输入错误");
         return false;
       }
-      if (IsEmpty(this.formMsg.imgValid)) {
+      if (IsEmpty(this.register.captcha)) {
         this.MessageBox("提示", "请输入图片验证码。")
         return false;
       }
-      if (this.formMsg.imgValid.length < 4) {
+      if (this.register.captcha.length < 4) {
         this.MessageBox("提示", "图片验证码输入错误。")
         return false;
       }
-      if (IsEmpty(this.formMsg.smsValid)) {
+      if (IsEmpty(this.register.msgValidate)) {
         this.MessageBox("提示", "请输入短信验证码。")
         return false;
       }
-      if (this.formMsg.smsValid.length < 4) {
+      if (this.register.msgValidate.length < 4) {
         this.MessageBox("提示", "短信验证码输入错误")
         return false;
       }
-      if (!CheckPass(this.formMsg.passWord)) {
+      if (!CheckPass(this.register.inputPass)) {
         this.MessageBox("提示", "请输入6-20位数字与字母的组合。")
         return false;
       }
@@ -248,32 +229,32 @@ export default {
     */
     validateCli: function() {
       var that = this;
-      if (IsEmpty(this.formMsg.userName)) {
+      if (IsEmpty(this.register.userName)) {
         this.MessageBox("提示", "手机号码不能为空")
         return false;
       }
 
-      if (this.telPlace == '86' && !IsChinaMobile(this.formMsg.userName)) {
+      if (this.telPlace == '86' && !IsChinaMobile(this.register.userName)) {
         this.MessageBox("提示", "手机号码输入错误");
         return false;
       }
 
-      if (this.telPlace == '852' && !IsHKMobile(this.formMsg.userName)) {
+      if (this.telPlace == '852' && !IsHKMobile(this.register.userName)) {
         this.MessageBox("提示", "香港手机号码输入错误");
         return false;
       }
-      if (IsEmpty(this.formMsg.imgValid)) {
+      if (IsEmpty(this.register.captcha)) {
         this.MessageBox("提示", "请输入图片验证码。")
         return false;
       }
-      if (this.formMsg.imgValid.length < 4) {
+      if (this.register.captcha.length < 4) {
         this.MessageBox("提示", "图片验证码输入错误")
         return false;
       }
       if (this.validateFlag == 1) {
         this.regsms();
       }
-    },
+    }
   },
   mounted() {
     this.validateImgSrc = infoURl + 'user/captcha?' + (new Date());
@@ -285,9 +266,11 @@ export default {
 </script>
 
 
-<style lang="less" scoped>
+<style lang="scss">
 #register {
   background: #fff; // position: absolute;
+  // bottom: 0;
+  // left: 0;
   width: 100%;
   height: 100%; // z-index: 2;
   position: relative;
@@ -299,6 +282,8 @@ export default {
     background-size: 100% 100%;
   }
 }
+
+
 .registHead {
   position: absolute;
   left: 0.5rem;
@@ -342,7 +327,7 @@ export default {
 
 .loginUl {
   padding: 0.75rem 0.7rem 0;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.2rem;
 }
 
 .loginUl li {
@@ -358,34 +343,37 @@ export default {
     width: 100%;
     height: 100%;
     span {
+      background-image: url(/static/images/login.png);
       background-repeat: no-repeat;
+      width: 26px;
+      height: 25px;
       display: inline-block;
-      background-size:100% 100%;
-    }
-    .select-wrap{
-      position:relative;
-      display: flex;
-      align-items: center;
-      height: 100%;
-      .select-index{
-        border:none;
-        background:#fff;
-        height:100%;
-        appearance: none;
-        margin-left:16px;
-      }
-      &::after{
-        height: 22px;
-        width: 1px;
-        margin-left: 10px;
-        content: '';
-        background: #E0E0E0;
-        display: inline-block;
-      }
+      background-size: 172px 32px;
     }
   }
 }
 
+
+
+.loginUl li:nth-of-type(1) .loginLileft span {
+  background-position: -79px -3px;
+}
+
+.loginUl li:nth-of-type(2) .loginLileft span {
+  background-position: -133px -3px;
+}
+
+.loginUl li:nth-of-type(3) .loginLileft span {
+  background-position: -106px -3px;
+}
+
+.loginUl li:nth-of-type(4) .loginLileft span {
+  background-position: -52px -2px;
+}
+
+.loginUl li:last-of-type {
+  border: none;
+}
 
 .loginLileft {
   display: flex; // width: 60%;
@@ -395,16 +383,60 @@ export default {
 .loginLileft input {
   height: 100%;
   font-size: 15px;
-  width: 100%;
-  padding-left: 15px;
-  flex: 1;
+  width: 80%;
+  padding-left: 0.1rem;
 }
 
 .loginLiRight {
   display: flex;
 }
 
+
+.eyeImgClose,
+.eyeImgOpen {
+  background-image: url(/static/images/login.png);
+  background-repeat: no-repeat;
+  width: 23px;
+  height: 23px;
+  display: inline-block;
+  background-size: 172px 32px;
+}
+
+.eyeImgClose {
+  background-position: -1px -8px;
+}
+
+.eyeImgOpen {
+  background-position: -27px -8px;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: #cecece;
+  font-size: 13px;
+}
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #cecece;
+  font-size: 13px;
+  ;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #cecece;
+  font-size: 13px;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #cecece;
+  font-size: 13px;
+}
+
 #loginBnt {
+  background: #19ad6a;
   color: #fff;
   line-height: 45px;
   width: 80%;
@@ -430,35 +462,21 @@ export default {
   color: #999999;
 }
 
+.validate {
+  font-size: 12px;
+  border: 1px solid #19ad6a;
+  border-radius: 30px;
+  line-height: 20px;
+  color: #19ad6a;
+  height: 20px;
+  width: 1.8rem;
+  text-align: center;
+}
 
 .img_captcha {
   width: 75px;
   height: 30px;
   margin-top: 6px;
-  margin-left: 8px;
-}
-
-.validate {
-    font-size: 13px;
-    border-radius: 30px;
-    line-height: 0.58rem;
-    width: 1.8rem;
-    text-align: center;
-    margin-left: 8px;
-}
-.validateNo{
-  border: #414141;
-  color: #fff;
-  background: #D3D3D3;
-}
-.validateCan{
-  border: 1px solid #19ad6a;
-  color: #19ad6a;
-}
-
-.loginLiRight {
-  display: flex;
-  align-items: center;
 }
 </style>
 
