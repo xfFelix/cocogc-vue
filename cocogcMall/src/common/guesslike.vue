@@ -2,7 +2,11 @@
     <div class="guesslike">
         <div class="home-integralW">
             <div class="home-rHM">
-                <h3>猜你喜欢</h3>
+                <h3>
+                  <img src="/static/images/cart/left.png" alt="" class="left">
+                  猜你喜欢
+                  <img src="/static/images/cart/right.png" alt="" class="right">
+                </h3>
             </div>
             <div class="home-interWrap">
                 <div class="home-iGoodsW" @click="goDetail(item)" v-for="(item,index) in goodsList" :key="index">
@@ -20,7 +24,7 @@
                 </div>
             </div>
             <!-- <no-data :data="goodsList"></no-data> -->
-            <p style="text-align: center;padding: 0.2rem;color: #666;">已经到底了噢~~</p>
+            <button class="btn-list">进店逛逛</button>
         </div>
     </div>
 </template>
@@ -77,18 +81,35 @@ export default {
 
 
 <style lang="scss">
+@import '../scss/mixin.scss';
 .guesslike {
     .home-integralW {
         width: 100%;
         background: #fff;
         border-top: 1px solid transparent;
         margin-bottom: 0.8rem;
+        overflow: hidden;
         .home-rHM {
             margin: 0;
             h3 {
-                font-size: 0.3rem;
-                font-weight: 100;
-                margin: 0.43rem 0 0.23rem 0.32rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size:px2rem(15);;
+              font-family:Microsoft YaHei;
+              font-weight:bold;
+              color:rgba(229,170,97,1);
+              margin-top: px2rem(20);
+              img{
+                width: px2rem(15);
+                height: px2rem(15);
+                &.left{
+                  margin-right: px2rem(15);
+                }
+                &.right{
+                  margin-left: px2rem(15);
+                }
+              }
             }
         }
         .home-interWrap {
@@ -172,6 +193,19 @@ export default {
                     margin-right: 0.03rem;
                 }
             }
+        }
+        .btn-list{
+          display: block;
+          width: px2rem(110);
+          height: px2rem(33);
+          background:rgba(48,206,132,1);
+          border-radius:4px;
+          font-size: px2rem(14);
+          font-family:Microsoft YaHei;
+          font-weight:400;
+          color:rgba(255,255,255,1);
+          border: none;
+          margin: px2rem(16) auto;
         }
     }
 }
