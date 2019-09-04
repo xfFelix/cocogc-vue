@@ -22,7 +22,7 @@
 </script>
 
 
-<style lang="">
+<style lang="scss" scoped>
 #passSetSucess {
     background: #fff;
     position: absolute;

@@ -328,7 +328,7 @@ export default {
 </script>
 
 
-<style lang="" scoped>
+<style lang="scss" scoped>
 .back {
     width: 0.22rem;
     height: 0.38rem;
