@@ -285,7 +285,7 @@ export default {
 </script>
 
 
-<style lang="less">
+<style lang="scss" scoped>
 #register {
   background: #fff; // position: absolute;
   width: 100%;
