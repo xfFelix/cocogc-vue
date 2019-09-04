@@ -80,7 +80,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../scss/mixin.scss';
 .guesslike {
     .home-integralW {
@@ -99,7 +99,7 @@ export default {
               font-family:Microsoft YaHei;
               font-weight:bold;
               color:rgba(229,170,97,1);
-              margin-top: px2rem(20);
+              margin: px2rem(20) auto 0;
               img{
                 width: px2rem(15);
                 height: px2rem(15);
