@@ -241,16 +241,16 @@ export default {
 
 <style lang="scss" scoped>
 #passSetUp {
-    background: #fff;
-    position: absolute;
+position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     z-index: 2;
-    max-width: 450px;
+    background: #fff;
     right: 0;
     margin: 0 auto;
+    max-width: 450px;
     head {
         background: url(/static/images/regist.png) no-repeat;
         width: 100%;

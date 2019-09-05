@@ -287,10 +287,16 @@ export default {
 
 <style lang="scss" scoped>
 #register {
-  background: #fff; // position: absolute;
-  width: 100%;
-  height: 100%; // z-index: 2;
-  position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    z-index: 2;
+    background: #fff;
+    right: 0;
+    margin: 0 auto;
+    max-width: 450px;
   head {
     background: url(/static/images/regist.png) no-repeat;
     width: 100%;
