@@ -72,7 +72,8 @@
                                 <p class="shop-selGoodsT">{{items.goods!=null?items.goods.name:''}}</p>
                                 <p class="shop-selGoodsC">{{items.goods!=null?items.goods.attrs:''}}</p>
                                 <div class="shop-selGoodsN">
-                                    <div>
+                                    <div style="display: flex; align-items: center">
+                                        <span class="money-logo"></span>
                                         <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Fp}}.</span>
                                         <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Ap}}</span>
                                     </div>
@@ -689,9 +690,6 @@ export default {
             display: flex;
             align-items: center;
             padding: 0.3rem 0 0.13rem 0;
-
-            .shop-selectN,
-            .shop-selectY,
             .shop-dNameImg,
             .shop-dGo {
                 background-image: url(/static/images/jl.png);
@@ -699,23 +697,6 @@ export default {
                 background-size: 5.8rem 1.86rem;
                 display: inline-block;
             }
-            .shop-selectN,
-            .shop-selectY {
-                margin: 0 0.25rem 0 0.32rem;
-                width: 0.32rem;
-                height: 0.3rem;
-                background: #fff;
-                background-image: url(/static/images/jl.png);
-                background-repeat: no-repeat;
-                background-size: 5.8rem 1.86rem;
-            }
-            .shop-selectN {
-                background-position: -5.17rem -0.77rem;
-            }
-            .shop-selectY {
-                background-position: -4.75rem -0.77rem;
-            }
-
             .shop-dNameImg {
                 width: 0.38rem;
                 height: 0.38rem;
@@ -742,20 +723,24 @@ export default {
                     align-items: center;
                     display: flex;
                     margin: 0 0.25rem 0 0.32rem;
-                    .shop-selectN,
-                    .shop-selectY {
-                        width: 0.3rem;
-                        height: 0.3rem;
-                        background: #fff;
-                        background-image: url(/static/images/jl.png);
-                        background-repeat: no-repeat;
-                        background-size: 5.8rem 1.86rem;
-                    }
                     .shop-selectN {
-                        background-position: -5.18rem -0.77rem;
+                      width: px2rem(18);
+                      height: px2rem(18);
+                      border: 1px solid #dedede;
+                      border-radius: 50%;
+                      display: block;
+                      margin: auto;
+                      box-sizing: border-box;
                     }
                     .shop-selectY {
-                        background-position: -4.75rem -0.77rem;
+                      background-image: url('/static/images/cart/checked.png');
+                      background-repeat: no-repeat;
+                      background-size: 100% 100%;
+                      width: px2rem(18);
+                      height: px2rem(18);
+                      display: block;
+                      margin: auto;
+                      box-sizing: border-box;
                     }
                 }
                 .shop-selImg {
@@ -788,6 +773,14 @@ export default {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
+                        .money-logo{
+                          background: url('/static/images/cart/icon.png') no-repeat;
+                          background-size: 100% 100%;
+                          width: px2rem(16);
+                          height: px2rem(16);
+                          display: inline-block;
+                          margin-right: 5px;
+                        }
                         .shop-selGoodsS {
                             color: #333333;
                         }
@@ -901,22 +894,24 @@ export default {
     background: #fff;
     .shop-cSelectW {
         margin-left: 0.22rem;
-        .shop-selectN,
-        .shop-selectY {
-            width: 0.3rem;
-            height: 0.3rem;
-            background: #fff;
-            background-image: url(/static/images/jl.png);
-            background-repeat: no-repeat;
-            background-size: 5.8rem 1.86rem;
-            display: block;
-            margin: 0 auto;
-        }
         .shop-selectN {
-            background-position: -5.17rem -0.77rem;
+          width: px2rem(18);
+          height: px2rem(18);
+          border: 1px solid #dedede;
+          border-radius: 50%;
+          display: block;
+          margin: auto;
+          box-sizing: border-box;
         }
         .shop-selectY {
-            background-position: -4.75rem -0.77rem;
+          background-image: url('/static/images/cart/checked.png');
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          width: px2rem(18);
+          height: px2rem(18);
+          display: block;
+          margin: auto;
+          box-sizing: border-box;
         }
         span:nth-of-type(2) {
             font-size: 0.24rem;

@@ -2,7 +2,8 @@
     <footer class="tabs" v-show="hideShow">
         <div v-for="(item,index) in tableList" @click="selectNav(item.name)" :key='index' class="navTabWrap">
             <router-link :to="item.path" class="navTab">
-                <span class="navImg" :class="isSelect == item.name ? item.iconGreen : item.icon"></span>
+                <!-- <span class="navImg" :class="isSelect == item.name ? item.iconGreen : item.icon"></span> -->
+                <img :src="`/static/images/home/${item.icon}${isSelect == item.name ? '-actived': ''}.png`" alt="" class="icon">
                 <span :class="isSelect == item.name ? 'active' : ''">
                     {{item.title}}
                 </span>
@@ -18,11 +19,11 @@ export default {
     data() {
         return {
             tableList: [
-                { title: '首页', path: 'home', icon: 'navGo01', iconGreen: 'navGo11', name: 'home' },
-                { title: '超市', path: 'shopMall', icon: 'navGo02', iconGreen: 'navGo12', name: 'shopMall' },
-                { title: '分类', path: 'classify', icon: 'navGo03', iconGreen: 'navGo13', name: 'classify' },
-                { title: '购物车', path: 'shopCart', icon: 'navGo04', iconGreen: 'navGo14', name: 'shopCart' },
-                { title: '我的', path: 'account', icon: 'navGo05', iconGreen: 'navGo15', name: 'account' },
+                { title: '首页', path: 'home', icon: 'home', iconGreen: 'navGo11', name: 'home' },
+                { title: '超市', path: 'shopMall', icon: 'supermarket', iconGreen: 'navGo12', name: 'shopMall' },
+                { title: '分类', path: 'classify', icon: 'classify', iconGreen: 'navGo13', name: 'classify' },
+                { title: '购物车', path: 'shopCart', icon: 'cart', iconGreen: 'navGo14', name: 'shopCart' },
+                { title: '我的', path: 'account', icon: 'mine', iconGreen: 'navGo15', name: 'account' },
             ],
             isSelect: 'home',
             docmHeight: document.documentElement.clientHeight,  //默认屏幕高度
@@ -91,6 +92,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '../scss/mixin.scss';
 .tabs {
     width: 100%;
     height: 49px; // position: absolute!important;
@@ -113,16 +115,10 @@ export default {
             width: 100%;
             height: 100%;
             position: relative;
-            .navImg {
-                width: 0.47rem;
-                height: 0.41rem;
-                display: inline-block;
-                background-image: url(/static/images/banner.png?_=1);
-                background-repeat: no-repeat;
-                background-size: 4.82rem 1.97rem;
-                position: relative;
-                color: #000000; // border: 1px solid #000;
-                margin: 0 auto;
+            .icon{
+              width: px2rem(24);
+              height: px2rem(24);
+              margin: px2rem(3) auto px2rem(1);
             }
             .num {
               position: absolute;
@@ -132,40 +128,6 @@ export default {
               color: #fff;
               border-radius: 50%;
               font-size: 0.22rem;
-            }
-            .navGo01 {
-                background-position: -0.1rem -0.73rem;
-            }
-            .navGo02 {
-                background-image: url(/static/images/home/supermarket.png);
-                background-size: 100% 100%;
-            }
-            .navGo03 {
-                background-image: url(/static/images/home/classify.png);
-                background-size: 100% 100%;
-            }
-            .navGo04 {
-                background-position: -1.71rem -0.73rem;
-            }
-            .navGo05 {
-                background-position: -2.21rem -0.73rem;
-            }
-            .navGo11 {
-                background-position: -0.1rem -1.29rem;
-            }
-            .navGo12 {
-                background-image: url(/static/images/home/supermarket-actived.png);
-                background-size: 100% 100%;
-            }
-            .navGo13 {
-                background-image: url(/static/images/home/classify-actived.png);
-                background-size: 100% 100%;
-            }
-            .navGo14 {
-                background-position: -1.71rem -1.29rem;
-            }
-            .navGo15 {
-                background-position: -2.24rem -1.29rem;
             }
         }
     }
