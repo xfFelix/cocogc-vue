@@ -347,7 +347,7 @@ export default {
 
 .loginUl li {
   border-bottom: 1px solid #dfdfdf;
-  height: 48px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -434,7 +434,6 @@ export default {
 .img_captcha {
   width: 75px;
   height: 30px;
-  margin-top: 6px;
   margin-left: 8px;
 }
 

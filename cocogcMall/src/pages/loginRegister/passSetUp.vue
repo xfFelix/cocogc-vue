@@ -239,7 +239,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #passSetUp {
     background: #fff;
     position: absolute;

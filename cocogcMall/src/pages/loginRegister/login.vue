@@ -88,7 +88,6 @@ import { IsEmpty, CheckPass, setToken, IsChinaMobile, IsHKMobile } from "@/util/
 export default {
     data() {
         return {
-            validateImgSrc: infoURl + 'user/captcha?' + (new Date()),
             formMsg: {
                 userName: '',
                 passWord: '',
@@ -98,6 +97,7 @@ export default {
             validate: "获取验证码",
             validateFlag: 1,
             smsFlag: true,
+            validateImgSrc:''
         };
     },
     mixins: [blurMix,loginMix],
@@ -324,6 +324,9 @@ export default {
         }
         next()
     },
+    mounted(){
+      this.validateImgSrc=infoURl + 'user/captcha?' + (new Date())
+    }
 };
 </script>
 
@@ -344,7 +347,7 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     z-index: 2;
     background: #fff;
     right: 0;
@@ -433,7 +436,8 @@ export default {
             align-items: center;
 
             .img_captcha{
-                width: 1.34rem;
+                  width: 75px;
+                height: 30px;
                 margin-left: 8px;
             }
         }
