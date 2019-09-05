@@ -498,7 +498,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .shop {
     padding-bottom: calc(50px + 40px) !important;
 }
