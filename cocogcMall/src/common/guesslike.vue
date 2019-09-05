@@ -24,7 +24,7 @@
                 </div>
             </div>
             <!-- <no-data :data="goodsList"></no-data> -->
-            <button class="btn-list">进店逛逛</button>
+            <button class="btn-list" @click="$router.push('/goodsList')">进店逛逛</button>
         </div>
     </div>
 </template>
@@ -87,7 +87,6 @@ export default {
         width: 100%;
         background: #fff;
         border-top: 1px solid transparent;
-        margin-bottom: 0.8rem;
         overflow: hidden;
         .home-rHM {
             margin: 0;
