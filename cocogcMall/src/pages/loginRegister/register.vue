@@ -303,126 +303,75 @@ export default {
     height: 3.5rem;
     display: block;
     background-size: 100% 100%;
-  }
-}
-.registHead {
-  position: absolute;
-  left: 0.5rem;
-  top: 0.7rem;
-}
-
-.headLogin {
-  padding: 0.7rem 0.5rem;
-  font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.close {
-  width: 35px;
-  height: 35px;
-}
-
-.close span {
-  width: 28px;
-  height: 35px;
-}
-
-.close span:first-of-type {
-  transform: rotate(45deg);
-  top: -12px;
-  left: 14px;
-}
-
-.close span:last-of-type {
-  transform: rotate(-45deg);
-  top: -12px;
-  left: -11px;
-}
-
-.register {
-  line-height: 0.7rem;
-  color: #333333;
-  font-size: 15px;
-}
-
-.loginUl {
-  padding: 0.75rem 0.7rem 0;
-  margin-bottom: 0.8rem;
-}
-
-.loginUl li {
-  border-bottom: 1px solid #dfdfdf;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#register .loginUl li{
-  .loginLileft {
-    width: 100%;
-    height: 100%;
-    span {
-      background-repeat: no-repeat;
-      display: inline-block;
-      background-size:100% 100%;
+    .registHead {
+      position: absolute;
+      left: 0.5rem;
+      top: 0.7rem;
     }
-    .select-wrap{
-      position:relative;
+  }
+  .loginUl {
+    padding: 0.75rem 0.48rem 0;
+    margin-bottom: 0.8rem;
+    li{
+      border-bottom: 1px solid #dfdfdf;
+      height: 1.14rem;
       display: flex;
       align-items: center;
-      height: 100%;
-      .select-index{
-        border:none;
-        background:#fff;
-        height:100%;
-        appearance: none;
-        margin-left:16px;
-      }
-      &::after{
-        height: 22px;
-        width: 1px;
-        margin-left: 10px;
-        content: '';
-        background: #E0E0E0;
-        display: inline-block;
+      justify-content: space-between;
+      .loginLileft {
+        width: 100%;
+        height: 100%;
+        display: flex; // width: 60%;
+        align-items: center;
+        span {
+          background-repeat: no-repeat;
+          display: inline-block;
+          background-size:100% 100%;
+        }
+        .select-wrap{
+          position:relative;
+          display: flex;
+          align-items: center;
+          height: 100%;
+          .select-index{
+            border:none;
+            background:#fff;
+            height:100%;
+            appearance: none;
+            margin-left:16px;
+          }
+          &::after{
+            height: 22px;
+            width: 1px;
+            margin-left: 10px;
+            content: '';
+            background: #E0E0E0;
+            display: inline-block;
+          }
+        }
+        input {
+          height: 100%;
+          font-size: 15px;
+          width: 100%;
+          padding-left: 15px;
+          flex: 1;
+        }
       }
     }
   }
 }
-
-
-.loginLileft {
-  display: flex; // width: 60%;
-  align-items: center;
-}
-
-.loginLileft input {
-  height: 100%;
-  font-size: 15px;
-  width: 100%;
-  padding-left: 15px;
-  flex: 1;
-}
-
-.loginLiRight {
-  display: flex;
-}
-
-#loginBnt {
-  color: #fff;
-  line-height: 45px;
-  width: 80%;
-  margin: 0 auto;
-  border-radius: 0.6rem;
-  font-size: 18px;
-  box-shadow: #d1efe1 4px 6px 15px 0px;
-  display: block;
-}
-
 .loginBntWrap {
   text-align: center;
+  #loginBnt {
+    color: #fff;
+    line-height: 0.94rem;
+    width: 89.6%;
+    margin: 0 auto;
+    border-radius: 0.6rem;
+    font-size: 16px;
+    box-shadow: #d1efe1 4px 6px 15px 0px;
+    display: block;
+  }
 }
 
 .forgetPass {
@@ -430,12 +379,10 @@ export default {
   font-size: 15px;
   color: #999999;
   margin: 0.5rem 0;
+  a {
+    color: #999999;
+  }
 }
-
-.forgetPass a {
-  color: #999999;
-}
-
 
 .img_captcha {
   width: 75px;
@@ -447,7 +394,7 @@ export default {
     font-size: 13px;
     border-radius: 30px;
     line-height: 0.58rem;
-    width: 1.8rem;
+    width: 2rem;
     text-align: center;
     margin-left: 8px;
 }
@@ -460,10 +407,10 @@ export default {
   border: 1px solid #19ad6a;
   color: #19ad6a;
 }
-
 .loginLiRight {
   display: flex;
   align-items: center;
 }
+
 </style>
 

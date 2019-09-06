@@ -64,8 +64,8 @@
               </li>
             </ul>
 
-        <p class="bntWrap">
-            <span class="bnt"  :class="loginBntColor?'canBnt':'noBnt'" @click="loginBnt()">登录</span>
+        <p class="loginBntWrap">
+            <span class="loginBnt"  :class="loginBntColor?'canBnt':'noBnt'" @click="loginBnt()">登录</span>
         </p>
 
         <p class="forgetPass" v-if="smsFlag">
@@ -378,22 +378,22 @@ export default {
                     left: 14px;
                 }
             }
+            .register {
+              line-height: 0.7rem;
+              color: #333333;
+              font-size: .34rem;
+          }
         }
     }
 }
 
-.register {
-    line-height: 0.7rem;
-    color: #333333;
-    font-size: .34rem;
-}
 
 .loginUl {
-    padding: 1.25rem .9rem 0;
+    padding: 1.25rem 0.48rem 0;
     background: #fff;
     li {
         border-bottom: 1px solid #dfdfdf;
-        height: 56px;
+        height: 1.12rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -444,10 +444,23 @@ export default {
     }
 }
 
-.bntWrap {
-    background: #fff;
-    padding-top: 0.8rem;
+
+.loginBntWrap {
+  text-align: center;
+  background: #fff;
+  padding-top: 0.8rem;
+  .loginBnt {
+    color: #fff;
+    line-height: 0.94rem;
+    width: 89.6%;
+    margin: 0 auto;
+    border-radius: 0.6rem;
+    font-size: 16px;
+    box-shadow: #d1efe1 4px 6px 15px 0px;
+    display: block;
+  }
 }
+
 
 .forgetPass {
     text-align: center;
@@ -471,7 +484,7 @@ export default {
     font-size: 13px;
     border-radius: 30px;
     line-height: 0.58rem;
-    width: 1.8rem;
+    width: 2rem;
     text-align: center;
     margin-left: 8px;
 }

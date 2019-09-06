@@ -63,7 +63,7 @@
             </ul>
         </section>
 
-        <p class="bnt" @click="passSetBnt()" :class="forgerBntColor?'canBnt':'noBnt'">
+        <p class="bnt loginBntWrap" @click="passSetBnt()" :class="forgerBntColor?'canBnt':'noBnt'">
             下一步
         </p>
 
@@ -260,7 +260,7 @@ position: absolute;
         position: relative;
     }
     .loginUl {
-        padding: 1.25rem 1rem 0 1rem;
+        padding: 1.25rem 0.48rem 0;
         margin-bottom: 0.66rem;
         li {
             border-bottom: 1px solid #dfdfdf;
@@ -318,7 +318,7 @@ position: absolute;
                       font-size: 13px;
                       border-radius: 30px;
                       line-height: 0.58rem;
-                      width: 1.8rem;
+                      width: 2rem;
                       text-align: center;
                       margin-left: 8px;
                 }
@@ -349,6 +349,12 @@ position: absolute;
     top: 0.6rem;
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
+}
+
+.loginBntWrap {
+  line-height: 0.94rem;
+  width: 89.6%;
+  font-size: 16px;
 }
 
 </style>
