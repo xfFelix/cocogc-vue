@@ -333,7 +333,7 @@ export default {
     display: inline-block;
     .iconImg{
       width: px2rem(44);
-      height: px2rem(42);
+      height: px2rem(44);
       margin: auto;
     }
     .badge-img{
