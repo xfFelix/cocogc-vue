@@ -123,11 +123,12 @@ export default {
             .num {
               position: absolute;
               right: 17px;top: 1px;
-              padding: 1px 5px;
+              padding: 2px 5px;
               background: #fb5c5c;
               color: #fff;
               border-radius: 50%;
-              font-size: 0.22rem;
+              font-size: 12px;
+              transform: scale(.73);
             }
         }
     }

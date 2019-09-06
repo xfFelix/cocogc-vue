@@ -79,10 +79,14 @@
                                     </div>
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
-                                        <span @click="numDecrease(index) " :class="items.num>1?'decNum':'decNoNum'"></span>
+                                        <span @click="numDecrease(index)" class="decNum">
+                                          <img :src="`/static/images/cart/cut${items.num>1 ? '': '-disabled'}.png`" alt=" " class="num-icon">
+                                        </span>
                                         <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1" @click="numberShow(items.num,index)" /></span>
                                         <!-- 是否需要有货和没货？+号颜色是否要变 -->
-                                        <span @click="numIncrease(index)"></span>
+                                        <span class="add-num" @click="numIncrease(index)">
+                                          <img :src="`/static/images/cart/add.png`" alt=" " class="num-icon">
+                                        </span>
                                     </p>
                                 </div>
                             </div>
@@ -137,6 +141,7 @@
             </p>
             <div class="shop-cPN" v-if="deitDelFlag">
                 <p class="shop-cPriceW">
+                    <span>合计：</span>
                     <span class="shop-cPriceInt">{{selectAllPrice|toDecimal2Fp(selectAllPrice)}}.</span>
                     <span class="shop-cPriceFloat">{{selectAllPrice|toDecimal2Ap(selectAllPrice)}}</span>
                 </p>
@@ -148,7 +153,7 @@
             </div>
 
             <div class="shop-cPN" v-if="!deitDelFlag">
-                <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum1':'shop-cartNum0'">
+                <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum2':'shop-cartNum0'">
                     <span class="shop-carNumI" @click="delGoods">
                         删除(<span class="shop-cartNum">{{selectAllGoods}}</span>)
                     </span>
@@ -795,6 +800,9 @@ export default {
                             // line-height: 0.48rem;
                             border: 1px solid #dfdfdf;
                             margin-right: 0.22rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
                             input {
                                 border: none;
                                 padding: 0 0.02rem;
@@ -807,15 +815,23 @@ export default {
                                 box-sizing: border-box;
                             }
                             .decNum {
-                                float: left;
-                                background-position: -2.88rem -1.04rem;
-                            }
-                            .decNoNum {
-                                float: left;
-                                background-position: -2.08rem -1.04rem;
+                                flex: 1;
+                                position: relative;
+                                &::after{
+                                  content: ' ';
+                                  width: 200%;
+                                  height:200%;
+                                  position: absolute;
+                                  transform: scale(.5);
+                                  transform-origin: top left;
+                                  border-right: 1px solid #DFDFDF;
+                                  left: 0;
+                                  top: 0;
+                                }
                             }
                             span:nth-of-type(2) {
-                                width: 0.76rem;
+                                flex: 1;
+                                width: 0.46rem;
                                 display: inline-block;
                                 text-align: center;
                                 white-space: nowrap;
@@ -825,17 +841,31 @@ export default {
                                 height: 100%;
                             }
                             span:nth-of-type(3) {
+                                flex: 1;
                                 float: right; // background-position: -2.49rem -1.15rem; 灰色
                                 background-position: -3.32rem -1.17rem;
+                                position: relative;
+                                &::after{
+                                  content: ' ';
+                                  width: 200%;
+                                  height:200%;
+                                  position: absolute;
+                                  left: 0;
+                                  top: 0;
+                                  transform: scale(.5);
+                                  transform-origin: top left;
+                                  border-left: 1px solid #DFDFDF;
+                                }
                             }
                             span:nth-of-type(odd) {
-                                display: inline-block;
-                                height: 100%;
-                                width: 0.42rem;
-                                text-align: center;
-                                background-image: url(/static/images/jl.png);
-                                background-repeat: no-repeat;
-                                background-size: 5.8rem 1.86rem;
+                              height: 100%;
+                              display: flex;
+                              justify-content: center;
+                              align-items: center;
+                              .num-icon{
+                                width: px2rem(13);
+                                height: px2rem(13);
+                              }
                             }
                         }
                     }
@@ -927,12 +957,22 @@ export default {
         height: 100%;
         .shop-cPriceW {
             display: flex;
-            align-self: center;
+            align-items: center;
             color: #fb5c5c;
+            span{
+                &:nth-of-type(1) {
+                    font-size:12px;
+                    font-family:Microsoft YaHei;
+                    font-weight:bold;
+                    color:rgba(51,51,51,1);
+                    display: inline-block;
+                }
+            }
             .shop-cPriceInt {
                 font-size: 0.36rem;
             }
             .shop-cPriceFloat {
+              margin-top: px2rem(5);
                 font-size: 0.24rem;
                 display: flex;
                 align-items: flex-end;
@@ -951,6 +991,7 @@ export default {
             margin-left: 0.34rem;
             z-index: 2;
             .shop-carNumI {
+              font-size: px2rem(14);
                 margin: 0 auto;
                 .shop-cartNum {}
             }
@@ -960,6 +1001,9 @@ export default {
         }
         .shop-cartNum1 {
             background: #30ce84;
+        }
+        .shop-cartNum2{
+          background:rgba(251,92,92,1);
         }
     }
 }
