@@ -153,7 +153,7 @@
             </div>
 
             <div class="shop-cPN" v-if="!deitDelFlag">
-                <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum1':'shop-cartNum0'">
+                <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum2':'shop-cartNum0'">
                     <span class="shop-carNumI" @click="delGoods">
                         删除(<span class="shop-cartNum">{{selectAllGoods}}</span>)
                     </span>
@@ -1001,6 +1001,9 @@ export default {
         }
         .shop-cartNum1 {
             background: #30ce84;
+        }
+        .shop-cartNum2{
+          background:rgba(251,92,92,1);
         }
     }
 }
