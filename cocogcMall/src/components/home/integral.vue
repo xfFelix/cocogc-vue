@@ -32,7 +32,8 @@
                 </div>
             </div>
         </div>
-        <no-data :data="goodsList"></no-data>
+        <no-data :data="goodsList" v-if="!showLoading"></no-data>
+        <circle-arc v-else></circle-arc>
         <div class="spinWrap" v-if="tenFlag&&goodsList.length"><mt-spinner :size="12"  type="snake"></mt-spinner>&nbsp;&nbsp;正在加载中...</div>
         <div class="spinWrap" v-if="!tenFlag&&goodsList.length">没有更多数据了~~</div>
     </div>
@@ -42,6 +43,7 @@ import Swiper from 'swiper';
 import api from '../../service/api';
 import { mapGetters } from 'vuex';
 import { getToken } from '@/util/common'
+import CircleArc from '@/common/loading/CircleArc'
 
 export default {
     data() {
@@ -63,8 +65,12 @@ export default {
             rows: 10,
             offset: 0,
             allLoaded: false,
-            tenFlag:false
+            tenFlag:false,
+            showLoading: false
         }
+    },
+    components: {
+      CircleArc
     },
     computed: {
         ...mapGetters({
@@ -166,6 +172,7 @@ export default {
           this.goodsList = []
         },
         price(integral, first) {
+            this.showLoading = true
             let integrals = this.charReplace(integral)
             this.axios(jdTestUrl + api.price, {
                 "price": integrals,
@@ -173,12 +180,13 @@ export default {
                 "rows": this.rows
             }, 'get')
                 .then((data) => {
+                    this.showLoading = false
                     if (data.code == 0) {
-                        // if (first) {
-                        //   this.goodsList = data.list
-                        // } else {
-                        //   this.goodsList.push(...data.list)
-                        // }
+                        if (first) {
+                          this.goodsList = data.list
+                        } else {
+                          this.goodsList.push(...data.list)
+                        }
                         this.allLoaded = !(data.list.length === this.rows)
                         this.page ++
                         this.offset = 1+this.rows*(this.page-1);
@@ -192,6 +200,8 @@ export default {
                     } else {
                         this.Toast(data.message)
                     }
+                }).catch((e) => {
+                    this.showLoading = false
                 })
         },
         charReplace(data){
@@ -396,5 +406,62 @@ export default {
       margin-right: 0.44rem;
     }
   }
+}
+.chaos-loading {
+	overflow: hidden;
+	position: relative;
+	border-radius: 100%;
+	width: 200px;
+	height: 200px;
+	&::after {
+		display: block;
+		filter: drop-shadow(2px 4px 6px #000);
+		line-height: 200px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 30px;
+		color: #fff;
+		content: "Loading...";
+	}
+	li {
+		position: absolute;
+		left: 0;
+		top: 0;
+		border-radius: 100%;
+		width: 100px;
+		height: 100px;
+		filter: blur(25px);
+		animation: move 2s linear infinite;
+		&:nth-child(1) {
+			background-color: #f66;
+		}
+		&:nth-child(2) {
+			background-color: #66f;
+			animation-delay: -500ms;
+		}
+		&:nth-child(3) {
+			background-color: #f90;
+			animation-delay: -1s;
+		}
+		&:nth-child(4) {
+			background-color: #09f;
+			animation-delay: -1.5s;
+		}
+	}
+}
+@keyframes move {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0);
+	}
+	25% {
+		transform: translate3d(100%, 0, 0);
+	}
+	50% {
+		transform: translate3d(100%, 100%, 0);
+	}
+	75% {
+		transform: translate3d(0, 100%, 0);
+	}
 }
 </style>
