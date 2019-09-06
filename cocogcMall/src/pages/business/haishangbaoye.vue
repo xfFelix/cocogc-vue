@@ -164,6 +164,8 @@ export default {
           autoplay: this.autoplay,
           pagination: {
             el: '.swiper-pagination',
+            bulletClass : 'my-bullet',
+            bulletActiveClass: 'my-bullet-active'
           },
         })
       })
@@ -328,8 +330,8 @@ export default {
     margin: px2rem(14) 0 0.1rem 0;
     display: inline-block;
     .iconImg{
-      width: px2rem(40);
-      height: px2rem(40);
+      width: px2rem(44);
+      height: px2rem(42);
       margin: auto;
     }
 

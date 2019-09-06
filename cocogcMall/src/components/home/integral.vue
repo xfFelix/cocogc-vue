@@ -174,11 +174,11 @@ export default {
             }, 'get')
                 .then((data) => {
                     if (data.code == 0) {
-                        if (first) {
-                          this.goodsList = data.list
-                        } else {
-                          this.goodsList.push(...data.list)
-                        }
+                        // if (first) {
+                        //   this.goodsList = data.list
+                        // } else {
+                        //   this.goodsList.push(...data.list)
+                        // }
                         this.allLoaded = !(data.list.length === this.rows)
                         this.page ++
                         this.offset = 1+this.rows*(this.page-1);

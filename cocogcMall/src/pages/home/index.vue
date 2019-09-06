@@ -164,6 +164,8 @@ export default {
           autoplay: this.autoplay,
           pagination: {
             el: '.swiper-pagination',
+            bulletClass : 'my-bullet',
+            bulletActiveClass: 'my-bullet-active'
           },
         })
       })
@@ -320,16 +322,16 @@ export default {
   background: #fff;
   border-radius:25px 25px 0px 0px;
   padding-top: px2rem(6);
-  position: absolute;
-  top: px2rem(148);
+  margin-top: px2rem(-120);
+  position: relative;
   .ifa-fastNavLi {
     width: 25%;
     text-align: center;
     margin: px2rem(14) 0 0.1rem 0;
     display: inline-block;
     .iconImg{
-      width: px2rem(40);
-      height: px2rem(40);
+      width: px2rem(44);
+      height: px2rem(42);
       margin: auto;
     }
 
@@ -350,7 +352,7 @@ export default {
 }
 
 .index-swipeW {
-  margin: px2rem(160) px2rem(10) px2rem(10) px2rem(10);
+  margin: px2rem(10) px2rem(10) px2rem(10) px2rem(10);
   padding-bottom: px2rem(25);
   img {
     width: 100%;

@@ -719,6 +719,7 @@ export default {
             li {
                 display: flex;
                 padding: 0.3rem 0;
+                align-items: center;
                 .shop-selectW {
                     align-items: center;
                     display: flex;
@@ -745,7 +746,8 @@ export default {
                 }
                 .shop-selImg {
                     width: 2.1rem;
-                    height: 2.1rem;
+                    height: 2rem;
+                    line-height: 2rem;
                     margin-right: 0.25rem;
                     img {
                         width: 100%;
@@ -755,8 +757,6 @@ export default {
                     flex: 1;
                     .shop-selGoodsT {
                         width: 3.8rem;
-                        font-size: 0.3rem;
-                        color: #333333;
                         text-overflow: -o-ellipsis-lastline;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -764,6 +764,10 @@ export default {
                         -webkit-line-clamp: 2;
                         line-clamp: 2;
                         -webkit-box-orient: vertical;
+                        font-size:15px;
+                        font-family:Microsoft YaHei;
+                        font-weight:400;
+                        color:rgba(51,51,51,1);
                     }
                     .shop-selGoodsC {
                         color: #999999;
