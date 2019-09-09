@@ -134,7 +134,7 @@
           <img src="/static/images/cart/logo.png" alt="">
         </div>
 
-        <div class="shop-cartBot">
+        <div class="shop-cartBot" v-if="list.length">
             <p class="shop-cSelectW">
                 <span @click="selectAll()" :class="!selectAllFlag?'shop-selectN':'shop-selectY'"></span>
                 <span>全选</span>
