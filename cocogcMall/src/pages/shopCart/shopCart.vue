@@ -98,7 +98,8 @@
         </div>
 
         <div class="shopEmpty" v-if="num && !list.length">
-            <p>购物车加载中~~</p>
+            <!-- <p>购物车加载中~~</p> -->
+            <text-loading>购物车加载中</text-loading>
         </div>
 
         <div class="shopEmpty" v-if="!num">
@@ -164,6 +165,7 @@
     </div>
 </template>
 <script>
+import TextLoading from '@/common/loading/TextLoading'
 import Guesslike from "../../common/guesslike.vue";
 import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
@@ -515,7 +517,8 @@ export default {
     },
     components: {
         "guess-like": Guesslike,
-        BgMask
+        BgMask,
+        TextLoading
     }
 };
 </script>
@@ -580,7 +583,7 @@ export default {
   .order-addressWN{
     position: relative;
     z-index: 3;
-    margin: px2rem(-30) px2rem(15) 0;
+    margin: -36px px2rem(15) 0;
     padding: px2rem(19) px2rem(15);
     box-sizing: border-box;
     background: #fff;
@@ -786,7 +789,7 @@ export default {
                           background: url('/static/images/cart/icon.png') no-repeat;
                           background-size: 100% 100%;
                           width: px2rem(16);
-                          height: px2rem(16);
+                          height: px2rem(17.5);
                           display: inline-block;
                           margin-right: 5px;
                         }
@@ -942,7 +945,7 @@ export default {
           background-repeat: no-repeat;
           background-size: 100% 100%;
           width: px2rem(18);
-          height: px2rem(18);
+          height: px2rem(18.5);
           display: block;
           margin: auto;
           box-sizing: border-box;
