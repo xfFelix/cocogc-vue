@@ -82,7 +82,7 @@
                                         <span @click="numDecrease(index)" class="decNum">
                                           <img :src="`/static/images/cart/cut${items.num>1 ? '': '-disabled'}.png`" alt=" " class="num-icon">
                                         </span>
-                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1" @click="numberShow(items.num,index)" /></span>
+                                        <span @click="numberShow(items.num,index)" ><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1"/></span>
                                         <!-- 是否需要有货和没货？+号颜色是否要变 -->
                                         <span class="add-num" @click="numIncrease(index)">
                                           <img :src="`/static/images/cart/add.png`" alt=" " class="num-icon">
@@ -801,11 +801,24 @@ export default {
                             width: 1.68rem;
                             height: 0.48rem;
                             // line-height: 0.48rem;
-                            border: 1px solid #dfdfdf;
                             margin-right: 0.22rem;
                             display: flex;
                             align-items: center;
                             justify-content: center;
+                            position: relative;
+                            z-index: 2;
+                            &::after{
+                              content: ' ';
+                              width: 200%;
+                              height:200%;
+                              position: absolute;
+                              left: 0;
+                              top: 0;
+                              transform: scale(.5);
+                              transform-origin: top left;
+                              z-index: 1;
+                              border: 1px solid #DFDFDF;
+                            }
                             input {
                                 border: none;
                                 padding: 0 0.02rem;
@@ -817,21 +830,6 @@ export default {
                                 align-self: center;
                                 box-sizing: border-box;
                             }
-                            .decNum {
-                                flex: 1;
-                                position: relative;
-                                &::after{
-                                  content: ' ';
-                                  width: 200%;
-                                  height:200%;
-                                  position: absolute;
-                                  transform: scale(.5);
-                                  transform-origin: top left;
-                                  border-right: 1px solid #DFDFDF;
-                                  left: 0;
-                                  top: 0;
-                                }
-                            }
                             span:nth-of-type(2) {
                                 flex: 1;
                                 width: 0.46rem;
@@ -842,12 +840,8 @@ export default {
                                 overflow: hidden;
                                 word-break: break-all;
                                 height: 100%;
-                            }
-                            span:nth-of-type(3) {
-                                flex: 1;
-                                float: right; // background-position: -2.49rem -1.15rem; 灰色
-                                background-position: -3.32rem -1.17rem;
                                 position: relative;
+                                z-index: 2;
                                 &::after{
                                   content: ' ';
                                   width: 200%;
@@ -857,14 +851,35 @@ export default {
                                   top: 0;
                                   transform: scale(.5);
                                   transform-origin: top left;
+                                  z-index: 1;
                                   border-left: 1px solid #DFDFDF;
+                                  border-top: 1px solid #dedede;
                                 }
+                            }
+                            span:nth-of-type(3) {
+                              &::after{
+                                border-left: 1px solid #DFDFDF;
+                              }
                             }
                             span:nth-of-type(odd) {
                               height: 100%;
                               display: flex;
                               justify-content: center;
                               align-items: center;
+                              z-index: 2;
+                              flex: 1;
+                              position: relative;
+                              &::after{
+                                content: ' ';
+                                width: 200%;
+                                height:200%;
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                transform: scale(.5);
+                                transform-origin: top left;
+                                z-index: 1;
+                              }
                               .num-icon{
                                 width: px2rem(13);
                                 height: px2rem(13);
@@ -929,6 +944,7 @@ export default {
     border-top: 1px solid #dfdfdf;
     justify-content: space-between;
     background: #fff;
+    z-index: 3;
     .shop-cSelectW {
         margin-left: 0.22rem;
         .shop-selectN {

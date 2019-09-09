@@ -1,5 +1,5 @@
 <template>
-  <div class="load-indicator"><slot></slot><dot></dot></div>
+  <div class="load-indicator"><slot></slot><span></span></div>
 </template>
 <script>
 export default {
@@ -10,7 +10,7 @@ export default {
 .load-indicator {
 	font-size: 16px;
 	color: #999;
-	dot {
+	span {
 		display: inline-block;
 		overflow: hidden;
 		height: 1em;
