@@ -191,9 +191,9 @@ export default {
             var disValue = {};
             disValue = value[1];
 
-           
+
             for (const key in disValue) {
-                
+
                 let DisType = typeof (disValue[key]);
                 if (DisType == 'object') {
                     this.levelShow = false;
@@ -292,7 +292,7 @@ export default {
     }
 };
 </script>
-<style lang="less" >
+<style lang="scss" >
 .addressFixed {
     position: fixed;
     top: 0;

@@ -1,42 +1,51 @@
 <template>
     <div class="shop">
         <div class="shop-headW">
-            <h3 class="shop-title">购物车</h3>
-            <p class="shop-headR" v-if="list.length != 0">
-                <span class="shop-headWrite" @click="deitDel" v-if="deitDelFlag">编辑</span>
-                <span class="shop-headWrite" @click="deitDelOk" v-if="!deitDelFlag">完成</span>
-            </p>
+            <div class="header-wrapper">
+              <h3 class="shop-title">购物车</h3>
+              <p class="shop-headR" v-if="list.length != 0">
+                  <span class="shop-headWrite" @click="deitDel" v-if="deitDelFlag">编辑</span>
+                  <span class="shop-headWrite" @click="deitDelOk" v-if="!deitDelFlag">完成</span>
+              </p>
+            </div>
         </div>
 
-        <div class="order-addressWN">
-          <div v-if="addressDef != null">
-            <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}">
-                <div class="order-address">
-                    <p class="order-addPerson">
-                        <span>{{addressDef.name}}</span>
-                        <span>{{addressDef.tel}}</span>
-                    </p>
-                    <p class="order-addInfo">
-                        {{addressDef.area}} {{addressDef.address}}
-                    </p>
-                </div>
-                <div>
-                    <span class="goTo" @click="$router.replace('/addressEdit')"></span>
-                </div>
-            </router-link>
-          </div>
-          <div v-else>
-            <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}">
-              <div class="order-addressN" style="display: block;">
-                    <span class="order-addNImg"></span>
-                    <p>您还没有收货地址，点击添加</p>
+        <!-- 收货地址 -->
+        <div class="content-wrapper">
+          <div class="order-addressWN">
+              <div v-if="addressDef != null">
+                <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}">
+                    <div class="order-address">
+                        <p class="order-addPerson">
+                          <span class="default-text">默认</span>
+                          <span>{{addressDef.name}}</span>
+                          <span>{{addressDef.tel}}</span>
+                        </p>
+                        <p class="order-addInfo">
+                            {{addressDef.area}} {{addressDef.address}}
+                        </p>
+                        <span class="iconfont icon-right" @click="$router.replace('/addressEdit')"></span>
+                    </div>
+                    <!-- <div>
+                        <span class="goTo" @click="$router.replace('/addressEdit')"></span>
+                    </div> -->
+                </router-link>
               </div>
-            </router-link>
+              <div v-else>
+                <router-link class="order-addressW" :to="{path:'/addressMag',query:{cart: $route.path}}">
+                    <div class="order-addressN">
+                        <img src="/static/images/cart/add-address.png" alt="">
+                        <p>您还没有收货地址，点击添加</p>
+                        <span class="iconfont icon-right"></span>
+                    </div>
+                </router-link>
+              </div>
           </div>
-          <div class="order-bottom"></div>
         </div>
+        <!-- 收货地址end -->
 
-        <div class="shop-content">
+        <!-- 购物车列表 -->
+          <div class="shop-content" v-if="num && list.length">
             <div class="shop-dropW">
                 <p>
                     <span class="shop-horn"></span>
@@ -88,8 +97,11 @@
         </div>
 
         <div class="shopEmpty" v-if="!num">
-            <p>购物车竟然是空的~~</p>
+            <img src="/static/images/home/nothing.png" alt="" class="nothing">
+            <button class="btn-list" @click="$router.push('/goodsList')">进店逛逛</button>
         </div>
+        <!-- 购物车列表end -->
+
 
 
         <div class="inputNum" v-if="inputNumShow">
@@ -113,7 +125,11 @@
         <!-- 猜你喜欢 -->
         <guess-like></guess-like>
 
-        <div class="shop-cartBot" v-if="list.length != 0">
+        <div class="logo-wrapper">
+          <img src="/static/images/cart/logo.png" alt="">
+        </div>
+
+        <div class="shop-cartBot">
             <p class="shop-cSelectW">
                 <span @click="selectAll()" :class="!selectAllFlag?'shop-selectN':'shop-selectY'"></span>
                 <span>全选</span>
@@ -498,9 +514,11 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="scss" scoped>
+@import '../../scss/mixin.scss';
 .shop {
     padding-bottom: calc(50px + 40px) !important;
+    background:rgba(243,244,246,1);
 }
 .order-bottom {
     height: 0.1rem;
@@ -509,33 +527,146 @@ export default {
     margin-left: -0.1rem;
     margin-bottom: 10px;
 }
-
-.shop-headW {
-    background: #fff;
-    position: relative;
-    .shop-title {
-        text-align: center;
-        height: 1.28rem;
-        line-height: 1.28rem;
-        font-size: 0.36rem;
-        color: #333333;
-        font-weight: normal;
-    }
-    .shop-headR {
-        position: absolute;
-        right: 0;
-        top: 0.44rem;
-        display: flex;
-        justify-content: center;
-        padding-right: 0.38rem;
-        .shop-headWrite {
-            font-size: 0.3rem; // margin-right: 0.42rem;
-        }
-    }
+.logo-wrapper{
+  img{
+    width: px2rem(116);
+    height: px2rem(25);
+    margin: px2rem(20) auto px2rem(20);
+  }
 }
 
+.shop-headW {
+  width: 100%;
+  height: 92px;
+  background:rgba(48,206,132,1);
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  overflow: hidden;
+  .header-wrapper{
+    position: absolute;
+    left: 0;
+    top: px2rem(18);
+    width: 100%;
+    text-align: center;
+    .shop-title{
+      font-size:17px;
+      font-family:Microsoft YaHei;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+    }
+    .shop-headR{
+      position: absolute;
+      right: px2rem(16);
+      top: 0;
+      .shop-headWrite{
+        font-size:14px;
+        font-family:Microsoft YaHei;
+        font-weight:400;
+        color:rgba(255,255,255,1);
+      }
+    }
+  }
+}
+
+.content-wrapper{
+  background: #fff;
+  .order-addressWN{
+    position: relative;
+    z-index: 3;
+    margin: px2rem(-30) px2rem(15) 0;
+    padding: px2rem(19) px2rem(15);
+    box-sizing: border-box;
+    background: #fff;
+    box-shadow:0px 9px 18px 0px rgba(123,123,123,0.16);
+    border-radius:10px;
+    &::after{
+      content: '';
+      background-image: url(/static/images/cart/line.png);
+      background-size: cover;
+      background-repeat: repeat-x;
+      display: block;
+      width: 100%;
+      height: px2rem(3);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-radius: 10px;
+    }
+    .order-addressW{
+      padding: 0;
+      .order-address{
+        width: 100%;
+        position: relative;
+        .order-addPerson{
+          display: flex;
+          align-items: center;
+          span{
+            font-size: 15px;
+            font-family: Microsoft YaHei;
+            font-weight: bold;
+            color: rgba(51,51,51,1);
+            margin-left: 10px;
+          }
+          .default-text{
+            margin-left: 0;
+            font-size: 12px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            color: rgba(255,255,255,1);
+            padding: px2rem(2) px2rem(5);
+            box-sizing: border-box;
+            background: #30CE84;
+            border-radius: 10px;
+          }
+        }
+        .order-addInfo{
+          font-size:14px;
+          font-family:Microsoft YaHei;
+          font-weight:300;
+          color:rgba(102,102,102,1);
+          margin-top: px2rem(10);
+          padding-right: px2rem(10);
+          box-sizing: border-box;
+        }
+        .icon-right{
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          color:rgba(102,102,102,1);
+        }
+      }
+      .order-addressN{
+        display: flex;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        img{
+          width: px2rem(22);
+          height: px2rem(22);
+        }
+        p {
+          margin-left: px2rem(6);
+          font-size:14px;
+          font-family:Microsoft YaHei;
+          font-weight:400;
+          color:rgba(102,102,102,1);
+        }
+        .icon-right{
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          color:rgba(102,102,102,1);
+        }
+      }
+    }
+  }
+}
 .shop-content {
     position: relative;
+    background: #fff;
     .shop-dStoreWW {
       position: relative;
         margin-bottom: 0.3rem;
@@ -756,10 +887,11 @@ export default {
     }
 }
 
+
 .shop-cartBot {
     display: flex;
     align-items: center;
-    height: 1.2rem;
+    height: px2rem(47);;
     position: fixed;
     bottom: 48px;
     width: 100%;
@@ -834,10 +966,30 @@ export default {
 }
 
 .shopEmpty {
-    text-align: center;
-    padding: 1rem 0;
-    background: #fff;
-    font-size: 0.38rem;
+  text-align: center;
+  padding: px2rem(20) 0;
+  background: #fff;
+  font-size: 0.38rem;
+  margin-bottom: px2rem(15);
+  box-shadow:0px 9px 18px 0px rgba(123,123,123,0.09);
+  .nothing{
+    width: px2rem(138);
+    height: px2rem(131);
+    margin: auto;
+  }
+  .btn-list{
+    display: block;
+    width: px2rem(110);
+    height: px2rem(33);
+    background:rgba(48,206,132,1);
+    border-radius:4px;
+    font-size: px2rem(14);
+    font-family:Microsoft YaHei;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    border: none;
+    margin: px2rem(16) auto 0;
+  }
 }
 
 
@@ -904,61 +1056,6 @@ export default {
             color: #fff;
             background: #32CE84;
             border-radius: 0 0 10px 0;
-        }
-    }
-}
-</style>
-<style lang="less" scoped>
-.order-addressWN {
-    margin-top: 0.2rem;
-    .order-addressN {
-        display: none;
-        text-align: center;
-        background: #fff;
-        padding: 0.7rem 0 0.78rem 0;
-        margin: 0 auto;
-        .order-addNImg {
-            width: 0.4rem;
-            height: 0.4rem;
-            background-image: url(/static/images/jl.png);
-            background-repeat: no-repeat;
-            background-size: 5.8rem 1.86rem;
-            background-position: -0.85rem -0.76rem;
-            display: inline-block;
-        }
-        p {
-            color: #999999;
-        }
-    }
-    .order-addressW {
-        background: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.4rem 0.33rem 0.5rem 0.39rem;
-        .order-address {
-            width: 4.9rem;
-            .order-addPerson {
-                margin-bottom: 0.33rem;
-                span:nth-of-type(1),
-                span:nth-of-type(2) {
-                    color: #000;
-                    font-size: 0.3rem;
-                }
-            }
-            .order-addInfo {
-                color: #666666;
-                font-size: 0.28rem;
-            }
-        }
-        .goTo {
-            width: 0.3rem;
-            height: 0.38rem;
-            background-position: -0.2rem -0.75rem;
-            background-image: url(/static/images/jl.png);
-            background-repeat: no-repeat;
-            background-size: 5.8rem 1.86rem;
-            display: inline-block;
         }
     }
 }

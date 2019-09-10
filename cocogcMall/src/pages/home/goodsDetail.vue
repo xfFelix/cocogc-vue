@@ -554,7 +554,7 @@ function areaResize(commId, vendorId) {
 </script>
 
 
-<style lang="less">
+<style lang="scss">
 .imgWidth100 {
     img {
         width: 100% !important;

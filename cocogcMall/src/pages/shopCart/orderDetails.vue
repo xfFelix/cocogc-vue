@@ -167,7 +167,7 @@ export default {
     }
 };
 </script>
-<style lang="less">
+<style lang="scss">
 .od-titleWrap {
     padding: 0.4rem 0.3rem 0 0.3rem;
     // height: 1.26rem;

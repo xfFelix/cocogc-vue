@@ -19,7 +19,7 @@ export default {
         return {
             tableList: [
                 { title: '首页', path: 'home', icon: 'navGo01', iconGreen: 'navGo11', name: 'home' },
-                { title: '商城', path: 'shopMall', icon: 'navGo02', iconGreen: 'navGo12', name: 'shopMall' },
+                { title: '超市', path: 'shopMall', icon: 'navGo02', iconGreen: 'navGo12', name: 'shopMall' },
                 { title: '分类', path: 'classify', icon: 'navGo03', iconGreen: 'navGo13', name: 'classify' },
                 { title: '购物车', path: 'shopCart', icon: 'navGo04', iconGreen: 'navGo14', name: 'shopCart' },
                 { title: '我的', path: 'account', icon: 'navGo05', iconGreen: 'navGo15', name: 'account' },
@@ -90,7 +90,7 @@ export default {
     },
 }
 </script>
-<style lang="less">
+<style lang="scss" scoped>
 .tabs {
     width: 100%;
     height: 49px; // position: absolute!important;
@@ -114,8 +114,8 @@ export default {
             height: 100%;
             position: relative;
             .navImg {
-                width: 0.42rem;
-                height: 0.42rem;
+                width: 0.47rem;
+                height: 0.41rem;
                 display: inline-block;
                 background-image: url(/static/images/banner.png?_=1);
                 background-repeat: no-repeat;
@@ -137,25 +137,29 @@ export default {
                 background-position: -0.1rem -0.73rem;
             }
             .navGo02 {
-                background-position: -0.65rem -0.73rem;
+                background-image: url(/static/images/home/supermarket.png);
+                background-size: 100% 100%;
             }
             .navGo03 {
-                background-position: -1.17rem -0.73rem;
+                background-image: url(/static/images/home/classify.png);
+                background-size: 100% 100%;
             }
             .navGo04 {
                 background-position: -1.71rem -0.73rem;
             }
             .navGo05 {
-                background-position: -2.24rem -0.73rem;
+                background-position: -2.21rem -0.73rem;
             }
             .navGo11 {
                 background-position: -0.1rem -1.29rem;
             }
             .navGo12 {
-                background-position: -0.65rem -1.29rem;
+                background-image: url(/static/images/home/supermarket-actived.png);
+                background-size: 100% 100%;
             }
             .navGo13 {
-                background-position: -1.17rem -1.29rem;
+                background-image: url(/static/images/home/classify-actived.png);
+                background-size: 100% 100%;
             }
             .navGo14 {
                 background-position: -1.71rem -1.29rem;
@@ -171,7 +175,7 @@ export default {
 @media screen and (min-width: 600px) {
   .tabs {
     max-width: 450px;
-    left: 50%;
+    left: 50% !important;
     transform: translateX(-50%);
   }
 }

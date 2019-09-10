@@ -81,7 +81,7 @@ export default {
 
 }
 </script>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .home-rank {
     width: 100%;
     background: #fff;

@@ -69,8 +69,8 @@
     <!-- 底部切换 -->
 
     <!-- 回到顶部 -->
-    
-    
+
+
 
         <div class="fixOut" style="bottom:0px;">
             <div class="relOut">
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-    
+
   </div>
 </template>
 
@@ -238,7 +238,7 @@ export default {
 </script>
 
 
-<style lang="less">
+<style lang="scss">
 .link-url {
   margin-right: 100px;
   &:last-of-type {

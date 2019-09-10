@@ -375,7 +375,7 @@
   }
 
 </script>
-<style lang="less">
+<style lang="scss">
   .goodsList {
     height: 100%;
     background: #fff;

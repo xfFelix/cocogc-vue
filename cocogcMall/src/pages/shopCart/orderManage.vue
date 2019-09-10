@@ -233,7 +233,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .orderHead {
     position: fixed;
     top: 0;

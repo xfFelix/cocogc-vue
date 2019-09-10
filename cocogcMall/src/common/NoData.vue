@@ -1,6 +1,6 @@
 <template>
   <div class="no-data" v-if="open">
-    <img src="/static/images/nothing.png" alt="">
+    <img src="/static/images/home/nothing.png" alt="">
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .no-data{
   display: flex;
   width: 100%;

@@ -61,7 +61,7 @@ const router = new Router({
                   return import('@/pages/business/Business')
               }
             }
-            return import('@/pages/home/index')
+            return import(`@/pages/home/index`)
           },
           meta: { title: '首页:无信用卡',scrolltop: true },
         },
