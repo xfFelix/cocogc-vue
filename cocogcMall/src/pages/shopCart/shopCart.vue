@@ -733,8 +733,8 @@ export default {
                     display: flex;
                     margin: 0 0.25rem 0 0.32rem;
                     .shop-selectN {
-                      width: px2rem(18);
-                      height: px2rem(18);
+                      width: 20px;
+                      height: 20px;
                       border: 1px solid #dedede;
                       border-radius: 50%;
                       display: block;
@@ -745,8 +745,8 @@ export default {
                       background-image: url('/static/images/cart/checked.png');
                       background-repeat: no-repeat;
                       background-size: 100% 100%;
-                      width: px2rem(18);
-                      height: px2rem(18.5);
+                      width: 20px;
+                      height: 20px;
                       display: block;
                       margin: auto;
                       box-sizing: border-box;
@@ -788,8 +788,8 @@ export default {
                         .money-logo{
                           background: url('/static/images/cart/icon.png') no-repeat;
                           background-size: 100% 100%;
-                          width: px2rem(16);
-                          height: px2rem(17.5);
+                          width: 16px;
+                          height: 17px;
                           display: inline-block;
                           margin-right: 5px;
                         }
@@ -948,8 +948,8 @@ export default {
     .shop-cSelectW {
         margin-left: 0.22rem;
         .shop-selectN {
-          width: px2rem(18);
-          height: px2rem(18);
+          width: 20px;
+          height: 20px;
           border: 1px solid #dedede;
           border-radius: 50%;
           display: block;
@@ -960,8 +960,8 @@ export default {
           background-image: url('/static/images/cart/checked.png');
           background-repeat: no-repeat;
           background-size: 100% 100%;
-          width: px2rem(18);
-          height: px2rem(18.5);
+          width: 20px;
+          height: 20px;
           display: block;
           margin: auto;
           box-sizing: border-box;

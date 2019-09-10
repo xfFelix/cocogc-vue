@@ -632,6 +632,8 @@ export default {
                       this.clearPassword()
                       this.smsCode = ''
                       this.failText = data.message
+                      this.showSendCode = false
+                      this.Toast('商品已下架或库存不足')
                     }
                 });
         },
