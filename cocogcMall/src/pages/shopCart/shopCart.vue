@@ -746,7 +746,7 @@ export default {
                       background-repeat: no-repeat;
                       background-size: 100% 100%;
                       width: px2rem(18);
-                      height: px2rem(18);
+                      height: px2rem(18.5);
                       display: block;
                       margin: auto;
                       box-sizing: border-box;
