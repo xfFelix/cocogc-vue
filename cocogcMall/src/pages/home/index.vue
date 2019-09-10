@@ -33,7 +33,9 @@
       <!-- 导航 -->
       <ul class="index-fastNav">
         <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
-            <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)">
+            <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)" style="position:relative;">
+              <img src="/static/images/home/hot.png" alt=" " v-if="item.id == 1" class="badge-img hot">
+              <img src="/static/images/home/new.png" alt=" " v-if="item.id == 13" class="badge-img">
               <img :src="`/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png`" alt="" class="iconImg">
               <p class="ifa-name" :style="!item.active && 'color: #cecece'">{{item.name}}</p>
             </div>
@@ -164,6 +166,8 @@ export default {
           autoplay: this.autoplay,
           pagination: {
             el: '.swiper-pagination',
+            bulletClass : 'my-bullet',
+            bulletActiveClass: 'my-bullet-active'
           },
         })
       })
@@ -320,17 +324,27 @@ export default {
   background: #fff;
   border-radius:25px 25px 0px 0px;
   padding-top: px2rem(6);
-  position: absolute;
-  top: px2rem(148);
+  margin-top: px2rem(-120);
+  position: relative;
   .ifa-fastNavLi {
     width: 25%;
     text-align: center;
     margin: px2rem(14) 0 0.1rem 0;
     display: inline-block;
     .iconImg{
-      width: px2rem(40);
-      height: px2rem(40);
+      width: px2rem(44);
+      height: px2rem(44);
       margin: auto;
+    }
+    .badge-img{
+      position: absolute;
+      right: px2rem(16);
+      top: px2rem(6);
+      width: px2rem(21);
+      height: px2rem(10);
+    }
+    .hot{
+      top: px2rem(2);
     }
 
     .ifa-ImgW {
@@ -350,7 +364,7 @@ export default {
 }
 
 .index-swipeW {
-  margin: px2rem(160) px2rem(10) px2rem(10) px2rem(10);
+  margin: px2rem(10) px2rem(10) px2rem(10) px2rem(10);
   padding-bottom: px2rem(25);
   img {
     width: 100%;

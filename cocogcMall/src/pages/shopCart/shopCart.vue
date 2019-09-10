@@ -72,16 +72,21 @@
                                 <p class="shop-selGoodsT">{{items.goods!=null?items.goods.name:''}}</p>
                                 <p class="shop-selGoodsC">{{items.goods!=null?items.goods.attrs:''}}</p>
                                 <div class="shop-selGoodsN">
-                                    <div>
+                                    <div style="display: flex; align-items: center">
+                                        <span class="money-logo"></span>
                                         <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Fp}}.</span>
                                         <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Ap}}</span>
                                     </div>
                                     <p class="shop-selGoodsOW">
                                         <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
-                                        <span @click="numDecrease(index) " :class="items.num>1?'decNum':'decNoNum'"></span>
-                                        <span><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1" @click="numberShow(items.num,index)" /></span>
+                                        <span @click="numDecrease(index)" class="decNum">
+                                          <img :src="`/static/images/cart/cut${items.num>1 ? '': '-disabled'}.png`" alt=" " class="num-icon">
+                                        </span>
+                                        <span @click="numberShow(items.num,index)" ><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1"/></span>
                                         <!-- 是否需要有货和没货？+号颜色是否要变 -->
-                                        <span @click="numIncrease(index)"></span>
+                                        <span class="add-num" @click="numIncrease(index)">
+                                          <img :src="`/static/images/cart/add.png`" alt=" " class="num-icon">
+                                        </span>
                                     </p>
                                 </div>
                             </div>
@@ -93,7 +98,8 @@
         </div>
 
         <div class="shopEmpty" v-if="num && !list.length">
-            <p>购物车加载中~~</p>
+            <!-- <p>购物车加载中~~</p> -->
+            <text-loading>购物车加载中</text-loading>
         </div>
 
         <div class="shopEmpty" v-if="!num">
@@ -129,13 +135,14 @@
           <img src="/static/images/cart/logo.png" alt="">
         </div>
 
-        <div class="shop-cartBot">
+        <div class="shop-cartBot" v-if="list.length">
             <p class="shop-cSelectW">
                 <span @click="selectAll()" :class="!selectAllFlag?'shop-selectN':'shop-selectY'"></span>
                 <span>全选</span>
             </p>
             <div class="shop-cPN" v-if="deitDelFlag">
                 <p class="shop-cPriceW">
+                    <span>合计：</span>
                     <span class="shop-cPriceInt">{{selectAllPrice|toDecimal2Fp(selectAllPrice)}}.</span>
                     <span class="shop-cPriceFloat">{{selectAllPrice|toDecimal2Ap(selectAllPrice)}}</span>
                 </p>
@@ -147,7 +154,7 @@
             </div>
 
             <div class="shop-cPN" v-if="!deitDelFlag">
-                <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum1':'shop-cartNum0'">
+                <p class="shop-cartNumW" :class="selectAllGoods>0?'shop-cartNum2':'shop-cartNum0'">
                     <span class="shop-carNumI" @click="delGoods">
                         删除(<span class="shop-cartNum">{{selectAllGoods}}</span>)
                     </span>
@@ -158,6 +165,7 @@
     </div>
 </template>
 <script>
+import TextLoading from '@/common/loading/TextLoading'
 import Guesslike from "../../common/guesslike.vue";
 import api from '../../service/api';
 import { IsEmpty, getToken } from "@/util/common";
@@ -509,7 +517,8 @@ export default {
     },
     components: {
         "guess-like": Guesslike,
-        BgMask
+        BgMask,
+        TextLoading
     }
 };
 </script>
@@ -574,7 +583,7 @@ export default {
   .order-addressWN{
     position: relative;
     z-index: 3;
-    margin: px2rem(-30) px2rem(15) 0;
+    margin: -36px px2rem(15) 0;
     padding: px2rem(19) px2rem(15);
     box-sizing: border-box;
     background: #fff;
@@ -689,9 +698,6 @@ export default {
             display: flex;
             align-items: center;
             padding: 0.3rem 0 0.13rem 0;
-
-            .shop-selectN,
-            .shop-selectY,
             .shop-dNameImg,
             .shop-dGo {
                 background-image: url(/static/images/jl.png);
@@ -699,23 +705,6 @@ export default {
                 background-size: 5.8rem 1.86rem;
                 display: inline-block;
             }
-            .shop-selectN,
-            .shop-selectY {
-                margin: 0 0.25rem 0 0.32rem;
-                width: 0.32rem;
-                height: 0.3rem;
-                background: #fff;
-                background-image: url(/static/images/jl.png);
-                background-repeat: no-repeat;
-                background-size: 5.8rem 1.86rem;
-            }
-            .shop-selectN {
-                background-position: -5.17rem -0.77rem;
-            }
-            .shop-selectY {
-                background-position: -4.75rem -0.77rem;
-            }
-
             .shop-dNameImg {
                 width: 0.38rem;
                 height: 0.38rem;
@@ -738,29 +727,35 @@ export default {
             li {
                 display: flex;
                 padding: 0.3rem 0;
+                align-items: center;
                 .shop-selectW {
                     align-items: center;
                     display: flex;
                     margin: 0 0.25rem 0 0.32rem;
-                    .shop-selectN,
-                    .shop-selectY {
-                        width: 0.3rem;
-                        height: 0.3rem;
-                        background: #fff;
-                        background-image: url(/static/images/jl.png);
-                        background-repeat: no-repeat;
-                        background-size: 5.8rem 1.86rem;
-                    }
                     .shop-selectN {
-                        background-position: -5.18rem -0.77rem;
+                      width: px2rem(18);
+                      height: px2rem(18);
+                      border: 1px solid #dedede;
+                      border-radius: 50%;
+                      display: block;
+                      margin: auto;
+                      box-sizing: border-box;
                     }
                     .shop-selectY {
-                        background-position: -4.75rem -0.77rem;
+                      background-image: url('/static/images/cart/checked.png');
+                      background-repeat: no-repeat;
+                      background-size: 100% 100%;
+                      width: px2rem(18);
+                      height: px2rem(18.5);
+                      display: block;
+                      margin: auto;
+                      box-sizing: border-box;
                     }
                 }
                 .shop-selImg {
                     width: 2.1rem;
-                    height: 2.1rem;
+                    height: 2rem;
+                    line-height: 2rem;
                     margin-right: 0.25rem;
                     img {
                         width: 100%;
@@ -770,8 +765,6 @@ export default {
                     flex: 1;
                     .shop-selGoodsT {
                         width: 3.8rem;
-                        font-size: 0.3rem;
-                        color: #333333;
                         text-overflow: -o-ellipsis-lastline;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -779,6 +772,10 @@ export default {
                         -webkit-line-clamp: 2;
                         line-clamp: 2;
                         -webkit-box-orient: vertical;
+                        font-size:15px;
+                        font-family:Microsoft YaHei;
+                        font-weight:400;
+                        color:rgba(51,51,51,1);
                     }
                     .shop-selGoodsC {
                         color: #999999;
@@ -788,6 +785,14 @@ export default {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
+                        .money-logo{
+                          background: url('/static/images/cart/icon.png') no-repeat;
+                          background-size: 100% 100%;
+                          width: px2rem(16);
+                          height: px2rem(17.5);
+                          display: inline-block;
+                          margin-right: 5px;
+                        }
                         .shop-selGoodsS {
                             color: #333333;
                         }
@@ -796,8 +801,24 @@ export default {
                             width: 1.68rem;
                             height: 0.48rem;
                             // line-height: 0.48rem;
-                            border: 1px solid #dfdfdf;
                             margin-right: 0.22rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            position: relative;
+                            z-index: 2;
+                            &::after{
+                              content: ' ';
+                              width: 200%;
+                              height:200%;
+                              position: absolute;
+                              left: 0;
+                              top: 0;
+                              transform: scale(.5);
+                              transform-origin: top left;
+                              z-index: 1;
+                              border: 1px solid #DFDFDF;
+                            }
                             input {
                                 border: none;
                                 padding: 0 0.02rem;
@@ -809,16 +830,9 @@ export default {
                                 align-self: center;
                                 box-sizing: border-box;
                             }
-                            .decNum {
-                                float: left;
-                                background-position: -2.88rem -1.04rem;
-                            }
-                            .decNoNum {
-                                float: left;
-                                background-position: -2.08rem -1.04rem;
-                            }
                             span:nth-of-type(2) {
-                                width: 0.76rem;
+                                flex: 1;
+                                width: 0.46rem;
                                 display: inline-block;
                                 text-align: center;
                                 white-space: nowrap;
@@ -826,19 +840,50 @@ export default {
                                 overflow: hidden;
                                 word-break: break-all;
                                 height: 100%;
+                                position: relative;
+                                z-index: 2;
+                                &::after{
+                                  content: ' ';
+                                  width: 200%;
+                                  height:200%;
+                                  position: absolute;
+                                  left: 0;
+                                  top: 0;
+                                  transform: scale(.5);
+                                  transform-origin: top left;
+                                  z-index: 1;
+                                  border-left: 1px solid #DFDFDF;
+                                  border-top: 1px solid #dedede;
+                                }
                             }
                             span:nth-of-type(3) {
-                                float: right; // background-position: -2.49rem -1.15rem; 灰色
-                                background-position: -3.32rem -1.17rem;
+                              &::after{
+                                border-left: 1px solid #DFDFDF;
+                              }
                             }
                             span:nth-of-type(odd) {
-                                display: inline-block;
-                                height: 100%;
-                                width: 0.42rem;
-                                text-align: center;
-                                background-image: url(/static/images/jl.png);
-                                background-repeat: no-repeat;
-                                background-size: 5.8rem 1.86rem;
+                              height: 100%;
+                              display: flex;
+                              justify-content: center;
+                              align-items: center;
+                              z-index: 2;
+                              flex: 1;
+                              position: relative;
+                              &::after{
+                                content: ' ';
+                                width: 200%;
+                                height:200%;
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                transform: scale(.5);
+                                transform-origin: top left;
+                                z-index: 1;
+                              }
+                              .num-icon{
+                                width: px2rem(13);
+                                height: px2rem(13);
+                              }
                             }
                         }
                     }
@@ -899,24 +944,27 @@ export default {
     border-top: 1px solid #dfdfdf;
     justify-content: space-between;
     background: #fff;
+    z-index: 3;
     .shop-cSelectW {
         margin-left: 0.22rem;
-        .shop-selectN,
-        .shop-selectY {
-            width: 0.3rem;
-            height: 0.3rem;
-            background: #fff;
-            background-image: url(/static/images/jl.png);
-            background-repeat: no-repeat;
-            background-size: 5.8rem 1.86rem;
-            display: block;
-            margin: 0 auto;
-        }
         .shop-selectN {
-            background-position: -5.17rem -0.77rem;
+          width: px2rem(18);
+          height: px2rem(18);
+          border: 1px solid #dedede;
+          border-radius: 50%;
+          display: block;
+          margin: auto;
+          box-sizing: border-box;
         }
         .shop-selectY {
-            background-position: -4.75rem -0.77rem;
+          background-image: url('/static/images/cart/checked.png');
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          width: px2rem(18);
+          height: px2rem(18.5);
+          display: block;
+          margin: auto;
+          box-sizing: border-box;
         }
         span:nth-of-type(2) {
             font-size: 0.24rem;
@@ -928,12 +976,22 @@ export default {
         height: 100%;
         .shop-cPriceW {
             display: flex;
-            align-self: center;
+            align-items: center;
             color: #fb5c5c;
+            span{
+                &:nth-of-type(1) {
+                    font-size:12px;
+                    font-family:Microsoft YaHei;
+                    font-weight:bold;
+                    color:rgba(51,51,51,1);
+                    display: inline-block;
+                }
+            }
             .shop-cPriceInt {
                 font-size: 0.36rem;
             }
             .shop-cPriceFloat {
+              margin-top: px2rem(5);
                 font-size: 0.24rem;
                 display: flex;
                 align-items: flex-end;
@@ -952,6 +1010,7 @@ export default {
             margin-left: 0.34rem;
             z-index: 2;
             .shop-carNumI {
+              font-size: px2rem(14);
                 margin: 0 auto;
                 .shop-cartNum {}
             }
@@ -961,6 +1020,9 @@ export default {
         }
         .shop-cartNum1 {
             background: #30ce84;
+        }
+        .shop-cartNum2{
+          background:rgba(251,92,92,1);
         }
     }
 }
