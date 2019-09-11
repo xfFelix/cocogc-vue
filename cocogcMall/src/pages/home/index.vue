@@ -104,8 +104,8 @@ export default {
   data() {
     return {
       fastList: [
-        { id: 1, name: "黄金兑换", img: 'gold', active: true, path: infoURl + '#!/goldChange?token=' + getToken() },
-        { id: 2, name: "话费充值", img: 'recharge', active: true, path: infoURl + '#!/phoneBill?token=' + getToken() },
+        { id: 1, name: "黄金兑换", img: 'gold', active: true, path: infoURl + '#!/goldChange?token=' + getToken() + '&t=' + (new Date()).getTime() },
+        { id: 2, name: "话费充值", img: 'recharge', active: true, path: infoURl + '#!/phoneBill?token=' + getToken() + '&t=' + (new Date()).getTime() },
         { id: 5, name: "加油卡充值", img: 'oil', active: true, path: hostUrl + 'ticket/oil' },
         { id: 4, name: "小椰超市", img: 'jd', active: true, path: '/layout/shopMall'},
         { id: 13, name: "生活缴费", img: 'life', active: true, path: `${hostUrl}ticket/life` },
