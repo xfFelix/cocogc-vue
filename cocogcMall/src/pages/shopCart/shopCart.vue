@@ -818,6 +818,7 @@ export default {
                               transform-origin: top left;
                               z-index: 1;
                               border: 1px solid #DFDFDF;
+                              pointer-events: none;
                             }
                             input {
                                 border: none;
@@ -854,11 +855,13 @@ export default {
                                   z-index: 1;
                                   border-left: 1px solid #DFDFDF;
                                   border-top: 1px solid #dedede;
+                                  pointer-events: none;
                                 }
                             }
                             span:nth-of-type(3) {
                               &::after{
                                 border-left: 1px solid #DFDFDF;
+                                pointer-events: none;
                               }
                             }
                             span:nth-of-type(odd) {
@@ -879,6 +882,7 @@ export default {
                                 transform: scale(.5);
                                 transform-origin: top left;
                                 z-index: 1;
+                                pointer-events: none;
                               }
                               .num-icon{
                                 width: px2rem(13);

@@ -12,11 +12,12 @@
                                     <p class="home-qName">{{quickItem.name}}</p>
                                 </router-link> -->
 
-                        <router-link :to="{path:'/goodsList',query:{quickItem:quickItem.id}}" class="home-quickA" v-for="(quickItem,quickIndex) in item" :key="quickIndex">
+                        <div class="home-quickA" v-for="(quickItem,quickIndex) in item" :key="quickIndex" @click="jumpPage(quickItem)">
                             <p class="navImg home-qImg" :class="quickItem.imgBg">
                             </p>
                             <p class="home-qName">{{quickItem.name}}</p>
-                        </router-link>
+                        </div>
+
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -32,7 +33,7 @@ export default {
         return {
             quickList: [
                 [
-                    { name: "日用超市", imgBg: 'home-qImg01', id: '1620' },
+                    { name: "天涯严选", imgBg: 'home-qImg01', id: '18608' },
                     { name: "手机数码", imgBg: 'home-qImg02', id: '9987' },
                     { name: "家用电器", imgBg: 'home-qImg03', id: '737' },
                     { name: "美妆护肤", imgBg: 'home-qImg04', id: '1316' },
@@ -56,7 +57,12 @@ export default {
         })
     },
     methods: {
-
+        jumpPage(quickItem){
+            if(quickItem.id=='18608'){
+                return false;
+            }
+            this.$router.push({path:'/goodsList',query:{quickItem:quickItem.id}})
+        }
     }
 
 }
