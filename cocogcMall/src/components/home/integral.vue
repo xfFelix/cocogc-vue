@@ -26,7 +26,7 @@
                     {{item.name}}
                 </p>
                 <div class="home-iMoneyW">
-                    <span class="home-iMoneyL"></span>
+                    <img :src="logoImg" alt="" class="logo-black-img">
                     <span class="home-iMoney">{{item.currentPrice|toDecimal2}}</span>
                     <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">{{item.marketPrice|toDecimal2}}</span>
                 </div>
@@ -56,8 +56,9 @@ export default {
                 { id: 4, integral: "1001~5000", homeSelShow: true, integralInfo: '1001~5000' },
                 { id: 5, integral: "5001~*", homeSelShow: true, integralInfo: '5000以上' },
             ],
-            homeSelFlag: 0,
-            iSelectAct: '',
+            logoImg: LOGO_PACKAGE_URL + 'logo-black.png',
+            homeSelFlag: 1,
+            iSelectAct: 1,
             iSintegra: '',
             goodsList: [],
             token: getToken(),
@@ -355,15 +356,9 @@ export default {
             align-items: center;
             margin: 0.1rem 0;
             text-align: left;
-            .home-iMoneyL {
-                width: 0.26rem;
-                height: 0.28rem;
-                display: inline-block;
-                background-image: url(/static/images/jl.png);
-                background-repeat: no-repeat;
-                background-position: -2.57rem -0.78rem;
-                background-size: 5.8rem 1.86rem;
-                margin-right: 0.03rem;
+            .logo-black-img{
+              width: 20px;
+              height: 20px;
             }
         }
     }

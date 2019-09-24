@@ -3,7 +3,8 @@
         <div class="j1Png home-back" @click="$router.back()"></div>
         <div class="home-search">
             <div class="home-smInput">
-                <span class="j1Png home-logo"></span>
+                <img :src="logoImg" alt="" class="logo-img">
+                <!-- <span class="j1Png home-logo"></span> -->
                 <p class="home-searchI">
                     <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="kewWordC"/> -->
                     <el-autocomplete v-model="kewWordC" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="goSearch()"></el-autocomplete>
@@ -27,6 +28,9 @@ export default {
         default: ''
       }
     },
+    data: () => ({
+      logoImg: LOGO_PACKAGE_URL + 'logo.png'
+    }),
     methods: {
         cleanInp() {
             this.kewWordC = ""
@@ -81,11 +85,10 @@ export default {
             align-items: center;
             width: 100%;
             height: 100%;
-            .home-logo {
-                height: 0.38rem;
-                width: 0.42rem;
-                background-position: -2.16rem -0.18rem;
-                margin: 0.1rem 0.12rem;
+            .logo-img{
+              width: 20px;
+              height: 20px;
+              margin: 0 6px;
             }
             .home-searchL {
                 height: 0.26rem;

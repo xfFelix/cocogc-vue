@@ -21,8 +21,8 @@
                                     {{item.name}}
                                 </p>
                                 <div class="home-hSmoneyW">
-                                    <span class="home-hSmoneyL"></span>
-                                    <span class="home-hSmoney">{{item.currentPrice|toDecimal2}}</span>
+                                  <img :src="logoImg" alt="" class="logo-black-img">
+                                  <span class="home-hSmoney">{{item.currentPrice|toDecimal2}}</span>
                                 </div>
                             </router-link>
                         </div>
@@ -41,6 +41,7 @@ export default {
     data() {
         return {
             goodsList: [],
+            logoImg: LOGO_PACKAGE_URL + 'logo-black.png'
         }
     },
     mounted() {
@@ -164,16 +165,9 @@ export default {
         margin-bottom: 0.4rem;
         text-align: left;
         padding: 0 0.22rem;
-        .home-hSmoneyL {
-            width: 0.28rem;
-            height: 0.28rem;
-            display: inline-block;
-            background-image: url(/static/images/jl.png);
-            background-repeat: no-repeat;
-            background-position: -2.57rem -0.78rem;
-            background-size: 5.8rem 1.86rem;
-            margin-right: 0.03rem;
-            margin-left: 0.01rem;
+        .logo-black-img{
+          width: 20px;
+          height: 20px;
         }
     }
 }

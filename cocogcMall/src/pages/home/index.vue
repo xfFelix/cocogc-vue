@@ -3,6 +3,7 @@
     <!-- 头部 -->
     <div style="background: #fff;">
       <div class="index-head">
+        <img :src="bannerImg" alt="" srcset="">
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
@@ -36,7 +37,7 @@
             <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)" style="position:relative;">
               <img src="/static/images/home/hot.png" alt=" " v-if="item.id == 1" class="badge-img hot">
               <img src="/static/images/home/new.png" alt=" " v-if="item.id == 13" class="badge-img">
-              <img :src="`/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png`" alt="" class="iconImg">
+              <img :src="item.id == 4 ? logoImg : `/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png`" alt="" class="iconImg">
               <p class="ifa-name" :style="!item.active && 'color: #cecece'">{{item.name}}</p>
             </div>
         </li>
@@ -122,7 +123,9 @@ export default {
       token: getToken(),
       banner: [],
       newsList:[],
-      autoplay: false
+      autoplay: false,
+      bannerImg: LOGO_PACKAGE_URL + 'home-banner-bg.png',
+      logoImg: LOGO_PACKAGE_URL + 'jd.png'
     }
   },
   created() {
@@ -230,16 +233,8 @@ export default {
   }
 }
 .index-head {
-  width: 100%;
-  background: url("/static/images/home/bg.png") no-repeat;
-  background-size: 100% auto;
   position: relative;
   overflow: hidden;
-  &::before{
-    display: block;
-    content: ' ';
-    padding-top: 70.6%;
-  }
   .ih-noticeW {
     width: 88%;
     background: rgba(0, 0, 0, 0.15);

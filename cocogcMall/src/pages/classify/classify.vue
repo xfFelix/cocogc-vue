@@ -3,7 +3,8 @@
         <div class="select-head">
             <div class="home-smWrap">
                 <div class="home-search">
-                    <span class="home-logo"></span>
+                    <img :src="searchLogo" alt="" srcset="" class="search-logo">
+                    <!-- <span class="home-logo"></span> -->
                     <!-- <span class="home-searchL"></span> -->
                     <p class="home-searchI">
                         <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchWord" /> -->
@@ -95,7 +96,8 @@ export default
                 cateGoodsList: [],
                 searchWord: '',
                 banner: [],
-                timeout: null
+                timeout: null,
+                searchLogo: LOGO_PACKAGE_URL + 'logo.png'
             };
         },
         mounted() {
@@ -265,16 +267,10 @@ export default
             align-items: center;
             margin-top: 0.09rem;
             border: 1px solid rgba(0, 0, 0, 0.06);
-            ;
-            .home-logo {
-                height: 0.38rem;
-                width: 0.42rem;
-                display: inline-block;
-                background-image: url(/static/images/jl.png);
-                background-repeat: no-repeat;
-                background-position: -2.16rem -0.18rem;
-                background-size: 5.8rem 1.86rem;
-                margin: 0.1rem 0.12rem;
+            .search-logo{
+              width: 24px;
+              height: 24px;
+              margin-left: 5px;
             }
             .home-searchL {
                 height: 0.26rem;

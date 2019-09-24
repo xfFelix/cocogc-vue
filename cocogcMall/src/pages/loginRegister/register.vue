@@ -2,12 +2,13 @@
   <transition enter-active-class="slideInRight" leave-active-class="slideOutRight">
     <div id="register">
 
-      <head>
+      <header>
         <div class="registHead" @click="$router.back(-1)">
           <span class="triangleUp"></span>
           <span class="triangleDown"></span>
         </div>
-      </head>
+        <img :src="bannerImg" alt="">
+      </header>
 
         <ul class="loginUl">
           <li>
@@ -94,6 +95,7 @@ export default {
         smsValid: '',
         passWord: ""
       },
+      bannerImg: LOGO_PACKAGE_URL + 'regist.png'
     };
   },
     computed: {
@@ -237,7 +239,7 @@ export default {
         return false;
       }
       if (!CheckPass(this.formMsg.passWord)) {
-        this.MessageBox("提示", "请输入6-20位数字与字母的组合。")
+        this.MessageBox("提示", "密码请输入6-20位数字与字母的组合")
         return false;
       }
       this.regist();
@@ -297,12 +299,8 @@ export default {
     right: 0;
     margin: 0 auto;
     max-width: 450px;
-  head {
-    background: url(/static/images/regist.png) no-repeat;
-    width: 100%;
-    height: 3.5rem;
-    display: block;
-    background-size: 100% 100%;
+  header {
+    position: relative;
     .registHead {
       position: absolute;
       left: 0.5rem;

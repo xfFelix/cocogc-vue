@@ -8,7 +8,7 @@
             </div>
             <div class="acc-headInfo">
                 <div class="acc-headImgW">
-                    <img class="acc-headImg" src="static/images/headImg.png" alt="" />
+                    <img class="acc-headImg" :src="logoImg" alt="" />
                 </div>
                 <div class="acc-headTG">
                     <p class="acc-headTel">{{userName}}</p>
@@ -139,7 +139,8 @@ export default {
             top: [],
             end: [],
             levelFlag:false,
-            num: 0
+            num: 0,
+            logoImg: LOGO_PACKAGE_URL + 'headImg.png'
         };
     },
     computed: {
