@@ -613,12 +613,16 @@ export default {
               return ;
             }
             let _this = this;
+            this.Indicator.open({
+              spinnerType: 'double-bounce'
+            });
             this.axios(testUrl + api.saveOrderByCart, {
                 token,
                 id: this.addressDef.id,
                 code: this.smsCode
                 }, 'post')
                 .then((data) => {
+                  this.Indicator.close()
                      this.btnDisabled = false
                     if (data.error_code == 0) {
                         var orderId = data.data[0].orderId;
@@ -628,7 +632,13 @@ export default {
                         _this.exchangeShow = true;
                         _this.parOrderId = orderId;
                         this.clearPassword()
-                    } else {
+                    } else if(data.error_code === 4) {
+                      this.Toast(data.message)
+                      this.clearPassword()
+                      this.smsCode = ''
+                      this.failText = data.message
+                      this.showSendCode = false
+                    } else{
                       this.clearPassword()
                       this.smsCode = ''
                       this.failText = data.message
