@@ -58,9 +58,6 @@ export default {
     },
     methods: {
         jumpPage(quickItem){
-            if(quickItem.id=='18608'){
-                return false;
-            }
             this.$router.push({path:'/goodsList',query:{quickItem:quickItem.id}})
         }
     }
