@@ -17,7 +17,8 @@
                         {{item.name}}
                     </p>
                     <div class="home-iMoneyW">
-                        <span class="home-iMoneyL"></span>
+                        <!-- <span class="home-iMoneyL"></span> -->
+                        <img :src="logoImg" alt="" class="home-iMoneyL">
                         <span class="home-iMoney">{{item.currentPrice|toDecimal2}}</span>
                         <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">{{item.marketPrice|toDecimal2}}</span>
                     </div>
@@ -34,7 +35,8 @@ import { arrayContains } from "@/util/common";
 export default {
     data() {
         return {
-            goodsList: []
+            goodsList: [],
+            logoImg: LOGO_PACKAGE_URL + 'logo-black.png'
         }
     },
     methods: {
@@ -182,14 +184,9 @@ export default {
                 align-items: center;
                 font-size: 0.26rem;
                 .home-iMoneyL {
-                    width: 0.26rem;
-                    height: 0.28rem;
-                    display: inline-block;
-                    background-image: url(/static/images/jl.png);
-                    background-repeat: no-repeat;
-                    background-position: -2.57rem -0.78rem;
-                    background-size: 5.8rem 1.86rem;
-                    margin-right: 0.03rem;
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 3px;
                 }
             }
         }

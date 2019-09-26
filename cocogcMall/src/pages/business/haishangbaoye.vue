@@ -3,6 +3,7 @@
     <!-- 头部 -->
     <div style="background: #fff;">
       <div class="index-head">
+        <img :src="bannerImg" alt="" srcset="">
         <div class="ih-noticeW">
           <div class="ih-notice">
             <span class="ih-hormImg j1Png"></span>
@@ -122,7 +123,8 @@ export default {
       token: getToken(),
       banner: [],
       newsList:[],
-      autoplay: false
+      autoplay: false,
+      bannerImg: LOGO_PACKAGE_URL + 'home-banner-bg.png'
     }
   },
   created() {
@@ -230,16 +232,8 @@ export default {
   }
 }
 .index-head {
-  width: 100%;
-  background: url("/static/images/home/bg.png") no-repeat;
-  background-size: 100% auto;
   position: relative;
   overflow: hidden;
-  &::before{
-    display: block;
-    content: ' ';
-    padding-top: 70.6%;
-  }
   .ih-noticeW {
     width: 88%;
     background: rgba(0, 0, 0, 0.15);
