@@ -1,14 +1,15 @@
 <template>
     <div id="login">
 
-        <head>
+        <header>
             <div class="headLogin">
                 <span class="back" @click="goBack"></span>
                 <router-link class="register" to="/register">
                     注册
                 </router-link>
             </div>
-        </head>
+            <img :src="bannerImg" alt="" class="banner-img">
+        </header>
 
         <ul class="loginUl">
             <li>
@@ -97,7 +98,8 @@ export default {
             validate: "获取验证码",
             validateFlag: 1,
             smsFlag: true,
-            validateImgSrc:''
+            validateImgSrc:'',
+            bannerImg: LOGO_PACKAGE_URL + 'regist.png'
         };
     },
     mixins: [blurMix,loginMix],
@@ -353,18 +355,17 @@ export default {
     right: 0;
     margin: 0 auto;
     max-width: 450px;
-    head {
-        background: url(/static/images/regist.png) no-repeat;
-        width: 100%;
-        height: 3.5rem;
-        display: block;
-        background-size: 100% 100%;
+    header {
+      position: relative;
         .headLogin {
             padding: 0.44rem 0.5rem;
             font-size: 0.28rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: absolute;
+            width: 100%;
+            box-sizing: border-box;
             .close {
                 width: 0.7rem;
                 height: 0.7rem;

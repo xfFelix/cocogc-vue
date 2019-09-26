@@ -73,7 +73,8 @@
                                 <p class="shop-selGoodsC">{{items.goods!=null?items.goods.attrs:''}}</p>
                                 <div class="shop-selGoodsN">
                                     <div style="display: flex; align-items: center">
-                                        <span class="money-logo"></span>
+                                        <!-- <span class="money-logo"></span> -->
+                                        <img :src="logoImg" alt="" class="money-logo">
                                         <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Fp}}.</span>
                                         <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Ap}}</span>
                                     </div>
@@ -185,7 +186,8 @@ export default {
             inputNumShow: false,
             goodsNum: 1,
             goodsNumIndex: 0,
-            addressDef: undefined
+            addressDef: undefined,
+            logoImg: LOGO_PACKAGE_URL + 'logo.png'
         };
     },
     computed: {
@@ -786,11 +788,8 @@ export default {
                         justify-content: space-between;
                         align-items: center;
                         .money-logo{
-                          background: url('/static/images/cart/icon.png') no-repeat;
-                          background-size: 100% 100%;
                           width: 16px;
-                          height: 17px;
-                          display: inline-block;
+                          height: 16px;
                           margin-right: 5px;
                         }
                         .shop-selGoodsS {

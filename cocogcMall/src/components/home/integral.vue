@@ -26,7 +26,7 @@
                     {{item.name}}
                 </p>
                 <div class="home-iMoneyW">
-                    <span class="home-iMoneyL"></span>
+                    <img :src="logoImg" alt="" class="logo-black-img">
                     <span class="home-iMoney">{{item.currentPrice|toDecimal2}}</span>
                     <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">{{item.marketPrice|toDecimal2}}</span>
                 </div>
@@ -49,21 +49,21 @@ export default {
     data() {
         return {
             homeSel: [
-                { id: 0, integral: '0~' + parseInt(this.$store.getters['userinfo/getUserInfo'].score), homeSelShow: true, integralInfo: '我能兑换' },
-                { id: 1, integral: "0~50", homeSelShow: true, integralInfo: '0~50' },
-                { id: 2, integral: "51~200", homeSelShow: true, integralInfo: '51~200' },
-                { id: 3, integral: "201~1000", homeSelShow: true, integralInfo: '201~1000' },
-                { id: 4, integral: "1001~5000", homeSelShow: true, integralInfo: '1001~5000' },
-                { id: 5, integral: "5001~*", homeSelShow: true, integralInfo: '5000以上' },
+                { id: 0, integral: '0~' + parseInt(this.$store.getters['userinfo/getUserInfo'].score), homeSelShow: true, integralInfo: '我能兑换', args: '0-' + parseInt(this.$store.getters['userinfo/getUserInfo'].score) },
+                { id: 1, integral: "0~50", homeSelShow: true, integralInfo: '0~50', args: '0-50' },
+                { id: 2, integral: "51~200", homeSelShow: true, integralInfo: '51~200', args: '51-200' },
+                { id: 3, integral: "201~1000", homeSelShow: true, integralInfo: '201~1000', args: '201-1000' },
+                { id: 4, integral: "1001~5000", homeSelShow: true, integralInfo: '1001~5000', args: '1001-5000' },
+                { id: 5, integral: "5001~*", homeSelShow: true, integralInfo: '5000以上', args: '5001-*' },
             ],
+            logoImg: LOGO_PACKAGE_URL + 'logo-black.png',
             homeSelFlag: 0,
-            iSelectAct: '',
+            iSelectAct: 0,
             iSintegra: '',
             goodsList: [],
             token: getToken(),
-            page: 1,
+            page: 0,
             rows: 10,
-            offset: 0,
             allLoaded: false,
             tenFlag:false,
             showLoading: false
@@ -76,6 +76,9 @@ export default {
         ...mapGetters({
             userinfo: 'userinfo/getUserInfo'
         }),
+        offset() {
+          return this.page * this.rows + 1
+        }
     },
     mounted() {
         //积分列表展示
@@ -85,13 +88,14 @@ export default {
             }
         })
 
-        if (this.userinfo && this.token) {
-            this.price(this.homeSel[0].integral, 'first');
-            this.iSintegra = this.homeSel[0].integral.replace('~', '-');
+        if (this.token && this.userinfo.score > 0) {
+            this.iSelectAct = 0
+            this.price(this.homeSel[0].args, 'first');
+            this.iSintegra = this.homeSel[0].args
         } else {
             this.iSelectAct = 1
-            this.price(this.homeSel[1].integral, 'first');
-            this.iSintegra = this.homeSel[1].integral.replace('~', '-');
+            this.price(this.homeSel[1].args, 'first');
+            this.iSintegra = this.homeSel[1].args
         }
 
         window.addEventListener('scroll', this.handleScroll)
@@ -168,7 +172,6 @@ export default {
         },
         init() {
           this.page = 1
-          this.offset = 0
           this.goodsList = []
         },
         price(integral, first) {
@@ -189,8 +192,6 @@ export default {
                         }
                         this.allLoaded = !(data.list.length === this.rows)
                         this.page ++
-                        this.offset = 1+this.rows*(this.page-1);
-
                         if(data.list.length>9){
                           this.tenFlag = true;
                         }else{
@@ -355,15 +356,9 @@ export default {
             align-items: center;
             margin: 0.1rem 0;
             text-align: left;
-            .home-iMoneyL {
-                width: 0.26rem;
-                height: 0.28rem;
-                display: inline-block;
-                background-image: url(/static/images/jl.png);
-                background-repeat: no-repeat;
-                background-position: -2.57rem -0.78rem;
-                background-size: 5.8rem 1.86rem;
-                margin-right: 0.03rem;
+            .logo-black-img{
+              width: 20px;
+              height: 20px;
             }
         }
     }

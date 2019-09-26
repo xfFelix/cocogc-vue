@@ -1,10 +1,10 @@
 <template>
     <div id="passSetUp">
 
-        <head>
-            <div class="registHead" @click="$router.back(-1)">
-            </div>
-        </head>
+        <header>
+            <div class="registHead" @click="$router.back(-1)"></div>
+            <img :src="bannerImg" alt="">
+        </header>
 
         <section>
             <ul class="loginUl">
@@ -89,7 +89,8 @@ export default {
                 passWord: '',
                 passConfirm: '',
                 smsValid: '',
-            }
+            },
+            bannerImg: LOGO_PACKAGE_URL + 'regist.png'
         };
     },
      computed: {
@@ -251,12 +252,7 @@ position: absolute;
     right: 0;
     margin: 0 auto;
     max-width: 450px;
-    head {
-        background: url(/static/images/regist.png) no-repeat;
-        width: 100%;
-        height: 3.5rem;
-        display: block;
-        background-size: 100% 100%;
+    header {
         position: relative;
     }
     .loginUl {

@@ -47,7 +47,7 @@ dotenvFiles.forEach(dotenvFile => {
   }
 });
 
-const reg = /^(testUrl|infoURl|jdTestUrl|hostUrl)/
+const reg = /^(testUrl|infoURl|jdTestUrl|hostUrl|LOGO_PACKAGE_URL)/
 
 const raw = Object.keys(process.env)
     .filter(key => reg.test(key))

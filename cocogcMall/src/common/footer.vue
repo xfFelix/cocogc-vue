@@ -3,7 +3,7 @@
         <div v-for="(item,index) in tableList" @click="selectNav(item.name)" :key='index' class="navTabWrap">
             <router-link :to="item.path" class="navTab">
                 <!-- <span class="navImg" :class="isSelect == item.name ? item.iconGreen : item.icon"></span> -->
-                <img :src="`/static/images/home/${item.icon}${isSelect == item.name ? '-actived': ''}.png`" alt="" class="icon">
+                <img :src="item.id == 2 ? setIcon(item) : (`/static/images/home/${item.icon}${isSelect == item.name ? '-actived': ''}.png`)" alt="" class="icon">
                 <span :class="isSelect == item.name ? 'active' : ''">
                     {{item.title}}
                 </span>
@@ -19,11 +19,11 @@ export default {
     data() {
         return {
             tableList: [
-                { title: '首页', path: 'home', icon: 'home', iconGreen: 'navGo11', name: 'home' },
-                { title: '超市', path: 'shopMall', icon: 'supermarket', iconGreen: 'navGo12', name: 'shopMall' },
-                { title: '分类', path: 'classify', icon: 'classify', iconGreen: 'navGo13', name: 'classify' },
-                { title: '购物车', path: 'shopCart', icon: 'cart', iconGreen: 'navGo14', name: 'shopCart' },
-                { title: '我的', path: 'account', icon: 'mine', iconGreen: 'navGo15', name: 'account' },
+                { id: '1', title: '首页', path: 'home', icon: 'home', iconGreen: 'navGo11', name: 'home' },
+                { id: '2', title: '超市', path: 'shopMall', icon: 'supermarket', iconGreen: 'navGo12', name: 'shopMall' },
+                { id: '3', title: '分类', path: 'classify', icon: 'classify', iconGreen: 'navGo13', name: 'classify' },
+                { id: '4', title: '购物车', path: 'shopCart', icon: 'cart', iconGreen: 'navGo14', name: 'shopCart' },
+                { id: '5', title: '我的', path: 'account', icon: 'mine', iconGreen: 'navGo15', name: 'account' },
             ],
             isSelect: 'home',
             docmHeight: document.documentElement.clientHeight,  //默认屏幕高度
@@ -66,6 +66,9 @@ export default {
             isThis.isSelect = title; //当点击或啥返回上一页时都可以获取当前的名称
             sessionStorage.setItem('isSelect', this.isSelect);
         },
+        setIcon(item) {
+          return item.id == 2 && `${LOGO_PACKAGE_URL}/${item.icon}${this.isSelect == item.name ? '-actived': ''}.png`
+        }
     },
     components: {
 

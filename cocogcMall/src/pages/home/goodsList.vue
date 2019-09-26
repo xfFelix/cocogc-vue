@@ -50,7 +50,8 @@
               {{item.name}}
             </p>
             <div class="home-iMoneyW">
-              <span class="home-iMoneyL"></span>
+              <!-- <span class="home-iMoneyL"></span> -->
+              <img :src="logoImg" alt="" class="home-iMoneyL">
               <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
               <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">{{item.marketPrice|toDecimal2}}</span>
             </div>
@@ -81,6 +82,7 @@
     data() {
       return {
         // observer: null,
+        logoImg: LOGO_PACKAGE_URL + 'logo-black.png',
         searchCont: '',
         tenFlag:false,
         homeSel: [{
@@ -514,14 +516,9 @@
         margin: 0.1rem;
 
         .home-iMoneyL {
-          width: 0.26rem;
-          height: 0.28rem;
-          display: inline-block;
-          background-image: url(/static/images/jl.png);
-          background-repeat: no-repeat;
-          background-position: -2.57rem -0.78rem;
-          background-size: 5.8rem 1.86rem;
-          margin-right: 0.03rem;
+          width: 18px;
+          height: 18px;
+          margin-right: 4px;
         }
       }
     }

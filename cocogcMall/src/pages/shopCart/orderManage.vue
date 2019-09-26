@@ -97,6 +97,7 @@
                     </div>
                 </div>
             </div>
+            <div @click="loadBottom" v-if="platform && !allLoaded" class="more">点击加载更多</div>
         </mt-loadmore>
         <no-data :data="list"></no-data>
 
@@ -118,16 +119,14 @@ export default {
             pathStatus: '',
             pageNum: 1,
             pageSize: 10,
-            allLoaded: false
+            allLoaded: false,
+            platform: /win|mac|x11|linux/i.test(navigator.platform)
         }
     },
     computed: {
         offset() {
             return this.pageSize * (this.pageNum - 1) + 1
         }
-    },
-    watch: {
-
     },
     mounted() {
         this.pathStatus = this.$route.query.status;
@@ -265,6 +264,7 @@ export default {
     margin: 0.2rem 0;
     background: #fff;
     padding: 0 0.37rem;
+    overflow: hidden;
     &:first-of-type {
         margin-top: 0;
     }
@@ -416,6 +416,15 @@ export default {
         background: #30CE84;
         color: #FFF;
     }
+}
+.more{
+  width: 100%;
+  height: 44px;
+  background: #FFF;
+  text-align: center;
+  line-height: 44px;
+  color: #333;
+  font-size: 14px;
 }
 </style>
 <style>
