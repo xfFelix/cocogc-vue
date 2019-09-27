@@ -77,7 +77,7 @@
         </div>
     </div>
 
-    <banner v-model="showBanner"></banner>
+    <banner v-model="showBanner" ref="banner"></banner>
   </div>
 </template>
 
@@ -108,7 +108,8 @@ export default {
         return this.$store.getters['shopMall/getShowBanner']
       },
       set(val) {
-        this.$store.dispatch('shopMall/setShowBanner', val)
+        let time = this.$refs.banner.$data.expireTime
+        this.$store.dispatch('shopMall/setShowBanner', {expireTime: time, val})
       }
     }
   },

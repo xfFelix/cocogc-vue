@@ -35,9 +35,9 @@ const actions = {
 // mutations
 const mutations = {
   setShowBanner(state, val) {
-    state.showBanner = val
+    state.showBanner = val.val
     try {
-      local.set('shop_mall_banner_show', state.showBanner)
+      local.set('shop_mall_banner_show', state.showBanner, val.expireTime)
     }catch(e) {
       console.error(e)
     }

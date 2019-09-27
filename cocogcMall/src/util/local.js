@@ -7,29 +7,29 @@ var storage = {
   */
   set: function(key, value, duration) {
     var data = {
-        value: value,
-        expiryTime: !duration || isNaN(duration) ? 0 : this.getCurrentTimeStamp() + parseInt(duration)
-      };
-      localStorage[key] = JSON.stringify(data);
+      value: value,
+      expiryTime: !duration || isNaN(duration) ? 0 : parseInt(duration)
+    };
+    localStorage[key] = JSON.stringify(data);
   },
   get: function(key) {
-      var data = localStorage[key];
-      if (data === null || data === undefined || data === "null" || data === 'undefined') {
-          return null;
-      }
-      var now = this.getCurrentTimeStamp();
-      var obj;
-      try {
-          obj = JSON.parse(data);
-      } catch (e) {
-          return null;
-      }
-      if (obj.expiryTime === 0 || obj.expiryTime > now) {
-          return obj.value;
-      } else {
-        localStorage.removeItem(key);
-      }
-      return null;
+    var data = localStorage[key];
+    if (data === null || data === undefined || data === "null" || data === 'undefined') {
+        return null;
+    }
+    var now = this.getCurrentTimeStamp();
+    var obj;
+    try {
+        obj = JSON.parse(data);
+    } catch (e) {
+        return null;
+    }
+    if (obj.expiryTime === 0 || obj.expiryTime > now) {
+        return obj.value;
+    } else {
+      localStorage.removeItem(key);
+    }
+    return null;
   },
   remove: function(key){
       localStorage.removeItem(key);

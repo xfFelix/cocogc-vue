@@ -3,6 +3,10 @@
     <div class="banner">
       <img :src="data.src" alt="" class="link" @click="goLinkUrl">
     </div>
+    <div class="show-dialog">
+      <img :src="`/static/images/home/check${checked ? '-active': ''}.png`" alt="" class="checkbox" @click="checked = !checked">
+      <span class="text">不再提示</span>
+    </div>
     <img src="/static/images/home/close.png" alt="" class="close" @click="onClose">
   </div>
 </template>
@@ -20,7 +24,9 @@ export default {
     }
   },
   data: () => ({
-    data: ''
+    data: '',
+    expireTime: 0,
+    checked: false
   }),
   watch: {
     show: {
@@ -37,6 +43,11 @@ export default {
       try {
         const { data, error_code, message } = await this.axios(testUrl + api.goodsGroups, {id: "e284f81c03a5421e9f923b553ae0ae2b"}, 'post')
         this.data = data.data[0]
+        if (this.checked) {
+          this.expireTime = Date.parse(new Date((data.title).trim()))
+        } else {
+          this.expireTime = Date.parse(new Date((data.title).trim())) - 1
+        }
       } catch(e) {
         this.Toast(e)
       }
@@ -46,7 +57,11 @@ export default {
       window.location.href = this.data.url
     },
     onClose() {
-      this.$emit('click', false)
+      if (this.checked) {
+        this.$emit('click', false)
+      } else {
+        this.show = false
+      }
     }
   }
 }
@@ -70,8 +85,25 @@ export default {
       height: 100%;
     }
   }
+  .show-dialog{
+    width: px2rem(255);
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .checkbox{
+      display: block;
+      width: 14px;
+      height: 14px;
+      margin-right: 3px;
+    }
+    .text{
+      font-size: 14px;
+      color: #fff;
+    }
+  }
   .close{
-    margin: 20px auto;
+    margin: -16px auto;
     width: px2rem(40);
     height: px2rem(40);
   }
