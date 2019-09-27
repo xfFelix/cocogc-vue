@@ -71,16 +71,13 @@
     <!-- 底部切换 -->
 
     <!-- 回到顶部 -->
-
-
-
-        <div class="fixOut" style="bottom:0px;">
-            <div class="relOut">
-                <div class="goTop" @click="goTop()" v-if="homeSmWrap"></div>
-                </div>
-            </div>
+    <div class="fixOut" style="bottom:0px;">
+        <div class="relOut">
+            <div class="goTop" @click="goTop()" v-if="homeSmWrap"></div>
         </div>
+    </div>
 
+    <banner v-model="showBanner"></banner>
   </div>
 </template>
 
@@ -90,8 +87,7 @@ import api from '../../service/api'
 import Shortcut from '../../components/home/shortcut.vue'
 import HotGoods from '../../components/home/hotGoods.vue'
 import Integral from '../../components/home/integral.vue'
-
-
+import Banner from './components/Banner'
 export default {
   data() {
     return {
@@ -105,6 +101,16 @@ export default {
     };
   },
   watch: {
+  },
+  computed: {
+    showBanner: {
+      get() {
+        return this.$store.getters['shopMall/getShowBanner']
+      },
+      set(val) {
+        this.$store.dispatch('shopMall/setShowBanner', val)
+      }
+    }
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
@@ -235,7 +241,8 @@ export default {
   components: {
     "v-shortcut": Shortcut,
     "v-hotGoods": HotGoods,
-    "v-integral": Integral
+    "v-integral": Integral,
+    Banner
   }
 };
 </script>
