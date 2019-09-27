@@ -53,7 +53,6 @@ export default {
       }
     },
     goLinkUrl() {
-      this.$emit('click', false)
       window.location.href = this.data.url
     },
     onClose() {
