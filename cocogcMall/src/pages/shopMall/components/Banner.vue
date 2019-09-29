@@ -43,7 +43,7 @@ export default {
     toggleChecked() {
       this.checked = !this.checked
       if (this.checked) {
-        this.expireTime = Date.parse(new Date((this.data.title).trim()))
+        this.expireTime = Date.parse(new Date((this.data.title).trim().replace(/-/g, '/')))
         this.showBanner = !this.showBanner
         this.$emit('click', false)
       }

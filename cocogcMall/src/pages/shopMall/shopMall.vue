@@ -203,8 +203,8 @@ export default {
       try {
         const { data, error_code, message } = await this.axios(testUrl + api.goodsGroups, {id: "e284f81c03a5421e9f923b553ae0ae2b"}, 'post')
         this.data = data
-        let time = Date.parse(new Date((data.title).trim())) - Date.parse(new Date())
-        await this.setShowBanner({expireTime: Date.parse(new Date((data.title).trim())), val: this.showBanner})
+        let time = Date.parse(new Date((data.title).trim().replace(/-/g, '/'))) - Date.parse(new Date())
+        await this.setShowBanner({expireTime: Date.parse(new Date((data.title).trim().replace(/-/g, '/'))), val: this.showBanner})
         this.showDialog = (time > 0 && this.showBanner)
       } catch(e) {
         this.Toast(e)
