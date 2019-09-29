@@ -5,7 +5,7 @@ import local from '@/util/local'
 let defaultShow = false
 try{
   let res = local.get('shop_mall_banner_show')
-  if (res === null || res === undefined || res === '') {
+  if (res || res === null || res === undefined || res === '') {
     defaultShow = true
   } else {
     defaultShow = false

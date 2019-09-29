@@ -15,7 +15,7 @@ var storage = {
   get: function(key) {
     var data = localStorage[key];
     if (data === null || data === undefined || data === "null" || data === 'undefined') {
-        return null;
+      return null;
     }
     var now = this.getCurrentTimeStamp();
     var obj;

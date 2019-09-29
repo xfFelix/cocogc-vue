@@ -77,7 +77,7 @@
         </div>
     </div>
 
-    <banner v-model="showBanner" ref="banner"></banner>
+    <banner v-model="showDialog" ref="banner" :data="data"></banner>
   </div>
 </template>
 
@@ -88,6 +88,7 @@ import Shortcut from '../../components/home/shortcut.vue'
 import HotGoods from '../../components/home/hotGoods.vue'
 import Integral from '../../components/home/integral.vue'
 import Banner from './components/Banner'
+import { mapGetters, mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -97,29 +98,26 @@ export default {
       swiperBan: '',
       newsList: [],
       timeout: null,
-      searchLogo: LOGO_PACKAGE_URL + 'logo.png'
+      searchLogo: LOGO_PACKAGE_URL + 'logo.png',
+      data: '',
+      showDialog: false
     };
   },
-  watch: {
-  },
   computed: {
-    showBanner: {
-      get() {
-        return this.$store.getters['shopMall/getShowBanner']
-      },
-      set(val) {
-        let time = this.$refs.banner.$data.expireTime
-        this.$store.dispatch('shopMall/setShowBanner', {expireTime: time, val})
-      }
-    }
+    ...mapGetters({
+      showBanner: 'shopMall/getShowBanner'
+    })
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
     this.banner()
     this.getNews();
-
+    this.getBanner()
   },
   methods: {
+    ...mapActions({
+      setShowBanner :'shopMall/setShowBanner'
+    }),
     // 回到顶部
     goTop() {
       document.body.scrollTop -= 500;
@@ -199,6 +197,17 @@ export default {
         this.homeSmWrap = false;
       } else {
         this.homeSmWrap = true;
+      }
+    },
+    async getBanner() {
+      try {
+        const { data, error_code, message } = await this.axios(testUrl + api.goodsGroups, {id: "e284f81c03a5421e9f923b553ae0ae2b"}, 'post')
+        this.data = data
+        let time = Date.parse(new Date((data.title).trim())) - Date.parse(new Date())
+        await this.setShowBanner({expireTime: Date.parse(new Date((data.title).trim())), val: this.showBanner})
+        this.showDialog = (time > 0 && this.showBanner)
+      } catch(e) {
+        this.Toast(e)
       }
     },
 
