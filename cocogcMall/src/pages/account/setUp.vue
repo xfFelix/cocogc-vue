@@ -84,13 +84,13 @@ export default {
           this.$router.push("/addressMag")
         },
         certJump() {
-          window.location.href = infoURl + "#!/cert?token=" + getToken();
+          window.location.href = hostUrl + "ticket/realName?token=" + getToken();
         },
         cardsJump() {
-          window.location.href = infoURl + "#!/pay?token=" + getToken();
+          window.location.href = hostUrl + "ticket/creditCard/home?token=" + getToken();
         },
         passupJump() {
-          window.location.href = infoURl + "#!/changePwd?token=" + getToken();
+          this.$router.push('/passSetUp')
         },
         goPayPwd() {
           this.$router.push('/payPassword')
