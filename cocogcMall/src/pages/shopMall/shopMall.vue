@@ -105,7 +105,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      showBanner: 'shopMall/getShowBanner'
+      showBanner: 'shopMall/getShowBanner',
+      showTime: 'shopMall/getShowTime'
     })
   },
   mounted() {
@@ -116,7 +117,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      setShowBanner :'shopMall/setShowBanner'
+      setShowBanner :'shopMall/setShowBanner',
+      setShowTime :'shopMall/setShowTime'
     }),
     // 回到顶部
     goTop() {
@@ -203,8 +205,12 @@ export default {
       try {
         const { data, error_code, message } = await this.axios(testUrl + api.goodsGroups, {id: "e284f81c03a5421e9f923b553ae0ae2b"}, 'post')
         this.data = data
-        let time = Date.parse(new Date((data.title).trim().replace(/-/g, '/'))) - Date.parse(new Date())
-        await this.setShowBanner({expireTime: Date.parse(new Date((data.title).trim().replace(/-/g, '/'))), val: this.showBanner})
+        let expireTime = Date.parse(new Date((data.title).trim().replace(/-/g, '/')))
+        let time = expireTime - Date.parse(new Date())
+        if (expireTime !== this.showTime && time > 0) {
+          this.setShowTime(expireTime)
+          this.setShowBanner(true)
+        }
         this.showDialog = (time > 0 && this.showBanner)
       } catch(e) {
         this.Toast(e)
