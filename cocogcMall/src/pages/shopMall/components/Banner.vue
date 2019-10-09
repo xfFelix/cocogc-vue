@@ -30,20 +30,17 @@ export default {
         return this.$store.getters['shopMall/getShowBanner']
       },
       set(val) {
-        let time = this.expireTime
-        this.$store.dispatch('shopMall/setShowBanner', {expireTime: time, val})
+        this.$store.dispatch('shopMall/setShowBanner', val)
       }
     }
   },
   data: () => ({
-    checked: false,
-    expireTime: 0
+    checked: false
   }),
   methods: {
     toggleChecked() {
       this.checked = !this.checked
       if (this.checked) {
-        this.expireTime = Date.parse(new Date((this.data.title).trim().replace(/-/g, '/')))
         this.showBanner = !this.showBanner
         this.$emit('click', false)
       }
