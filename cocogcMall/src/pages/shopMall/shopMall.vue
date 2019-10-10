@@ -71,16 +71,13 @@
     <!-- 底部切换 -->
 
     <!-- 回到顶部 -->
-
-
-
-        <div class="fixOut" style="bottom:0px;">
-            <div class="relOut">
-                <div class="goTop" @click="goTop()" v-if="homeSmWrap"></div>
-                </div>
-            </div>
+    <div class="fixOut" style="bottom:0px;">
+        <div class="relOut">
+            <div class="goTop" @click="goTop()" v-if="homeSmWrap"></div>
         </div>
+    </div>
 
+    <banner v-model="showDialog" ref="banner" :data="data"></banner>
   </div>
 </template>
 
@@ -90,8 +87,8 @@ import api from '../../service/api'
 import Shortcut from '../../components/home/shortcut.vue'
 import HotGoods from '../../components/home/hotGoods.vue'
 import Integral from '../../components/home/integral.vue'
-
-
+import Banner from './components/Banner'
+import { mapGetters, mapActions } from 'vuex';
 export default {
   data() {
     return {
@@ -101,18 +98,28 @@ export default {
       swiperBan: '',
       newsList: [],
       timeout: null,
-      searchLogo: LOGO_PACKAGE_URL + 'logo.png'
+      searchLogo: LOGO_PACKAGE_URL + 'logo.png',
+      data: '',
+      showDialog: false
     };
   },
-  watch: {
+  computed: {
+    ...mapGetters({
+      showBanner: 'shopMall/getShowBanner',
+      showTime: 'shopMall/getShowTime'
+    })
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
     this.banner()
     this.getNews();
-
+    this.getBanner()
   },
   methods: {
+    ...mapActions({
+      setShowBanner :'shopMall/setShowBanner',
+      setShowTime :'shopMall/setShowTime'
+    }),
     // 回到顶部
     goTop() {
       document.body.scrollTop -= 500;
@@ -194,6 +201,21 @@ export default {
         this.homeSmWrap = true;
       }
     },
+    async getBanner() {
+      try {
+        const { data, error_code, message } = await this.axios(testUrl + api.goodsGroups, {id: "e284f81c03a5421e9f923b553ae0ae2b"}, 'post')
+        this.data = data
+        let expireTime = Date.parse(new Date((data.title).trim().replace(/-/g, '/')))
+        let time = expireTime - Date.parse(new Date())
+        if (expireTime !== this.showTime && time > 0) {
+          this.setShowTime(expireTime)
+          this.setShowBanner(true)
+        }
+        this.showDialog = (time > 0 && this.showBanner)
+      } catch(e) {
+        this.Toast(e)
+      }
+    },
 
     async getNews() {
 
@@ -235,7 +257,8 @@ export default {
   components: {
     "v-shortcut": Shortcut,
     "v-hotGoods": HotGoods,
-    "v-integral": Integral
+    "v-integral": Integral,
+    Banner
   }
 };
 </script>

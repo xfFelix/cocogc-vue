@@ -38,7 +38,7 @@
           <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)" style="position:relative;">
             <img src="/static/images/home/hot.png" alt=" " v-if="item.id == 1" class="badge-img hot">
             <img src="/static/images/home/new.png" alt=" " v-if="item.id == 13" class="badge-img">
-            <img :src="`/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png`" alt="" class="iconImg">
+            <img :src="item.id == 4 ? logoImg : `/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png`" alt="" class="iconImg">
             <p class="ifa-name">{{item.name}}</p>
           </div>
       </li>
@@ -106,9 +106,9 @@ export default {
   data() {
     return {
       fastList: [
-        { id: 1, name: "黄金兑换", img: 'gold', active: true, path: infoURl + '#!/goldChange?token=' + getToken() },
-        { id: 2, name: "话费充值", img: 'recharge', active: true, path: infoURl + '#!/phoneBill?token=' + getToken() },
-        { id: 3, name: "信用卡还款", img: 'credit', active: true, path: `${infoURl}#!/pay?token=${getToken()}` },
+        { id: 1, name: "黄金兑换", img: 'gold', active: true, path: `${hostUrl}ticket/gold` },
+        { id: 2, name: "话费充值", img: 'recharge', active: true, path: `${hostUrl}ticket/phone` },
+        { id: 3, name: "信用卡还款", img: 'credit', active: true, path: `${hostUrl}ticket/creditCard` },
         { id: 4, name: "小椰超市", img: 'jd', active: true, path: '/layout/shopMall'},
         { id: 5, name: "加油卡充值", img: 'oil', active: true, path: hostUrl + 'ticket/oil' },
         { id: 6, name: "会员卡券", img: 'vip', active: true, path: hostUrl + 'ticket/memberCard'},
@@ -127,7 +127,8 @@ export default {
       banner: [],
       newsList:[],
       autoplay: false,
-      bannerImg: LOGO_PACKAGE_URL + 'home-banner-bg.png'
+      bannerImg: LOGO_PACKAGE_URL + 'home-banner-bg.png',
+      logoImg: LOGO_PACKAGE_URL + 'jd.png'
     }
   },
   computed: {
