@@ -105,7 +105,7 @@ export default {
       fastList: [
         { id: 1, name: "黄金兑换", imgBg: 'ifa-imgBg01', path: `${hostUrl}ticket/gold` },
         { id: 2, name: "话费充值", imgBg: 'ifa-imgBg02', path: `${hostUrl}ticket/phone`  },
-        { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: `${hostUrl}ticket/creditCard`  },
+        { id: 3, name: "信用卡还款", imgBg: 'ifa-imgBg03', path: `${hostUrl}ticket/creditCard`},
         // { id: 3, name: "手机/配件", imgBg: 'ifa-imgBg03', path: '/goodsList?classfyId=9987' },
         { id: 4, name: "京东商城", imgBg: 'ifa-imgBg09', path: '/layout/shopMall'},
         { id: 5, name: "加油卡充值", imgBg: 'ifa-imgBg12', path: hostUrl + 'ticket/oil/?token=' + getToken() },

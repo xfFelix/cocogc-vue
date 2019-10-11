@@ -109,7 +109,7 @@ export default {
       fastList: [
         { id: 1, name: "黄金兑换", img: 'gold', active: true, path: `${hostUrl}ticket/gold`},
         { id: 2, name: "话费充值", img: 'recharge', active: true, path: `${hostUrl}ticket/phone` },
-        { id: 3, name: "信用卡还款", img: 'credit', active: true, path: `${hostUrl}ticket/creditCard}` },
+        { id: 3, name: "信用卡还款", img: 'credit', active: true, path: `${hostUrl}ticket/creditCard`},
         { id: 4, name: "小椰超市", img: 'jd', active: true, path: '/layout/shopMall'},
         { id: 5, name: "加油卡充值", img: 'oil', active: true, path: hostUrl + 'ticket/oil' },
         { id: 6, name: "会员卡券", img: 'vip', active: true, path: hostUrl + 'ticket/memberCard'},
