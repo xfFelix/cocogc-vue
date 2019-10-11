@@ -451,7 +451,7 @@ export default {
                     duration: 1000
                 })
                 setTimeout(() => {
-                    window.location.href = infoURl + '#!/cert?token=' + getToken();
+                    window.location.href = `${hostUrl}ticket/realName`
                 }, 1000)
                 return
             }
