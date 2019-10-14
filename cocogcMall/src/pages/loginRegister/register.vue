@@ -289,14 +289,10 @@ export default {
 
 <style lang="scss" scoped>
 #register {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
     min-height: 100%;
     z-index: 2;
     background: #fff;
-    right: 0;
     margin: 0 auto;
     max-width: 450px;
   header {
