@@ -507,6 +507,14 @@ export default {
             }
             this.list[this.goodsNumIndex].num = parseInt(this.goodsNum);
             this.list[this.goodsNumIndex].check = true
+            this.selectAllPrice = 0
+            this.selectAllGoods = 0
+            this.list.forEach((res) => {
+                if (res.check == true && res.goods != null) {
+                    this.selectAllPrice += res.num * res.goods.currentPrice;
+                    this.selectAllGoods++;
+                }
+            });
         },
         numDec() {
             if (this.goodsNum > 1) {
