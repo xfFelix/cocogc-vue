@@ -39,7 +39,7 @@
       </div>
 
     </div>
-      <div class="goodList-interWrap" ref="wrapper" v-infinite-scroll="loadBottom" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
+      <div class="goodList-interWrap" ref="wrapper" v-infinite-scroll="loadBottom" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="62">
         <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
           <!-- <router-link :to="{path:'goodsDetail/'+item.id}"> -->
           <div @click="goDetail(item.id)">
