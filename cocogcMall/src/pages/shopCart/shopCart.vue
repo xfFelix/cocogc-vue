@@ -54,7 +54,7 @@
                 <span class="shop-dClose"></span>
             </div>
               <div v-for="(itemList,index) in list" :key="index" class="shop-dStoreWW">
-                <div class="vendor-title"><span class="iconBg vendorIcon"></span>{{itemList.vendorId}}<span class="vendorInfo">({{itemList.vendorInfo}})</span></div>
+                <div class="vendor-title"><span class="iconBg vendorIcon"></span>{{itemList.vendorId}}<span class="vendorInfo">{{itemList.vendorInfo}}</span></div>
                 <div class="shop-dStoreW" v-for="(items,index) in itemList.cartVOList" :key="index">
                     <ul class="shop-contentUl">
                         <li>
@@ -285,9 +285,9 @@ export default {
                             num += res.num
                           })
                           if(items.vendorId=='网易严选'){
-                             data.data[indexD].vendorInfo='88包邮';
+                             data.data[indexD].vendorInfo='（88包邮）';
                           }else if(items.vendorId=='椰云直营'){
-                            data.data[indexD].vendorInfo='一件包邮';
+                            data.data[indexD].vendorInfo='（一件包邮）';
                           }else{
                             data.data[indexD].vendorInfo='';
                           }
