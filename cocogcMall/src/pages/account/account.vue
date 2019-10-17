@@ -14,7 +14,7 @@
                       </p>
                   </div>
                   <div class="balance">
-                   <span class="iconBg logo" :style="`background-image:url(${logoImg})`"></span>椰子分余额：{{score}} >
+                   <span class="iconBg logo" :style="`background-image:url(${logoImg})`"></span>椰子分余额：{{score}}
                   </div>
                 </div>
             </div>

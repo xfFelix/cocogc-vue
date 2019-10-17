@@ -58,6 +58,12 @@ export default {
         border-bottom: 1px solid #F4F4F4;
         height: 100%;
       }
+      .goIcon{
+        width: 0.12rem;
+        height: 0.22rem;
+        background-image: url('/static/images/personal/go.png');
+        margin-right: 0.32rem;
+      }
     }
   }
   .jumpIcon{

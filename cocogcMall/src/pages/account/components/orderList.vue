@@ -15,10 +15,10 @@
       serveList:[
         {bgImgClass:"/static/images/personal/gold.png",name:'黄金订单',path:`${hostUrl}ticket/gold/record`},
         {bgImgClass:"/static/images/personal/phone.png",name:'话费订单',path:`${hostUrl}ticket/phone/record`},
-        {bgImgClass:"/static/images/personal/oil.png",name:'加油卡订单',path:`${hostUrl}ticket/oil/oilRecord`},
-        {bgImgClass:"/static/images/personal/life.png",name:'生活缴费订单',path:`${hostUrl}ticket/life/record`},
-        {bgImgClass:"/static/images/personal/vipCard.png",name:'会员订单',path:`${hostUrl}ticket/memberCard/cardRecord`},
-        {bgImgClass:"/static/images/personal/travel.png",name:'海南旅游订单',path:`${hostUrl}ticket/order/list`},
+        {bgImgClass:"/static/images/personal/oil.png",name:'加油卡订单',path:`${hostUrl}ticket/oil/oilRecord?go=cocogc`},
+        {bgImgClass:"/static/images/personal/life.png",name:'生活缴费订单',path:`${hostUrl}ticket/life/record?go=cocogc`},
+        {bgImgClass:"/static/images/personal/vipCard.png",name:'会员订单',path:`${hostUrl}ticket/memberCard/cardRecord?go=cocogc`},
+        {bgImgClass:"/static/images/personal/travel.png",name:'海南旅游订单',path:`${hostUrl}ticket/order/list?go=cocogc`},
         // {bgImgClass:"/static/images/personal/hotel.png",name:'机票酒店订单',path:`${hostUrl}ticket/gold`}
       ],
     }),

@@ -285,11 +285,11 @@ export default {
                             num += res.num
                           })
                           if(items.vendorId=='网易严选'){
-                             data.data[indexD].vendorInfo='99包邮';
+                             data.data[indexD].vendorInfo='88包邮';
                           }else if(items.vendorId=='椰云直营'){
                             data.data[indexD].vendorInfo='一件包邮';
                           }else{
-                            data.data[indexD].vendorInfo='';
+                            data.data[indexD].vendorInfo='99包邮';
                           }
                         })
                         this.setNum(num)
