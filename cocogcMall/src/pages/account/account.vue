@@ -1,24 +1,24 @@
 <template>
     <div id="account">
         <div class="account-head">
-            <div class="acc-headCSMW">
-                <div class="acc-headCSM">
-                    <img src="../../../static/images/user-set.png" class="acc-headSet"  @click="$router.push('/setUp')" />
-                </div>
-            </div>
             <div class="acc-headInfo">
                 <div class="acc-headImgW">
                     <img class="acc-headImg" :src="logoImg" alt="" />
                 </div>
                 <div class="acc-headTG">
-                    <p class="acc-headTel">{{userName}}</p>
-                    <p class="acc-headGrade">
+                  <div class="acc-numInfo">
+                      <p class="acc-headTel">{{userName|formatPhone}}</p>
+                      <p  class="acc-headGrade">
                         <span class="acc-headChessI"></span>
-                        <span class="acc-headChess" v-if="levelFlag">专业选手</span>
-                        <span class="acc-headChess" v-else>业余选手</span>
-                    </p>
+                        <span class="acc-headChess"> {{levelFlag?'专业选手':'业余选手'}}</span>
+                      </p>
+                  </div>
+                  <div class="balance">
+                   <span class="iconBg logo" :style="`background-image:url(${logoImg})`"></span>椰子分余额：{{score}}
+                  </div>
                 </div>
             </div>
+
         </div>
         <div class="banner">
             <div class="account-swipe">
@@ -30,7 +30,6 @@
                             <img :src="item.src" alt=""/>
                           </a>
                         </div>
-
                     </div>
                     <!-- 分页器 -->
                     <div class="swiper-pagination"></div>
@@ -42,7 +41,7 @@
             <ul class="account-quickUl">
                 <li v-for="(item,index) in orderList" :key="index">
                     <router-link class="account-quickA" :to="item.path">
-                        <p :class="item.bgImgClass">
+                        <p :class="item.bgImgClass" class="iconBg">
                           <span v-if="item.name === '未完成' && num" class="num">{{num}}</span>
                         </p>
                         <p class="account-qName">{{item.name}}</p>
@@ -51,59 +50,8 @@
             </ul>
         </div>
 
-        <div class="account-contentW">
-            <div class="acc-content">
-                <ul class="acc-contentUl">
-                    <li v-for="(item,index) in jumpList" :key="index">
-                        <a :href="item.path">
-                            <span :class="item.bgImg"></span>
-                            <div class="acc-contentInfo">
-                                <span class="acc-contentName">{{item.name}}</span>
-                                <p class="acc-contentR">
-                                    <span v-if="item.scoreShow">椰子分余额：</span>
-                                    <span v-if="item.scoreShow">{{score}}</span>
-                                    <span class="acc-contentGo"></span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="acc-content">
-                <ul class="acc-contentUl">
-                    <li v-for="(item,index) in helpList" :key="index">
-                        <a :href="item.path">
-                            <span :class="item.bgImg"></span>
-                            <div class="acc-contentInfo">
-                                <span class="acc-contentName">{{item.name}}</span>
-                                <p class="acc-contentR">
-                                    <span class="acc-contentGo"></span>
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="account-swipeW">
-            <div class="account-swipe">
-                <div class="swiper-container" ref="endSwiper">
-                    <!-- 页面 -->
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" v-for="item of end" :key="item.title">
-                          <a :href="item.url">
-                            <img :src="item.src" alt=""/>
-                          </a>
-                        </div>
-
-                    </div>
-                    <!-- 分页器 -->
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-        </div>
+        <order-list></order-list>
+        <inquire-list></inquire-list>
     </div>
 </template>
 <script>
@@ -123,18 +71,6 @@ export default {
             ],
             score: '',
             userName: '',
-            jumpList: [
-                { name: '我的椰子分', scoreShow: true, path: hostUrl + "ticket/integrallog?token=" + getToken(), bgImg: "acc-contentLog01" },
-                { name: '信用卡还款', scoreShow: false, path: hostUrl + "ticket/creditCard?token=" + getToken(), bgImg: "acc-contentLog02" },
-                { name: '话费充值', scoreShow: false, path: hostUrl + "ticket/phone?token=" + getToken(), bgImg: "acc-contentLog04" },
-                { name: '门票兑换记录', scoreShow: false, path: hostUrl + 'ticket/order/list?token=' + getToken() , bgImg: "acc-contentLog09" },
-            ],
-            helpList: [
-                { name: '卡密充值', path: hostUrl + 'ticket/reCharge?token=' + getToken(), bgImg: "acc-contentLog08" },
-                { name: '帮助中心', path: 'https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q', bgImg: "acc-contentLog05" },
-                { name: '联系客服', path: hostUrl + "ticket/contact?token=" + getToken(), bgImg: "acc-contentLog06" },
-                { name: '商务合作', path: hostUrl + "ticket/cooperate?token=" + getToken(), bgImg: "acc-contentLog07" },
-            ],
             top: [],
             end: [],
             levelFlag:false,
@@ -145,18 +81,7 @@ export default {
     computed: {
         ...mapGetters({
             userinfo: 'userinfo/getUserInfo',
-            platform: 'platform/getPlatform'
         })
-    },
-    watch: {
-      platform: {
-        handler (val) {
-          if (!val) {
-            this.jumpList.splice(1, 1)
-          }
-        },
-        immediate: true
-      }
     },
     created() {
       this.getOrderTotals()
@@ -164,7 +89,6 @@ export default {
     mounted() {
         this.userName = this.$store.getters['userinfo/getUserInfo'].userName;
         this.score = this.$store.getters['userinfo/getUserInfo'].score;
-
         this.getSwiper()
         if(this.userinfo.level == 0){
             this.levelFlag = false;
@@ -219,6 +143,10 @@ export default {
         })
         return promise
       },
+    },
+    components:{
+      'orderList':()=>import ('./components/orderList'),
+      'inquireList':()=>import ('./components/inquireList')
     }
 };
 </script>
@@ -241,31 +169,10 @@ export default {
     height: 3.6rem;
     position: relative;
     z-index: 22;
-    .acc-headCSMW {
-        border-top: 1px solid transparent;
-        .acc-headCSM {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 0.6rem;
-            padding-right: 0.2rem;
-            .acc-headCrown,
-            .acc-headSet {
-                display: inline-block;
-                position: absolute;
-                width: 35px;
-                height: 30px;
-                top: 15px;
-                right: 19px;
-                opacity: 0.5;
-            }
-            .acc-headCrown {
-                background-position: -0.17rem -1.09rem;
-            }
-        }
-    }
+    padding-top: 0.6rem;
     .acc-headInfo {
         display: flex;
-        margin-top: 10px;
+        // margin-top: 10px;
         .acc-headImgW {
             width: 1.1rem;
             height: 1.1rem;
@@ -275,40 +182,52 @@ export default {
             .acc-headImg {
                 width: 100%;
             }
+
         }
         .acc-headTG {
-                width: 27%;
+            margin-bottom: 0.13rem;
+            margin-top: 0.18rem;
+            .balance{
+              font-size: 0.24rem;
+              color: #fff;
+              display: inline-flex;
+              align-items: center;
+              background: rgba(0,0,0,0.3);
+              margin-top: 0.16rem;
+              padding: 0.04rem 0.08rem;
+              border-radius: 50px;
+              .logo{
+                width: 0.32rem;
+                height: 0.32rem;
+                margin-right: 0.1rem;
+              }
+
+            }
             .acc-headTel {
-                margin-bottom: 0.13rem;
-                font-size: 0.3rem;
+                font-size:0.36rem;
                 color: #fff;
                 font-weight: bold;
-                margin-top: 0.18rem;
-                    text-shadow: 0px 0 8px #666;
+                display: inline-flex;
             }
             .acc-headGrade {
                 background: linear-gradient(to right, #ebc99d, #d5b587);
                 font-size: 0.22rem;
-                padding: 0.08rem 0px 0.08rem 0.1rem;
-                display: flex;
+                padding: 0.04rem 0.1rem;
+                display: inline-flex;
                 border-radius: 50px;
                 color: #fff;
-                position: relative;
-                width: 85%;
+                align-items: center;
                 .acc-headChessI {
                     width: 0.28rem;
                     height: 0.28rem;
                     display: inline-block;
-                    background-image: url(/static/images/account.png);
+                    background-image: url("/static/images/account.png");
                     background-repeat: no-repeat;
                     background-size: 3.12rem 2.95rem;
                     background-position: -1.78rem -1.09rem;
-                    position: absolute;
-                    left: 0.18rem;
-                    top: 0.12rem;
                 }
                 .acc-headChess {
-                    margin: 0 0.1rem 0 0.42rem;
+                    margin:0 0.2rem 0 0.1rem;
                 }
                 .acc-headChessN {
                     margin-right: 0.2rem;
@@ -318,8 +237,9 @@ export default {
     }
 }
 
+
 .account-quickW {
-    margin-top: -0.64rem;
+    margin-top: -1.14rem;
     height: 1.78rem;
     width: 100%;
     position: relative;
@@ -336,32 +256,23 @@ export default {
         width: 92%;
         li {
             width: 25%;
-
             .account-quickA {
                 display: block;
                 text-align: center;
                 height: 100%;
                 .account-qImg01,
-                .account-qImg02,
                 .account-qImg03,
                 .account-qImg04,
                 .account-qImg05 {
-                    width: 0.42rem;
-                    height: 0.44rem;
-                    display: inline-block;
-                    background-image: url("../../../static/images/account.png");
-                    background-repeat: no-repeat;
-                    background-size: 3.12rem 2.95rem;
-                    margin: 0.48rem 0 0.13rem 0;
+                    width: 0.64rem;
+                    height: 0.58rem;
+                    margin: 0.38rem 0 0.13rem 0;
                 }
                 .account-qImg01 {
-                    background-position: -0.13rem -0.13rem;
-                }
-                .account-qImg02 {
-                    background-position: -0.66rem -0.13rem;
+                   background-image: url("/static/images/personal/order-1.png");
                 }
                 .account-qImg03 {
-                    background-position: -1.17rem -0.13rem;
+                    background-image: url("/static/images/personal/order-2.png");
                     position: relative;
                     .num {
                       position: absolute;
@@ -375,140 +286,14 @@ export default {
                     }
                 }
                 .account-qImg04 {
-                    background-position: -1.71rem -0.13rem;
+                    background-image: url("/static/images/personal/order-3.png");
                 }
                 .account-qImg05 {
-                    background-position: -2.23rem -0.13rem;
+                    background-image: url("/static/images/personal/order-4.png");
                 }
             }
         }
     }
 }
 
-.account-contentW {
-    .acc-content {
-        background: #fff;
-        margin-top: 0.26rem;
-        .acc-contentUl {
-            li {
-                a {
-                    align-items: center;
-                    display: flex;
-                    justify-content: space-between;
-                    .acc-contentLog01,
-                    .acc-contentLog02,
-                    .acc-contentLog03,
-                    .acc-contentLog04,
-                    .acc-contentLog05,
-                    .acc-contentLog06,
-                    .acc-contentLog07,
-                    .acc-contentLog08,
-                    .acc-contentLog09,
-                     {
-                        width: 0.3rem;
-                        height: 0.3rem;
-                        display: inline-block;
-                        background-image: url("../../../static/images/account.png");
-                        background-repeat: no-repeat;
-                        background-size: 3.12rem 2.95rem;
-                        margin: 0 0.36rem;
-                    }
-                    .acc-contentLog01 {
-                        background-position: -0.17rem -0.68rem;
-                    }
-                    .acc-contentLog02 {
-                        background-position: -0.58rem -0.7rem;
-                    }
-                    .acc-contentLog03 {
-                        background-position: -1rem -0.7rem;
-                    }
-                    .acc-contentLog04 {
-                        background-position: -1.5rem -0.7rem;
-                    }
-                    .acc-contentLog05 {
-                        background-position: -1.88rem -0.7rem;
-                    }
-                    .acc-contentLog06 {
-                        background-position: -2.3rem -0.7rem;
-                    }
-                    .acc-contentLog07 {
-                        background-position: -2.71rem -0.7rem;
-                    }
-                    .acc-contentLog08{
-                            background-position: -2.58rem -1.07rem;
-                    }
-                    .acc-contentLog09{
-                            background-position: -2.58rem -1.07rem;
-                            transform: rotate(-63deg);
-                    }
-
-
-                    .acc-contentInfo {
-                        font-size: 0.30rem;
-                        color: #666666;
-                        border-bottom: 1px solid #f4f4f4;
-                        display: flex;
-                        justify-content: space-between;
-                        flex: 1;
-                        padding: 0.36rem 0;
-                        margin-right: 0.36rem;
-                    }
-
-
-                    .acc-contentR {
-                        font-size: 0.24rem;
-                        color: #999;
-                        display: flex;
-                        align-items: center;
-                        span {
-                            color: #666;
-                        }
-                        .acc-contentGo {
-                            width: 0.25rem;
-                            height: 0.25rem;
-                            display: inline-block;
-                            background-image: url("../../../static/images/account.png");
-                            background-repeat: no-repeat;
-                            background-size: 3.12rem 2.95rem;
-                            background-position: -2.7rem -0.25rem;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-.account-swipeW {
-    height: 1.8rem;
-    margin: 0.5rem 0.53rem 0.5rem 0.53rem;
-    .account-swipe {
-        height: 100%;
-        .swiper-container-horizontal>.swiper-pagination-bullets {
-            bottom: 0px;
-        }
-        .swiper-container {
-            height: 100%;
-            .swiper-wrapper {
-                .swiper-slide {
-                    img {
-                        height: 1.8rem;
-                    }
-                }
-            }
-        }
-        .swiper-pagination {
-            .swiper-pagination-bullet {
-                width: 0.06rem;
-                height: 0.06rem;
-                border: 0.02rem solid #fff;
-                border-radius: inherit;
-                background: transparent;
-            }
-            .swiper-pagination-bullet-active {
-                background: #fff;
-            }
-        }
-    }
-}
 </style>

@@ -227,6 +227,7 @@ export default {
     watch: {
         '$route'(to, from) {
             window.scrollTo(0, 0);
+            this.goodsId = this.$route.params.goodId;
             this.getGoodsInfo(this.$route.params.goodId, (data) => {
                 if (data != null) {
                     this.setGoodsData(data);

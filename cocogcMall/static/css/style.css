@@ -380,3 +380,9 @@ font-size: 14px;
 .my-bullet-active {
   background: #fff;
 }
+
+.iconBg{
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-size: 100% 100%;
+}

@@ -1,184 +1,174 @@
 <template>
     <div class="searchPage" >
         <head-search></head-search>
-
         <div class="search-contWrap" >
-
-            <div class="search-recent">
-                <div class="search-conType">
-                    <span>最近搜索</span>
-                    <div class="delHandle" v-if="recordFlag" >
-                        <p class="delAll" @click="delAll">
-                            <span class="j1Png search-delImg"></span>
-                            <span>全部删除</span>
-                        </p>
-                        <span class="delOk"  @click="delOk">完成</span>
-                    </div>
-                    <div class="delHandle" v-else>
-                        <span class="j1Png search-delImgClick" @click="delRecord"></span>
-                    </div>
-
-                </div>
-                <ul class="seach-list" >
-                    <li v-for="(item,index) in list.recent"
-                        :key="index"
-                        :class="recordFlag?'recodeActive':'recodeNo'" >
-                        {{item}}
-                        <span class="j1Png colseRecord" v-if="recordFlag==true" @click="delThisRecode(item,index)"></span>
-                    </li>
-
-                </ul>
+            <div class="discover-all">
+              <p><span class="iconBg hotIcon"></span>搜索发现</p>
+              <ul>
+                <li v-for="(item,index) in discoverList" :key="index" >
+                  <a :href="item.url">
+                      <img :src="logoImg" alt="" class="logoImg" v-if="item.noticeTitle=='小椰自营'" />
+                      {{item.noticeTitle}}
+                  </a>
+                </li>
+              </ul>
             </div>
-
-            <div class="search-hot">
-                <p class="search-conType">
-                    <span>热门搜索</span>
-                    <span></span>
-                </p>
-                <ul class="seach-list">
-                    <li v-for="(item,index) in list.hot" :key="index" class="recodeNo">{{item}}</li>
-                </ul>
+            <div class="hot-all">
+              <p><span class="iconBg rankIcon"></span>热销TOP</p>
+              <ul>
+                <li v-for="(item,index) in rankList" :key="index"  >
+                  <div class="rankL">
+                    <span class="iconBg rankHeight" :style="`background-image: url('/static/images/historyPage/rank-${index+1}.png')`"></span>
+                    <p class="imgHeight"> <img :src="item.img " alt=""/></p>
+                  </div>
+                  <div class="rankR">
+                     <span class="iconBg comIcon"></span>
+                      <span>{{item.noticeTitle.length>25?item.noticeTitle.substr(1,200)+'...':item.noticeTitle}}</span>
+                      <span class="iconBg topHeight" :style="`background-image: url('/static/images/historyPage/top-${index+1}.png')`"></span>
+                  </div>
+                </li>
+              </ul>
             </div>
-
-            <div class="search-integral">
-                <p class="search-conType">
-                    <span>积分区间</span>
-                    <span></span>
-                </p>
-                <ul class="seach-list">
-                    <li v-for="(item,index) in list.integral" :key="index" class="recodeNo">{{item}}</li>
-                </ul>
-            </div>
-
         </div>
-
     </div>
 </template>
 <script>
-import headSearch from "../../common/headSearch.vue";
 
-
-
+import api from '../../service/api';
 export default {
     data() {
         return {
-            list: {
-                recent: ["VIVO", "笔记本电脑", "mac", "无损音乐播放器"],
-                hot: ["信用卡还款", "代金券"],
-                integral: ["我能兑换", "全部", "0-50", "50-200", "200-1000", "1000-5000", "5000以上","我能兑换"]
-            },
-            recordFlag: false,
-
+            discoverList:[],
+            rankList:[],
+            logoImg: LOGO_PACKAGE_URL + 'logo.png'
         }
     },
-
     mounted() {
-
+      this.searchList('228');
+      this.searchList('229');
     },
     methods: {
-
-        delOk(){
-this.recordFlag = false
-        },
-        delRecord() {
-            this.recordFlag = !this.recordFlag
-        },
-        delThisRecode(item,index) {
-           this.list.recent.splice(index,1)
-        },
-        delAll(){
-            this.list.recent.splice(0,this.list.recent.length)
+      async searchList(catId){
+        let res = await this.axios(infoURl + api.searchApi, {
+          'catId':catId
+        },'post');
+        if(catId=='228'){
+          this.discoverList =res.data;
+        }else{
+          this.rankList =res.data;
         }
+      }
     },
     components: {
-        "head-search": headSearch
+      "head-search": ()=>import ("../../common/headSearch.vue")
     }
 }
 </script>
 <style lang="scss">
 .searchPage {
-    padding-top: 0.44rem;
     background: #fff;
+    height: 100%;
+    min-height: 100%;
 }
 
 .search-contWrap {
-    // padding: 0 0.32rem;
-    padding-left: 0.32rem;
-    .search-recent,
-    .search-hot,
-    .search-integral {
-        .search-conType {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.26rem 0 0.28rem 0;
-            .delHandle {
-                display: flex;
-                align-items: center;
-                font-size: 0.24rem;
-                .delAll {
-                    display: flex;
-                    .search-delImg {
-                        width: 0.33rem;
-                        height: 0.33rem;
-                        background-position: -0.96rem -1.27rem;
-                    }
-                }
-                .search-delImgClick {
-                    width: 0.33rem;
-                    height: 0.33rem;
-                    background-position: -0.96rem -1.27rem;
-                    margin-right: 0.3rem;
-                }
-                .delOk {
-                    margin-right: 0.3rem;
-                    display: flex;
-                    font-size: 0.24rem;
-                    align-items: center;
-                    &::before {
-                        width: 2px;
-                        height: 0.3rem;
-                        display: inline-block;
-                        background: #000;
-                        content: "";
-                        margin: 0 0.1rem;
-                        align-items: center;
-                    }
-                }
-            }
-        }
-        .seach-list {
-            font-size: 0.28rem;
-            .recodeNo {
-                display: inline-block;
-                padding: 0.22rem 0.33rem;
-                background: #efefef;
-                border-radius: 40px;
-                margin: 0 0.2rem 0.2rem 0;
-                font-size: 0.28rem;
-                border: 1px solid #efefef;
-            }
-            .recodeActive {
-                display: inline-block;
-                background: #fff;
-                border-radius: 40px;
-                border: 1px dashed #999999;
-                margin: 0 0.2rem 0.2rem 0;
-                padding: 0.22rem 0.07rem 0.22rem 0.33rem;
-            }
-        }
+  padding: 0 0.3rem;
+  box-sizing: border-box;
+  .discover-all{
+    p{
+      color: #333333;
+      font-weight: bold;
+      font-size: 16px;
+      font-family: MicrosoftYaHei-Bold;
+      margin:0.52rem 0 0.3rem 0;
+      display: flex;
+      align-items: center;
+      .hotIcon{
+        width: 0.3rem;
+        height: 0.3rem;
+        background-image: url('/static/images/historyPage/hot.png');
+        margin-right: 3px;
+      }
     }
-    .search-recent {
-        .search-conType {
-            padding: 0.26rem 0 0.28rem 0;
+    ul{
+      li{
+        a{
+          padding:  0.18rem 0.42rem;
+          display: inline-block;
+
         }
+
+        display: inline-block;
+        background: #F2F2F2;
+        margin:0.12rem 0.24rem 0.12rem 0;
+        border-radius:0.16rem;
+        font-size: 0.24rem;
+      }
     }
+  }
+
+  .hot-all{
+     p{
+      color: #333333;
+      font-weight: bold;
+      font-size: 16px;
+      font-family: MicrosoftYaHei-Bold;
+      margin:0.42rem 0 0.4rem 0;
+      display: flex;
+      align-items: center;
+      .rankIcon{
+        width: 0.3rem;
+        height: 0.3rem;
+        background-image: url('/static/images/historyPage/rank.png');
+        margin-right: 3px;
+      }
+    }
+    ul{
+      li{
+        color: #333333;
+        font-size: 0.28rem;
+        display: flex;
+        align-items: center;
+        padding: 0.2rem 0;
+        border-bottom: 1px solid #EFEFEF;
+        .rankL{
+          display: flex;
+          align-items: center;
+        }
+        .rankHeight{
+          width: 0.4rem;
+          height: 0.4rem;
+        }
+        .imgHeight{
+          width: 1.06rem;
+          height: 1.06rem;
+          margin: 0 0.3rem 0 0.26rem;
+          img{
+            width: 100%;
+            height: auto;
+          }
+        }
+        .topHeight{
+          width: 0.22rem;
+          height: 0.22rem;
+        }
+        .comIcon{
+          width: 0.32rem;
+          height: 0.32rem;
+          background-image: url('/static/images/historyPage/recommend.png');
+              vertical-align: middle;
+        }
+      }
+    }
+  }
+  .logoImg{
+    width: 0.3rem;
+    height: 0.3rem;
+    display: inline-block;
+        vertical-align: bottom;
+  }
+
 }
 
-.colseRecord {
-    width: 0.22rem;
-    height: 0.22rem; // border: 1px solid;
-    background-position: -0.53rem -0.76rem;
-}
 </style>
 
