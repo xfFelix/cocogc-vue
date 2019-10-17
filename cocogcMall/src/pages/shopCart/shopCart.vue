@@ -4,8 +4,8 @@
             <div class="header-wrapper">
               <h3 class="shop-title">购物车</h3>
               <p class="shop-headR" v-if="list.length != 0">
-                  <span class="shop-headWrite" @click="deitDel" v-if="deitDelFlag">编辑</span>
-                  <span class="shop-headWrite" @click="deitDelOk" v-if="!deitDelFlag">完成</span>
+                  <span class="shop-headWrite" @click="deitDelFlag=false" v-if="deitDelFlag">编辑</span>
+                  <span class="shop-headWrite" @click="deitDelFlag=true" v-if="!deitDelFlag">完成</span>
               </p>
             </div>
         </div>
@@ -26,9 +26,6 @@
                         </p>
                         <span class="iconfont icon-right" @click="$router.replace('/addressEdit')"></span>
                     </div>
-                    <!-- <div>
-                        <span class="goTo" @click="$router.replace('/addressEdit')"></span>
-                    </div> -->
                 </router-link>
               </div>
               <div v-else>
@@ -56,13 +53,13 @@
                 </p>
                 <span class="shop-dClose"></span>
             </div>
-
-            <div class="shop-dStoreWW">
-                <div class="shop-dStoreW" v-for="(items,index) in list" :key="index">
+              <div v-for="(itemList,index) in list" :key="index" class="shop-dStoreWW">
+                <div class="vendor-title"><span class="iconBg vendorIcon"></span>{{itemList.vendorId}}<span class="vendorInfo">({{itemList.vendorInfo}})</span></div>
+                <div class="shop-dStoreW" v-for="(items,index) in itemList.cartVOList" :key="index">
                     <ul class="shop-contentUl">
                         <li>
                             <span class="shop-selectW">
-                                <span @click="selGoods(index,0,$event, items)" :class="!items.check?'shop-selectN':'shop-selectY'">
+                                <span @click="selGoods(items)" :class="!items.check?'shop-selectN':'shop-selectY'">
                                 </span>
                             </span>
                             <span class="shop-selImg" @click="$router.push('/goodsDetail/'+ items.goods.id)">
@@ -73,19 +70,17 @@
                                 <p class="shop-selGoodsC">{{items.goods!=null?items.goods.attrs:''}}</p>
                                 <div class="shop-selGoodsN">
                                     <div style="display: flex; align-items: center">
-                                        <!-- <span class="money-logo"></span> -->
                                         <img :src="logoImg" alt="" class="money-logo">
                                         <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Fp}}.</span>
                                         <span class="shop-selGoodsS" v-if="items.goods">{{items.goods.currentPrice|toDecimal2Ap}}</span>
                                     </div>
                                     <p class="shop-selGoodsOW">
-                                        <!-- <span @click="goodsItem.count>0?goodsItem.count :goodsItem.count" :class="goodsItem.count>0?'decNum':'decNoNum'"></span> -->
-                                        <span @click="numDecrease(index)" class="decNum">
+
+                                        <span @click="numDecrease(items)" class="decNum">
                                           <img :src="`/static/images/cart/cut${items.num>1 ? '': '-disabled'}.png`" alt=" " class="num-icon">
                                         </span>
-                                        <span @click="numberShow(items.num,index)" ><input type="number" @input="storeMoney(items.num,index)" v-model.number="items.num" readonly="readonly" min="1"/></span>
-                                        <!-- 是否需要有货和没货？+号颜色是否要变 -->
-                                        <span class="add-num" @click="numIncrease(index)">
+                                        <span @click="numberShow(items)" ><input type="number" @input="storeMoney(items)" v-model.number="items.num" readonly="readonly" min="1"/></span>
+                                        <span class="add-num" @click="numIncrease(items)">
                                           <img :src="`/static/images/cart/add.png`" alt=" " class="num-icon">
                                         </span>
                                     </p>
@@ -94,8 +89,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-
+              </div>
         </div>
 
         <div class="shopEmpty" v-if="num && !list.length">
@@ -108,20 +102,17 @@
             <button class="btn-list" @click="$router.push('/goodsList')">进店逛逛</button>
         </div>
         <!-- 购物车列表end -->
-
-
-
         <div class="inputNum" v-if="inputNumShow">
             <div class="inputNumInfo">
                 <p class="inputNumTitle">修改购买数量</p>
                 <div class="inputNumWrite">
-                    <span class="decNum" @click="numDec">-</span>
+                    <span class="decNum" @click="goodsNum>1?goodsNum--:goodsNum">-</span>
                     <span><input type="number" min="1" v-model="goodsNum"/></span>
-                    <span @click="numInc">+</span>
+                    <span @click="goodsNum++">+</span>
                 </div>
             </div>
             <div class="inputNumBnt">
-                <p @click="cancelInp">取消</p>
+                <p @click="inputNumShow = false">取消</p>
                 <p @click="comfirmInp()">确定</p>
             </div>
         </div>
@@ -185,7 +176,7 @@ export default {
             deitDelFlag: true,
             inputNumShow: false,
             goodsNum: 1,
-            goodsNumIndex: 0,
+            goodsNumId: 0,
             addressDef: undefined,
             logoImg: LOGO_PACKAGE_URL + 'logo.png'
         };
@@ -199,18 +190,20 @@ export default {
             let num = 0
             if (this.list) {
                 let buys = []
-                let total = this.list.reduce((state, item) => {
-                    if (item.check) {
-                        buys.push({ goodsId: item.goodsId, nums: item.num })
-                        state.num = Number(item.num) + Number(state.num)
-                        num++
+                let total = this.list.reduce((state, data) => {
+                  data.cartVOList.forEach((res,indexR)=>{
+                    if(res.check){
+                      buys.push({ goodsId: res.goodsId, nums: res.num })
+                      state.num = Number(res.num) + Number(state.num)
+                      num++
                     }
-                    return state
+                    if(num === res.length){
+                      this.selectAllFlag = true
+                    }
+                  })
+                  return state
                 }, { num: 0 })
-                if (num === this.list.length) {
-                    this.selectAllFlag = true
-                }
-                this.axios(testUrl + api.updateCart, { token: getToken(), buys: buys }, 'post')
+                this.axios(testUrl + api.updateCart, { token: getToken(), buys: buys }, 'post');
                 return total.num
             } else {
                 return 0
@@ -229,7 +222,6 @@ export default {
             }
             that.computeTotal();
         });
-
     },
     beforeRouteEnter(to, from, next) {
       if(from.path.includes('goodsDetail')){
@@ -288,8 +280,17 @@ export default {
                         callback(data.data);
                       } else {
                         let num = 0
-                        data.data.forEach((v, i) => {
-                          num += v.num
+                        data.data.forEach((items,indexD)=>{
+                          items.cartVOList.forEach((res,indexR)=>{
+                            num += res.num
+                          })
+                          if(items.vendorId=='网易严选'){
+                             data.data[indexD].vendorInfo='99包邮';
+                          }else if(items.vendorId=='椰云直营'){
+                            data.data[indexD].vendorInfo='一件包邮';
+                          }else{
+                            data.data[indexD].vendorInfo='';
+                          }
                         })
                         this.setNum(num)
                       }
@@ -319,18 +320,18 @@ export default {
                 confirm => {
                     var that = this;
                     var ids = [];
-                    let arrIndex = []
-                    that.list.forEach((res, index) => {
-                        if (res.check == true) {
-                            ids.push(res.id);
+                    this.list.forEach((data,indexD)=>{
+                      data.cartVOList.forEach((res,indexR)=>{
+                        if(this.list[indexD].cartVOList[indexR].check){
+                          ids.push(res.id);
                         }
-                        arrIndex.push(index)
-                    });
+                      })
+                    })
                     if (ids.length > 0) {
                         that.axios(testUrl + api.removeCarts,
                             {
-                                token: getToken(),
-                                id: ids.join(",")
+                              token: getToken(),
+                              id: ids.join(",")
                             },
                             'post')
                             .then((data) => {
@@ -363,27 +364,22 @@ export default {
         async settleGoods() {
             var that = this;
             var buys = [];
-            // if (this.$store.state.userinfo.userinfo.isRealCert == 0) {
-            //     this.Toast({
-            //         message: '请先实名认证',
-            //         duration: 1000
-            //     })
-            //     setTimeout(() => {
-            //         window.location.href = infoURl + '#!/cert?token=' + getToken();
-            //     }, 1000)
-            //     return
-            // }
-            that.list.forEach(function(v) {
-                if (v.check) {
-                  if (!v.goods.stocks)  {
-                    return that.Toast(`${v.goods.name}库存不足`)
-                  }
+            this.list.forEach((data,indexD)=>{
+              data.cartVOList.forEach((res,indexR)=>{
+                for (let i in res) {
+                  if (res.check) {
+                    // if(res.goods.stocks<res.num){
+                    //   return this.Toast(`${res.goods.name}库存不足`)
+                    // }
                     var buy = {};
-                    buy.goodsId = v.goodsId;
-                    buy.nums = v.num;
+                    buy.goodsId = res.goodsId;
+                    buy.nums = res.num;
                     buys.push(buy);
+                  }
                 }
-            });
+              })
+            })
+
             if (that.selectAllGoods == 0) return false;
             if (buys.length <= 0) {
                 return false;
@@ -414,90 +410,108 @@ export default {
 
                     }
                 });
-
         },
-        //编辑
-        deitDel() {
-            this.deitDelFlag = false;
-
-        },
-        deitDelOk() {
-            this.deitDelFlag = true;
-
-        },
+        //算价格
         computeTotal() {
-            var that = this;
-            this.selectAllPrice = 0;
-            this.selectAllGoods = 0;
-            this.list.forEach((res) => {
-                if (res.check == true && res.goods != null) {
-                    that.selectAllPrice += res.num * res.goods.currentPrice;
-                    that.selectAllGoods++;
-                }
-            });
+          this.selectAllPrice =0;
+          this.selectAllGoods = 0;
+          this.list.forEach((data,indexD)=>{
+            data.cartVOList.forEach((res,indexR)=>{
+              if(this.list[indexD].cartVOList[indexR].check && this.list[indexD].cartVOList[indexR].goods!= null){
+                 this.selectAllPrice += this.list[indexD].cartVOList[indexR].num*this.list[indexD].cartVOList[indexR].goods.currentPrice;
+                 this.selectAllGoods++;
+              }
+            })
+          })
         },
         // 数量减小
-        numDecrease(index) {
-            if (this.list[index].num > 1) {
-                this.list[index].check = true
-                this.list[index].num--;
-                this.decrementNum()
-                this.computeTotal();
-            }
+        numDecrease(item) {
+          this.list.forEach((data,indexD)=>{
+            data.cartVOList.forEach((res,indexR)=>{
+              for (let i in res) {
+                if (res[i] == item.id) {
+                  if (this.list[indexD].cartVOList[indexR].num> 1) {
+                    this.list[indexD].cartVOList[indexR].num--
+                    this.list[indexD].cartVOList[indexR].check=true;
+                    this.decrementNum();
+                    this.computeTotal();
+                  }
+                }
+              }
+            })
+          })
         },
         //增加
-        numIncrease(index) {
-            this.list[index].check = true
-            if (this.list[index].goods != null && this.list[index].num < this.list[index].goods.stocks) {
-                this.list[index].num++;
-                this.incrementNum();
-                this.computeTotal();
-            }
+        numIncrease(item) {
+          this.list.forEach((data,indexD)=>{
+            data.cartVOList.forEach((res,indexR)=>{
+              for (let i in res) {
+                if (res[i] == item.id) {
+                  this.list[indexD].cartVOList[indexR].check=true;
+                  if (this.list[indexD].cartVOList[indexR].goods != null && this.list[indexD].cartVOList[indexR].num < this.list[indexD].cartVOList[indexR].goods.stocks) {
+                    this.list[indexD].cartVOList[indexR].num++;
+                    this.incrementNum();
+                    this.computeTotal();
+                  }
+                }
+              }
+            })
+          })
         },
         //输入的数量
-        async storeMoney(e, index) {
-            this.list[index].num = e;
-            this.computeTotal();
+        async storeMoney(item) {
+          this.list.forEach((data,indexD)=>{
+            data.cartVOList.forEach((res,indexR)=>{
+              for (let i in res) {
+                if (res[i] == item.id) {
+                  this.list[indexD].cartVOList[indexR].num = item.num;
+                  this.computeTotal();
+                }
+              }
+            })
+          })
         },
         //单个商品选中
-        selGoods(index, goodsIndex) {
-            var List = this.list;
-            List[index].check = !List[index].check;
-            //判断是否全选
-            this.IsQuanXuan();
-            this.computeTotal();
+        selGoods(item) {
+          let checkFlag = true;
+          this.list.forEach((data,indexD)=>{
+            data.cartVOList.forEach((res,indexR)=>{
+               for (let i in res) {
+                 if (res[i] == item.id) {
+                  this.list[indexD].cartVOList[indexR].check = !this.list[indexD].cartVOList[indexR].check;
+                 }
+               }
+               checkFlag = this.list[indexD].cartVOList[indexR].check && checkFlag;
+               if(!checkFlag){
+                  this.selectAllFlag = false;
+               }else{
+                  this.selectAllFlag = true;
+               }
+            })
+          })
+          this.computeTotal();
         },
         //全选
         selectAll() {
-            this.selectAllFlag = !this.selectAllFlag;
-            this.selectAllPrice = 0;
-            this.selectAllGoods = 0;
-            this.list.forEach((res) => {
-                res.AllFlag = this.selectAllFlag;
-                res.check = this.selectAllFlag;
-                if (res.AllFlag == true) {
-                    this.selectAllPrice += res.num * res.goods.currentPrice;
-                    this.selectAllGoods++
+          this.selectAllFlag = !this.selectAllFlag;
+          this.list.forEach((data,indexD)=>{
+            data.cartVOList.forEach((res,indexR)=>{
+              if(this.selectAllFlag){
+                if(!this.list[indexD].cartVOList[indexR].check){
+                  this.list[indexD].cartVOList[indexR].check=true;
+                  this.selectAllPrice += this.list[indexD].cartVOList[indexR].num * this.list[indexD].cartVOList[indexR].goods.currentPrice;
                 }
-            });
+              }else{
+                this.list[indexD].cartVOList[indexR].check=false;
+              }
+            })
+          })
+          this.computeTotal()
         },
-        //某个商品不选，全选不选
-        IsQuanXuan(index) {
-            let Notselected = true;
-            this.list.forEach((res) => {
-                if (!res.check) {
-                    Notselected = false
-                }
-            });
-            this.selectAllFlag = Notselected;
-        },
-        cancelInp() {
-            this.inputNumShow = false;
-        },
-        numberShow(itemNum, index) {
+        numberShow(item) {
             this.inputNumShow = true;
-            this.goodsNum = itemNum;
-            this.goodsNumIndex = index
+            this.goodsNum = item.num;
+            this.goodsNumId = item.id;
         },
         comfirmInp() {
             this.inputNumShow = false;
@@ -505,24 +519,20 @@ export default {
                 this.Toast('宝贝不能再少了~~');
                 return false;
             }
-            this.list[this.goodsNumIndex].num = parseInt(this.goodsNum);
-            this.list[this.goodsNumIndex].check = true
-            this.selectAllPrice = 0
-            this.selectAllGoods = 0
-            this.list.forEach((res) => {
-                if (res.check == true && res.goods != null) {
-                    this.selectAllPrice += res.num * res.goods.currentPrice;
-                    this.selectAllGoods++;
+            let num =0;
+            this.list.forEach((data,indexD)=>{
+              data.cartVOList.forEach((res,indexR)=>{
+               for(let i in res){
+                  if(res[i] == this.goodsNumId){
+                    this.list[indexD].cartVOList[indexR].num=parseInt(this.goodsNum);
+                    this.list[indexD].cartVOList[indexR].check = true;
+                  }
                 }
-            });
-        },
-        numDec() {
-            if (this.goodsNum > 1) {
-                this.goodsNum--
-            }
-        },
-        numInc() {
-            this.goodsNum++
+                num += this.list[indexD].cartVOList[indexR].num;
+                this.setNum(num);
+              })
+            })
+            this.computeTotal();
         },
     },
     components: {
@@ -686,9 +696,15 @@ export default {
 .shop-content {
     position: relative;
     background: #fff;
+    box-shadow:0px 0.36rem 0.7rem 0px rgba(123,123,123,0.09);
     .shop-dStoreWW {
       position: relative;
-        margin-bottom: 0.3rem;
+      border-bottom: 0.3rem solid #F2F3F5;
+      padding:0 0.3rem;
+      // margin-bottom: 0.3rem;
+      &:last-of-type{
+        border-bottom:0;
+      }
         .z-mask{
           position: absolute;
           top: 0;
@@ -700,6 +716,26 @@ export default {
           text-align: center;
           padding-top: 100px;
         }
+        .vendor-title{
+          font-size: 0.3rem;
+          color: #000000;
+          font-weight: Bold;
+          display: flex;
+          align-items: center;
+          padding-top: 0.4rem;
+          .vendorIcon{
+            background-image: url('/static/images/cart/supermarket.png');
+            width: 0.34rem;
+            height: 0.32rem;
+            margin-right: 0.26rem;
+          }
+          .vendorInfo{
+            font-weight: normal;
+            color: #E5AA61;
+            margin-left: 0.1rem;
+          }
+        }
+
     }
     .shop-dStoreW {
         background: #fff;
@@ -741,7 +777,7 @@ export default {
                 .shop-selectW {
                     align-items: center;
                     display: flex;
-                    margin: 0 0.25rem 0 0.32rem;
+                    margin: 0 0.25rem 0 0;
                     .shop-selectN {
                       width: 20px;
                       height: 20px;

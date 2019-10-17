@@ -15,7 +15,7 @@ export default {
           {bgImgClass:"/static/images/logo/logo.png",name:'积分日志',path:`${hostUrl}ticket/integrallog`},
           {bgImgClass:"/static/images/personal/kami.png",name:'卡密充值',path:`${hostUrl}ticket/reCharge`},
         //  {bgImgClass:"/static/images/personal/collect.png",name:'我的收藏',path:`${hostUrl}ticket/gold`},
-          {bgImgClass:"/static/images/personal/help.png",name:'帮助中心',path:`'https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q'`},
+          {bgImgClass:"/static/images/personal/help.png",name:'帮助中心',path:'weixin'},
           {bgImgClass:"/static/images/personal/contact.png",name:'联系我们',path:`${hostUrl}ticket/contact`},
           {bgImgClass:"/static/images/personal/setUp.png",name:'设置',path:`/setUp`},
       ],
@@ -24,6 +24,8 @@ export default {
       pageJump(path){
         if(path.includes('setUp')){
           this.$router.push({path:'/setUp'})
+        }else if(path.includes('weixin')){
+          window.location.href = 'https://mp.weixin.qq.com/s/YjTWs8Ep1lpIYeSXJTH03Q';
         }else{
           window.location.href = path;
         }

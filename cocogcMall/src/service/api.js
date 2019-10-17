@@ -57,6 +57,7 @@ const userSms = 'user/sms'
 const bindMobile = 'user/bindMobile'
 const checkPayPwd = 'user/editPayPwd'
 
+const searchApi = 'news/newsList'
 
 
 
@@ -102,5 +103,6 @@ export default {
   confirmReceived,
   userSms,
   bindMobile,
-  checkPayPwd
+  checkPayPwd,
+  searchApi
 }
