@@ -115,7 +115,7 @@ export default {
           return
         }
         //滚动条到底部的条件
-        if(scrollTop+windowHeight==scrollHeight){
+        if(scrollHeight -scrollTop-windowHeight <= 60){
           //写后台加载数据的函数
           if (this.offset) {
             this.price(this.iSintegra)
