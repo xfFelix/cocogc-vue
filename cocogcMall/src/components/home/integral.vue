@@ -171,7 +171,7 @@ export default {
             }
         },
         init() {
-          this.page = 1
+          this.page = 0
           this.goodsList = []
         },
         price(integral, first) {
