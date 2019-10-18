@@ -182,7 +182,7 @@ export default {
             addressList: [],
             dataList: {},
             orderId: this.$route.params.orderId,
-            showStream: true,
+            showStream: false,
             stream: {
               name: '',
               number: '',
