@@ -93,6 +93,9 @@
                         <div class="logistTake">
                             <span class="lookLogist" @click="$router.push({name:'logisticsDetail',query:{orderId:item.orderId,logisticId:item.id}})">查看物流</span>
                             <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus =='已确认'">确认收货</span>
+                            <span class="confirmTake" @click="cancelOrder(item.orderId)" v-if="(item.orderStatus =='待确认' && item.vendorId !== '网易严选') || (item.orderStatus =='已确认' && item.vendorId === '网易严选')">取消订单</span>
+                            <span class="confirmTake" @click="applyBack(item.orderId)" v-if="item.orderStatus =='已完成'">申请退货</span>
+                            <span class="confirmTake" @click="cancelBack(item.orderId)" v-if="item.orderStatus =='申请退货'">取消申请</span>
                         </div>
                     </div>
                 </div>
@@ -209,7 +212,7 @@ export default {
         async confirmReceived(token,takeId) {
             let data = await this.axios(testUrl + api.confirmReceived, { "token": token, "id":  takeId}, 'post')
             if (data.error_code) {
-                return
+                return this.Toast(data.message)
             }
             this.init();
             this.selectOrders(token, this.headIndex);
@@ -223,7 +226,46 @@ export default {
             }).catch(action => {
 
             })
-        }
+        },
+        cancelOrder(takeId){
+          let token = getToken()
+          this.MessageBox.confirm('', {
+            message: '是否取消订单',
+            title: '取消订单',
+          }).then(async action => {
+            let data = await this.axios(testUrl + api.cancelOrder, { "token": token, "code":  takeId}, 'post')
+            if (data.error_code) return this.Toast(data.message)
+            this.Toast(data.message)
+            this.init();
+            this.selectOrders(token, this.headIndex);
+          }).catch(action => {})
+        },
+        applyBack(takeId){
+          let token = getToken()
+          this.MessageBox.confirm('', {
+            message: '是否申请退货',
+            title: '申请退货',
+          }).then(async action => {
+            let data = await this.axios(testUrl + api.applyBack, { "token": token, "code":  takeId}, 'post')
+            if (data.error_code) return this.Toast(data.message)
+            this.Toast(data.message)
+            this.init();
+            this.selectOrders(token, this.headIndex);
+          }).catch(action => {})
+        },
+        cancelBack(takeId){
+          let token = getToken()
+          this.MessageBox.confirm('', {
+            message: '是否取消申请退货',
+            title: '取消申请',
+          }).then(async action => {
+            let data = await this.axios(testUrl + api.cancelBack, { "token": token, "code":  takeId}, 'post')
+            if (data.error_code) return this.Toast(data.message)
+            this.Toast(data.message)
+            this.init();
+            this.selectOrders(token, this.headIndex);
+          }).catch(action => {})
+        },
     },
     components: {
         "header-top": headerTop,

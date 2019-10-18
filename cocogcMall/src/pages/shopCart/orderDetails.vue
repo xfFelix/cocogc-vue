@@ -5,6 +5,7 @@
              <p class="od-titleInfoWrap">
                 <span class="j1Png od-titleInfoImg"></span>
                 <span class="od-titleInfo">{{dataList.orderStatus}}</span>
+                <span class="bind-stream" v-if="dataList.orderStatus === '申请退货'" @click="showStream = true">绑定物流</span>
             </p>
             <!-- <p class="od-service">
                 申请售后
@@ -43,6 +44,38 @@
                 <span>下单时间：</span>
                 <span>{{dataList.addTime}}</span>
             </div>
+        </div>
+
+        <div v-if="addressList && addressList.length">
+          <div class="od-timeInfoWrap" v-for="(item, index) in addressList" :key="index">
+              <div class="od-numberWrap">
+                  <p class="od-number">
+                      <span>申请单号：</span>
+                      <span>{{item.applyId}}</span>
+                  </p>
+                  <p class="od-numberCopy" @click="handleCopy(item.applyId, $event)">复制</p>
+              </div>
+              <div class="od-timeInfo">
+                  <span>收货地址：</span>
+                  <span>{{item.fullAddress}}</span>
+              </div>
+              <div class="od-timeInfo">
+                  <span>商品名称：</span>
+                  <span>{{item.goodsName}}</span>
+              </div>
+              <div class="od-timeInfo">
+                  <span>收货电话：</span>
+                  <span>{{item.mobile}}</span>
+              </div>
+              <div class="od-timeInfo">
+                  <span>收货人：</span>
+                  <span>{{item.name}}</span>
+              </div>
+              <div class="od-timeInfo">
+                  <span>邮政编码：</span>
+                  <span>{{item.zipCode}}</span>
+              </div>
+          </div>
         </div>
 
 
@@ -111,6 +144,28 @@
             </p>
         </div>
 
+        <div class="mask" v-if="showStream">
+          <div class="dialog">
+            <h1>绑定物流信息</h1>
+            <div class="item">
+              <div class="label">申请单号</div>
+              <input type="text" v-model="stream.applyId">
+            </div>
+            <div class="item">
+              <div class="label">快递公司</div>
+              <input type="text" v-model="stream.name" placeholder="圆通\中通\顺丰...">
+            </div>
+            <div class="item">
+              <div class="label">快递单号</div>
+              <input type="text" v-model="stream.number">
+            </div>
+            <div class="btn-wrapper">
+              <div class="btn" @click="closeDialog()">取消</div>
+              <div class="btn" @click="bindStream()">成功</div>
+            </div>
+          </div>
+        </div>
+
     </div>
 </template>
 <script>
@@ -124,16 +179,38 @@ export default {
     data() {
         return {
             list: [],
-
+            addressList: [],
             dataList: {},
-            orderId: this.$route.params.orderId
+            orderId: this.$route.params.orderId,
+            showStream: true,
+            stream: {
+              name: '',
+              number: '',
+              applyId: ''
+            }
         };
     },
     mounted() {
       this.findOrder()
     },
     methods: {
-
+      closeDialog() {
+        this.stream = {
+          name: '',
+          number: '',
+          applyId: ''
+        },
+        this.showStream = false
+      },
+      async bindStream() {
+        let token = getToken();
+        const { applyId, name, number } = this.stream
+        let params = {token, code: this.orderId, applyId, trackingCompany: name, trackingNum: number}
+        const { data, error_code, message } = await this.axios(testUrl + api.bindStream, params, 'post')
+        this.Toast(message)
+        if (error_code) return
+        this.closeDialog()
+      },
         logisticGo: function() {
             this.$router.push('/logisticsDetail')
         },
@@ -142,14 +219,15 @@ export default {
 
             var token = getToken();
             let _this = this;
-            this.axios(testUrl + api.findOrder, {
+            this.axios(testUrl + api.getOrder, {
 
                 "token": token,
                 "code": this.orderId
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                        _this.dataList = data.data;
+                        _this.dataList = data.data.orderVO;
+                        this.addressList = data.data.returnAddressList
                     } else {
                         _this.Toast(data.message)
                     }
@@ -190,6 +268,14 @@ export default {
             margin-right: 0.05rem;
         }
         .od-titleInfo {}
+        .bind-stream{
+          background: #fff;
+          color: #30ce84;
+          padding: 3px 10px;
+          border-radius: 25px;
+          font-size: 13px;
+          margin-left: 10px;
+        }
     }
     .od-service {
         border: 1px solid #fff;
@@ -266,6 +352,9 @@ export default {
         padding-bottom: 0.4rem;
         span:nth-of-type(1) {
             font-weight: bold;
+            display: block;
+            width: 68px;
+            text-align-last: justify;
         }
     }
 }
@@ -386,6 +475,68 @@ export default {
             color: #30ce84;
         }
     }
+}
+.mask{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.5);
+  .dialog{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    width: 88%;
+    border-radius: 5px;
+    overflow: hidden;
+    box-sizing: border-box;
+    h1{
+      font-size: 18px;
+      text-align: center;
+      margin-top: 15px;
+    }
+    .item{
+      display: flex;
+      align-items: center;
+      margin: 15px 15px 0 15px;
+      height: 40px;
+      border: 1px solid #dedede;
+      border-radius: 5px;
+      .label{
+        text-align: center;
+        flex-basis: 80px;
+        font-size: 14px;
+        border-right: 1px solid #dedede;
+      }
+      input {
+        flex: 1;
+        height: 100%;
+        padding-left: 10px;
+        font-size: 14px;
+      }
+    }
+    .btn-wrapper{
+      display: flex;
+      align-items: center;
+      height: 44px;
+      border-top: 1px solid #dedede;
+      margin-top: 20px;
+      .btn{
+        flex: 1;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:last-child{
+          border-left: 1px solid #dedede;
+          color: #30ce84;
+        }
+      }
+    }
+  }
 }
 </style>
 
