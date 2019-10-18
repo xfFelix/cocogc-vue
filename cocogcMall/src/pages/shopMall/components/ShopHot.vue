@@ -2,10 +2,12 @@
   <div class="hotGood">
     <div><span class="iconBg headIcon"></span><span class="iconBg allbuy"></span></div>
     <ul>
-      <li v-for="(item,index) in list" :key="index">
-        <img :src="item.picUrl" alt="good"/>
-        <p class="name">{{item.name}}</p>
-        <p class="money"><span class="iconBg iconLogo"></span>{{item.currentPrice|toDecimal2}}</p>
+      <li v-for="(item,index) in list" :key="index" >
+        <router-link :to="`/goodsDetail/${item.id}`" style="display:inline-block">
+          <img :src="item.picUrl" alt="good"/>
+          <p class="name">{{item.name}}</p>
+          <p class="money"><span class="iconBg iconLogo"></span>{{item.currentPrice|toDecimal2}}</p>
+        </router-link>
       </li>
     </ul>
   </div>

@@ -2,7 +2,7 @@
   <div class="classify">
       <ul>
         <li v-for="(item,index) in list" :key="index" @click="jumpPath(item.path)">
-          <p class="iconBg iconNorms" :style="`background-image:url('${item.img}')`">
+          <p class="iconBg iconNorms" :style="`background-image:url('${item.img}');display:block;`">
             <span class="iconBg iconSpecial" v-if="item.flagImg" :style="`background-image:url('${item.flagImg}')`"></span>
           </p>
           {{item.name}}

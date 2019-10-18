@@ -39,7 +39,7 @@ export default {
         sendSearch() {
             this.searchHis(this.kewWordC)
             this.$emit('searchChild', this.kewWordC);
-            this.$router.replace({path:`/goodsList?keyWord=${this.kewWordC}`})
+            this.$router.push({path:`/goodsList?keyWord=${this.kewWordC}`})
         },
         async querySearchAsync(queryString, cb) {
             if (queryString) {
@@ -153,7 +153,7 @@ export default {
         height: 0.36rem;
         background-image: (url('/static/images/home/arrow.png'))
     }
-    
+
 }
 
 

@@ -17,7 +17,7 @@
               <p><span class="iconBg rankIcon"></span>热销TOP</p>
               <ul>
                 <li v-for="(item,index) in rankList" :key="index">
-                  <!-- <a :href="item.url"> -->
+                  <a :href="item.url">
                     <div class="rankL">
                       <span class="iconBg rankHeight" :style="`background-image: url('/static/images/historyPage/rank-${index+1}.png')`"></span>
                       <p class="imgHeight"> <img :src="item.img " alt=""/></p>
@@ -27,7 +27,7 @@
                         <span>{{item.noticeTitle.length>25?item.noticeTitle.substr(1,200)+'...':item.noticeTitle}}</span>
                         <span class="iconBg topHeight" :style="`background-image: url('/static/images/historyPage/top-${index+1}.png')`"></span>
                     </div>
-                  <!-- </a> -->
+                  </a>
                 </li>
               </ul>
             </div>
@@ -129,7 +129,7 @@ export default {
       }
     }
     ul{
-      li{
+      li a{
         color: #333333;
         font-size: 0.28rem;
         display: flex;
