@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="logistTake">
-                            <span class="lookLogist" @click="$router.push({name:'logisticsDetail',query:{orderId:item.orderId,logisticId:item.id}})">查看物流</span>
+                            <span class="lookLogist" v-if="item.orderStatus =='已取消'" @click="$router.push({name:'logisticsDetail',query:{orderId:item.orderId,logisticId:item.id}})">查看物流</span>
                             <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus =='已确认'">确认收货</span>
                             <span class="confirmTake" @click="cancelOrder(item.orderId)" v-if="(item.orderStatus =='待确认' && item.vendorId !== '网易严选') || (item.orderStatus =='已确认' && item.vendorId === '网易严选')">取消订单</span>
                             <span class="confirmTake" @click="applyBack(item.orderId)" v-if="item.orderStatus =='已完成'">申请退货</span>
@@ -94,7 +94,7 @@
                             <p>合计：<span>{{item.totalMoney}}</span></p>
                         </div>
                         <div class="logistTake">
-                            <span class="lookLogist" @click="$router.push({name:'logisticsDetail',query:{orderId:item.orderId,logisticId:item.id}})">查看物流</span>
+                            <span class="lookLogist" v-if="item.orderStatus =='已取消'" @click="$router.push({name:'logisticsDetail',query:{orderId:item.orderId,logisticId:item.id}})">查看物流</span>
                             <span class="confirmTake" @click="confirmTake(item.id)" v-if="item.orderStatus =='已确认'">确认收货</span>
                             <span class="confirmTake" @click="cancelOrder(item.orderId)" v-if="(item.orderStatus =='待确认' && item.vendorId !== '网易严选') || (item.orderStatus =='已确认' && item.vendorId === '网易严选')">取消订单</span>
                             <span class="confirmTake" @click="applyBack(item.orderId)" v-if="item.orderStatus =='已完成'">申请退货</span>
