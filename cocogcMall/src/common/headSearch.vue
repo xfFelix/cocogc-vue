@@ -1,18 +1,14 @@
 <template>
     <div class="home-sm">
-        <div class="j1Png home-back" @click="$router.back()"></div>
+        <div class="iconBg home-back" @click="$router.back()"></div>
         <div class="home-search">
             <div class="home-smInput">
-                <img :src="logoImg" alt="" class="logo-img">
-                <!-- <span class="j1Png home-logo"></span> -->
+                <span class="iconBg searchIcon"></span>
                 <p class="home-searchI">
-                    <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="kewWordC"/> -->
-                    <el-autocomplete v-model="kewWordC" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="goSearch()"></el-autocomplete>
+                  <el-autocomplete v-model="kewWordC" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="goSearch()" autofocus="autofocus"></el-autocomplete>
                 </p>
             </div>
-            <span class="home-smdel" @click="cleanInp" v-if="kewWordC">
-                <span class="j1Png home-smdelImg"></span>
-            </span>
+            <span class="home-smdel iconBg" @click="kewWordC=''" v-if="kewWordC"></span>
         </div>
         <div class="home-smClose" @click="sendSearch()" ref="searchInput">
             搜索
@@ -20,27 +16,30 @@
     </div>
 </template>
 <script>
-import api from '@/service/api'
+import api from '@/service/api';
+import { mapActions } from 'vuex';
 export default {
-    props: {
-      kewWordC: {
-        type: String,
-        default: ''
-      }
-    },
     data: () => ({
-      logoImg: LOGO_PACKAGE_URL + 'logo.png'
+      logoImg: LOGO_PACKAGE_URL + 'logo.png',
+      kewWordC:''
     }),
+    watch:{
+        $route(to,from){
+            this.kewWordC = this.$route.query.keyWord;
+        }
+    },
     methods: {
-        cleanInp() {
-            this.kewWordC = ""
-        },
+        ...mapActions({
+            searchHis: 'searchHis/setSearchHis'
+        }),
         goSearch() {
           this.sendSearch()
           document.activeElement.blur();
         },
         sendSearch() {
-            this.$emit('searchChild', this.kewWordC)
+            this.searchHis(this.kewWordC)
+            this.$emit('searchChild', this.kewWordC);
+            this.$router.replace({path:`/goodsList?keyWord=${this.kewWordC}`})
         },
         async querySearchAsync(queryString, cb) {
             if (queryString) {
@@ -63,6 +62,9 @@ export default {
             this.sendSearch()
         },
     },
+    mounted(){
+        this.kewWordC = this.$route.query.keyWord;
+    },
 }
 </script>
 <style lang="scss">
@@ -70,26 +72,27 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #fff;
+    background: #30CE84;
+    color: #fff;
+    height: 1.16rem;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
     .home-search {
-        width: 78%; //   background: rgba(0, 0, 0, 0.25);
-        // border: 1px solid #dfdfdf;
-        border: 1px solid rgba(0, 0, 0, 0.06);
+        width: 5.54rem;
         height: 0.6rem;
-        border-radius: 0.6rem;
+        border-radius: 0.1rem;
         display: flex;
-        align-items: center; // margin: 0 auto;
+        align-items: center;
         justify-content: space-between;
+        background: #26A56A;
+        padding: 0 0.3rem;
+        box-sizing: border-box;
         .home-smInput {
             display: flex;
             align-items: center;
             width: 100%;
             height: 100%;
-            .logo-img{
-              width: 20px;
-              height: 20px;
-              margin: 0 6px;
-            }
+            flex: 1;
             .home-searchL {
                 height: 0.26rem;
                 width: 0.26rem;
@@ -98,70 +101,60 @@ export default {
             }
             .home-searchI {
                 height: 100%;
-                width: 88%;
+                width: 100%;
                 display: flex;
                 align-items: center;
-                padding-left: 0.1rem;
+                flex: 1;
                 input {
                     width: 100%;
                     font-size: 0.26rem;
                     border: none;
                     background: transparent;
-                    color: #333;
-                }
-                 ::-webkit-input-placeholder {
-                    /* WebKit, Blink, Edge */
-                    color: #dfdfdf;
-                    font-size: 0.26rem;
-                }
+                    color: #fff;
 
-                 :-moz-placeholder {
-                    /* Mozilla Firefox 4 to 18 */
-                    color: #dfdfdf;
-                    font-size: 0.26rem;
+                    &::-webkit-input-placeholder {
+                        color: #fff;
+                        font-size: 0.26rem;
+                    }
+                    &:-moz-placeholder {
+                        color: #fff;
+                        font-size: 0.26rem;
+                    }
+                    &::-moz-placeholder {
+                        color: #fff;
+                        font-size: 0.26rem;
+                    }
+                    &:-ms-input-placeholder {
+                        color: #fff;
+                        font-size: 0.26rem;
+                    }
                 }
-
-                 ::-moz-placeholder {
-                    /* Mozilla Firefox 19+ */
-                    color: #dfdfdf;
-                    font-size: 0.26rem;
-                }
-
-                input:-ms-input-placeholder {
-                    /* Internet Explorer 10-11 */
-                    color: #dfdfdf;
-                    font-size: 0.26rem;
-                }
-
             }
         }
-
-        .home-smdel {
-            width: 0.46rem;
-            height: 0.46rem;
-            border-radius: 50%;
-            background: #efefef;
-            margin-right: 0.07rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            .home-smdelImg {
-                height: 0.22rem;
-                width: 0.2rem;
-                background-position: -0.54rem -0.76rem;
-            }
+        .home-back {
+            width: 0.2rem;
+            height: 0.36rem;
+            background-image: (url('/static/images/home/arrow.png'))
+        }
+        .searchIcon{
+            width: 0.32rem;
+            height: 0.32rem;
+            background-image: (url('/static/images/superMark/searchb.png'));
+            margin-right: 0.2rem;
+        }
+        .home-smdel{
+            width: 0.3rem;
+            height: 0.3rem;
+            background-image: (url('/static/images/home/close.png'))
         }
     }
-    .home-smClose {
-        margin-right: 0.27rem;
+     .home-back {
+        width: 0.2rem;
+        height: 0.36rem;
+        background-image: (url('/static/images/home/arrow.png'))
     }
+    
 }
 
-.home-back {
-    width: 0.25rem;
-    height: 0.36rem;
-    background-position: -0.2rem -0.76rem;
-    transform: rotate(180deg);
-    margin: 0 0.19rem;
-}
+
 </style>

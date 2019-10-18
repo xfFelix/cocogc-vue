@@ -1,28 +1,17 @@
 <template>
-    <div class="select page" style="position:relative;">
-        <div class="select-head">
-            <div class="home-smWrap">
-                <div class="home-search">
-                    <img :src="searchLogo" alt="" srcset="" class="search-logo">
-                    <!-- <span class="home-logo"></span> -->
-                    <!-- <span class="home-searchL"></span> -->
-                    <p class="home-searchI">
-                        <!-- <input type="text" placeholder="请输入要搜索的内容" v-model="searchWord" /> -->
-                        <el-autocomplete v-model="searchWord" :fetch-suggestions="querySearchAsync" placeholder="请输入要搜索的内容" @select="handleSelect" :trigger-on-focus="false" :hide-loading="true" :debounce="1000" @keyup.enter.native="seachClick"></el-autocomplete>
-                    </p>
-                </div>
-                <div class="home-message" @click="seachClick()">
-                    搜索
-                </div>
-            </div>
+    <div class="page" style="position: relative; padding: 1.16rem 0px 0px; box-sizing: border-box;">
+      <div class="select-head">
+        <div class="home-search" @click="seachClick()">
+          <img src="/static/images/superMark/searchb.png"  class="search-logo" alt=""/>
+          请输入要搜索的商品名称
         </div>
+      </div>
 
-        <div class="view select-goodsW">
+        <div class="select-goodsW">
             <div class="aside select-brandW">
                 <ul class="select-brand">
                     <li v-for="(item,index) in cateList" :key="index" class="select-brandLi" @click="activeIndexC(index,item.id)" :style="(activeIndex==index ?' background: #fff':'background: #f3f4f6')">
                         <span class="activeGre" v-if="activeIndex==index"></span>
-
                         <span :style="(activeIndex==index ?'color: #30ce84':'color: #333')">{{item.name}}</span>
                     </li>
 
@@ -31,7 +20,6 @@
 
             <div class="main select-bGoodsW">
                 <div class="select-bGoods">
-
                     <div class="classify-swipeW">
                         <div class="classify-swipe">
                             <div class="swiper-container">
@@ -147,7 +135,7 @@ export default
                 this.seachClick()
             },
             seachClick() {
-                this.$router.push({ path: '/goodsList', query: { keyWord: this.searchWord } })
+                this.$router.push({ path: '/searchPage', query: { keyWord: this.searchWord } })
             },
             categories: function(cateId, callback) {
                 this.axios(testUrl + api.categories, {
@@ -251,73 +239,28 @@ export default
 
 .select-head {
     width: 100%;
-    border-bottom: 10px solid #f3f4f6;
-    height: 1rem;
-    background: #fff;
-    padding: 0.42rem 0 0.24rem 0; // box-shadow: 0.05rem 0.09rem 0.1rem 0px rgba(225, 235, 255, 0.3);
-    .home-smWrap {
-        display: flex;
-        justify-content: space-between;
+    height: 1.16rem;
+    background: #30CE84;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 2;
         .home-search {
-            width: 6.26rem;
-            height: 0.6rem;
-            border-radius: 0.6rem;
-            margin-left: 0.12rem;
+            width: 6.9rem;
+            height: 0.7rem;
+            background: #26A56A;
+            margin: 0 auto;
             display: flex;
             align-items: center;
-            margin-top: 0.09rem;
-            border: 1px solid rgba(0, 0, 0, 0.06);
+            justify-content: center;
+            font-size: 0.28rem;
+            color: #FFFFFF;
+            border-radius: 0.08rem;
             .search-logo{
-              width: 24px;
-              height: 24px;
-              margin-left: 5px;
-            }
-            .home-searchL {
-                height: 0.26rem;
-                width: 0.26rem;
-                display: inline-block;
-                background-image: url(/static/images/jl.png);
-                background-repeat: no-repeat;
-                background-position: -5rem -0.25rem;
-                background-size: 5.8rem 1.86rem;
-                margin-right: 0.04rem;
-            }
-            .home-searchI {
-                height: 100%;
-                width: 90%;
-                display: flex;
-                align-items: center;
-                padding-left: 0.1rem;
-                input {
-                    width: 4.5rem;
-                    font-size: 0.26rem;
-                    border: none;
-                    background: transparent;
-                    line-height: 20px;
-                }
-                 ::-webkit-input-placeholder {
-                    /* WebKit, Blink, Edge */
-                    color: #c5c5c5;
-                    font-size: 0.26rem;
-                }
-
-                 :-moz-placeholder {
-                    /* Mozilla Firefox 4 to 18 */
-                    color: #c5c5c5;
-                    font-size: 0.26rem;
-                }
-
-                 ::-moz-placeholder {
-                    /* Mozilla Firefox 19+ */
-                    color: #c5c5c5;
-                    font-size: 0.26rem;
-                }
-
-                input:-ms-input-placeholder {
-                    /* Internet Explorer 10-11 */
-                    color: #c5c5c5;
-                    font-size: 0.26rem;
-                }
+              width: 0.34rem;
+              height: 0.34rem;
+              margin-right: 5px;
             }
         }
 
@@ -351,46 +294,15 @@ export default
                 color: #fff;
             }
         }
-    } // .select-headBan {
-    //     .select-headUl {
-    //         display: flex;
-    //         justify-content: space-around;
-    //         text-align: center;
-    //         margin-top: 0.56rem;
-    //         font-size: 0.24rem;
-    //         color: #333;
-    //         .select-headImg01,
-    //         .select-headImg02,
-    //         .select-headImg03,
-    //         .select-headImg04 {
-    //             width: 0.42rem;
-    //             height: 0.42rem;
-    //             background-image: url(/static/images/jl.png);
-    //             background-repeat: no-repeat;
-    //             background-size: 5.8rem 1.86rem;
-    //             margin: 0px auto 0.09rem auto;
-    //         }
-    //         .select-headImg01 {
-    //             background-position: -0.16rem -0.17rem;
-    //         }
-    //         .select-headImg02 {
-    //             background-position: -0.68rem -0.17rem;
-    //         }
-    //         .select-headImg03 {
-    //             background-position: -1.18rem -0.17rem;
-    //         }
-    //         .select-headImg04 {
-    //             background-position: -1.65rem -0.17rem;
-    //         }
-    //     }
-    // }
 }
 
+.select-bGoodsW,.select-brandW{
+  height: calc(100vh - 1.16rem - 49px);
+}
 .select-goodsW {
-    // margin-bottom: 49px;
     display: flex;
     position: relative;
-    height: 100%;
+    height: calc(100vh - 1.16rem - 49px);
     .select-brandW {
         height: 100%;
         position: relative;
@@ -407,13 +319,13 @@ export default
 
             .activeGre {
                 width: 0.06rem;
-                height: 100%;
+                height: 0.32rem;
                 display: block;
                 position: absolute;
                 background: #30ce84;
+                top: 25%;
             }
         }
-        .activeBand {}
     }
     .select-bGoodsW {
         width: 100%;
@@ -427,8 +339,6 @@ export default
         ul {
             width: 100%;
             li {
-
-
                 width: 24%;
                 margin: 0 4.66%;
                 display: inline-block;
@@ -466,10 +376,9 @@ export default
 }
 
 .aside {
-    // flex: 2.2;
     height: 100%;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; // background-color: gold;
+    -webkit-overflow-scrolling: touch;
     &::-webkit-scrollbar {
         display: none
     }
