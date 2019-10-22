@@ -16,16 +16,18 @@
             <div class="hot-all">
               <p><span class="iconBg rankIcon"></span>热销TOP</p>
               <ul>
-                <li v-for="(item,index) in rankList" :key="index"  >
-                  <div class="rankL">
-                    <span class="iconBg rankHeight" :style="`background-image: url('/static/images/historyPage/rank-${index+1}.png')`"></span>
-                    <p class="imgHeight"> <img :src="item.img " alt=""/></p>
-                  </div>
-                  <div class="rankR">
-                     <span class="iconBg comIcon"></span>
-                      <span>{{item.noticeTitle.length>25?item.noticeTitle.substr(1,200)+'...':item.noticeTitle}}</span>
-                      <span class="iconBg topHeight" :style="`background-image: url('/static/images/historyPage/top-${index+1}.png')`"></span>
-                  </div>
+                <li v-for="(item,index) in rankList" :key="index">
+                  <a :href="item.url">
+                    <div class="rankL">
+                      <span class="iconBg rankHeight" :style="`background-image: url('/static/images/historyPage/rank-${index+1}.png')`"></span>
+                      <p class="imgHeight"> <img :src="item.img " alt=""/></p>
+                    </div>
+                    <div class="rankR">
+                      <span class="iconBg comIcon"></span>
+                        <span>{{item.noticeTitle.length>25?item.noticeTitle.substr(1,200)+'...':item.noticeTitle}}</span>
+                        <span class="iconBg topHeight" :style="`background-image: url('/static/images/historyPage/top-${index+1}.png')`"></span>
+                    </div>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -40,7 +42,7 @@ export default {
         return {
             discoverList:[],
             rankList:[],
-            logoImg: LOGO_PACKAGE_URL + 'logo.png'
+            logoImg: LOGO_PACKAGE_URL + 'logo.png',
         }
     },
     mounted() {
@@ -56,6 +58,9 @@ export default {
           this.discoverList =res.data;
         }else{
           this.rankList =res.data;
+          if(this.rankList.length>3){
+            this.rankList = this.rankList.splice(0,3);
+          }
         }
       }
     },
@@ -124,7 +129,7 @@ export default {
       }
     }
     ul{
-      li{
+      li a{
         color: #333333;
         font-size: 0.28rem;
         display: flex;

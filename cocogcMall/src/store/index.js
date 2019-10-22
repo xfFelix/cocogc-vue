@@ -7,6 +7,7 @@ import platform from './modules/platform'
 import order from './modules/order'
 import tab from './modules/tab'
 import shopMall from './modules/shop_mall'
+import searchHis from './modules/searchHis'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     platform,
     order,
     tab,
-    shopMall
+    shopMall,
+    searchHis
   }
 })

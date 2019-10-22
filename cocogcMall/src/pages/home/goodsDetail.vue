@@ -29,7 +29,6 @@
 
         <div class="goodsD-headW">
             <div class="goodsD-headImg">
-
                 <div class="swiper-container goodsD-headImg">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide" v-for="item in goodsInfo.gallery.split('|')"><img v-bind:src="item" alt="" /></div>

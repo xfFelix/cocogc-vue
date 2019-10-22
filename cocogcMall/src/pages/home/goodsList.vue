@@ -1,7 +1,7 @@
 <template>
   <div class="goodsList">
     <div class="home-smWrap">
-      <head-search @searchChild='parentChild' v-bind:kewWordC="keyWord"></head-search>
+      <head-search @searchChild='parentChild'></head-search>
       <ul class="goodsList-order one-bottom-px">
         <li>
           <p @click="searchAll()" :class="{'hight-light': hightLight === 'all'}">全部</p>
@@ -41,8 +41,7 @@
     </div>
       <div class="goodList-interWrap" ref="wrapper" v-infinite-scroll="loadBottom" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="62">
         <div class="home-iGoodsW" v-for="(item,index) in goodsList" :key="index">
-          <!-- <router-link :to="{path:'goodsDetail/'+item.id}"> -->
-          <div @click="goDetail(item.id)">
+          <div @click="goDetail(item.id)" class="goods-content">
             <div class="home-iGoods">
               <img v-lazy="item.image" alt="" />
             </div>
@@ -50,19 +49,16 @@
               {{item.name}}
             </p>
             <div class="home-iMoneyW">
-              <!-- <span class="home-iMoneyL"></span> -->
               <img :src="logoImg" alt="" class="home-iMoneyL">
               <span class="home-iMoney">{{item.currentPrice|toDecimal2(item.currentPrice)}}</span>
               <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">{{item.marketPrice|toDecimal2}}</span>
             </div>
           </div>
-          <!-- </router-link> -->
         </div>
         <no-data :data="goodsList"></no-data>
         <div class="spinWrap" v-if="tenFlag&&goodsList.length"><mt-spinner :size="12"  type="snake"></mt-spinner>&nbsp;&nbsp;正在加载中...</div>
         <div class="spinWrap" v-if="!tenFlag&&goodsList.length">没有更多数据了~~</div>
       </div>
-    <!-- <observer @intersect="intersected"></observer> -->
   </div>
 </template>
 <script>
@@ -161,7 +157,7 @@
       })
     },
     beforeRouteEnter(to, from, next) {
-      if (from.path.includes('layout') || from.path === '/') {
+      if (from.path.includes('layout') || from.path === '/' ||from.path.includes('searchPage')) {
         next(vm => {
           vm.initData()
           vm.urlParams()
@@ -214,6 +210,7 @@
       },
         //搜索框
         parentChild(val) {
+          console.log(val)
             this.keyWord = val;
             this.initData()
             this.brandId = ''
@@ -380,9 +377,9 @@
 <style lang="scss">
   .goodsList {
     height: 100%;
-    background: #fff;
+    background: #F4F4F4;
     .home-smWrap {
-      padding: 0.5rem 0 0 0;
+      // padding: 0.5rem 0 0 0;
       width: 100%; // align-items: center;
       background: #fff;
       position: fixed;
@@ -391,12 +388,14 @@
       .goodsList-order {
         display: flex;
         justify-content: space-around;
-
+        // border-bottom:1px solid #30ce84;
+        padding-bottom: 5px;
         li {
           display: flex;
           align-items: center;
-          padding: 0.5rem 0 0.18rem 0;
-
+          padding: 0.25rem 0 0.18rem 0;
+          position: relative;
+          font-size: 0.28rem;
           p {
               display: inline-flex;
               flex-direction: column;
@@ -427,27 +426,31 @@
 
   .goodList-interWrap {
     width: 100%;
-    background: #fff; // overflow: auto;
+    background: #f4f4f4; // overflow: auto;
     padding-top: 2.22rem;
     box-sizing: content-box;
 
     .home-iGoodsW {
-      // float: left;
       display: inline-block;
-      width: 50%;
-      padding: 0 0.32rem;
+      width: 46%;
+      // padding: 0 0.32rem;
+      // margin: 0 2%;
       box-sizing: border-box;
-      margin: 0.2rem 0; // height: 4.1rem;
-
+      margin: 0.1rem 3%; // height: 4.1rem;
+      &:nth-of-type(2n+1){
+        margin-right:2%;
+      }
+      &:nth-of-type(2n+2){
+        margin-left:0;
+      }
+      .goods-content{
+        background:#fff;
+        border-radius: 5px;
+      }
       .home-iGoods {
-        width: 100%;
-        text-align: center;
-        border-bottom: 1px solid #e6e6e6;
-        height: 3.16rem;
-        position: relative;
-
         img {
           width: 100%; // margin-top: 0.5rem;
+          border-radius: 5px 5px 0 0;
         }
 
         .home-iTags {
@@ -490,8 +493,6 @@
       .home-iNmame {
         color: #333333;
         font-size: 0.26rem;
-        font-weight: bold;
-        margin-top: 0.12rem;
         word-break: break-all;
         word-wrap: break-word;
         text-align: left;
@@ -499,7 +500,11 @@
         position: relative;
         line-height: 1.5em;
         height: 2.9em;
-
+        margin: 0.2rem 0.2rem 0 0.2rem;
+        text-overflow:ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:2;
         &::after {
           content: '';
           position: absolute;
@@ -513,7 +518,7 @@
       .home-iMoneyW {
         display: flex;
         align-items: center;
-        margin: 0.1rem;
+        padding: 0.3rem 0.1rem 0.24rem 0.1rem;
 
         .home-iMoneyL {
           width: 18px;
@@ -612,15 +617,26 @@
   }
 
   .hight-light {
-    color: #30ce84;
-  }
-
-    .spinWrap{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-      line-height: 32px;
-      font-size: 14px;
+    color: #333333;
+    font-size: 0.32rem;
+    &::after{
+      width: 100%;
+      height: 3px;
+      content: '';
+      background:-webkit-linear-gradient(90deg,#30CE84,#BBEFD6); /* 控制边框颜色渐变 */
+      background: -moz-linear-gradient(90deg,#30CE84,#BBEFD6);
+      background:linear-gradient(90deg,#30CE84,#BBEFD6);
+      position: absolute;
+      width: 100%;
+      bottom: 2px;
     }
+  }
+  .spinWrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    line-height: 32px;
+    font-size: 14px;
+  }
 </style>
