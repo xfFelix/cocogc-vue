@@ -95,12 +95,12 @@ export default {
             _this.banList = data.data.data;
             _this.$nextTick(function() {
               _this.swiperBan = new Swiper('.home-head .swiper-container', {
-                // autoplay: {
-                //   delay: 2000,
-                //   stopOnLastSlide: false,
-                //   disableOnInteraction: false,
-                // },
-                // loop: true,
+                autoplay: {
+                  delay: 2000,
+                  stopOnLastSlide: false,
+                  disableOnInteraction: false,
+                },
+                loop: true,
                 pagination: {
                   el: '.swiper-pagination'
                 },
