@@ -296,16 +296,6 @@ export default {
                       }
                         if (callback)
                             callback(data.data);
-                        //传给猜你喜欢
-                        let cartShop = [];
-                        let ids = [];
-                        data.data.forEach((res) => {
-                            cartShop.push(res.goods.name);
-                            ids.push(res.goods.id);
-                        })
-                        window.userLikeName = cartShop;
-                        window.userLikeId = ids;
-                        //localStorage.setItem('cartShop', JSON.stringify(cartShop));
                     } else {
                         _this.Toast(data.message)
                     }
