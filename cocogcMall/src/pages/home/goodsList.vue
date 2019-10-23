@@ -629,6 +629,7 @@
       position: absolute;
       width: 100%;
       bottom: 2px;
+      left: 0;
     }
   }
   .spinWrap{
