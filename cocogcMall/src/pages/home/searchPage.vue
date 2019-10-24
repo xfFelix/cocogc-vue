@@ -47,7 +47,7 @@ export default {
     },
     mounted() {
       this.searchList('228');
-      this.searchList('229');
+      this.searchList('254');
     },
     methods: {
       async searchList(catId){
@@ -72,7 +72,6 @@ export default {
 <style lang="scss">
 .searchPage {
     background: #fff;
-    height: 100%;
     min-height: 100%;
 }
 

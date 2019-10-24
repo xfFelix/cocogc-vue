@@ -12,7 +12,7 @@
                 <ul class="select-brand">
                     <li v-for="(item,index) in cateList" :key="index" class="select-brandLi" @click="activeIndexC(index,item.id)" :style="(activeIndex==index ?' background: #fff':'background: #f3f4f6')">
                         <span class="activeGre" v-if="activeIndex==index"></span>
-                        <span :style="(activeIndex==index ?'color: #30ce84':'color: #333')">{{item.name}}</span>
+                        <span :class="(activeIndex==index ?'select-namea':'select-name')">{{item.name}}</span>
                     </li>
 
                 </ul>
@@ -312,18 +312,31 @@ export default
         flex: 0 0 1.58rem;
         width: 1.58rem;
         .select-brandLi {
-            height: 0.7rem;
-            line-height: 0.7rem;
+            // padding: 0.31rem 0;
+            height: 1rem;
             position: relative;
-            font-size: 0.24rem;
-
+            font-size: 0.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             .activeGre {
                 width: 0.06rem;
                 height: 0.32rem;
                 display: block;
                 position: absolute;
                 background: #30ce84;
-                top: 25%;
+                top: 36%;
+                left: 0;
+            }
+            .select-name{
+              padding: 0 0.1rem 0 0.2rem;
+              font-size: 0.26rem;
+              color: #787878;
+            }
+            .select-namea{
+              padding: 0 0.1rem 0 0.2rem;
+              font-size: 0.3rem;
+              color: #30ce84;
             }
         }
     }
