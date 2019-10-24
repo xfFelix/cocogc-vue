@@ -265,7 +265,7 @@ export default {
                 .account-qImg04,
                 .account-qImg05 {
                     width: 0.64rem;
-                    height: 0.58rem;
+                    height: 0.62rem;
                     margin: 0.38rem 0 0.13rem 0;
                 }
                 .account-qImg01 {

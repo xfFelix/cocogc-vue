@@ -5,7 +5,7 @@
       <li v-for="(item,index) in list" :key="index" >
         <router-link :to="`/goodsDetail/${item.id}`" style="display:inline-block">
           <img :src="item.picUrl" alt="good"/>
-          <p class="name">{{item.name}}</p>
+          <p class="name"><span class="nameBefore"></span>{{item.name}}</p>
           <p class="money"><span class="iconBg iconLogo"></span>{{item.currentPrice|toDecimal2}}</p>
         </router-link>
       </li>
@@ -75,6 +75,9 @@ import api from '@/service/api'
         font-size: 0.22rem;
         color: #333333;
         margin: 1%;
+        a{
+          width: 100%;
+        }
         img{
             border: 2px solid #fedccd;
             width: 100%;
@@ -90,22 +93,26 @@ import api from '@/service/api'
           align-items: center;
 
           span{
-             margin: 0 5px 0 -5px;
+             margin: 0 5px 0 -0;
           }
         }
         .name{
-          justify-content: center;
-          display: flex;
-          align-items: center;
           margin: 0.24rem 0 0.2rem 0;
-          &::before{
+          overflow: hidden;
+            font-size:0.22rem;
+            line-height:1.5em;
+            height:3em;
+            word-break:break-all;
+            word-wrap:break-word;
+          .nameBefore{
             width: 0.1rem;
             height: 0.1rem;
             background: #ff8873;
             border-radius: 50%;
             content: '';
             display: inline-block;
-            margin: 0 5px 0 -5px;
+            margin-right: 3px;
+            // margin: 0 5px 0 0;
           }
         }
         .iconLogo{
