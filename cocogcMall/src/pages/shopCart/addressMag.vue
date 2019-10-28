@@ -157,6 +157,9 @@ export default {
 </script>
 
 <style lang="scss">
+.addressMag{
+  background: #eef1f6;
+  padding-bottom: 0.5rem;
 .address-content {
     li {
         background: #fff;
@@ -226,12 +229,13 @@ export default {
             }
         }
     }
+
 }
 
-.addBnt {
-    background: #30ce84;
-    margin: 2rem 0.26rem 0.5rem 0.26rem;
-}
+    .addBnt {
+      background: #30ce84;
+      margin: 2rem 0.26rem 0 0.26rem;
+    }
 
 .address-fixedWrap {
     background: rgba(0, 0, 0, 0.5);
@@ -267,5 +271,6 @@ export default {
             border-radius: 0 0 5px 0;
         }
     }
+}
 }
 </style>

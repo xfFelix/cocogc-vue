@@ -24,9 +24,7 @@
                 <li class="one-bottom-px">
                     <p>
                         <span>所在地区</span>
-                        <span>
-                            <input type="text" placeholder="省市区县、乡镇等" v-model.trim="takeAddress" @click="fixedShowC()" readonly="">
-                        </span>
+                        <textarea type="text" placeholder="省市区县、乡镇等" v-model.trim="takeAddress"  @click="fixedShowC()" readonly="" style="height:auto"></textarea>
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeAddressC" v-if="takeAddress">
                     </p>
@@ -272,7 +270,8 @@ export default {
             p:nth-of-type(1) {
                 span:nth-of-type(1) {
                     display: flex;
-                    align-items: center;
+                    // align-items: center;
+                        align-items: end;
                 }
             }
         }
