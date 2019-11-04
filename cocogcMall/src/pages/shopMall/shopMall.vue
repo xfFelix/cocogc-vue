@@ -64,6 +64,7 @@ export default {
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
     this.banner()
+    console.log('111')
     this.getBanner()
   },
   methods: {
