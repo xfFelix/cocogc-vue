@@ -1,13 +1,7 @@
 <template>
     <div class="guesslike">
         <div class="home-integralW">
-            <div class="home-rHM">
-                <h3>
-                  <img src="/static/images/cart/left.png" alt="" class="left">
-                  猜你喜欢
-                  <img src="/static/images/cart/right.png" alt="" class="right">
-                </h3>
-            </div>
+            <p class="home-rHM">为你推荐<span>RECOMMENDED</span></p>
             <div class="home-interWrap">
                 <div class="home-iGoodsW" @click="goDetail(item)" v-for="(item,index) in goodsList" :key="index">
                     <div class="home-iGoods">
@@ -17,14 +11,12 @@
                         {{item.name}}
                     </p>
                     <div class="home-iMoneyW">
-                        <!-- <span class="home-iMoneyL"></span> -->
                         <img :src="logoImg" alt="" class="home-iMoneyL">
                         <span class="home-iMoney">{{item.currentPrice|toDecimal2}}</span>
                         <span class="home-iMoneymar" v-if="item.currentPrice!=item.marketPrice">{{item.marketPrice|toDecimal2}}</span>
                     </div>
                 </div>
             </div>
-            <!-- <no-data :data="goodsList"></no-data> -->
             <button class="btn-list" @click="$router.push('/goodsList')">进店逛逛</button>
         </div>
     </div>
@@ -77,40 +69,41 @@ export default {
 
 
 <style lang="scss" scoped>
-@import '../scss/mixin.scss';
+@import '../../../scss/mixin.scss';
 .guesslike {
-    padding-bottom:0.6rem;
     .home-integralW {
         width: 100%;
         background: #fff;
         border-top: 1px solid transparent;
         overflow: hidden;
         .home-rHM {
-            margin: 0;
-            h3 {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              font-size:px2rem(15);;
-              font-family:Microsoft YaHei;
-              font-weight:bold;
-              color:rgba(229,170,97,1);
-              margin: px2rem(20) auto 0;
-              img{
-                width: px2rem(15);
-                height: px2rem(15);
-                &.left{
-                  margin-right: px2rem(15);
-                }
-                &.right{
-                  margin-left: px2rem(15);
-                }
-              }
+          text-align: center;
+
+          font-size: 0.32rem;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          span{
+            color: #fe6701;
+            font-weight: normal;
+            display: inline-flex;
+            align-items: center;
+            &::before{
+              content: '';
+              width: 0.08rem;
+              height: 0.08rem;
+              border-radius: 50%;
+              background: #9a9a99;
+              display: inline-block;
+              margin: 0 0.1rem 0 0.13rem;
             }
+          }
         }
         .home-interWrap {
             width: 100%;
             overflow: auto;
+                padding: 0.3rem 0 0.32rem 0;
         }
         .no-more {
             padding-bottom: 0.5rem;
@@ -119,17 +112,25 @@ export default {
         }
         .home-iGoodsW {
             display: inline-block;
-            width: 50%;
-            padding: 0.32rem;
+            width: 43%;
             box-sizing: border-box;
+            border-radius: 5px;
+            box-shadow: 0px 0px 8px 6px #F3F3F3;
+            margin:  0.1rem 5%;
+            &:nth-of-type(2n+1){
+              margin-right: 4%;
+            }
+            &:nth-of-type(2n+2){
+                  margin-left: 0;
+            }
             .home-iGoods {
                 width: 100%;
                 text-align: center;
-                border-bottom: 1px solid #e6e6e6;
-                height: 3.16rem;
+                // height: 3.16rem;
                 position: relative;
                 img {
                     width: 100%;
+                    border-radius: 5px 5px 0 0;
                 }
                 .home-iTags {
                     position: absolute;
@@ -151,7 +152,7 @@ export default {
                     .iDrop {
                         margin-right: 0.08rem;
                         background: #000000;
-                        color: #fff; // padding: 0.04rem 0.07rem 0.01rem 0.07rem;
+                        color: #fff;
                         display: inline-block;
                         padding: 0.04rem 0.07rem 0.02rem 0.07rem;
                     }
@@ -165,24 +166,30 @@ export default {
             }
             .home-iNmame {
                 color: #333333;
-                font-size: 13px;
-                line-height: 20px;
-                height: 37px;
-                overflow: hidden;
+                font-size: 0.26rem;
                 word-break: break-all;
                 word-wrap: break-word;
                 text-align: left;
-                margin: 0.12rem 0;
+                overflow: hidden;
+                position: relative;
+                line-height: 1.5em;
+                height: 2.9em;
+                margin: 0.2rem 0.2rem 0 0.2rem;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
             }
             .home-iMoneyW {
-                display: flex;
-                align-items: center;
-                font-size: 0.26rem;
-                .home-iMoneyL {
-                    width: 20px;
-                    height: 20px;
-                    margin-right: 3px;
-                }
+              display: flex;
+              align-items: center;
+              padding: 0.3rem 0.1rem 0.24rem 0.1rem;
+
+              .home-iMoneyL {
+                width: 18px;
+                height: 18px;
+                margin-right: 4px;
+              }
             }
         }
         .btn-list{
@@ -196,7 +203,7 @@ export default {
           font-weight:400;
           color:rgba(255,255,255,1);
           border: none;
-          margin: px2rem(16) auto;
+          margin: 0 auto px2rem(16) auto;
         }
     }
 }

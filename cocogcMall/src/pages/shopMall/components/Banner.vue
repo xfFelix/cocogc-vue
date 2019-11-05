@@ -49,7 +49,7 @@ export default {
       window.location.href = this.data.data[0].url
     },
     onClose() {
-      this.show = false
+      this.$emit('click', false)
     }
   }
 }

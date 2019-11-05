@@ -5,27 +5,29 @@
             <div class="discover-all">
               <p><span class="iconBg hotIcon"></span>搜索发现</p>
               <ul>
-                <li v-for="(item,index) in discoverList" :key="index" >
-                  <a :href="item.url">
+                <li v-for="(item,index) in discoverList" :key="index" @click="jumpKey(item)">
+                  <!-- <a :href="item.url"> -->
                       <img :src="logoImg" alt="" class="logoImg" v-if="item.noticeTitle=='小椰自营'" />
                       {{item.noticeTitle}}
-                  </a>
+                  <!-- </a> -->
                 </li>
               </ul>
             </div>
             <div class="hot-all">
               <p><span class="iconBg rankIcon"></span>热销TOP</p>
               <ul>
-                <li v-for="(item,index) in rankList" :key="index"  >
-                  <div class="rankL">
-                    <span class="iconBg rankHeight" :style="`background-image: url('/static/images/historyPage/rank-${index+1}.png')`"></span>
-                    <p class="imgHeight"> <img :src="item.img " alt=""/></p>
-                  </div>
-                  <div class="rankR">
-                     <span class="iconBg comIcon"></span>
-                      <span>{{item.noticeTitle.length>25?item.noticeTitle.substr(1,200)+'...':item.noticeTitle}}</span>
-                      <span class="iconBg topHeight" :style="`background-image: url('/static/images/historyPage/top-${index+1}.png')`"></span>
-                  </div>
+                <li v-for="(item,index) in rankList" :key="index" @click="jumpKey(item)">
+                  <!-- <a :href="item.url"> -->
+                    <div class="rankL">
+                      <span class="iconBg rankHeight" :style="`background-image: url('/static/images/historyPage/rank-${index+1}.png')`"></span>
+                      <p class="imgHeight"> <img :src="item.img " alt=""/></p>
+                    </div>
+                    <div class="rankR">
+                      <span class="iconBg comIcon"></span>
+                        <span>{{item.noticeTitle.length>25?item.noticeTitle.substr(1,200)+'...':item.noticeTitle}}</span>
+                        <span class="iconBg topHeight" :style="`background-image: url('/static/images/historyPage/top-${index+1}.png')`"></span>
+                    </div>
+                  <!-- </a> -->
                 </li>
               </ul>
             </div>
@@ -40,14 +42,21 @@ export default {
         return {
             discoverList:[],
             rankList:[],
-            logoImg: LOGO_PACKAGE_URL + 'logo.png'
+            logoImg: LOGO_PACKAGE_URL + 'logo.png',
         }
     },
     mounted() {
       this.searchList('228');
-      this.searchList('229');
+      this.searchList('254');
     },
     methods: {
+      jumpKey(item){
+        if(!item.url){
+          this.$router.push({path:`/goodsList?keyWord=${item.noticeTitle}`})
+        }else{
+          window.location.href=item.url
+        }
+      },
       async searchList(catId){
         let res = await this.axios(infoURl + api.searchApi, {
           'catId':catId
@@ -56,6 +65,9 @@ export default {
           this.discoverList =res.data;
         }else{
           this.rankList =res.data;
+          if(this.rankList.length>3){
+            this.rankList = this.rankList.splice(0,3);
+          }
         }
       }
     },
@@ -67,7 +79,6 @@ export default {
 <style lang="scss">
 .searchPage {
     background: #fff;
-    height: 100%;
     min-height: 100%;
 }
 
@@ -92,12 +103,7 @@ export default {
     }
     ul{
       li{
-        a{
-          padding:  0.18rem 0.42rem;
-          display: inline-block;
-
-        }
-
+        padding:  0.18rem 0.42rem;
         display: inline-block;
         background: #F2F2F2;
         margin:0.12rem 0.24rem 0.12rem 0;
