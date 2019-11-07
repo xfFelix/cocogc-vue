@@ -38,10 +38,9 @@
 
                     </li>
                     <li class="addList" v-for="(v,k,i) in showCityList" @click="getCityId(v,k,i)" v-show="showCity" :class="v[0]==City ? 'active' : ''" :key="k">
-                        {{v[0]}}
+                        {{Array.isArray(v)?v[0]:v}}
                     </li>
                     <li class="addList" v-for="(v,k,i) in showDistrictList" @click="getDistrictId(v, k, i)" v-show="showDistrict" :key="k">
-
                         <!-- <span v-if="levelShow==false" :class="v[0] == District ? 'active' : ''">{{v[0]}}</span>
                         <span v-if="levelShow" :class="v == District ? 'active' : ''">{{v}}</span> -->
                         <span v-if="typeof (v)=='object'">{{v[0]}}</span>
@@ -178,22 +177,17 @@ export default {
         },
         //点击市
         getCityId: function(value, key, index) {
-
-            this.city = key;
+          this.city = key;
+          if(Array.isArray(value)){
             this.City = value[0];
             this.selectArea = 3;
-
             this.showProvince = false;
             this.showCity = false;
             this.showDistrict = true;
             this.showTown = false;
-
             var disValue = {};
             disValue = value[1];
-
-
             for (const key in disValue) {
-
                 let DisType = typeof (disValue[key]);
                 if (DisType == 'object') {
                     this.levelShow = false;
@@ -203,7 +197,17 @@ export default {
                 this.showDistrictList = disValue
                 return
             }
+          }else{
+                this.City = value;
+                this.showChose = false;
+                this.$emit('childShow', this.showChose);
 
+                this.areaAddress = this.Province + ' ' + this.City + ' ';
+                this.$emit('childAddress', this.areaAddress);
+
+                this.areaAddressId = this.province + ',' + this.city + ',0'+ ',0';
+                this.$emit('childAddressId', this.areaAddressId);
+          }
         },
 
 

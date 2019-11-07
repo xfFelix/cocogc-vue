@@ -5,19 +5,19 @@
             <div class="discover-all">
               <p><span class="iconBg hotIcon"></span>搜索发现</p>
               <ul>
-                <li v-for="(item,index) in discoverList" :key="index" >
-                  <a :href="item.url">
+                <li v-for="(item,index) in discoverList" :key="index" @click="jumpKey(item)">
+                  <!-- <a :href="item.url"> -->
                       <img :src="logoImg" alt="" class="logoImg" v-if="item.noticeTitle=='小椰自营'" />
                       {{item.noticeTitle}}
-                  </a>
+                  <!-- </a> -->
                 </li>
               </ul>
             </div>
             <div class="hot-all">
               <p><span class="iconBg rankIcon"></span>热销TOP</p>
               <ul>
-                <li v-for="(item,index) in rankList" :key="index">
-                  <a :href="item.url">
+                <li v-for="(item,index) in rankList" :key="index" @click="jumpKey(item)">
+                  <!-- <a :href="item.url"> -->
                     <div class="rankL">
                       <span class="iconBg rankHeight" :style="`background-image: url('/static/images/historyPage/rank-${index+1}.png')`"></span>
                       <p class="imgHeight"> <img :src="item.img " alt=""/></p>
@@ -27,7 +27,7 @@
                         <span>{{item.noticeTitle.length>25?item.noticeTitle.substr(1,200)+'...':item.noticeTitle}}</span>
                         <span class="iconBg topHeight" :style="`background-image: url('/static/images/historyPage/top-${index+1}.png')`"></span>
                     </div>
-                  </a>
+                  <!-- </a> -->
                 </li>
               </ul>
             </div>
@@ -50,6 +50,13 @@ export default {
       this.searchList('254');
     },
     methods: {
+      jumpKey(item){
+        if(!item.url){
+          this.$router.push({path:`/goodsList?keyWord=${item.noticeTitle}`})
+        }else{
+          window.location.href=item.url
+        }
+      },
       async searchList(catId){
         let res = await this.axios(infoURl + api.searchApi, {
           'catId':catId
@@ -96,12 +103,7 @@ export default {
     }
     ul{
       li{
-        a{
-          padding:  0.18rem 0.42rem;
-          display: inline-block;
-
-        }
-
+        padding:  0.18rem 0.42rem;
         display: inline-block;
         background: #F2F2F2;
         margin:0.12rem 0.24rem 0.12rem 0;
@@ -128,7 +130,7 @@ export default {
       }
     }
     ul{
-      li a{
+      li{
         color: #333333;
         font-size: 0.28rem;
         display: flex;
