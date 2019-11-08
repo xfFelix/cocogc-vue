@@ -151,27 +151,9 @@
                     <div class="dialog-conInner">
                         <div class="arrow-top"></div>
                         <div class="dialog-content">
-                            <router-link :to="{path: '/layout/home'}">
-                                <div class="link">
-                                    <span class="navImg navGo navGo01"></span>首页</div>
-                            </router-link>
-                            <router-link :to="{path: '/layout/shopMall'}">
-                                <div class="link">
-                                    <span class="navImg navGo navGo02"></span>商城</div>
-                            </router-link>
-                            <router-link :to="{path: '/layout/classify'}">
-                                <div class="link">
-                                    <span class="navImg navGo navGo03"></span>分类</div>
-                            </router-link>
-                            <router-link :to="{path: '/layout/shopCart'}">
-                                <div class="link">
-                                    <span class="navImg navGo navGo04"></span>购物车</div>
-                            </router-link>
-                            <router-link :to="{path: '/layout/account'}">
-                                <div class="link">
-                                    <span class="navImg navGo navGo05"></span>我的</div>
-                            </router-link>
-
+                            <div class="link" v-for="(item,index) in tabList" :key="index" @click="jumpTab(item.path)">
+                              <span class="navImg navGo" :class="item.icon"></span>{{item.name}}
+                            </div>
                         </div>
                     </div>
 
@@ -215,7 +197,14 @@ export default {
             carTotal: 0,
             isGo: 'cart',
             showDialog: false,
-            headShow: false
+            headShow: false,
+            tabList:[
+              {name:'首页',icon:'navGo01',path:'/layout/home'},
+              {name:'商城',icon:'navGo02',path:'/layout/shopMall'},
+              {name:'分类',icon:'navGo03',path:'/layout/classify'},
+              {name:'购物车',icon:'navGo04',path:'/layout/shopCart'},
+              {name:'我的',icon:'navGo05',path:'/layout/account'},
+            ]
         };
     },
     computed: {
@@ -261,8 +250,13 @@ export default {
     },
     methods: {
         ...mapActions({
-            checkAddress: 'userinfo/checkAddress'
+            checkAddress: 'userinfo/checkAddress',
+            initConfig:'channel/initConfig'
         }),
+        jumpTab(pathName){
+          this.initConfig();
+          this.$router.push({path:pathName})
+        },
         async resetAddress() {
             let data = await this.checkAddress()
             window.chooseAddress = data

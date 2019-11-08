@@ -39,7 +39,7 @@ export default {
         sendSearch() {
             this.searchHis(this.kewWordC)
             this.$emit('searchChild', this.kewWordC);
-            this.$router.push({path:`/goodsList?keyWord=${this.kewWordC}`})
+            this.$router.push({path:`/goodsList?keyWord=${this.kewWordC?this.kewWordC:''}`})
         },
         async querySearchAsync(queryString, cb) {
             if (queryString) {

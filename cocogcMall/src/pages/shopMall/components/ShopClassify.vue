@@ -11,13 +11,14 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 export default {
   data:()=>({
     list:[
-      // {name:'京东商城',img:'/static/images/superMark/jingdong.png',flagImg:'',path:''},
-      // {name:'小椰超市',img:'/static/images/logo/superMark.png',flagImg:'',path:''},
-      // {name:'网易严选',img:'/static/images/superMark/wangyi.png',flagImg:'',path:''},
-      {name:'天涯严选',img:'/static/images/superMark/tianya.png',flagImg:'',path:'quickItem=118608'},
+      {name:'京东商城',img:'/static/images/superMark/jingdong.png',flagImg:'',path:'channel?typeId=1'},
+      {name:'小椰超市',img:'/static/images/logo/superMark.png',flagImg:'',path:'channel?typeId=2'},
+      {name:'网易严选',img:'/static/images/superMark/wangyi.png',flagImg:'',path:'channel?typeId=3'},
+      {name:'天涯严选',img:'/static/images/superMark/tianya.png',flagImg:'',path:'classfyId=118608'},
       {name:'手机通讯',img:'/static/images/superMark/community.png',flagImg:'',path:'quickItem=9987'},
       {name:'3C数码',img:'/static/images/superMark/3c.png',flagImg:'',path:'quickItem=652'},
       {name:'家用电器',img:'/static/images/superMark/appliances.png',flagImg:'/static/images/superMark/new.png',path:'quickItem=737'},
@@ -25,9 +26,16 @@ export default {
     ]
   }),
   methods:{
+     ...mapActions({
+        setTypeId: 'channel/setTypeId'
+    }),
     jumpPath(way){
-      if(way.includes('quickItem')){
+      if(way.includes('quickItem')||way.includes('classfyId')){
         this.$router.push({path:`/goodsList?${way}`})
+      }else if(way.includes('channel')){
+        this.$router.push({path:`/layout/channel`});
+        let queryId = way.split('?')[1].split('=')[1];
+        this.setTypeId(queryId);
       }
     }
   }

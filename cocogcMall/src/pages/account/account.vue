@@ -154,6 +154,7 @@ export default {
 <style lang="scss" scoped>
 #account{
   position: relative;
+  background:#eef1f6;
   .banner{
     width: 100%;
     height: 3.6rem;
