@@ -312,10 +312,9 @@ export default
         flex: 0 0 1.58rem;
         width: 1.58rem;
         .select-brandLi {
-            // padding: 0.31rem 0;
             height: 1rem;
             position: relative;
-            font-size: 0.3rem;
+            font-size: 0.26rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -335,7 +334,6 @@ export default
             }
             .select-namea{
               padding: 0 0.1rem 0 0.2rem;
-              font-size: 0.3rem;
               color: #30ce84;
             }
         }

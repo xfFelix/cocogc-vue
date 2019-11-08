@@ -102,7 +102,7 @@ export default {
       newsList:[],
       autoplay: false,
       bannerImg: LOGO_PACKAGE_URL + 'home-banner-bg.png',
-      logoImg: LOGO_PACKAGE_URL + 'jd.png'
+      logoImg: LOGO_PACKAGE_URL + 'superMark.png'
     }
   },
   created() {

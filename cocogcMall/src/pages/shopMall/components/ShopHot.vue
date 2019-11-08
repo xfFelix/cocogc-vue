@@ -60,10 +60,7 @@ export default {
                     this.Toast(err.message);
                 })
         },
-
-
     }
-
 }
 </script>
 <style lang="scss" scoped>

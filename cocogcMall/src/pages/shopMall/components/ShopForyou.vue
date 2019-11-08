@@ -1,5 +1,5 @@
 <template>
-    <div class="guesslike">
+    <div class="shopForyou">
         <div class="home-integralW">
             <p class="home-rHM">为你推荐<span>RECOMMENDED</span></p>
             <div class="home-interWrap">
@@ -18,6 +18,9 @@
                 </div>
             </div>
             <button class="btn-list" @click="$router.push('/goodsList')">进店逛逛</button>
+            <div class="logo-wrapper">
+              <img src="/static/images/cart/logo.png" alt="">
+            </div>
         </div>
     </div>
 </template>
@@ -70,7 +73,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../../scss/mixin.scss';
-.guesslike {
+.shopForyou {
     .home-integralW {
         width: 100%;
         background: #fff;
@@ -78,7 +81,6 @@ export default {
         overflow: hidden;
         .home-rHM {
           text-align: center;
-
           font-size: 0.32rem;
           font-weight: bold;
           display: flex;
@@ -205,6 +207,16 @@ export default {
           border: none;
           margin: 0 auto px2rem(16) auto;
         }
+    }
+    .logo-wrapper{
+       background: #f3f4f6;
+        padding: 0.6rem 0 0.1rem 0;
+      img{
+        width: 2.32rem;
+        height: 0.5rem;
+        margin: 0.4rem auto 0.2rem;
+
+      }
     }
 }
 </style>
