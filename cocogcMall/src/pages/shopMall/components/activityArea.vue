@@ -2,7 +2,7 @@
   <div class="activityArea">
     <div class="active-title flexB">
       <span class="title">活动专区</span>
-      <span class="name">去看看></span>
+      <span class="name" @click="goSee()">去看看></span>
     </div>
     <div class="active-content">
       <div class="swiper-container banSwiper">
@@ -84,6 +84,9 @@ export default {
     },
     banPath(item){
       window.location.href=item.url;
+    },
+    goSee(){
+       window.location.href=this.banList[0].url;
     },
     goodsPath(item){
       this.$router.push({path:`/goodsDetail/${item.id}`})

@@ -16,8 +16,8 @@
 export default {
   data:()=>({
     list:[
-      {name:'热带水果',path:'%E9%87%87%E5%B0%8F%E6%B5%B7',img:'/static/images/channel/ty-1-1.png'},
-      {name:'海鲜干货',path:'18591',img:'/static/images/channel/ty-1-2.png'},
+      {name:'热带水果',path:'18591',img:'/static/images/channel/ty-1-1.png'},
+      {name:'海鲜干货',path:'%E9%87%87%E5%B0%8F%E6%B5%B7',img:'/static/images/channel/ty-1-2.png'},
       {name:'农副产品',path:'%E5%8E%9F%E5%88%87%E8%85%8C%E5%88%B6',img:'/static/images/channel/ty-1-3.png'},
       {name:'特色饮品',path:'%E6%A4%B0%E9%9D%92',img:'/static/images/channel/ty-1-4.png'}
     ]
@@ -29,7 +29,6 @@ export default {
       }else{
         this.$router.push({path:`/goodsList?classfyId=${id}`});
       }
-
     }
   },
   components:{

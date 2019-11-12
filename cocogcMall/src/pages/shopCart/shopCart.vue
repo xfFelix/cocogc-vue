@@ -548,7 +548,7 @@ export default {
 }
 .logo-wrapper{
     background: #Fff;
-    padding-bottom:0.44rem;
+    padding-bottom:0.88rem;
   img{
     width:2.32rem;
     margin: 0 auto 0.4rem;

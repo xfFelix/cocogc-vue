@@ -10,8 +10,8 @@
 
     <ul class="category-o" v-if="otherList.length>0">
       <li v-for="(item,index) in otherList" :key="index" @click="jumpPath(item.url)">
-        <p class="cate-name">{{item.name}}</p>
-        <p class="cate-detail" :class="`cate-detail-${index}`">{{item.title}}</p>
+        <!-- <p class="cate-name">{{item.name}}</p>
+        <p class="cate-detail" :class="`cate-detail-${index}`">{{item.title}}</p> -->
         <img :src="item.src" :alt="item.name" />
       </li>
     </ul>
@@ -39,12 +39,15 @@ export default {
       {name:'京东生鲜',path:'12218',img:'/static/images/channel/jd-1-9.png'},
       {name:'京东珠宝',path:'6144',img:'/static/images/channel/jd-1-10.png'}
     ],
-    otherListName:[{name:'汽车配件'},{name:'游戏设备'},{name:'宠物天堂'},{name:'运动健身'}],
     otherList:[]
   }),
   methods:{
-    jumpPath(id){
-      this.$router.push({path:`/goodsList?quickItem=${id}`});
+    jumpPath(url){
+      if(url.indexOf('http')!=-1){
+        window.location.href = url;
+      }else{
+        this.$router.push({path:`/goodsList?quickItem=${url}`});
+      }
     },
     rank(){
             let _this = this;
@@ -54,10 +57,7 @@ export default {
                 .then((data) => {
                     if (data.error_code == 0) {
                       let res = data.data.data;
-                      this.otherList=res.map((item,index)=>{
-                         return {...item,...this.otherListName[index]}
-                      })
-                      this.otherList = this.otherList.splice(0,4);
+                      this.otherList = res.splice(0,4);
                     } else {
                       this.Toast(data.message);
                     }
@@ -114,36 +114,36 @@ export default {
       border-radius: 0.2rem;
       height: 2.64rem;
     }
-    .cate-name{
-      color: #4a4242;
-      font-size: 0.22rem;
-      margin: 0.24rem 0 0.06rem 0;
+    // .cate-name{
+    //   color: #4a4242;
+    //   font-size: 0.22rem;
+    //   margin: 0.24rem 0 0.06rem 0;
 
-    }
-    .cate-detail{
-      font-size: 12px;
-      transform: scale(0.8);
-      width: 100%;
-      display: inline-block;
-      white-space: nowrap;
-    }
-    .cate-detail-0{
-       color: #2543d8;
-    }
-    .cate-detail-1{
-       color: #0cbd70;
-    }
-    .cate-detail-2{
-      color: #e23131;
-    }
-    .cate-detail-3{
-      color: #b42de6;
-    }
-
+    // }
+    // .cate-detail{
+    //   font-size: 12px;
+    //   transform: scale(0.8);
+    //   width: 100%;
+    //   display: inline-block;
+    //   white-space: nowrap;
+    // }
+    // .cate-detail-0{
+    //    color: #2543d8;
+    // }
+    // .cate-detail-1{
+    //    color: #0cbd70;
+    // }
+    // .cate-detail-2{
+    //   color: #e23131;
+    // }
+    // .cate-detail-3{
+    //   color: #b42de6;
+    // }
     img{
-      margin: 0.15rem auto 0.25rem auto;
+      // margin: 0.15rem auto 0.25rem auto;
       height: auto;
-      width: 1.4rem;
+      width: 100%;
+      border-radius: 0.2rem;
     }
   }
 }
