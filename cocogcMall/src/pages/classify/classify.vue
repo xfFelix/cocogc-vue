@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="select-bGoodsT" v-for="(item,index) in cateTypeList" :key="index">
-                        <h3 class="title">{{item.name}}</h3>
+                        <h3 class="title"><span>{{item.name}}</span></h3>
                         <ul>
                             <li v-for="(i,index) in item.childCategory" :key="index">
                                 <span v-if="i.content != '' && i.content != null">
@@ -204,9 +204,9 @@ export default
 }
 
 .classify-swipeW {
-    height: 1.8rem;
+    height: 1.55rem;
     width: 5.52rem;
-    margin: 0.22rem auto 0.18rem auto;
+    margin: 0.22rem auto 0.5rem auto;
     .classify-swipe {
         height: 100%;
         .swiper-container-horizontal>.swiper-pagination-bullets {
@@ -214,10 +214,11 @@ export default
         }
         .swiper-container {
             height: 100%;
+            border-radius: 5px;
             .swiper-wrapper {
                 .swiper-slide {
                     img {
-                        height: 1.8rem;
+                        height: 1.55rem;
                     }
                 }
             }
@@ -345,7 +346,7 @@ export default
             font-size: 0.24rem;
             color: #333;
             text-align: center;
-            margin: 0.16rem 0 0.5rem 0;
+
         }
         ul {
             width: 100%;
@@ -367,8 +368,20 @@ export default
                 margin-bottom: 0.38rem;
             }
         }
-        .select-bGoodsT:nth-of-type(1) {
-            margin-top: 0.34rem;
+        .select-bGoodsT {
+            .title{
+              width: 5.52rem;
+              background: #E8E8E8;
+              position: relative;
+              height: 1px;
+              margin: 0.16rem auto 0.5rem auto;
+              span{
+                position: absolute;
+                padding: 0 15px;
+                transform: translate(-50%,-50%);
+                background: #fff;
+              }
+            }
         }
     }
 }

@@ -58,11 +58,7 @@ import {mapGetters} from 'vuex';
             loop: _this.banner.length>1?true:false,
             autoplay: _this.banner.length>1?true:false,
             allowTouchMove:_this.banner.length>1?true:false,
-            pagination: {
-              el: '.swiper-pagination',
-              bulletClass : 'my-bullet',
-              bulletActiveClass: 'my-bullet-active'
-            },
+            pagination: _this.banner.length>1?{el: '.swiper-pagination',bulletClass : 'my-bullet',bulletActiveClass: 'my-bullet-active',}:'',
           })
         })
       },

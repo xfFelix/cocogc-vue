@@ -18,7 +18,7 @@ export default {
       {name:'京东商城',img:'/static/images/superMark/jingdong.png',flagImg:'',path:'channel?typeId=1'},
       {name:'小椰超市',img:'/static/images/logo/superMark.png',flagImg:'',path:'channel?typeId=2'},
       {name:'网易严选',img:'/static/images/superMark/wangyi.png',flagImg:'',path:'channel?typeId=3'},
-      {name:'天涯严选',img:'/static/images/superMark/tianya.png',flagImg:'',path:'classfyId=118608'},
+      {name:'天涯严选',img:'/static/images/superMark/tianya.png',flagImg:'',path:'channel?typeId=4'},
       {name:'手机通讯',img:'/static/images/superMark/community.png',flagImg:'',path:'quickItem=9987'},
       {name:'3C数码',img:'/static/images/superMark/3c.png',flagImg:'',path:'quickItem=652'},
       {name:'家用电器',img:'/static/images/superMark/appliances.png',flagImg:'/static/images/superMark/new.png',path:'quickItem=737'},

@@ -15,15 +15,19 @@
 export default {
   data:()=>({
     list:[
-      {name:'品质好货',path:'',img:'/static/images/channel/xy-1-1.png'},
-      {name:'手机数码',path:'',img:'/static/images/channel/xy-1-2.png'},
-      {name:'酒果好礼',path:'',img:'/static/images/channel/xy-1-3.png'},
-      {name:'美人坊',path:'',img:'/static/images/channel/xy-1-4.png'}
+      {name:'品质好货',path:'%E9%85%8D%E4%BB%B6',img:'/static/images/channel/xy-1-1.png'},
+      {name:'手机数码',path:'655',img:'/static/images/channel/xy-1-2.png'},
+      {name:'酒果好礼',path:'15601',img:'/static/images/channel/xy-1-3.png'},
+      {name:'美人坊',path:'%E5%8C%96%E5%A6%86',img:'/static/images/channel/xy-1-4.png'}
     ]
   }),
   methods:{
     jumpPath(id){
-      this.$router.push({path:`/goodsList?quickItem=${id}`});
+      if(id.indexOf('%')!=-1){
+        this.$router.push({path:`/goodsList?keyWord=${id}`});
+      }else{
+        this.$router.push({path:`/goodsList?classfyId=${id}`});
+      }
     }
   },
   components:{

@@ -325,9 +325,11 @@ export default {
   .index-swipeW {
     margin: px2rem(10) px2rem(10) 0 px2rem(10);
     padding-bottom: px2rem(25);
-    img {
-      width: 100%;
+    .swiper-container{
       border-radius:10px;
+      img {
+        width: 100%;
+      }
     }
   }
 }

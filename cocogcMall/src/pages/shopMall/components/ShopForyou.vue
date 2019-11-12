@@ -209,13 +209,10 @@ export default {
         }
     }
     .logo-wrapper{
-       background: #f3f4f6;
-        padding: 0.6rem 0 0.1rem 0;
+        background: #Fff;
       img{
-        width: 2.32rem;
-        height: 0.5rem;
-        margin: 0.4rem auto 0.2rem;
-
+        width:2.32rem;
+        margin: 0 auto 0.4rem;
       }
     }
 }

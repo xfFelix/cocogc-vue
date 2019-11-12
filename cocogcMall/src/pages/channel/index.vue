@@ -5,7 +5,7 @@
         <mt-tab-item id="tab-container1">京东商城</mt-tab-item>
         <mt-tab-item id="tab-container2">小椰超市</mt-tab-item>
         <mt-tab-item id="tab-container3">网易严选</mt-tab-item>
-        <!-- <mt-tab-item id="tab-container4">天涯严选</mt-tab-item> -->
+        <mt-tab-item id="tab-container4">天涯严选</mt-tab-item>
       </mt-navbar>
         <div class="channel-name-wrap flex">
           <span class="channel-name">{{tabName}}</span>
@@ -35,7 +35,7 @@
 
       <div  v-show="selected=='tab-container4'">
         <div class="head-ban ty"></div>
-        <swiper-Ban :keyId="`ee3d9939c33b482fa866fc0767fb10d6`" :keyName="`tianya`"></swiper-Ban>
+        <swiper-Ban :keyId="`ee3d9939c33b482fa866fc0767fb10d6`" :keyName="`TianYaYanXuan`"></swiper-Ban>
         <tianYa></tianYa>
       </div>
     </div>
@@ -90,7 +90,7 @@ export default {
         case 'tab-container4':
           this.tabBg='ty';
           this.tabName = '天涯严选';
-          this.keyName='tianYa';
+          this.keyName='TianYaYanXuan';
           this.setTypeId(4);
           break;
       }
@@ -149,7 +149,7 @@ export default {
       background: transparent;
       .mint-tab-item{
         color: #fff;
-        margin: 0 6%;
+        margin: 0 4%;
       }
       .mint-tab-item.is-selected{
         border-bottom:3px solid #fff;
@@ -193,7 +193,7 @@ export default {
 }
 .channel{
     .mint-tab-item-label {
-      font-size: 0.32rem;
+      font-size: 0.3rem;
       line-height:1;
       font-weight: bold;
     }

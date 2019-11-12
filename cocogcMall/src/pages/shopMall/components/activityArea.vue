@@ -44,7 +44,6 @@ export default {
   methods: {
     banSwiper: function() {
       this.axios(testUrl + api.goodsGroups,{id: "824af88ea0104f5397987f24d43f9c47"},"post")
-      // this.axios('http://lc-OnsG2j7w.cn-n1.lcfile.com/84795178a5f39cfdf76a.json',{id: "824af88ea0104f5397987f24d43f9c47"},"post")
         .then(data => {
           if (data.error_code == 0) {
             this.banList = data.data.data;
@@ -65,7 +64,6 @@ export default {
     },
     goodSwiper: function() {
       this.axios(testUrl + api.goodsGroups,{id: "f92b7b5193b6418c8cc4ed4a03bb4678"},"post")
-      // this.axios('http://lc-OnsG2j7w.cn-n1.lcfile.com/70cfad8a09543541723a.json',{id: "f92b7b5193b6418c8cc4ed4a03bb4678"},"post")
         .then(data => {
           if (data.error_code == 0) {
             this.goodsList = data.data.goodsList;

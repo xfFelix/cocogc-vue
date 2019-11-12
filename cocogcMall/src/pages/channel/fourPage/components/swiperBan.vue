@@ -58,9 +58,7 @@ import {mapGetters} from 'vuex';
                     loop: _this.banList.length>1?true:false,
                     autoplay: _this.banList.length>1?true:false,
                     allowTouchMove:_this.banList.length>1?true:false,
-                    pagination: {
-                      el: '.swiper-pagination'
-                    },
+                    pagination: _this.banList.length>1?{el: '.swiper-pagination'}:'',
                 });
               })
             } else {

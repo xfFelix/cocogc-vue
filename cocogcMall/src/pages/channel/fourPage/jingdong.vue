@@ -10,18 +10,16 @@
 
     <ul class="category-o" v-if="otherList.length>0">
       <li v-for="(item,index) in otherList" :key="index" @click="jumpPath(item.url)">
+        <p class="cate-name">{{item.name}}</p>
+        <p class="cate-detail" :class="`cate-detail-${index}`">{{item.title}}</p>
         <img :src="item.src" :alt="item.name" />
-        <!-- <p class="cate-name">{{item.name}}</p>
-        <p class="cate-detail">{{item.detail}}</p> -->
       </li>
     </ul>
-
 
     <channel-hot :keyId="`e2a913cee8b84c97a9a9801375a6a1f7`" :keyName="`jingDong`"></channel-hot>
     <swiper-bana :keyBana="`a10a220f9aa94dc49c960c77cd783d11`" :keyName="`jingDong`"></swiper-bana>
     <new-goods :keyId="`3dc231152e7a4e51b0f67481de86c3af`" :keyName="`jingDong`"></new-goods>
     <!-- <integral :keyName="`JingDong`"></integral> -->
-
 
   </div>
 </template>
@@ -41,6 +39,7 @@ export default {
       {name:'京东生鲜',path:'12218',img:'/static/images/channel/jd-1-9.png'},
       {name:'京东珠宝',path:'6144',img:'/static/images/channel/jd-1-10.png'}
     ],
+    otherListName:[{name:'汽车配件'},{name:'游戏设备'},{name:'宠物天堂'},{name:'运动健身'}],
     otherList:[]
   }),
   methods:{
@@ -54,7 +53,11 @@ export default {
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                      this.otherList = data.data.data.splice(0,4);
+                      let res = data.data.data;
+                      this.otherList=res.map((item,index)=>{
+                         return {...item,...this.otherListName[index]}
+                      })
+                      this.otherList = this.otherList.splice(0,4);
                     } else {
                       this.Toast(data.message);
                     }
@@ -109,6 +112,7 @@ export default {
       text-align: center;
       box-shadow: -3px 2px 20px 4px rgba(231, 230, 230, 0.46);
       border-radius: 0.2rem;
+      height: 2.64rem;
     }
     .cate-name{
       color: #4a4242;
@@ -123,9 +127,23 @@ export default {
       display: inline-block;
       white-space: nowrap;
     }
+    .cate-detail-0{
+       color: #2543d8;
+    }
+    .cate-detail-1{
+       color: #0cbd70;
+    }
+    .cate-detail-2{
+      color: #e23131;
+    }
+    .cate-detail-3{
+      color: #b42de6;
+    }
+
     img{
-      margin: 0.15rem 0 0.25rem 0;
+      margin: 0.15rem auto 0.25rem auto;
       height: auto;
+      width: 1.4rem;
     }
   }
 }
