@@ -92,19 +92,15 @@ export default {
     banner: function() {
       let _this = this;
       this.axios(testUrl + api.goodsGroups, {
-        "id": "1e0615c5b4b54caf97a366059249017d"
+        "id": "17fc24c6d6b14669bc48443b31c9a6fa"
       }, 'post')
         .then((data) => {
           if (data.error_code == 0) {
             _this.banList = data.data.data;
             _this.$nextTick(function() {
               _this.swiperBan = new Swiper('.home-head .swiper-container', {
-                autoplay: {
-                  delay: 2000,
-                  stopOnLastSlide: false,
-                  disableOnInteraction: false,
-                },
-                loop: true,
+                autoplay:_this.banList.length>1?true:false,
+                loop: _this.banList.length>1?true:false,
                 pagination: {
                   el: '.swiper-pagination'
                 },

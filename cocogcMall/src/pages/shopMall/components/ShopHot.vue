@@ -122,7 +122,8 @@ export default {
         .iconLogo{
           width: 0.24rem;
           height: 0.24rem;
-          background-image: url('/static/images/logo/jd.png')
+          background-image: url('/static/images/logo/jd.png');
+          flex-shrink: 0;
         }
     }
     .headIcon{

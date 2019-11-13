@@ -100,7 +100,6 @@ export default {
       token: getToken(),
       banner: [],
       newsList:[],
-      autoplay: false,
       bannerImg: LOGO_PACKAGE_URL + 'home-banner-bg.png',
       logoImg: LOGO_PACKAGE_URL + 'superMark.png'
     }
@@ -131,18 +130,13 @@ export default {
     },
     async getBanner() {
       let banner = await this.axios(testUrl + api.goodsGroups, {
-        "id": "a10a220f9aa94dc49c960c77cd783d11"
+        "id": "e47b8b14f892456b8bff408dddbc0e58"
       }, 'post')
       this.banner = banner.data.data;
-      if (this.banner.length >1) {
-        this.autoplay = true
-      } else {
-        this.autoplay = false
-      }
       this.$nextTick(() => {
         var swiperBan = new Swiper('.index-swipe .swiper-container', {
-          loop: true,
-          autoplay: this.autoplay,
+          loop: this.banner.length >1?true:false,
+          autoplay: this.banner.length >1?true:false,
           pagination: {
             el: '.swiper-pagination',
             bulletClass : 'my-bullet',

@@ -161,6 +161,7 @@ export default {
         height: 0.26rem;
         background-image: url("/static/images/logo/jd.png");
         margin-right:2px;
+        flex-shrink: 0;
       }
     }
   }
