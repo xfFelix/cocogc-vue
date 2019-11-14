@@ -25,7 +25,11 @@ Vue.use(infiniteScroll)
 // new Vconsole();
 FastClick.attach(document.body);
 
-Vue.component(Spinner.name, Spinner)
+Vue.component(Spinner.name, Spinner);
+Vue.component(TabContainer.name, TabContainer);
+Vue.component(TabContainerItem.name, TabContainerItem);
+Vue.component(Navbar.name, Navbar);
+Vue.component(TabItem.name, TabItem);
 Vue.component('no-data', NoData)
 
 Vue.use(VueCookie);
@@ -41,9 +45,18 @@ import {
   Indicator,
   Toast,
   Spinner,
-  InfiniteScroll
+  InfiniteScroll,
+  TabContainer,
+  TabContainerItem,
+  Navbar,
+  TabItem
 } from "mint-ui";
 Vue.use(InfiniteScroll);
+Vue.use(TabContainer);
+Vue.use(TabContainerItem);
+Vue.use(Navbar);
+Vue.use(TabItem);
+
 
 window.Toast= Toast;
 window.MessageBox= MessageBox;

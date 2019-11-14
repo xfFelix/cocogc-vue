@@ -8,6 +8,7 @@ import order from './modules/order'
 import tab from './modules/tab'
 import shopMall from './modules/shop_mall'
 import searchHis from './modules/searchHis'
+import channel from './modules/channel'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     order,
     tab,
     shopMall,
-    searchHis
+    searchHis,
+    channel
   }
 })

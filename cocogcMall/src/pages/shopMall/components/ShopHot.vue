@@ -35,19 +35,15 @@ export default {
         rank: function() {
             let _this = this;
             this.axios(testUrl + api.goodsGroups, {
-                "id": "e2a913cee8b84c97a9a9801375a6a1f7"
+                "id": "52a518d7ea3d448588edaaec7b789e74"
             }, 'post')
                 .then((data) => {
                     if (data.error_code == 0) {
-                        this.goodsList = data.data.goodsList;
+                        _this.goodsList = data.data.goodsList;
                         _this.$nextTick(function() {
                             _this.swiperRank = new Swiper('.shopHot .swiper-container', {
-                                autoplay: {
-                                  delay: 2000,
-                                  stopOnLastSlide: false,
-                                  disableOnInteraction: false,
-                                },
-                                loop: true,
+                                autoplay: _this.goodsList.length>4?true:false,
+                                loop: _this.goodsList.length>4?true:false,
                                 slidesPerView : 4,
                                 freeMode: true,
                             });
@@ -60,10 +56,7 @@ export default {
                     this.Toast(err.message);
                 })
         },
-
-
     }
-
 }
 </script>
 <style lang="scss" scoped>
@@ -129,7 +122,8 @@ export default {
         .iconLogo{
           width: 0.24rem;
           height: 0.24rem;
-          background-image: url('/static/images/logo/jd.png')
+          background-image: url('/static/images/logo/jd.png');
+          flex-shrink: 0;
         }
     }
     .headIcon{

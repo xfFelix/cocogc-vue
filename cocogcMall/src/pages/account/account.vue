@@ -7,7 +7,7 @@
                 </div>
                 <div class="acc-headTG">
                   <div class="acc-numInfo">
-                      <p class="acc-headTel">{{userName|formatPhone}}</p>
+                      <p class="acc-headTel">{{userName}}</p>
                       <p  class="acc-headGrade">
                         <span class="acc-headChessI"></span>
                         <span class="acc-headChess"> {{levelFlag?'专业选手':'业余选手'}}</span>
@@ -154,6 +154,7 @@ export default {
 <style lang="scss" scoped>
 #account{
   position: relative;
+  background:#eef1f6;
   .banner{
     width: 100%;
     height: 3.6rem;
