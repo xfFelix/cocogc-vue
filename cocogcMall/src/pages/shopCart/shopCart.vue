@@ -547,10 +547,11 @@ export default {
     margin-bottom: 10px;
 }
 .logo-wrapper{
+    background: #Fff;
+    padding-bottom:0.88rem;
   img{
-    width: px2rem(116);
-    height: px2rem(25);
-    margin: px2rem(20) auto px2rem(20);
+    width:2.32rem;
+    margin: 0 auto 0.4rem;
   }
 }
 

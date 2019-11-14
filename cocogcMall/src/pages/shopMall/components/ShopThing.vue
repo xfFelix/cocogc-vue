@@ -1,42 +1,64 @@
 <template>
   <div class="goodThing">
-    <p>好物精选<span>BEST</span></p>
+    <p class="goodThing-title">好物精选<span>BEST</span></p>
     <ul>
-      <li v-for="(item,index) in thingList" :key="index">
-        <img :src="item.imgPath" alt=""/>
+      <li v-for="(item,index) in thingList" :key="index" @click="jumpPath(item)">
+        <img :src='item.src'/>
       </li>
     </ul>
   </div>
 </template>
 <script>
+import api from '@/service/api'
   export default {
     data:()=>({
-      thingList:[
-        {name:'9块9包邮',imgPath:'/static/images/product_wine.png',jumpPath:'www.baidu.com'},
-        {name:'9块9包邮',imgPath:'/static/images/product_wine.png',jumpPath:'www.baidu.com'},
-        {name:'9块9包邮',imgPath:'/static/images/product_wine.png',jumpPath:'www.baidu.com'},
-        {name:'9块9包邮',imgPath:'/static/images/product_wine.png',jumpPath:'www.baidu.com'},
-        {name:'9块9包邮',imgPath:'/static/images/product_wine.png',jumpPath:'www.baidu.com'},
-        {name:'9块9包邮',imgPath:'/static/images/product_wine.png',jumpPath:'www.baidu.com'},
-      ]
-    })
+      thingList:[]
+    }),
+    methods:{
+        rank: function() {
+          this.axios(testUrl + api.goodsGroups, {
+              "id": "26eb5fd1044f47f380831e66988bc3c5"
+          }, 'post')
+              .then((data) => {
+                  if (data.error_code == 0) {
+                      this.thingList = data.data.data;
+                  } else {
+                      this.Toast(data.message);
+                  }
+              })
+              .catch((err) => {
+                  this.Toast(err.message);
+              })
+        },
+        jumpPath(item){
+            window.location.href=item.url;
+        }
+    },
+    mounted(){
+      this.rank()
+    }
   }
 </script>
 <style lang='scss'>
 .goodThing{
   ul{
-    padding: 0 0.2rem;
+    padding: 0 3%;
     li{
-      width: 49%;
+      width: 48%;
       display: inline-block;
-      margin-bottom: 2%;
+      box-shadow: 0px 0px 27px 0px rgba(180, 180, 180, 0.26);
+      margin: 0 auto 2% auto;
+      border-radius: 0.2rem;
       &:nth-of-type(2n+1){
-        margin-right: 2%;
+        margin-right: 3%;
       }
-
+      img{
+        height: auto;
+        border-radius: 0.2rem;
+      }
     }
   }
-  p{
+  .goodThing-title{
     text-align: center;
     margin: 0.6rem 0 0.3rem 0;
     font-size: 0.32rem;

@@ -13,7 +13,7 @@
     </footer>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+import {mapGetters,mapActions} from 'vuex';
 import { getToken } from '@/util/common'
 export default {
     data() {
@@ -32,9 +32,7 @@ export default {
             token: getToken()
         }
     },
-    created() {
 
-    },
     computed: {
       ...mapGetters({
         num: 'cart/getNum',
@@ -61,7 +59,11 @@ export default {
       }
     },
     methods: {
+      ...mapActions({
+        initConfig:'channel/initConfig'
+      }),
         selectNav(title) {
+            this.initConfig();
             var isThis = this;
             isThis.isSelect = title; //当点击或啥返回上一页时都可以获取当前的名称
             sessionStorage.setItem('isSelect', this.isSelect);
@@ -88,7 +90,7 @@ export default {
           }
         }
         this.isSelect = sessionStorage.getItem('isSelect');
-        if (this.$route.name == "home" || this.$route.name == 'shopMall' || this.$route.name == 'classify' || this.$route.name == 'shopCart' || this.$route.name == 'account') {
+        if (this.$route.name == "home" || this.$route.name == 'shopMall' || this.$route.name == 'classify' || this.$route.name == 'shopCart' || this.$route.name == 'account' ||this.$route.name == 'channel') {
             this.selectNav(this.$route.name);
         }
     },

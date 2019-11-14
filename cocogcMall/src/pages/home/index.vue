@@ -1,7 +1,7 @@
 <template>
   <div class="index" id="index">
     <!-- 头部 -->
-    <div style="background: #fff;">
+    <div class="index-wrap">
       <div class="index-head">
         <img :src="bannerImg" alt="" srcset="">
         <div class="ih-noticeW">
@@ -62,28 +62,6 @@
       </div>
     </div>
 
-    <!-- 热门爆款 -->
-    <!-- <div class="index-hotGoods">
-      <div class="ihot-title">
-        <h3>热门爆款</h3>
-      </div>
-      <div class="ihot-goodsW">
-        <div class="ihot-goods" v-for="(item,index) in goodsList.slice(0, 6)" :key="index">
-          <router-link :to="{path:'/goodsDetail/'+item.id}">
-            <div class="ihot-goodsImg">
-              <img :src="item.picUrl" alt="" />
-            </div>
-            <p class="ihot-name">{{item.name}}</p>
-            <p class="ihot-moneyW">
-              <span class="ihot-logo"></span>
-              <span class="ihot-money">{{item.currentPrice|toDecimal2Fp}}.</span>
-              <span class="ihot-money">{{item.currentPrice|toDecimal2Ap}}</span>
-            </p>
-          </router-link>
-        </div>
-      </div>
-
-    </div> -->
     <!-- 积分区间 -->
     <v-integral></v-integral>
   </div>
@@ -118,14 +96,12 @@ export default {
         { id: 11, name: "游戏周边", img: 'game', active: false, path: 'javascript:;' },
         { id: 12, name: "网易严选", img: 'wangyi', active: false, path: 'javascript:;' },
       ],
-      goodsList: [],
       loginFlag: false,
       token: getToken(),
       banner: [],
       newsList:[],
-      autoplay: false,
       bannerImg: LOGO_PACKAGE_URL + 'home-banner-bg.png',
-      logoImg: LOGO_PACKAGE_URL + 'jd.png'
+      logoImg: LOGO_PACKAGE_URL + 'superMark.png'
     }
   },
   created() {
@@ -137,7 +113,6 @@ export default {
   },
   mounted() {
     this.getBanner()
-    this.rank();
     this.getNews();
   },
   methods: {
@@ -155,18 +130,13 @@ export default {
     },
     async getBanner() {
       let banner = await this.axios(testUrl + api.goodsGroups, {
-        "id": "a10a220f9aa94dc49c960c77cd783d11"
+        "id": "e47b8b14f892456b8bff408dddbc0e58"
       }, 'post')
       this.banner = banner.data.data;
-      if (this.banner.length >1) {
-        this.autoplay = true
-      } else {
-        this.autoplay = false
-      }
       this.$nextTick(() => {
         var swiperBan = new Swiper('.index-swipe .swiper-container', {
-          loop: true,
-          autoplay: this.autoplay,
+          loop: this.banner.length >1?true:false,
+          autoplay: this.banner.length >1?true:false,
           pagination: {
             el: '.swiper-pagination',
             bulletClass : 'my-bullet',
@@ -174,23 +144,6 @@ export default {
           },
         })
       })
-    },
-    rank: function() {
-      let _this = this;
-      this.axios(testUrl + api.goodsGroups, {
-        "id": "e2a913cee8b84c97a9a9801375a6a1f7"
-      }, 'post')
-        .then((data) => {
-          if (data.error_code == 0) {
-            _this.goodsList = data.data.goodsList;
-
-          } else {
-            _this.Toast(data.message);
-          }
-        })
-        .catch((err) => {
-          _this.Toast(data.message);
-        })
     },
     async getNews() {
       let newsList = await this.axios(infoURl + api.newsList, {
@@ -225,221 +178,151 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../scss/mixin.scss';
-.link-url{
-  color:rgb(255,255,255);
-  margin-right:100px;
-  &:last-of-type{
-    margin-right: 0;
+#index{
+  background: #fff;
+  .index-wrap{
+    border-bottom: 0.4rem solid #eef1f6;
   }
-}
-.index-head {
-  position: relative;
-  overflow: hidden;
-  .ih-noticeW {
-    width: 88%;
-    background: rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 0.6rem;
-    margin: px2rem(30) auto 0;
-    line-height: 0.6rem;
-    position: absolute;
-    top: 0;
-    left: 6%;
-    .ih-notice {
-      color: #fff;
-      font-size: 0.26rem;
-       width: 100%;
+  .link-url{
+    color:rgb(255,255,255);
+    margin-right:100px;
+    &:last-of-type{
+      margin-right: 0;
+    }
+  }
+  .index-head {
+    position: relative;
+    overflow: hidden;
+    .ih-noticeW {
+      width: 88%;
+      background: rgba(0, 0, 0, 0.15);
       display: flex;
       align-items: center;
-      .ih-hormImg {
+      justify-content: space-between;
+      height: 0.6rem;
+      margin: px2rem(30) auto 0;
+      line-height: 0.6rem;
+      position: absolute;
+      top: 0;
+      left: 6%;
+      .ih-notice {
+        color: #fff;
+        font-size: 0.26rem;
+         width: 100%;
+        display: flex;
+        align-items: center;
+        .ih-hormImg {
+          width: 0.24rem;
+          height: 0.24rem;
+          background-position: -4.31rem -1.64rem;
+          margin-left: 0.1rem;
+          margin-right: 0.1rem;
+          display: inline-block;
+        }
+        p {
+          font-size: 0.26rem;
+          color: #ffffff;
+        }
+      }
+      .ih-goImg {
         width: 0.24rem;
         height: 0.24rem;
-        background-position: -4.31rem -1.64rem;
-        margin-left: 0.1rem;
-        margin-right: 0.1rem;
-        display: inline-block;
-      }
-      p {
-        font-size: 0.26rem;
-        color: #ffffff;
+        background-position: -5.6rem -0.8rem;
+        margin-right: 0.13rem;
       }
     }
-    .ih-goImg {
-      width: 0.24rem;
-      height: 0.24rem;
-      background-position: -5.6rem -0.8rem;
-      margin-right: 0.13rem;
-    }
-  }
-  .ih-balanceW {
-    display: flex;
-    width: 80%;
-    margin-left: 1.4rem;
-    justify-content: space-between;
-    margin-top: 0.45rem;
-    position: absolute;
-    top: px2rem(60);
-    .ih-balance {
-      p {
-        // margin-top: -0.1rem;
-        color: #fff;
-
-        text-align: center;
-      }
-      .ih-money {
-        font-size: px2rem(24);
-        font-weight: bold;
-        margin-top: -0.1rem;
-      }
-      .ih-moneya {
-        font-size: px2rem(12);
-        font-weight: bold;
-        margin-top: -0.05rem;
-        text-align: left;
-      }
-
-      .ih-nologin {
-        margin: 0.1rem;
-        color: #fff;
-        display: block;
-        letter-spacing: 1px;
-        cursor: pointer;
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-.index-fastNav {
-  font-size: 0.24rem;
-  color: #000;
-  margin: 0 px2rem(10) 0.2rem px2rem(10);
-  background: #fff;
-  border-radius:25px 25px 0px 0px;
-  padding-top: px2rem(6);
-  margin-top: px2rem(-120);
-  position: relative;
-  .ifa-fastNavLi {
-    width: 25%;
-    text-align: center;
-    margin: px2rem(14) 0 0.1rem 0;
-    display: inline-block;
-    .iconImg{
-      width: px2rem(44);
-      height: px2rem(44);
-      margin: auto;
-    }
-    .badge-img{
+    .ih-balanceW {
+      display: flex;
+      width: 80%;
+      margin-left: 1.4rem;
+      justify-content: space-between;
+      margin-top: 0.45rem;
       position: absolute;
-      right: px2rem(16);
-      top: px2rem(6);
-      width: px2rem(21);
-      height: px2rem(10);
-    }
-    .hot{
-      top: px2rem(2);
-    }
+      top: px2rem(60);
+      .ih-balance {
+        p {
+          // margin-top: -0.1rem;
+          color: #fff;
 
-    .ifa-ImgW {
-      width: 0.5rem;
-      height: 0.5rem;
-      background-position: -0.09rem -0.09rem;
-      position: relative;
-    }
-    .ifa-name {
-      padding: px2rem(9) 0 0 0;
-      font-size: 11px;
-      font-family: Microsoft YaHei;
-      font-weight: 400;
-      color:rgba(51,51,51,1);
-    }
-  }
-}
+          text-align: center;
+        }
+        .ih-money {
+          font-size: px2rem(24);
+          font-weight: bold;
+          margin-top: -0.1rem;
+        }
+        .ih-moneya {
+          font-size: px2rem(12);
+          font-weight: bold;
+          margin-top: -0.05rem;
+          text-align: left;
+        }
 
-.index-swipeW {
-  margin: px2rem(10) px2rem(10) px2rem(10) px2rem(10);
-  padding-bottom: px2rem(25);
-  img {
-    width: 100%;
-    border-radius:10px;
-  }
-}
-
-.index-hotGoods {
-  background: #fff;
-  padding-bottom: 30px;
-  .ihot-title {
-    padding: 0 0.4rem 0.2rem 0.33rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 0.2rem;
-    h3 {
-      font-size: 0.3rem;
-      font-weight: bold;
-    }
-    a {
-      font-size: 0.24rem;
-      color: #333333;
-    }
-  }
-  .ihot-goodsW {
-    .ihot-goods {
-      width: 24%;
-      margin: 0 4.66%;
-      display: inline-block;
-      text-align: center;
-      margin-top: 0.11rem;
-      .ihot-goodsImg {
-        height: 2rem;
-        width: 2rem;
-        margin: 0 auto;
-        img {
-          width: 100%;
+        .ih-nologin {
+          margin: 0.1rem;
+          color: #fff;
+          display: block;
+          letter-spacing: 1px;
+          cursor: pointer;
+          text-decoration: underline;
         }
       }
     }
+  }
 
+  .index-fastNav {
+    font-size: 0.24rem;
+    color: #000;
+    margin: 0 px2rem(10) 0.2rem px2rem(10);
+    background: #fff;
+    border-radius:25px 25px 0px 0px;
+    padding-top: px2rem(6);
+    margin-top: px2rem(-120);
+    position: relative;
+    .ifa-fastNavLi {
+      width: 25%;
+      text-align: center;
+      margin: px2rem(14) 0 0.1rem 0;
+      display: inline-block;
+      .iconImg{
+        width: px2rem(44);
+        height: px2rem(44);
+        margin: auto;
+      }
+      .badge-img{
+        position: absolute;
+        right: px2rem(16);
+        top: px2rem(6);
+        width: px2rem(21);
+        height: px2rem(10);
+      }
+      .hot{
+        top: px2rem(2);
+      }
 
-
-    .ihot-name {
-      font-size: 0.22rem;
-      font-weight: bold;
-      margin-top: 0.12rem;
-      position:relative;
-      line-height:1.5em;
-      height:3em;
-      overflow:hidden;
-      word-break: break-all;
-      word-wrap: break-word;
-      text-align: left;
-      &::after{
-        content:"";
-				position:absolute;
-				bottom:0;
-				right:0;
-				padding: 0 5px;
-				background-color: #fff;
+      .ifa-ImgW {
+        width: 0.5rem;
+        height: 0.5rem;
+        background-position: -0.09rem -0.09rem;
+        position: relative;
+      }
+      .ifa-name {
+        padding: px2rem(9) 0 0 0;
+        font-size: 11px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        color:rgba(51,51,51,1);
       }
     }
-    .ihot-moneyW {
-      display: flex;
-      align-items: center;
-      margin-top: 0.12rem;
-      margin-bottom: 0.4rem;
-      .ihot-logo {
-        width: 0.28rem;
-        height: 0.28rem;
-        background-position: -2.57rem -0.78rem;
-        background-size: 5.8rem 1.86rem;
-        background-repeat: no-repeat;
-        background-image: url(/static/images/jl.png);
-      }
-      .ihot-money {
-        font-size: 0.24rem;
-        color: #333;
+  }
+
+  .index-swipeW {
+    margin: px2rem(10) px2rem(10) 0 px2rem(10);
+    padding-bottom: px2rem(25);
+    .swiper-container{
+      border-radius:10px;
+      img {
+        width: 100%;
       }
     }
   }
