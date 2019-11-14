@@ -56,6 +56,7 @@
                             <span class="confirmTake" @click="cancelOrder(item.orderId)" v-if="(item.orderStatus =='待确认' && item.vendorId !== '网易严选') || (item.orderStatus =='已确认' && item.vendorId === '网易严选')">取消订单</span>
                             <span class="confirmTake" @click="applyBack(item.orderId)" v-if="item.orderStatus =='已完成'">申请退货</span>
                             <span class="confirmTake" @click="cancelBack(item.orderId)" v-if="item.orderStatus =='申请退货'">取消申请</span>
+                            <span class="confirmTake" @click="$router.push({name: 'orderDetails', params: {orderId:item.orderId}})" v-if="item.orderStatus =='申请退货'">绑定物流</span>
                         </div>
                     </div>
 
@@ -99,6 +100,7 @@
                             <span class="confirmTake" @click="cancelOrder(item.orderId)" v-if="(item.orderStatus =='待确认' && item.vendorId !== '网易严选') || (item.orderStatus =='已确认' && item.vendorId === '网易严选')">取消订单</span>
                             <span class="confirmTake" @click="applyBack(item.orderId)" v-if="item.orderStatus =='已完成'">申请退货</span>
                             <span class="confirmTake" @click="cancelBack(item.orderId)" v-if="item.orderStatus =='申请退货'">取消申请</span>
+                            <span class="confirmTake" @click="$router.push({name: 'orderDetails', params: {orderId:item.orderId}})" v-if="item.orderStatus =='申请退货'">绑定物流</span>
                         </div>
                     </div>
                 </div>
