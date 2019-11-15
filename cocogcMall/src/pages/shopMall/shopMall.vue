@@ -101,9 +101,8 @@ export default {
               _this.swiperBan = new Swiper('.home-head .swiper-container', {
                 autoplay:_this.banList.length>1?true:false,
                 loop: _this.banList.length>1?true:false,
-                pagination: {
-                  el: '.swiper-pagination'
-                },
+                allowTouchMove:_this.banList.length>1?true:false,
+                pagination: _this.banList.length>1?{el:'.swiper-pagination'}:'',
               });
             })
           } else {

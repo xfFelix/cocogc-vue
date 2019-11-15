@@ -92,8 +92,6 @@ import {mapGetters} from 'vuex';
     width:6.9rem;
     height: 3.2rem;
     border-radius: 0.2rem;
-    	box-shadow: -6px 4px 18px 0px#a6a6a6;
-
   }
 }
 </style>

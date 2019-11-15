@@ -130,8 +130,8 @@ export default {
     }
   }
   .banSwiper{
-    height: 3.42rem;
-    margin: 0.26rem 0 0.4rem 0;
+    height: 3.2rem;
+    margin: 0.26rem auto 0.4rem auto;
     img{
       border-radius: 0.1rem;
     }

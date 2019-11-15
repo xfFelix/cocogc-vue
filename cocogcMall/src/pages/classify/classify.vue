@@ -204,8 +204,8 @@ export default
 }
 
 .classify-swipeW {
-    height: 1.55rem;
-    width: 5.52rem;
+    height: 2rem;
+    width: 5.32rem;
     margin: 0.22rem auto 0.5rem auto;
     .classify-swipe {
         height: 100%;
@@ -214,11 +214,11 @@ export default
         }
         .swiper-container {
             height: 100%;
-            border-radius: 5px;
+            border-radius: 0.2rem;
             .swiper-wrapper {
                 .swiper-slide {
                     img {
-                        height: 1.55rem;
+                        border-radius: 0.2rem;
                     }
                 }
             }
