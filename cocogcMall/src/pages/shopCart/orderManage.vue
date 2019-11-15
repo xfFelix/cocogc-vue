@@ -248,7 +248,7 @@ export default {
         applyBack(takeId){
           let token = getToken()
           this.MessageBox.confirm('', {
-            message: '是否申请退货',
+            message: '网易严选订单退货需要整单退货，不支持单件商品退货，请确认是否整单退货？',
             title: '申请退货',
           }).then(async action => {
             let data = await this.axios(testUrl + api.applyBack, { "token": token, "code":  takeId}, 'post')
