@@ -348,7 +348,7 @@
           "salesVolume": this.salesVolume,
           "timeSort": "",
           "productTypeId": this.productTypeId,
-          "vendorId":(this.getTypeName && this.getTypeName!="TianYaYanXuan")?this.getTypeName:''
+          // "vendorId":(this.getTypeName && this.getTypeName!="TianYaYanXuan")?this.getTypeName:''
         }, 'post')
         if (data.code == 0) {
           this.goodsList = this.goodsList.concat(data.list);

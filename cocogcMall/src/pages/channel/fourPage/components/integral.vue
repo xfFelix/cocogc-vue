@@ -201,7 +201,7 @@ export default {
                 "price": integrals,
                 "offset": this.offset,
                 "rows": this.rows,
-                "vendorId":this.getTypeName!='TianYaYanXuan'?this.getTypeName:''
+                "vendorId":this.getTypeName
             }, 'get')
                 .then((data) => {
                     this.showLoading = false
