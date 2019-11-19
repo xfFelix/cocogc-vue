@@ -63,21 +63,15 @@
 </template>
 <script>
   import headSearch from "../../common/headSearch.vue";
-  // import Observer from '@/common/Observer'
-  import {
-    mapGetters, mapActions
-  } from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
   import api from '../../service/api';
-  import {
-    getToken
-  } from '@/util/common'
+  import {getToken} from '@/util/common'
   import {Loadmore} from 'mint-ui'
 
   export default {
     name: 'goodsList',
     data() {
       return {
-        // observer: null,
         logoImg: LOGO_PACKAGE_URL + 'logo-black.png',
         searchCont: '',
         tenFlag:false,
@@ -145,7 +139,8 @@
     computed: {
       ...mapGetters({
         userinfo: 'userinfo/getUserInfo',
-        getScrollto: 'scrollto/getGoodsList'
+        getScrollto: 'scrollto/getGoodsList',
+        getTypeName: 'channel/getTypeName'
       }),
       offsetRows () {
         return 1 + this.pages_size * (this.pages - 1)
@@ -166,6 +161,9 @@
       } else {
         next()
       }
+    },
+    mounted(){
+      console.log(this.getTypeName)
     },
     methods: {
       async loadBottom() {
@@ -349,7 +347,8 @@
           "rows": this.pages_size,
           "salesVolume": this.salesVolume,
           "timeSort": "",
-          "productTypeId": this.productTypeId
+          "productTypeId": this.productTypeId,
+          // "vendorId":(this.getTypeName && this.getTypeName!="TianYaYanXuan")?this.getTypeName:''
         }, 'post')
         if (data.code == 0) {
           this.goodsList = this.goodsList.concat(data.list);
@@ -368,7 +367,6 @@
     components: {
       "head-search": headSearch,
       "mt-loadmore": Loadmore
-      // Observer
     }
 
   }

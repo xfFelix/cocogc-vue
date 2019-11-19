@@ -25,6 +25,10 @@
     <shop-classify></shop-classify>
     <!-- 快捷通道 -->
     <shop-hot></shop-hot>
+    <!-- 好物精选 -->
+    <shop-thing></shop-thing>
+    <!-- 活动专区 -->
+    <activity-area></activity-area>
     <!-- 为你推荐 -->
     <shop-foryou></shop-foryou>
     <!-- 回到顶部 -->
@@ -64,7 +68,6 @@ export default {
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
     this.banner()
-    console.log('111')
     this.getBanner()
   },
   methods: {
@@ -89,22 +92,17 @@ export default {
     banner: function() {
       let _this = this;
       this.axios(testUrl + api.goodsGroups, {
-        "id": "1e0615c5b4b54caf97a366059249017d"
+        "id": "17fc24c6d6b14669bc48443b31c9a6fa"
       }, 'post')
         .then((data) => {
           if (data.error_code == 0) {
             _this.banList = data.data.data;
             _this.$nextTick(function() {
               _this.swiperBan = new Swiper('.home-head .swiper-container', {
-                autoplay: {
-                  delay: 2000,
-                  stopOnLastSlide: false,
-                  disableOnInteraction: false,
-                },
-                loop: true,
-                pagination: {
-                  el: '.swiper-pagination'
-                },
+                autoplay:_this.banList.length>1?true:false,
+                loop: _this.banList.length>1?true:false,
+                allowTouchMove:_this.banList.length>1?true:false,
+                pagination: _this.banList.length>1?{el:'.swiper-pagination'}:'',
               });
             })
           } else {
@@ -146,7 +144,8 @@ export default {
     ShopHot:()=>import('./components/ShopHot'),
     ShopThing:()=>import('./components/ShopThing'),
     Banner:()=>import('./components/Banner'),
-    ShopForyou:()=>import('./components/ShopForyou')
+    ShopForyou:()=>import('./components/ShopForyou'),
+    ActivityArea:()=>import('./components/activityArea'),
   }
 };
 </script>
@@ -215,7 +214,7 @@ export default {
 
 .home-head {
   .swiper-container {
-    width: 345px;
+    width: 92%;
     height: 160px;
     border-radius: 10px;
     .swiper-pagination {

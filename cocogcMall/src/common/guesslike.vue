@@ -79,7 +79,6 @@ export default {
 <style lang="scss" scoped>
 @import '../scss/mixin.scss';
 .guesslike {
-    padding-bottom:0.6rem;
     .home-integralW {
         width: 100%;
         background: #fff;

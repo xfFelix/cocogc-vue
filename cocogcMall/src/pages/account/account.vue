@@ -7,7 +7,7 @@
                 </div>
                 <div class="acc-headTG">
                   <div class="acc-numInfo">
-                      <p class="acc-headTel">{{userName|formatPhone}}</p>
+                      <p class="acc-headTel">{{userName}}</p>
                       <p  class="acc-headGrade">
                         <span class="acc-headChessI"></span>
                         <span class="acc-headChess"> {{levelFlag?'专业选手':'业余选手'}}</span>
@@ -72,7 +72,6 @@ export default {
             score: '',
             userName: '',
             top: [],
-            end: [],
             levelFlag:false,
             num: 0,
             logoImg: LOGO_PACKAGE_URL + 'headImg.png'
@@ -102,14 +101,11 @@ export default {
         this.num = data.data['2']
       },
       async getSwiper() {
-        const [top, end] = await Promise.all([
+        const [top] = await Promise.all([
           this.getBanner('1ffcda7e7555460399096529c68a7a2a'),
-          this.getBanner('eaccd32767844f78b3e94923ff6ae899')
         ])
-        this.end = end
         this.top = top
         this.checkLength(this.top, 'topSwiper')
-        this.checkLength(this.end, 'endSwiper')
       },
       checkLength(list, el) {
         this.$nextTick(() => {
@@ -154,6 +150,7 @@ export default {
 <style lang="scss" scoped>
 #account{
   position: relative;
+  background:#eef1f6;
   .banner{
     width: 100%;
     height: 3.6rem;

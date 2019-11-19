@@ -8,6 +8,7 @@ import searchPage from '@/pages/home/searchPage'; //列表页
 
 import classify from '@/pages/classify/classify';
 import shopMall from '@/pages/shopMall/shopMall';
+import channel from '@/pages/channel';
 
 import account from '@/pages/account/account';
 import setUp from '@/pages/account/setUp';
@@ -79,6 +80,12 @@ const router = new Router({
           name: 'shopMall',
           component: shopMall,
           meta: { title: '商城',scrolltop: true },
+        },
+        {
+          path: 'channel',
+          name: 'channel',
+          component: channel,
+          meta: { title: '频道',scrolltop: true },
         },
         {
           path: 'shopCart',
