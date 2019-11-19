@@ -72,7 +72,6 @@ export default {
             score: '',
             userName: '',
             top: [],
-            end: [],
             levelFlag:false,
             num: 0,
             logoImg: LOGO_PACKAGE_URL + 'headImg.png'
@@ -102,14 +101,11 @@ export default {
         this.num = data.data['2']
       },
       async getSwiper() {
-        const [top, end] = await Promise.all([
+        const [top] = await Promise.all([
           this.getBanner('1ffcda7e7555460399096529c68a7a2a'),
-          this.getBanner('eaccd32767844f78b3e94923ff6ae899')
         ])
-        this.end = end
         this.top = top
         this.checkLength(this.top, 'topSwiper')
-        this.checkLength(this.end, 'endSwiper')
       },
       checkLength(list, el) {
         this.$nextTick(() => {
