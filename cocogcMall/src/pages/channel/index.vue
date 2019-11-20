@@ -7,9 +7,9 @@
         <mt-tab-item id="tab-container3">网易严选</mt-tab-item>
         <mt-tab-item id="tab-container4">天涯严选</mt-tab-item>
       </mt-navbar>
-        <div class="channel-name-wrap flex">
+        <div class="channel-name-wrap flex" >
           <span class="channel-name">{{tabName}}</span>
-          <p class="channel-search flex" @click="$router.push({path:'/searchPage'})"><span class="iconBg searchIcon"></span>请输入要搜索的商品名称</p>
+          <p class="channel-search flex" @click="goSearch()"><span class="iconBg searchIcon"></span>请输入要搜索的商品名称</p>
         </div>
     </div>
 
@@ -99,8 +99,13 @@ export default {
   },
   methods:{
     ...mapActions({
-        setTypeId: 'channel/setTypeId'
+        setTypeId: 'channel/setTypeId',
+        setVendorFlag:'channel/setVendorFlag'
     }),
+    goSearch(){
+      this.$router.push({path:'/searchPage'});
+      this.setVendorFlag(true)
+    }
   },
   components:{
     wangYi:()=>import ('./fourPage/wangyi'),
@@ -111,6 +116,7 @@ export default {
     'swiper-Ban':()=>import ('./fourPage/components/swiperBan'),
   },
   mounted() {
+    this.setVendorFlag(false)
     this.selected = `tab-container${this.getChannelId}`;
   },
 }

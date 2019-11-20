@@ -140,7 +140,8 @@
       ...mapGetters({
         userinfo: 'userinfo/getUserInfo',
         getScrollto: 'scrollto/getGoodsList',
-        getTypeName: 'channel/getTypeName'
+        getTypeName: 'channel/getTypeName',
+        getVendorFlag:'channel/getVendorFlag',
       }),
       offsetRows () {
         return 1 + this.pages_size * (this.pages - 1)
@@ -336,6 +337,7 @@
         console.log('end')
       },
       async intersected() {
+        console.log(this.getVendorFlag)
         console.log('start')
         this.allLoaded = true
         let data = await this.axios(jdTestUrl + api.keyword, {
@@ -348,7 +350,7 @@
           "salesVolume": this.salesVolume,
           "timeSort": "",
           "productTypeId": this.productTypeId,
-          // "vendorId":(this.getTypeName && this.getTypeName!="TianYaYanXuan")?this.getTypeName:''
+          "vendorId":this.getVendorFlag?'':(this.getTypeName?this.getTypeName:'')
         }, 'post')
         if (data.code == 0) {
           this.goodsList = this.goodsList.concat(data.list);

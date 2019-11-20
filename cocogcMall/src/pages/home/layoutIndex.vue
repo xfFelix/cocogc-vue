@@ -322,7 +322,7 @@ export default {
     .imgBg {
       width: 0.5rem;
       height: 0.5rem;
-      background-image: url(/static/images/banner_index.png);
+      background-image: url('/static/images/banner_index.png?v=1');
       background-repeat: no-repeat;
       background-size: 4.82rem 1.97rem;
       display: inline-block;
