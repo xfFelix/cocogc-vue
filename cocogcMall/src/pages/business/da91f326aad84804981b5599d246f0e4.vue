@@ -38,7 +38,7 @@
           <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)" style="position:relative;">
             <img src="/static/images/home/hot.png" alt=" " v-if="item.id == 1" class="badge-img hot">
             <img src="/static/images/home/new.png" alt=" " v-if="item.id == 13" class="badge-img">
-            <img :src="item.id == 4 ? logoImg : `/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png`" alt="" class="iconImg">
+            <img :src="item.id == 4 ? logoImg : `/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png?${(new Date()).getTime()}`" alt="" class="iconImg">
             <p class="ifa-name">{{item.name}}</p>
           </div>
       </li>
@@ -119,7 +119,7 @@ export default {
         // { id: 10, name: "周大福金饰", imgBg: 'ifa-imgBg08', path: 'javascript:;' },
         { id: 13, name: "生活缴费", img: 'life', active: true, path: `${hostUrl}ticket/life` },
         { id: 11, name: "游戏周边", img: 'game', active: false, path: 'javascript:;' },
-        { id: 12, name: "网易严选", img: 'wangyi', active: false, path: 'javascript:;' },
+        { id: 12, name: "尊贵特权", img: 'zgtq', active: false, path: 'javascript:;' },
       ],
       goodsList: [],
       loginFlag: false,
@@ -128,7 +128,7 @@ export default {
       newsList:[],
       autoplay: false,
       bannerImg: LOGO_PACKAGE_URL + 'home-banner-bg.png',
-      logoImg: LOGO_PACKAGE_URL + 'jd.png'
+      logoImg: LOGO_PACKAGE_URL + 'superMark.png'
     }
   },
   computed: {

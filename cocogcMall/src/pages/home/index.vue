@@ -37,7 +37,7 @@
             <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)" style="position:relative;">
               <img src="/static/images/home/hot.png" alt=" " v-if="item.id == 1" class="badge-img hot">
               <img src="/static/images/home/new.png" alt=" " v-if="item.id == 13" class="badge-img">
-              <img :src="item.id == 4 ? logoImg : `/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png`" alt="" class="iconImg">
+              <img :src="item.id == 4 ? logoImg : `/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png?${(new Date()).getTime()}`" alt="" class="iconImg">
               <p class="ifa-name" :style="!item.active && 'color: #cecece'">{{item.name}}</p>
             </div>
         </li>
