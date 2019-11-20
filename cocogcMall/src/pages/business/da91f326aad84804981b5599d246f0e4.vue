@@ -119,7 +119,7 @@ export default {
         // { id: 10, name: "周大福金饰", imgBg: 'ifa-imgBg08', path: 'javascript:;' },
         { id: 13, name: "生活缴费", img: 'life', active: true, path: `${hostUrl}ticket/life` },
         { id: 11, name: "游戏周边", img: 'game', active: false, path: 'javascript:;' },
-        { id: 12, name: "网易严选", img: 'wangyi', active: false, path: 'javascript:;' },
+        { id: 12, name: "尊贵特权", img: 'zgtq', active: false, path: 'javascript:;' },
       ],
       goodsList: [],
       loginFlag: false,
@@ -128,7 +128,7 @@ export default {
       newsList:[],
       autoplay: false,
       bannerImg: LOGO_PACKAGE_URL + 'home-banner-bg.png',
-      logoImg: LOGO_PACKAGE_URL + 'jd.png'
+      logoImg: LOGO_PACKAGE_URL + 'superMark.png'
     }
   },
   computed: {
