@@ -15,15 +15,20 @@
 export default {
   data:()=>({
     list:[
-      {name:'居家生活',path:'%E5%AE%B6%E5%B1%85',img:'/static/images/channel/wy-1-1.png'},
-      {name:'数码家电',path:'%E6%95%B0%E7%A0%81%E5%AE%B6%E7%94%B5',img:'/static/images/channel/wy-1-2.png'},
-      {name:'服饰鞋包',path:'%E7%94%B7%E8%A3%85',img:'/static/images/channel/wy-1-3.png'},
-      {name:'母婴亲子',path:'%E5%A9%B4%E5%84%BF',img:'/static/images/channel/wy-1-4.png'}
+      {name:'居家生活',path:'家居',img:'/static/images/channel/wy-1-1.png'},
+      {name:'数码家电',path:'数码家电',img:'/static/images/channel/wy-1-2.png'},
+      {name:'服饰鞋包',path:'男装',img:'/static/images/channel/wy-1-3.png'},
+      {name:'母婴亲子',path:'婴儿',img:'/static/images/channel/wy-1-4.png'}
     ]
   }),
   methods:{
     jumpPath(id){
-      this.$router.push({path:`/goodsList?keyWord=${id}`});
+      let uPattern =  /^\d+$/;
+      if(!uPattern.test(id)){
+        this.$router.push({path:`/goodsList?keyWord=${id}&vendorId=WangYiYanXuan`});
+      }else{
+        this.$router.push({path:`/goodsList?classfyId=${id}&vendorId=WangYiYanXuan`});
+      }
     }
   },
    components:{

@@ -337,7 +337,6 @@
         console.log('end')
       },
       async intersected() {
-        console.log(this.getVendorFlag)
         console.log('start')
         this.allLoaded = true
         let data = await this.axios(jdTestUrl + api.keyword, {
@@ -350,7 +349,7 @@
           "salesVolume": this.salesVolume,
           "timeSort": "",
           "productTypeId": this.productTypeId,
-          "vendorId":this.getVendorFlag?'':(this.getTypeName?this.getTypeName:'')
+          "vendorId":this.getVendorFlag?'':(this.$route.query.vendorId?this.$route.query.vendorId:'')
         }, 'post')
         if (data.code == 0) {
           this.goodsList = this.goodsList.concat(data.list);
