@@ -46,7 +46,7 @@ export default {
       if(url.indexOf('http')!=-1){
         window.location.href = `${url}&vendorId=jingDong`;
       }else{
-        this.$router.push({path:`/goodsList?quickItem=${url}&vendorId=jingDong`});
+        this.$router.push({path:`/goodsList?classfyId=${url}&vendorId=jingDong`});
       }
     },
     rank(){

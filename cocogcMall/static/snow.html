@@ -1,0 +1,174 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>小雪</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1244015_taaw89pdwhh.css">
+  <style>
+    /* http://meyerweb.com/eric/tools/css/reset/
+      v2.0 | 20110126
+      License: none (public domain)
+    */
+
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+      font-family: SimHei;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+  </style>
+  <style>
+    .wrapper{
+      width: 100%;
+      max-width: 561px;
+      position: relative;
+      margin: auto;
+    }
+    .back{
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 20px;
+      background: rgba(0, 0, 0, .4);
+      border-radius: 50%;
+      position: absolute;
+      top: 15px;
+      left: 10px;
+      color: #fff;
+    }
+    .more{
+      width: 13%;
+      height: 1.2%;
+      position: absolute;
+      right: 4.2%;
+    }
+    .first-more{
+      top: 27.5%;
+    }
+    .second-more{
+      top: 51.2%;
+    }
+    .thrid-more{
+      top: 75.6%;
+    }
+    .left-7{
+      left: 15.5%;
+    }
+    .right-7{
+      right: 14.8%;
+    }
+    .item{
+      border-radius: 5px;
+      width: 32.6%;
+      position: absolute;
+      height: 9.53%;
+      box-sizing: border-box;
+      padding: 4% 0 0;
+      text-align: center;
+    }
+    .top-1-1{
+      top: 30.3%;
+    }
+    .top-1-2{
+      top:40.6%;
+    }
+    .top-2-1{
+      top: 53.9%;
+    }
+    .top-2-2{
+      top: 64.3%;
+    }
+    .top-3-1{
+      top: 78.3%;
+    }
+    .top-3-2{
+      top: 88.7%;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <img src="./images/snow/bg-1.png" alt=" " style="width: 100%;display:block;border:none;">
+    <img src="./images/snow/bg-2.png" alt=" " style="width: 100%;display:block;border:none;">
+    <img src="./images/snow/bg-3.png" alt=" " style="width: 100%;display:block;border:none;">
+    <img src="./images/snow/bg-4.png" alt=" " style="width: 100%;display:block;border:none;">
+
+    <div class="back iconfont" onclick="goBack()">&#xe61e;</div>
+
+    <div class="more first-more" onclick="goList('白酒')"></div>
+    <div class="item left-7 top-1-1" onclick="goDetail('149536')"></div>
+    <div class="item right-7 top-1-1" onclick="goDetail('148662')"></div>
+    <div class="item left-7 top-1-2" onclick="goDetail('148922')"></div>
+    <div class="item right-7 top-1-2" onclick="goDetail('76415')"></div>
+
+    <div class="more second-more" onclick="goList('茶叶')"></div>
+    <div class="item left-7 top-2-1" onclick="goDetail('155004')"></div>
+    <div class="item right-7 top-2-1" onclick="goDetail('155182')"></div>
+    <div class="item left-7 top-2-2" onclick="goDetail('156678')"></div>
+    <div class="item right-7 top-2-2" onclick="goDetail('100535')"></div>
+
+    <div class="more thrid-more" onclick="goList('药材')"></div>
+    <div class="item left-7 top-3-1" onclick="goDetail('150775')"></div>
+    <div class="item right-7 top-3-1" onclick="goDetail('164345')"></div>
+    <div class="item left-7 top-3-2" onclick="goDetail('164211')"></div>
+    <div class="item right-7 top-3-2" onclick="goDetail('164357')"></div>
+
+  </div>
+  <script>
+    function goList(id) {
+      let uPattern =  /^\d+$/;
+      if(!uPattern.test(id)){
+        window.location.href = 'https://mall.cocogc.cn/#/goodsList?keyWord=' + id;
+      }else{
+        window.location.href = 'https://mall.cocogc.cn/#/goodsList?classfyId=' + id;
+      }
+    }
+    function goDetail(id) {
+      window.location.href = 'https://mall.cocogc.cn/#/goodsDetail/' + id
+    }
+    function goBack() {
+      window.history.back()
+    }
+  </script>
+</body>
+</html>
