@@ -2,7 +2,6 @@
 const state = {
   typeId: 1,
   vendorId:'',
-  vendorFlag:false
 }
 
 // getters
@@ -12,9 +11,6 @@ const getters = {
   },
   getTypeName: state => {
     return state.vendorId
-  },
-  getVendorFlag:state=>{
-    return state.vendorFlag
   }
 }
 
@@ -22,9 +18,6 @@ const getters = {
 const actions = {
   setTypeId ({commit}, typeId) {
     commit('setTypeId', typeId)
-  },
-  setVendorFlag ({commit}, vendorFlag) {
-    commit('setVendorFlag', vendorFlag)
   },
   initConfig({commit}) {
     commit('initConfig')
@@ -56,10 +49,6 @@ const mutations = {
   initConfig(state) {
     state.typeId=1;
     state.vendorId='';
-  },
-  setVendorFlag(state,vendorFlag) {
-    console.log(vendorFlag)
-    state.vendorFlag = vendorFlag;
   }
 }
 

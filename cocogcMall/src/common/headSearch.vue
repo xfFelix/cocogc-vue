@@ -37,9 +37,13 @@ export default {
           document.activeElement.blur();
         },
         sendSearch() {
-            this.searchHis(this.kewWordC)
+            this.searchHis(this.kewWordC);
             this.$emit('searchChild', this.kewWordC);
-            this.$router.push({path:`/goodsList?keyWord=${this.kewWordC?this.kewWordC:''}`})
+            // this.$router.push({path:`/goodsList?keyWord=${this.kewWordC?this.kewWordC:''}`})
+            this.$router.push({
+              path:'/goodsList?'+(this.keyWord||this.$route.query.keyWord?'keyWord='+(this.keyWord||this.$route.query.keyWord):'')+
+                                ((this.keyWord||this.$route.query.keyWord)&&this.$route.query.vendorId?'&':'')+
+                                (this.$route.query.vendorId?'vendorId='+this.$route.query.vendorId:'')})
         },
         async querySearchAsync(queryString, cb) {
             if (queryString) {
