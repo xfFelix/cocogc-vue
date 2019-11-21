@@ -139,9 +139,7 @@
     computed: {
       ...mapGetters({
         userinfo: 'userinfo/getUserInfo',
-        getScrollto: 'scrollto/getGoodsList',
-        getTypeName: 'channel/getTypeName',
-        getVendorFlag:'channel/getVendorFlag',
+        getScrollto: 'scrollto/getGoodsList'
       }),
       offsetRows () {
         return 1 + this.pages_size * (this.pages - 1)
@@ -164,7 +162,6 @@
       }
     },
     mounted(){
-      console.log(this.getTypeName)
     },
     methods: {
       async loadBottom() {
@@ -210,11 +207,12 @@
         //搜索框
         parentChild(val) {
           console.log(val)
+          console.log(this.$route)
             this.keyWord = val;
             this.initData()
             this.brandId = ''
             this.switch = 'name'
-            this.$router.push({path: '/goodsList', query:{keyWord: val}})
+            this.$router.push({path:this.$route.fullPath})
             this.intersected()
         },
         //价格顺序
@@ -349,7 +347,7 @@
           "salesVolume": this.salesVolume,
           "timeSort": "",
           "productTypeId": this.productTypeId,
-          "vendorId":this.getVendorFlag?'':(this.$route.query.vendorId?this.$route.query.vendorId:'')
+          "vendorId":this.$route.query.vendorId?this.$route.query.vendorId:''
         }, 'post')
         if (data.code == 0) {
           this.goodsList = this.goodsList.concat(data.list);
