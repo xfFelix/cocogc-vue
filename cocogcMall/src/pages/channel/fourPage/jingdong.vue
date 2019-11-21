@@ -44,9 +44,9 @@ export default {
   methods:{
     jumpPath(url){
       if(url.indexOf('http')!=-1){
-        window.location.href = `${url}&vendorId=jingdong`;
+        window.location.href = `${url}&vendorId=jingDong`;
       }else{
-        this.$router.push({path:`/goodsList?quickItem=${url}&vendorId=jingdong`});
+        this.$router.push({path:`/goodsList?quickItem=${url}&vendorId=jingDong`});
       }
     },
     rank(){
