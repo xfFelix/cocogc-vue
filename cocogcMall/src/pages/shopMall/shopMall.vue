@@ -215,7 +215,7 @@ export default {
 .home-head {
   .swiper-container {
     width: 92%;
-    height: 160px;
+    height: 3.2rem;
     border-radius: 10px;
     .swiper-pagination {
       .swiper-pagination-bullet {
