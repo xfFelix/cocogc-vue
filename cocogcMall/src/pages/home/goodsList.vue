@@ -206,8 +206,8 @@
       },
         //搜索框
         parentChild(val) {
-          console.log(val)
-          console.log(this.$route)
+          // console.log(val)
+          // console.log(this.$route)
             this.keyWord = val;
             this.initData()
             this.brandId = ''
