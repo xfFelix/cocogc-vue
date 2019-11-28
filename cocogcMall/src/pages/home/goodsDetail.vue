@@ -216,14 +216,7 @@ export default {
         '$route'(to, from) {
             window.scrollTo(0, 0);
             this.goodsId = this.$route.params.goodId;
-            this.getGoodsInfo(this.$route.params.goodId, (data) => {
-                if (data != null) {
-                    this.setGoodsData(data);
-                } else {
-                    this.Toast("该商品已下架！");
-                    this.$router.back();
-                }
-            });
+            this.getGoodsInfo(this.$route.params.goodId, (data) => {this.setGoodsData(data);});
         }
     },
     mounted() {
@@ -232,14 +225,7 @@ export default {
         var that = this;
         //获取商品信息
         that.goodsId = this.$route.params.goodId;
-        that.getGoodsInfo(that.goodsId, function(data) {
-            if (data != null) {
-                that.setGoodsData(data);
-            } else {
-                that.Toast("该商品已下架！");
-                that.$router.back();
-            }
-        });
+        that.getGoodsInfo(that.goodsId, function(data) {that.setGoodsData(data);});
         that.getCarInfo(function(data) {
             that.carTotal = data;
         });
@@ -325,6 +311,11 @@ export default {
                         if (data.error_code == 0) {
                             if (callback)
                                 callback(data.data);
+                        } else {
+                          this.Toast(data.message)
+                          setTimeout(() => {
+                            this.$router.back();
+                          }, 1000)
                         }
                     })
                     .catch((err) => {

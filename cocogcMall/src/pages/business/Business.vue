@@ -145,6 +145,9 @@ export default {
   },
   methods: {
     goLink(item) {
+      if (item.id === 3) {
+        return this.MessageBox({message: "非常抱歉，因系统升级，本服务暂停。"})
+      }
       if (item.id === 4) {
         return this.$router.push(item.path)
       }

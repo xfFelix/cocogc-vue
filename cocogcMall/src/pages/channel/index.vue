@@ -100,11 +100,9 @@ export default {
   methods:{
     ...mapActions({
         setTypeId: 'channel/setTypeId',
-        setVendorFlag:'channel/setVendorFlag'
     }),
     goSearch(){
       this.$router.push({path:'/searchPage'});
-      this.setVendorFlag(true)
     }
   },
   components:{
@@ -116,7 +114,6 @@ export default {
     'swiper-Ban':()=>import ('./fourPage/components/swiperBan'),
   },
   mounted() {
-    this.setVendorFlag(false)
     this.selected = `tab-container${this.getChannelId}`;
   },
 }
