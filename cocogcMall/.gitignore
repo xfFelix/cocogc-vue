@@ -15,3 +15,12 @@ dist.zip
 *.sln
 .env.*.local
 .env.local
+
+QualityLife.html
+Moutai.html
+NewYear.html
+Christmas.html
+static/images/QualityLife/
+static/images/Moutai/
+static/images/NewYear/
+static/images/Christmas/
