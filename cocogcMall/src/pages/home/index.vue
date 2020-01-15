@@ -158,7 +158,7 @@ export default {
             let html = `<marquee  style="font-size:0.26rem;margin-top: 0.2rem;"  scrollamount=7   loop="infinite" >`
             this.newsList.forEach(res => {
               if(res.status == 0){
-                 html += `<a href=${res.url} class="link-url" style="color:#fff;margin-right: 50px;">
+                 html += `<a href=${!res.url?'javascript:void(0)':res.url} class="link-url" style="color:#fff;margin-right: 50px;">
                        ${res.noticeTitle}
                     </a>`
               }
