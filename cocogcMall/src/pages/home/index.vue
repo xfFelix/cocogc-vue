@@ -64,6 +64,9 @@
 
     <!-- 积分区间 -->
     <v-integral></v-integral>
+
+    <!-- 弹窗 -->
+    <banner v-model="showDialog" ref="banner" :data="data" @handle-close="handleClose()"></banner>
   </div>
 </template>
 
@@ -71,14 +74,15 @@
 import Integral from '../../components/home/integral.vue'
 import Swiper from 'swiper';
 import api from '../../service/api';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { getToken } from '@/util/common'
 import mixin from '@/util/mixin'
 export default {
   name: 'index',
   mixins: [mixin],
   components: {
-    "v-integral": Integral
+    "v-integral": Integral,
+    Banner: ()=>import('../shopMall/components/Banner'),
   },
   data() {
     return {
@@ -97,6 +101,8 @@ export default {
         { id: 11, name: "游戏周边", img: 'game', active: false, path: 'javascript:;' },
         { id: 12, name: "尊贵特权", img: 'zgtq', active: false, path: 'javascript:;' },
       ],
+      data: '',
+      showDialog: false,
       loginFlag: false,
       token: getToken(),
       banner: [],
@@ -109,14 +115,21 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loScore: 'userinfo/getUserInfo'
+      loScore: 'userinfo/getUserInfo',
+      showBanner: 'home/getShowBanner',
+      showTime: 'home/getShowTime'
     })
   },
   mounted() {
     this.getBanner()
-    this.getNews();
+    this.getNews()
+    this.getBannerTitle()
   },
   methods: {
+    ...mapActions({
+      setShowBanner :'home/setShowBanner',
+      setShowTime :'home/setShowTime'
+    }),
     goLink(item) {
       if (item.id === 4 || item.id === 0) {
         return this.$router.push(item.path)
@@ -172,7 +185,24 @@ export default {
           }
         })
     },
-
+    async getBannerTitle() {
+      try {
+        const { data, error_code, message } = await this.axios(testUrl + api.goodsGroups, {id: "f25ba33641e949549266eefefb37f2c0"}, 'post')
+        this.data = data
+        let expireTime = Date.parse(new Date((data.title).trim().replace(/-/g, '/')))
+        let time = expireTime - Date.parse(new Date())
+        if (expireTime !== this.showTime && time > 0) {
+          this.setShowTime(expireTime)
+          this.setShowBanner(true)
+        }
+        this.showDialog = (time > 0 && this.showBanner)
+      } catch(e) {
+        this.Toast(e)
+      }
+    },
+    handleClose () {
+      this.setShowBanner(!this.showBanner)
+    }
   }
 }
 </script>

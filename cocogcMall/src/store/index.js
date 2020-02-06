@@ -9,6 +9,7 @@ import tab from './modules/tab'
 import shopMall from './modules/shop_mall'
 import searchHis from './modules/searchHis'
 import channel from './modules/channel'
+import home from './modules/home'
 
 Vue.use(Vuex)
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     tab,
     shopMall,
     searchHis,
-    channel
+    channel,
+    home
   }
 })

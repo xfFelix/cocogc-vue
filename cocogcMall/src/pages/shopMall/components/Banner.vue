@@ -24,16 +24,16 @@ export default {
     },
     data: '',
   },
-  computed: {
-    showBanner: {
-      get() {
-        return this.$store.getters['shopMall/getShowBanner']
-      },
-      set(val) {
-        this.$store.dispatch('shopMall/setShowBanner', val)
-      }
-    }
-  },
+  // computed: {
+  //   showBanner: {
+  //     get() {
+  //       return this.$store.getters['shopMall/getShowBanner']
+  //     },
+  //     set(val) {
+  //       this.$store.dispatch('shopMall/setShowBanner', val)
+  //     }
+  //   }
+  // },
   data: () => ({
     checked: false
   }),
@@ -41,7 +41,7 @@ export default {
     toggleChecked() {
       this.checked = !this.checked
       if (this.checked) {
-        this.showBanner = !this.showBanner
+        this.$emit('handle-close')
         this.$emit('click', false)
       }
     },
