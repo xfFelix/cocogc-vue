@@ -32,18 +32,13 @@ export const IsHKMobile = (mobile) => {
 
 // 密码检测
 export const CheckPass = (s) => {
+   let reg=/^(([a-z]+[0-9]+)|([0-9]+[a-z]+))[a-z0-9]*$/i;
     if (s != 'undefined' || s != null) {
         if (s.length < 6 || s.length > 20) {
             return false;
         }
     }
-    if (!s.match(/([a-z])+/)) {
-        return false;
-    }
-    if (!s.match(/([0-9])+/)) {
-        return false;
-    }
-    return true;
+    return reg.test(s);
 }
 
 //获取用户token
