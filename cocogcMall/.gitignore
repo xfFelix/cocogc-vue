@@ -16,11 +16,18 @@ dist.zip
 .env.*.local
 .env.local
 
+
+
+
 QualityLife.html
 Moutai.html
 NewYear.html
 Christmas.html
+SpringFestival.html
+AnnualGoods.html
 static/images/QualityLife/
 static/images/Moutai/
 static/images/NewYear/
 static/images/Christmas/
+static/images/SpringFestival/
+static/images/AnnualGoods/
