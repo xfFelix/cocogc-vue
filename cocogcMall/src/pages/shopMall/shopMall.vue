@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <banner v-model="showDialog" ref="banner" :data="data"></banner>
+    <banner v-model="showDialog" ref="banner" :data="data" @handle-close="handleClose()"></banner>
   </div>
 </template>
 
@@ -135,6 +135,9 @@ export default {
         this.Toast(e)
       }
     },
+    handleClose () {
+      this.setShowBanner(!this.showBanner)
+    }
   },
   beforeDestroy() {
     window.removeEventListener('scroll', this.handleScroll)

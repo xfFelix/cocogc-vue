@@ -36,7 +36,7 @@
     <ul class="index-fastNav">
       <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
           <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)" style="position:relative;">
-            <img src="/static/images/home/hot.png" alt=" " v-if="item.id == 1" class="badge-img hot">
+            <img src="/static/images/home/hot.png" alt=" " v-if="item.id == 1 || item.id == 0" class="badge-img hot">
             <img src="/static/images/home/new.png" alt=" " v-if="item.id == 13" class="badge-img">
             <img :src="item.id == 4 ? logoImg : `/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png`" alt="" class="iconImg">
             <p class="ifa-name">{{item.name}}</p>
@@ -107,6 +107,7 @@ export default {
   data() {
     return {
       fastList: [
+        { id: 0, name: "抗击疫情", img: 'sy_kjyq', active: true, path: '/goodsList?classfyId=1000007' },
         { id: 2, name: "话费充值", img: 'gold', active: true,  path: `${hostUrl}ticket/phone`},
         { id: 4, name: "小椰超市", img: 'jd', active: true,  path: '/layout/shopMall'},
         { id: 6, name: "会员卡券", img: 'vip', active: true,  path: hostUrl + 'ticket/memberCard'},
@@ -145,7 +146,7 @@ export default {
       if (item.id === 3) {
         return this.MessageBox({message: "非常抱歉，因系统升级，本服务暂停。"})
       }
-      if (item.id === 4) {
+      if (item.id === 4 || item.id == 0) {
         return this.$router.push(item.path)
       }
       if (item.path === 'javascript:;'){

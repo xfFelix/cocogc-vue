@@ -35,7 +35,7 @@
       <ul class="index-fastNav">
         <li class="ifa-fastNavLi" v-for="(item,index) in fastList" :key="index">
             <div :style="(item.path=='javascript:;'? 'color:#ccc':'color:#000')" @click="goLink(item)" style="position:relative;">
-              <img src="/static/images/home/hot.png" alt=" " v-if="item.id == 1" class="badge-img hot">
+              <img src="/static/images/home/hot.png" alt=" " v-if="item.id == 1 || item.id == 0" class="badge-img hot">
               <img src="/static/images/home/new.png" alt=" " v-if="item.id == 13" class="badge-img">
               <img :src="item.id == 4 ? logoImg : `/static/images/home/${item.img}${!item.active ? '-disabled': ''}.png?${(new Date()).getTime()}`" alt="" class="iconImg">
               <p class="ifa-name" :style="!item.active && 'color: #cecece'">{{item.name}}</p>
@@ -64,6 +64,9 @@
 
     <!-- 积分区间 -->
     <v-integral></v-integral>
+
+    <!-- 弹窗 -->
+    <banner v-model="showDialog" ref="banner" :data="data" @handle-close="handleClose()"></banner>
   </div>
 </template>
 
@@ -71,18 +74,20 @@
 import Integral from '../../components/home/integral.vue'
 import Swiper from 'swiper';
 import api from '../../service/api';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { getToken } from '@/util/common'
 import mixin from '@/util/mixin'
 export default {
   name: 'index',
   mixins: [mixin],
   components: {
-    "v-integral": Integral
+    "v-integral": Integral,
+    Banner: ()=>import('../shopMall/components/Banner'),
   },
   data() {
     return {
       fastList: [
+        { id: 0, name: "抗击疫情", img: 'sy_kjyq', active: true, path: '/goodsList?classfyId=1000007' },
         { id: 1, name: "黄金兑换", img: 'gold', active: true, path: hostUrl + 'ticket/gold?t=' + (new Date()).getTime() },
         { id: 2, name: "话费充值", img: 'recharge', active: true, path: hostUrl + 'ticket/phone?t=' + (new Date()).getTime() },
         { id: 5, name: "加油卡充值", img: 'oil', active: true, path: hostUrl + 'ticket/oil' },
@@ -96,6 +101,8 @@ export default {
         { id: 11, name: "游戏周边", img: 'game', active: false, path: 'javascript:;' },
         { id: 12, name: "尊贵特权", img: 'zgtq', active: false, path: 'javascript:;' },
       ],
+      data: '',
+      showDialog: false,
       loginFlag: false,
       token: getToken(),
       banner: [],
@@ -108,16 +115,23 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loScore: 'userinfo/getUserInfo'
+      loScore: 'userinfo/getUserInfo',
+      showBanner: 'home/getShowBanner',
+      showTime: 'home/getShowTime'
     })
   },
   mounted() {
     this.getBanner()
-    this.getNews();
+    this.getNews()
+    this.getBannerTitle()
   },
   methods: {
+    ...mapActions({
+      setShowBanner :'home/setShowBanner',
+      setShowTime :'home/setShowTime'
+    }),
     goLink(item) {
-      if (item.id === 4) {
+      if (item.id === 4 || item.id === 0) {
         return this.$router.push(item.path)
       }
       if (item.path === 'javascript:;'){
@@ -171,7 +185,24 @@ export default {
           }
         })
     },
-
+    async getBannerTitle() {
+      try {
+        const { data, error_code, message } = await this.axios(testUrl + api.goodsGroups, {id: "f25ba33641e949549266eefefb37f2c0"}, 'post')
+        this.data = data
+        let expireTime = Date.parse(new Date((data.title).trim().replace(/-/g, '/')))
+        let time = expireTime - Date.parse(new Date())
+        if (expireTime !== this.showTime && time > 0) {
+          this.setShowTime(expireTime)
+          this.setShowBanner(true)
+        }
+        this.showDialog = (time > 0 && this.showBanner)
+      } catch(e) {
+        this.Toast(e)
+      }
+    },
+    handleClose () {
+      this.setShowBanner(!this.showBanner)
+    }
   }
 }
 </script>
