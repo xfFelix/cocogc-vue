@@ -195,7 +195,7 @@ export default {
           font-weight:400;
           color:rgba(255,255,255,1);
           border: none;
-          margin: px2rem(16) auto px2rem(50) auto;
+          margin: px2rem(16) auto px2rem(60) auto;
         }
     }
 }
