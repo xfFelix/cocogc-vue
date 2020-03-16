@@ -202,7 +202,7 @@ export default {
           if (data.resultCode == 0) {
             this.newsList = data.data;
             let marqueeHtml = document.createElement('div');
-            let html = `<marquee  style="font-size:0.26rem;margin-top: 0.2rem;"  scrollamount=7   loop="infinite" >`
+            let html = `<marquee  style="font-size:0.26rem;margin-top: 0.2rem;"  scrollamount=6   loop="infinite" >`
             this.newsList.forEach(res => {
               if(res.status == 0){
                  html += `<a href=${res.url} class="link-url" style="color:#fff;margin-right: 50px;">

@@ -106,7 +106,7 @@ export default {
   data() {
     return {
       fastList: [
-        { id: 0, name: "抗击疫情", img: 'sy_kjyq', active: true, path: '/goodsList?classfyId=1000007' },
+        { id: 0, name: "特惠商品", img: 'discount', active: true, path: '/goodsList?classfyId=1000007' },
         { id: 1, name: "黄金兑换", img: 'gold', active: true, path: `${hostUrl}ticket/gold` },
         { id: 2, name: "话费充值", img: 'recharge', active: true, path: `${hostUrl}ticket/phone` },
         { id: 3, name: "信用卡还款", img: 'credit', active: true, path: `${hostUrl}ticket/creditCard` },
@@ -213,7 +213,7 @@ export default {
           if (data.resultCode == 0) {
             this.newsList = data.data;
             let marqueeHtml = document.createElement('div');
-            let html = `<marquee  style="font-size:0.26rem;margin-top: 0.2rem;"  scrollamount=7   loop="infinite" >`
+            let html = `<marquee  style="font-size:0.26rem;margin-top: 0.2rem;"  scrollamount=6   loop="infinite" >`
             this.newsList.forEach(res => {
               if(res.status == 0){
                  html += `<a href=${res.url} class="link-url" style="color:#fff;margin-right: 50px;">
