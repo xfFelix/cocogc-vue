@@ -140,7 +140,12 @@ export default {
     })
   },
   mounted() {
-    this.fastList.splice(8,1, {
+    let coinIndex = this.fastList.findIndex((value,index)=>{
+      if(value.id==9){
+        return index
+      }
+    })
+    this.fastList.splice(coinIndex,1, {
       id: 9, name:  this.loScore.coinAlisa ? '元宝兑换' : '金币兑换', img: 'coin', active: true,
       path: `${hostUrl}ticket/changeCoin/home?vendorId=${this.vendorId || this.loScore.vendorId}${(this.vendorId && this.vendorUid) ? '&vendorUid=' + this.vendorUid : ''}`
     })
