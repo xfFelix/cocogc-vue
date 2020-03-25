@@ -6,9 +6,9 @@
         {{item.name}}
       </li>
     </ul>
-    <channel-hot :keyId="`b1c6120a70524fbf9869b51561e3b5d8`" :keyName="`WangYiYanXuan`"></channel-hot>
-    <swiper-bana :keyBana="`d8b84db11f754d3d86177a77c699d560`" :keyName="`WangYiYanXuan`"></swiper-bana>
-    <new-goods :keyId="`ab65568c3ee14ffdb3c795fe3ba2cdd8`" :keyName="`WangYiYanXuan`"></new-goods>
+    <channel-hot :keyId="`b1c6120a70524fbf9869b51561e3b5d8`" :keyName="`ZiYingWangYiYanXuan`"></channel-hot>
+    <swiper-bana :keyBana="`d8b84db11f754d3d86177a77c699d560`" :keyName="`ZiYingWangYiYanXuan`"></swiper-bana>
+    <new-goods :keyId="`ab65568c3ee14ffdb3c795fe3ba2cdd8`" :keyName="`ZiYingWangYiYanXuan`"></new-goods>
   </div>
 </template>
 <script>
@@ -25,9 +25,9 @@ export default {
     jumpPath(id){
       let uPattern =  /^\d+$/;
       if(!uPattern.test(id)){
-        this.$router.push({path:`/goodsList?keyWord=${id}&vendorId=WangYiYanXuan`});
+        this.$router.push({path:`/goodsList?keyWord=${id}&vendorId=ZiYingWangYiYanXuan`});
       }else{
-        this.$router.push({path:`/goodsList?classfyId=${id}&vendorId=WangYiYanXuan`});
+        this.$router.push({path:`/goodsList?classfyId=${id}&vendorId=ZiYingWangYiYanXuan`});
       }
     }
   },

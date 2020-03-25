@@ -35,7 +35,7 @@ const mutations = {
         state.vendorId ='yeyun';
         break;
       case 3:
-        state.vendorId ='WangYiYanXuan';
+        state.vendorId ='ZiYingWangYiYanXuan';
         break;
       case 4:
         state.vendorId ='TianYaYanXuan';

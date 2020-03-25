@@ -29,7 +29,7 @@
 
       <div  v-show="selected=='tab-container3'">
         <div class="head-ban wy"></div>
-        <swiper-Ban :keyId="`592a7c52f58344ba8c9acc42258d02d4`" :keyName="`WangYiYanXuan`"></swiper-Ban>
+        <swiper-Ban :keyId="`592a7c52f58344ba8c9acc42258d02d4`" :keyName="`ZiYingWangYiYanXuan`"></swiper-Ban>
         <wangYi></wangYi>
       </div>
 
@@ -84,7 +84,7 @@ export default {
         case 'tab-container3':
           this.tabBg='wy';
           this.tabName = '网易严选';
-          this.keyName='WangYiYanXuan';
+          this.keyName='ZiYingWangYiYanXuan';
           this.setTypeId(3);
           break;
         case 'tab-container4':
