@@ -261,6 +261,7 @@ export default {
                 }else{
                   if(local.get('gstocksAddress')){
                     this.takeAddress = local.get('gstocksAddress');
+                    this.areaCode = '';
                     this.goodsStocks();
                   }else{
                     this.getGeolocation()
@@ -291,20 +292,22 @@ export default {
         //子组件传来的地址名
         parentAddress(val) {
           this.takeAddress = val;
-          this.goodsStocks()
         },
         //子组件传来的areacode
         parentAddressId(valCode) {
           this.areaCode = valCode;
+          this.goodsStocks()
         },
         async getGeolocation() {
           let geolocation = new Geolocation();
           geolocation.getGeolocation((res) => {
             if(res){
               this.takeAddress = res;
+              this.areaCode = '';
               local.set('gstocksAddress', this.takeAddress);
             }else{
               this.takeAddress = '北京市 朝阳区 三环到四环之间';
+              this.areaCode = '';
             }
             this.goodsStocks()
           });
