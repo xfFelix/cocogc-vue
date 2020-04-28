@@ -64,10 +64,13 @@
                     <p v-else-if="goodsInfo.vendorId === 'jingDong' && !goodsInfo.services">由京东发货，并提供售后服务，服务电话4006-066-866</p>
                 </div>
             </div>
-            <div @click="fixedShow=true" class="send-address" v-if="ISJingDong">
-                <span class="send-name">送至：</span>
-                <span class="send-detail">{{!takeAddress?'北京市 朝阳区 三环到四环之间':takeAddress.replace(/\s+/g,">")}}</span>
-                <span class="stocks">{{stocks>0?'现货':'无货'}}</span>
+            <div @click="fixedShow=true" class="send-address" v-show="ISJingDong">
+                <span class="send-name">送至</span>
+                <div class="send-stocks">
+                  <img src="/static/images/cart/location.png" />
+                  <span class="send-detail">{{!takeAddress?'北京市 朝阳区 三环到四环之间':takeAddress.replace(/\s+/g,">")}}</span>
+                  <span class="stocks">{{stocks>0?'现货':'无货'}}</span>
+                </div>
             </div>
         </div>
 
@@ -287,12 +290,12 @@ export default {
         },
         //子组件传来的地址名
         parentAddress(val) {
-            this.takeAddress = val;
-            this.goodsStocks()
+          this.takeAddress = val;
+          this.goodsStocks()
         },
         //子组件传来的areacode
         parentAddressId(valCode) {
-            this.areaCode = valCode;
+          this.areaCode = valCode;
         },
         async getGeolocation() {
           let geolocation = new Geolocation();
@@ -301,14 +304,7 @@ export default {
               this.takeAddress = res;
               local.set('gstocksAddress', this.takeAddress);
             }else{
-               geolocation.getSDK((ress)=>{
-                 if(ress){
-                   this.takeAddress = ress;
-                   local.set('gstocksAddress', this.takeAddress);
-                 }else{
-                    this.takeAddress = '北京市 朝阳区 三环到四环之间';
-                 }
-              })
+              this.takeAddress = '北京市 朝阳区 三环到四环之间';
             }
             this.goodsStocks()
           });
@@ -986,15 +982,27 @@ function areaResize(commId, vendorId) {
     .send-address{
       padding: 0.1rem 0.38rem 0.28rem 0.38rem;
       font-size: 0.26rem;
-      display: inline-block;
+      display: flex;
       .send-name{
         color: #999;
+        width: 10%;
       }
-      .send-detail{
-        margin-right: 0 0.1rem;
-      }
-      .stocks{
-        font-weight: bold;
+      .send-stocks{
+        display: inline-block;
+        width: 86%;
+        .send-detail{
+          margin-right: 0 0.1rem;
+          line-height: 0.4rem;
+        }
+        .stocks{
+          font-weight: bold;
+          margin-left: 0.1rem;
+        }
+        img{
+          width: 0.24rem;
+          height: 0.28rem;
+          display: inline-block;
+        }
       }
     }
 }
