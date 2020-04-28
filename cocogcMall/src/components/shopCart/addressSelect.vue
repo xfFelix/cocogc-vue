@@ -306,6 +306,7 @@ export default {
     right: 0;
     font-size: 0.26rem;
     color: #000;
+    z-index: 500;
     .addressSelect {
         background: #fff;
         bottom: 0;

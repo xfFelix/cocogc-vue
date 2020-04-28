@@ -64,13 +64,26 @@
                     <p v-else-if="goodsInfo.vendorId === 'jingDong' && !goodsInfo.services">由京东发货，并提供售后服务，服务电话4006-066-866</p>
                 </div>
             </div>
+            <div @click="fixedShow=true" class="send-address" v-if="ISJingDong">
+                <span class="send-name">送至：</span>
+                <span class="send-detail">{{!takeAddress?'北京市 朝阳区 三环到四环之间':takeAddress.replace(/\s+/g,">")}}</span>
+                <span class="stocks">{{stocks>0?'现货':'无货'}}</span>
+            </div>
         </div>
+
+          <address-select
+            v-if="fixedShow==true"
+            @childShow="parentShow"
+            @childAddress="parentAddress"
+            @childAddressId="parentAddressId">
+        </address-select>
 
         <div class="goodsD-info">
             <h3>规格与包装</h3>
             <div v-html="goodsInfo.brief" class="goodsD-infoCon">
             </div>
         </div>
+
 
         <div class="goodsD-imgW">
             <h3>商品详情</h3>
@@ -169,6 +182,7 @@
         </div>
 
         <bg-mask v-model="showDialog" color="transparent"></bg-mask>
+        <div id="allmap"></div>
     </div>
 </template>
 
@@ -180,7 +194,9 @@ import api from '../../service/api';
 import { mapGetters, mapActions } from 'vuex';
 import BgMask from '@/common/BgMask'
 import Guesslike from "@/common/guesslike.vue";
-import mixin from '@/util/mixin'
+import mixin from '@/util/mixin';
+import Geolocation from '@/util/geolocation';
+import local from '@/util/local'
 export default {
     mixins: [mixin],
     data() {
@@ -204,12 +220,18 @@ export default {
               {name:'分类',icon:'navGo03',path:'/layout/classify'},
               {name:'购物车',icon:'navGo04',path:'/layout/shopCart'},
               {name:'我的',icon:'navGo05',path:'/layout/account'},
-            ]
+            ],
+            takeAddress:'北京市 朝阳区 三环到四环之间',
+            areaCode:'',
+            fixedShow:false,
+            ISJingDong:false,
+            stocks:0
         };
     },
     computed: {
         ...mapGetters({
-            userinfo: 'userinfo/getUserInfo'
+            userinfo: 'userinfo/getUserInfo',
+            address: 'userinfo/getAddress'
         })
     },
     watch: {
@@ -225,7 +247,28 @@ export default {
         var that = this;
         //获取商品信息
         that.goodsId = this.$route.params.goodId;
-        that.getGoodsInfo(that.goodsId, function(data) {that.setGoodsData(data);});
+        that.getGoodsInfo(that.goodsId, (data)=> {
+            if (data != null) {
+              this.setGoodsData(data);
+              if(data.vendorId=='jingDong' ){
+                if(this.address && this.address.areaCode){
+                    this.takeAddress = this.address.area;
+                    this.areaCode = this.address.areaCode;
+                    this.goodsStocks();
+                }else{
+                  if(local.get('gstocksAddress')){
+                    this.takeAddress = local.get('gstocksAddress');
+                    this.goodsStocks();
+                  }else{
+                    this.getGeolocation()
+                  }
+                }
+              }
+            } else {
+                that.Toast("该商品已下架！");
+                that.$router.back();
+            }
+        });
         that.getCarInfo(function(data) {
             that.carTotal = data;
         });
@@ -239,6 +282,59 @@ export default {
             checkAddress: 'userinfo/checkAddress',
             initConfig:'channel/initConfig'
         }),
+        parentShow(val) {
+            this.fixedShow = val;
+        },
+        //子组件传来的地址名
+        parentAddress(val) {
+            this.takeAddress = val;
+            this.goodsStocks()
+        },
+        //子组件传来的areacode
+        parentAddressId(valCode) {
+            this.areaCode = valCode;
+        },
+        async getGeolocation() {
+          let geolocation = new Geolocation();
+          geolocation.getGeolocation((res) => {
+            if(res){
+              this.takeAddress = res;
+              local.set('gstocksAddress', this.takeAddress);
+            }else{
+               geolocation.getSDK((ress)=>{
+                 if(ress){
+                   this.takeAddress = ress;
+                   local.set('gstocksAddress', this.takeAddress);
+                 }else{
+                    this.takeAddress = '北京市 朝阳区 三环到四环之间';
+                 }
+              })
+            }
+            this.goodsStocks()
+          });
+        },
+        async goodsStocks(){
+          let addressReal = this.takeAddress.replace(/\s/g,'-');
+          this.axios(testUrl + api.findGoodsStocks,
+            {
+                id:this.$route.params.goodId,
+                address:addressReal,
+                code:this.areaCode
+            },
+            'post')
+            .then((data) => {
+              this.Indicator.close()
+                if (data.error_code == 0) {
+                   this.stocks = data.data.stocks;
+                   this.ISJingDong = true;
+                } else {
+                   this.Toast(this.message);
+                }
+            }).catch((e)=>{
+              this.Indicator.close()
+              this.Toast(e);
+            })
+        },
         jumpTab(pathName){
           this.initConfig();
           this.$router.push({path:pathName})
@@ -334,7 +430,6 @@ export default {
         setGoodsData(data) {
             var that = this;
             that.goodsInfo = data;
-
             this.$nextTick(function() {
                 var swiperBan = new Swiper('.goodsD-headImg .swiper-container', {
                     pagination: {
@@ -475,7 +570,8 @@ export default {
     },
     components: {
         BgMask,
-        'guess-like': Guesslike
+        'guess-like': Guesslike,
+        addressSelect:()=>import ('../../components/shopCart/addressSelect')
     },
     directives: {
         color: function(el, binding, vnode) {
@@ -886,6 +982,20 @@ function areaResize(commId, vendorId) {
                 }
             }
         }
+    }
+    .send-address{
+      padding: 0.1rem 0.38rem 0.28rem 0.38rem;
+      font-size: 0.26rem;
+      display: inline-block;
+      .send-name{
+        color: #999;
+      }
+      .send-detail{
+        margin-right: 0 0.1rem;
+      }
+      .stocks{
+        font-weight: bold;
+      }
     }
 }
 

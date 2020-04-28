@@ -64,6 +64,8 @@ const cancelOrder = 'api/callOffOrder'
 const applyBack = 'api/orderRefundApply'
 const cancelBack = 'api/orderRefundCancel'
 const bindStream = 'api/bdOrderRefundExpress'
+const findGoodsStocks = 'api/findGoodsStocks'
+
 
 export default {
   bindStream,
@@ -113,5 +115,6 @@ export default {
   userSms,
   bindMobile,
   checkPayPwd,
-  searchApi
+  searchApi,
+  findGoodsStocks
 }
