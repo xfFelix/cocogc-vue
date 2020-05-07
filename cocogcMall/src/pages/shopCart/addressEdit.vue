@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <p class="address-keep" @click="takeKeep()">保存</p>
+        <p class="address-keep" @click="takeKeep()">{{$route.query.goodDetail==1?'保存并使用':'保存'}}</p>
         <address-select v-if="fixedShow==true" @childShow="parentShow" @childAddress="parentAddress" @childAddressId="parentAddressId"></address-select>
 
     </div>
@@ -153,7 +153,11 @@ export default {
                         if (this.addressDef) {
                           this.removeAddress()
                         }
-                        this.$router.replace('/addressMag' + this.fromPath);
+                        if(this.$route.query.goodDetail == 1){  //从商品详情页立即购买过来的
+                          this.$router.replace({path:'/order'})
+                        }else{
+                          this.$router.replace('/addressMag' + this.fromPath);
+                        }
                     } else {
                         return this.Toast(data.message)
                     }

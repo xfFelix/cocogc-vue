@@ -307,6 +307,18 @@ export default {
         window.chooseAddress = await store.dispatch('userinfo/checkAddress')
         if (!window.chooseAddress) {
           id = ''
+          next(vm=>{
+            MessageBox.confirm('',{
+              message:'您当前账号无收货地址，无法结算，请添加收货地址',
+              cancelButtonText:'取消',
+              confirmButtonText:'添加地址',
+              closeOnClickModal:false
+            }).then(action=>{
+              vm.$router.replace({path:'/addressEdit', query:{addOrder:1,goodDetail:1}})
+            }).catch(action=>{
+              vm.$router.back()
+            })
+          })
         } else {
           id = window.chooseAddress.id
         }

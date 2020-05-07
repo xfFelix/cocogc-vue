@@ -164,14 +164,11 @@ export default {
     li {
         background: #fff;
         margin: 0.2rem 0.28rem;
-
         font-size: 0.28rem;
         .address-infoW {
             padding: 0.3rem 0.32rem 0.2rem 0.32rem;
             .address-nameTel {
                 color: #000;
-                span:nth-of-type(1) {}
-                span:nth-of-type(1) {}
             }
             .address-address {
                 color: #666666;
@@ -196,7 +193,6 @@ export default {
                 .address-defAddress {
                     color: #999999;
                     margin-left: 0.08rem;
-                    span {}
                 }
             }
             .address-editDel {
@@ -212,7 +208,6 @@ export default {
                         background-position: -1.4rem -1.26rem;
                         margin-right: 0.1rem;
                     }
-                    span {}
                 }
                 .address-del {
                     display: flex;
@@ -224,7 +219,6 @@ export default {
                         margin-right: 0.1rem;
                         margin-left: 0.37rem;
                     }
-                    span {}
                 }
             }
         }

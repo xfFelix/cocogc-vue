@@ -524,7 +524,8 @@ export default {
             if (!window.chooseAddress) {
               window.chooseAddress = await this.$store.dispatch('userinfo/checkAddress')
               if (!window.chooseAddress) {
-                return this.Toast('请选择配送地址!');
+                // return this.Toast('请选择配送地址!');
+                this.$router.replace({path:'/order'})
               }
             }
             var that = this;

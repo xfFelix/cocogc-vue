@@ -29,9 +29,7 @@ export default {
     },
 }
 </script>
-<style lang="scss">
-header {}
-</style>
+
 <style>
 @media screen and (min-width: 600px) {
   header{
