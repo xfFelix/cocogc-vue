@@ -173,7 +173,9 @@ export default {
                         } else {
                             this.$router.replace('/layout/home');
                         }
-                    } else {
+                    } else if (data.error_code == 1) {
+                      this.MessageBox("提示", data.message)
+                    }else {
                         if (this.smsFlag === false) {
                             this.MessageBox.confirm('', {
                                 message: '手机号或登录密码错误。',

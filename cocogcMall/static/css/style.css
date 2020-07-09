@@ -396,3 +396,7 @@ input:-webkit-autofill:active{
    -webkit-transition-delay: 9999s;
    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
 }
+
+.mint-msgbox-message {
+  line-height: 28px !important;
+}
