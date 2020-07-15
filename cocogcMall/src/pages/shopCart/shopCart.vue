@@ -251,6 +251,16 @@ export default {
     activated () {
       this.addressDef = window.chooseAddress
       window.scrollTo(0, this.getScrollCart)
+      var that = this;
+      this.getCartGoodsList(function(data) {
+            if (data == null) {
+                that.list = [];
+                that.setNum(0)
+            } else {
+                that.list = data;
+            }
+            that.computeTotal();
+        });
     },
     methods: {
         ...mapActions({
@@ -356,17 +366,15 @@ export default {
             var buys = [];
             this.list.forEach((data,indexD)=>{
               data.cartVOList.forEach((res,indexR)=>{
-                for (let i in res) {
                   if (res.check) {
-                    // if(res.goods.stocks<res.num){
-                    //   return this.Toast(`${res.goods.name}库存不足`)
-                    // }
+                    if(res.goods.stocks<res.num){
+                      return this.Toast(`${res.goods.name}库存不足`)
+                    }
                     var buy = {};
                     buy.goodsId = res.goodsId;
                     buy.nums = res.num;
                     buys.push(buy);
                   }
-                }
               })
             })
 
