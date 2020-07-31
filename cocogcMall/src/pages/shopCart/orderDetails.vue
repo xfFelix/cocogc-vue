@@ -77,46 +77,76 @@
               </div>
           </div>
         </div>
-
-
-        <div v-for="(item,index) in dataList.goodsList" :key="index">
-            <div class="order-goodSW">
-              <router-link :to="{path: '/goodsDetail/'+ item.goodsId}">
-                <div class="order-goodSInfo">
-                    <div class="order-goodSIImg">
-                      <img :src="item.picUrl" alt="">
-                    </div>
-                    <div class="order-goodsDetail">
-                        <p class="order-goodsDName">{{item.goodsName}}</p>
-
-                        <p class="order-goodsDType"></p>
-                        <div class="order-goodsDPriceW">
-                            <span class="order-goodsDPrice">{{item.buyPrice|toDecimal2(item.buyPrice)}}</span>
-                            <p class="order-goodsDNumW">
-                                <span class="order-goodsDNumI"></span>
-                                <span class="order-goodsDNum">{{item.buyNum}}</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-              </router-link>
-
+        <!-- 京东订单 -->
+        <div v-if="dataList.vendorId == '京东商城'">
+          <div v-for="(itemgoods,index) in dataList.goodsMap" :key="index">
+            <div class="order-jd">
+              京东订单号： {{itemgoods[0].orderId}}
+              <span class="order-jd-numberCopy" @click="handleCopy(itemgoods[0].orderId, $event)">复制</span>
             </div>
+            <div v-for="(item,index) in itemgoods" :key="index" class="one-bottom-px">
+              <div class="order-goodSW">
+                <router-link :to="{path: '/goodsDetail/'+ item.goodsId}">
+                  <div class="order-goodSInfo">
+                      <div class="order-goodSIImg">
+                        <img :src="item.picUrl" alt="">
+                      </div>
+                      <div class="order-goodsDetail">
+                          <p class="order-goodsDName">{{item.goodsName}}</p>
+
+                          <p class="order-goodsDType"></p>
+                          <div class="order-goodsDPriceW">
+                              <span class="order-goodsDPrice">{{item.buyPrice|toDecimal2(item.buyPrice)}}</span>
+                              <p class="order-goodsDNumW">
+                                  <span class="order-goodsDNumI"></span>
+                                  <span class="order-goodsDNum">{{item.buyNum}}</span>
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+                </router-link>
+              </div>
+            </div>
+
+          </div>
         </div>
+        <!-- 非京东订单 -->
+        <div v-else>
+          <div v-for="(item,index) in dataList.goodsList" :key="index">
+              <div class="order-goodSW">
+                <router-link :to="{path: '/goodsDetail/'+ item.goodsId}">
+                  <div class="order-goodSInfo">
+                      <div class="order-goodSIImg">
+                        <img :src="item.picUrl" alt="">
+                      </div>
+                      <div class="order-goodsDetail">
+                          <p class="order-goodsDName">{{item.goodsName}}</p>
+
+                          <p class="order-goodsDType"></p>
+                          <div class="order-goodsDPriceW">
+                              <span class="order-goodsDPrice">{{item.buyPrice|toDecimal2(item.buyPrice)}}</span>
+                              <p class="order-goodsDNumW">
+                                  <span class="order-goodsDNumI"></span>
+                                  <span class="order-goodsDNum">{{item.buyNum}}</span>
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+                </router-link>
+              </div>
+          </div>
+        </div>
+
         <div class="od-goodSNumWrap one-top-px">
-            <p class="od-goodSNum">
-                <span class="od-goodSNumName">{{dataList.vendorId}}</span>
-                <span>{{dataList.orderId}}</span>
+            <p class="od-contact" @click="goContact">
+                联系客服
             </p>
             <p class="od-logistic">
                 <router-link :to="{path:'/logisticsDetail',query:{orderId:dataList.orderId,logisticId:dataList.id}}">
-                    <span>查看物流</span>
-                    <span class="od-goLogistics j1Png"></span>
+                  <span>查看物流</span>
                 </router-link>
             </p>
         </div>
-
-
 
         <div class="od-priceWrap">
             <ul class="od-priceUl one-bottom-px">
@@ -239,6 +269,9 @@ export default {
         handleCopy(text, event) {
             clip(text, event)
         },
+        goContact() {
+          window.location.href = 'http://mad.miduoke.net/Web/im.aspx?_=t&accountid=119481'
+        }
     },
     components: {
         "header-top": headerTop
@@ -365,7 +398,19 @@ export default {
     background-repeat: repeat-x;
     margin-left: -0.1rem;
 }
-
+.order-jd {
+  background: #fff;
+  padding: 0.2rem 0.37rem 0.2rem 0.32rem;
+  font-size: 0.26rem;
+  .order-jd-numberCopy {
+    font-size: 0.22rem;
+    border-radius: 0.3rem;
+    border: 1px solid #999999;
+    display: inline-block;
+    padding: 0 5px;
+    margin-left: 0.2rem;
+  }
+}
 
 .order-goodSW {
     background: #fff;
@@ -425,6 +470,10 @@ export default {
     justify-content: space-between;
     padding: 0.28rem 0.3rem 0.08rem 0.3rem;
     background: #fff;
+    .od-contact {
+      margin-left: 4.2rem;
+      padding-bottom: 0.2rem;
+    }
     .od-goodSNum {
         span{
              display: block;

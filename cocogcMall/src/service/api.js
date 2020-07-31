@@ -19,7 +19,8 @@ const goodsGroups = 'api/goodsGroups';
 const selectOrders = 'api/selectOrders';  //订单列表
 const previewOrder = 'api/previewOrder';  //订单预览
 const findOrder = 'api/findOrder';  //查找订单
-const getOrder = 'api/getOrder'
+// const getOrder = 'api/getOrder';
+const getOrder = 'api/getOrders'
 const saveOrder = 'api/saveOrder';  //保存订单
 
 
