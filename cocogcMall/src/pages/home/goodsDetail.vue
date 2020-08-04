@@ -61,7 +61,7 @@
                 </div>
                 <div class="goodsD-serve">
                     <p v-if="goodsInfo.services">{{goodsInfo.services}}</p>
-                    <p v-else-if="goodsInfo.vendorId === 'jingDong' && !goodsInfo.services">由京东发货，并提供售后服务，服务电话4006-066-866</p>
+                    <p v-else-if="goodsInfo.vendorId === 'jingDong' && !goodsInfo.services">由京东发货，并提供售后服务，服务电话400-603-5500，拨打后报“椰子商城”以及所要查询商品的京东订单号</p>
                 </div>
             </div>
             <div @click="fixedShow=true" class="send-address" v-show="ISJingDong">
