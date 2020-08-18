@@ -60,8 +60,7 @@
                     <p>服务</p>
                 </div>
                 <div class="goodsD-serve">
-                    <p v-if="goodsInfo.services">{{goodsInfo.services}}</p>
-                    <p v-else-if="goodsInfo.vendorId === 'jingDong' && !goodsInfo.services">由京东发货，并提供售后服务，服务电话400-603-5500，拨打后报“椰子商城”以及所要查询商品的京东订单号</p>
+                    <p v-if="goodsInfo.vendorId === 'jingDong'">由京东发货，并提供售后服务，服务电话400-603-5500，拨打后报“椰子商城”以及所要查询商品的京东订单号</p>
                 </div>
             </div>
             <div @click="fixedShow=true" class="send-address" v-show="ISJingDong">
@@ -962,7 +961,7 @@ function areaResize(commId, vendorId) {
         padding: 0.34rem 0;
         margin: 0 0.38rem;
         .goodsD-address {
-            width: 10%;
+            flex: 0 0 0.64rem;
             color: #999;
             p:nth-of-type(1) {
                 margin-bottom: 0.1rem;
