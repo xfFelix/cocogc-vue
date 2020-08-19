@@ -115,13 +115,13 @@ export default {
           return
         }
         //滚动条到底部的条件
-        if(scrollHeight -scrollTop-windowHeight <= 60){
-          //写后台加载数据的函数
-          if (this.offset) {
-            this.price(this.iSintegra)
+          if(scrollHeight -scrollTop-windowHeight > 0 && scrollHeight -scrollTop-windowHeight <= 60 ){
+            //写后台加载数据的函数
+            if (this.offset) {
+              this.price(this.iSintegra)
+            }
+           	console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
           }
-         	console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
-        }
       },
         //带积分到列表页
         toGoodsList() {
