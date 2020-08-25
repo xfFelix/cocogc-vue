@@ -150,7 +150,7 @@
                     <div style="margin-top:0.5rem;font-size:0.24rem;color: #999;">数量</div>
                     <div class="goodDetail-selectNumW">
                         <span class="goodDetail-selectDec" @click="setBuyNum(0)">-</span>
-                        <span class="goodDetail-selectNum"><input type="number" v-model="buyNum"></span>
+                        <span class="goodDetail-selectNum"><input type="number" v-model="buyNum" :disabled="disabled"></span>
                         <span class="goodDetail-selectInc" @click="setBuyNum(1)">+</span>
                     </div>
                 </div>
@@ -227,7 +227,8 @@ export default {
             areaCode:'',
             fixedShow:false,
             ISJingDong:false,
-            stocks:0
+            stocks:0,
+            disabled: false
         };
     },
     computed: {
@@ -236,13 +237,7 @@ export default {
             address: 'userinfo/getAddress'
         })
     },
-    watch: {
-        '$route'(to, from) {
-            window.scrollTo(0, 0);
-            this.goodsId = this.$route.params.goodId;
-            this.getGoodsInfo(this.$route.params.goodId, (data) => {this.setGoodsData(data);});
-        }
-    },
+
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
         this.resetAddress()
@@ -587,7 +582,33 @@ export default {
                 el.style.color = "#000";
             }
         }
-    }
+    },
+      watch: {
+      '$route'(to, from) {
+          window.scrollTo(0, 0);
+          this.goodsId = this.$route.params.goodId;
+          this.getGoodsInfo(this.$route.params.goodId, (data) => {this.setGoodsData(data);});
+      },
+      buyNum: {
+  　　　　handler(newValue, oldValue) {
+            if(newValue) {
+              newValue = parseInt(newValue)
+            }
+            this.buyNum = newValue
+            if(!this.ISJingDong) {
+              if(newValue>this.goodsInfo.stocks) {
+                this.Toast("库存不足！");
+                this.buyNum = 1
+              }else if(newValue == this.goodsInfo.stocks) {
+                this.disabled = true
+              }else {
+                this.disabled = false
+              }
+            }
+  　　　　},
+  　　　　deep: true
+  　　}
+  },
 };
 
 function areaResize(commId, vendorId) {

@@ -522,8 +522,17 @@ export default {
               data.cartVOList.forEach((res,indexR)=>{
                for(let i in res){
                   if(res[i] == this.goodsNumId){
-                    this.list[indexD].cartVOList[indexR].num=parseInt(this.goodsNum);
-                    this.list[indexD].cartVOList[indexR].check = true;
+                    if(this.list[indexD].vendorId != 'jingDong') {
+                        if(this.goodsNum>this.list[indexD].cartVOList[indexR].goods.stocks) {
+                        this.Toast(`${this.list[indexD].cartVOList[indexR].goods.name}库存不足`)
+                      }else {
+                        this.list[indexD].cartVOList[indexR].num=parseInt(this.goodsNum);
+                        this.list[indexD].cartVOList[indexR].check = true;
+                      }
+                    }else {
+                      this.list[indexD].cartVOList[indexR].num=parseInt(this.goodsNum);
+                      this.list[indexD].cartVOList[indexR].check = true;
+                    }
                   }
                 }
                 num += this.list[indexD].cartVOList[indexR].num;
