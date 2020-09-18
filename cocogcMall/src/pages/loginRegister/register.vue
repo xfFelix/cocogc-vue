@@ -126,6 +126,9 @@ export default {
       }
     },
   methods: {
+    telInp (e) {
+      this.formMsg.userName = e.target.value.replace(/[^\d]/g, '');
+    },
       computFalg:function(){
         let captchaColFlag = false;
         let telCloFlag = false;
