@@ -12,7 +12,7 @@ export const IsMobile = mobile => {
 }
 
 export const IsChinaMobile =  (mobile)=> {
-  var reg = /^1[3|4|5|7|8|9][0-9]\d{8}$/g;
+  var reg = /^1[0-9]\d{9}$/g;
   if (reg.test(mobile)) {
       return true
   } else {
