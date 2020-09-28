@@ -48,7 +48,7 @@
             </li>
         </ul>
 
-        <p class="button setUp-goback" @click="loginOut()" v-if="platform !== 1">退出</p>
+        <p class="button setUp-goback" @click="loginOut()">退出</p>
     </div>
 </template>
 <script>
