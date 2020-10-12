@@ -10,6 +10,7 @@
   </div>
 </template>
 <script>
+  import { mapGetters } from 'vuex';
   export default {
     data:()=>({
       serveList:[
@@ -22,10 +23,29 @@
         // {bgImgClass:"/static/images/personal/hotel.png",name:'机票酒店订单',path:`${hostUrl}ticket/gold`}
       ],
     }),
+    computed: {
+        ...mapGetters({
+            userinfo: 'userinfo/getUserInfo',
+            platform: 'platform/getPlatform',
+            vendorId: 'platform/getVendorId',
+        })
+    },
     methods:{
       serveJump(path){
         window.location.href = path;
       },
+    },
+    created() {
+      if (this.platform) {
+        if(this.vendorId == '3839c796c9574b05a80c87f0adfb1f21') {
+          this.serveList = [
+            {bgImgClass:"/static/images/personal/phone.png",name:'话费充值',path:`${hostUrl}ticket/phone/record`},
+            {bgImgClass:"/static/images/personal/oil.png",name:'加油卡充值',path:`${hostUrl}ticket/oil/oilRecord?go=cocogc`},
+            {bgImgClass:"/static/images/personal/life.png",name:'生活缴费',path:`${hostUrl}ticket/life/record?go=cocogc`},
+            {bgImgClass:"/static/images/personal/vipCard.png",name:'会员卡券',path:`${hostUrl}ticket/memberCard/cardRecord?go=cocogc`},
+          ]
+        }
+      }
     }
   }
 </script>

@@ -49,7 +49,7 @@ const router = new Router({
           path: 'home',
           name: 'home',
           component: () => {
-            const { HAI_SHANG_VENDOR_ID, COIN_VENDOR_ID } = process.env
+            const { HAI_SHANG_VENDOR_ID, COIN_VENDOR_ID, HAO_FANG_VENDOR_ID } = process.env
             const platform = store.state.platform.platform
             if (platform) {
               const vendorId = store.state.platform.vendorId || store.state.userinfo.userinfo.vendorId
@@ -58,6 +58,8 @@ const router = new Router({
                   return import(`@/pages/business/${HAI_SHANG_VENDOR_ID}`)
                 case COIN_VENDOR_ID:
                   return import(`@/pages/business/${COIN_VENDOR_ID}`)
+                case HAO_FANG_VENDOR_ID:
+                  return import(`@/pages/business/${HAO_FANG_VENDOR_ID}`)
                 default:
                   return import('@/pages/business/Business')
               }
