@@ -51,20 +51,23 @@ const router = new Router({
           component: () => {
             const { HAI_SHANG_VENDOR_ID, COIN_VENDOR_ID, HAO_FANG_VENDOR_ID } = process.env
             const platform = store.state.platform.platform
-            if (platform) {
+            const vendorIdHaoFang = store.state.userinfo.userinfo.vendorId
+            if(vendorIdHaoFang == '3839c796c9574b05a80c87f0adfb1f21') {
+              return import(`@/pages/business/${HAO_FANG_VENDOR_ID}`)
+            }else if (platform) {
               const vendorId = store.state.platform.vendorId || store.state.userinfo.userinfo.vendorId
               switch (vendorId) {
                 case HAI_SHANG_VENDOR_ID:
                   return import(`@/pages/business/${HAI_SHANG_VENDOR_ID}`)
                 case COIN_VENDOR_ID:
                   return import(`@/pages/business/${COIN_VENDOR_ID}`)
-                case HAO_FANG_VENDOR_ID:
-                  return import(`@/pages/business/${HAO_FANG_VENDOR_ID}`)
                 default:
                   return import('@/pages/business/Business')
               }
+            }else {
+              return import(`@/pages/home/index`)
             }
-            return import(`@/pages/home/index`)
+
           },
           meta: { title: '首页:无信用卡',scrolltop: true },
         },
