@@ -5,9 +5,9 @@ let defaultVendorId = ''
 let defaultVendorUid = ''
 try{
   if (local.get('platform')) {
-    defaultPlatform = local.get('platform')
-    defaultVendorId = local.get('vendorId')
-    defaultVendorUid = local.get('vendorUid')
+    defaultPlatform = local.get('platform') || local.get('yeyun_platform')
+    defaultVendorId = local.get('vendorId') || local.get('yeyun_vendorId')
+    defaultVendorUid = local.get('vendorUid') || local.get('yeyun_vendorUid')
   }
 } catch(e) {
   console.error(e)

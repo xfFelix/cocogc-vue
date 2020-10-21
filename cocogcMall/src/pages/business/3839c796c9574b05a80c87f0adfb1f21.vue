@@ -111,16 +111,16 @@ export default {
         // { id: 1, name: "黄金兑换", img: 'gold', active: true, path: `${hostUrl}ticket/gold`},
         { id: 2, name: "话费充值", img: 'recharge', active: true, path: `${hostUrl}ticket/phone` },
         // { id: 3, name: "信用卡还款", img: 'credit', active: true, path: `${hostUrl}ticket/creditCard`},
-        { id: 4, name: "小椰超市", img: 'jd', active: true, path: '/layout/shopMall'},
+        { id: 4, name: "小椰超市", img: 'jd', active: true, path: '/layout/channel?id=yeyun'},
         { id: 5, name: "加油卡充值", img: 'oil', active: true, path: hostUrl + 'ticket/oil' },
         { id: 6, name: "会员卡券", img: 'vip', active: true, path: hostUrl + 'ticket/memberCard'},
         // { id: 7, name: "海南旅游", img: 'travel', active: true, path: `${hostUrl}ticket/static/ticket.html` },
         // { id: 8, name: "海南特产", img: 'food', active: true, path: `${hostUrl}ticket/static/food.html` },
-        { id: 13, name: "生活缴费", img: 'life', active: true, path: `${hostUrl}ticket/life` },
-        { id: 9, name: "机票酒店", img: 'air', active: false, path: 'javascript:;' },
+        // { id: 13, name: "生活缴费", img: 'life', active: true, path: `${hostUrl}ticket/life` },
+        // { id: 9, name: "机票酒店", img: 'air', active: false, path: 'javascript:;' },
         // { id: 10, name: "周大福金饰", imgBg: 'ifa-imgBg08', path: 'javascript:;' },
-        { id: 11, name: "游戏周边", img: 'game', active: false, path: 'javascript:;' },
-        { id: 12, name: "尊贵特权", img: 'zgtq', active: false, path: 'javascript:;' },
+        // { id: 11, name: "游戏周边", img: 'game', active: false, path: 'javascript:;' },
+        // { id: 12, name: "尊贵特权", img: 'zgtq', active: false, path: 'javascript:;' },
       ],
       goodsList: [],
       loginFlag: false,
@@ -320,14 +320,14 @@ export default {
 }
 
 .index-fastNav {
-  font-size: 0.24rem;
+  font-size: .24rem;
   color: #000;
-  margin: 0 px2rem(10) 0.2rem px2rem(10);
+  margin: 0 .2rem .2rem;
   background: #fff;
-  border-radius:25px 25px 0px 0px;
-  padding-top: px2rem(6);
-  position: absolute;
-  top: px2rem(148);
+  border-radius: 25px 25px 0 0;
+  padding-top: .12rem;
+  margin-top: -2.4rem;
+  position: relative;
   .ifa-fastNavLi {
     width: 25%;
     text-align: center;
@@ -365,7 +365,7 @@ export default {
 }
 
 .index-swipeW {
-  margin: px2rem(160) px2rem(10) px2rem(10) px2rem(10);
+  margin: px2rem(10) px2rem(10) px2rem(10);
   padding-bottom: px2rem(25);
   img {
     width: 100%;

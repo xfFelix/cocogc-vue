@@ -47,6 +47,7 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex';
+import { getParam } from "@/util/common";
 export default {
   data:()=>({
        selected: '',
@@ -114,7 +115,13 @@ export default {
     'swiper-Ban':()=>import ('./fourPage/components/swiperBan'),
   },
   mounted() {
-    this.selected = `tab-container${this.getChannelId}`;
+    if(getParam().id == 'yeyun') {
+      this.setTypeId(2);
+      this.selected = `tab-container${this.getChannelId}`;
+    }else {
+      this.selected = `tab-container${this.getChannelId}`;
+    }
+
   },
 }
 </script>

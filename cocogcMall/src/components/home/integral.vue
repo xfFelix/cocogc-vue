@@ -66,7 +66,8 @@ export default {
             rows: 10,
             allLoaded: false,
             tenFlag:false,
-            showLoading: false
+            showLoading: false,
+            fixedNum: 0
         }
     },
     components: {
@@ -76,9 +77,9 @@ export default {
         ...mapGetters({
             userinfo: 'userinfo/getUserInfo'
         }),
-        offset() {
-          return this.page * this.rows + 1
-        }
+        // offset() {
+        //   return this.page * this.rows + 1
+        // }
     },
     mounted() {
         //积分列表展示
@@ -112,13 +113,14 @@ export default {
      		//变量scrollHeight是滚动条的总高度
      		var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
         if (this.allLoaded) {
-          return
+          return false
         }
-        //滚动条到底部的条件
-          if(scrollHeight -scrollTop-windowHeight > 0 && scrollHeight -scrollTop-windowHeight <= 60 ){
+          if(scrollHeight -scrollTop-windowHeight <= 60 ){
+            this.offset = this.page * this.rows + 1
             //写后台加载数据的函数
-            if (this.offset) {
+            if (this.offset > this.fixedNum) {
               this.price(this.iSintegra)
+              this.fixedNum = this.offset
             }
            	console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
           }

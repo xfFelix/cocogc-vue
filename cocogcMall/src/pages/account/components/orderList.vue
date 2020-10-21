@@ -17,7 +17,7 @@
         {bgImgClass:"/static/images/personal/gold.png",name:'黄金兑换',path:`${hostUrl}ticket/gold/record`},
         {bgImgClass:"/static/images/personal/phone.png",name:'话费充值',path:`${hostUrl}ticket/phone/record`},
         {bgImgClass:"/static/images/personal/oil.png",name:'加油卡充值',path:`${hostUrl}ticket/oil/oilRecord?go=cocogc`},
-        {bgImgClass:"/static/images/personal/life.png",name:'生活缴费',path:`${hostUrl}ticket/life/record?go=cocogc`},
+        // {bgImgClass:"/static/images/personal/life.png",name:'生活缴费',path:`${hostUrl}ticket/life/record?go=cocogc`},
         {bgImgClass:"/static/images/personal/vipCard.png",name:'会员卡券',path:`${hostUrl}ticket/memberCard/cardRecord?go=cocogc`},
         // {bgImgClass:"/static/images/personal/travel.png",name:'海南旅游',path:`${hostUrl}ticket/order/list?go=cocogc`},
         // {bgImgClass:"/static/images/personal/hotel.png",name:'机票酒店订单',path:`${hostUrl}ticket/gold`}
@@ -40,7 +40,7 @@
         this.serveList = [
           {bgImgClass:"/static/images/personal/phone.png",name:'话费充值',path:`${hostUrl}ticket/phone/record`},
           {bgImgClass:"/static/images/personal/oil.png",name:'加油卡充值',path:`${hostUrl}ticket/oil/oilRecord?go=cocogc`},
-          {bgImgClass:"/static/images/personal/life.png",name:'生活缴费',path:`${hostUrl}ticket/life/record?go=cocogc`},
+          // {bgImgClass:"/static/images/personal/life.png",name:'生活缴费',path:`${hostUrl}ticket/life/record?go=cocogc`},
           {bgImgClass:"/static/images/personal/vipCard.png",name:'会员卡券',path:`${hostUrl}ticket/memberCard/cardRecord?go=cocogc`},
         ]
       }
