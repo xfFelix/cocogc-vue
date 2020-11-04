@@ -4,7 +4,7 @@ let defaultPlatform = 0
 let defaultVendorId = ''
 let defaultVendorUid = ''
 try{
-  if (local.get('platform')) {
+  if (local.get('platform') || local.get('yeyun_platform')) {
     defaultPlatform = local.get('platform') || local.get('yeyun_platform')
     defaultVendorId = local.get('vendorId') || local.get('yeyun_vendorId')
     defaultVendorUid = local.get('vendorUid') || local.get('yeyun_vendorUid')

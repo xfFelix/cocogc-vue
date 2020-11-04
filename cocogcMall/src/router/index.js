@@ -21,10 +21,15 @@ import orderManage from '@/pages/shopCart/orderManage';
 import orderDetails from '@/pages/shopCart/orderDetails';
 import logisticsDetail from '@/pages/shopCart/logisticsDetail';
 
-import login from '@/pages/loginRegister/login';
-import passSetUp from '@/pages/loginRegister/passSetUp';
-import passSetSucess from '@/pages/loginRegister/passSetSucess';
-import register from '@/pages/loginRegister/register';
+// import login from '@/pages/loginRegister/login';
+import login from '@/pages/loginRegisterC/login';
+// import passSetUp from '@/pages/loginRegister/passSetUp';
+import passSetUp from '@/pages/loginRegisterC/passSetUp';
+import serviceProtocol from '@/pages/loginRegisterC/serviceProtocol';
+import privateProtocol from '@/pages/loginRegisterC/privateProtocol';
+// import passSetSucess from '@/pages/loginRegister/passSetSucess';
+// import register from '@/pages/loginRegister/register';
+import register from '@/pages/loginRegisterC/register';
 
 import Layout from '@/pages/layout/Layout'
 
@@ -67,6 +72,22 @@ const router = new Router({
             }else {
               return import(`@/pages/home/index`)
             }
+
+              // if (platform) {
+              //   const vendorId = store.state.platform.vendorId || store.state.userinfo.userinfo.vendorId
+              //   switch (vendorId) {
+              //     case HAI_SHANG_VENDOR_ID:
+              //       return import(`@/pages/business/${HAI_SHANG_VENDOR_ID}`)
+              //     case COIN_VENDOR_ID:
+              //       return import(`@/pages/business/${COIN_VENDOR_ID}`)
+              //     case HAO_FANG_VENDOR_ID:
+              //       return import(`@/pages/business/${HAO_FANG_VENDOR_ID}`)
+              //     default:
+              //       return import('@/pages/business/Business')
+              //   }
+              // }else {
+              //   return import(`@/pages/home/index`)
+              // }
 
           },
           meta: { title: '首页:无信用卡',scrolltop: true },
@@ -195,11 +216,23 @@ const router = new Router({
       meta: { title: '设置密码' },
     },
     {
-      path: '/passSetSucess',
-      name: 'passSetSucess',
-      component: passSetSucess,
-      meta: { title: '密码设置成功' },
+      path: '/serviceProtocol',
+      name: 'serviceProtocol',
+      component: serviceProtocol,
+      meta: { title: '用户协议' },
     },
+    {
+      path: '/privateProtocol',
+      name: 'privateProtocol',
+      component: privateProtocol,
+      meta: { title: '隐私政策' },
+    },
+    // {
+    //   path: '/passSetSucess',
+    //   name: 'passSetSucess',
+    //   component: passSetSucess,
+    //   meta: { title: '密码设置成功' },
+    // },
     {
       path: '/register',
       name: 'register',

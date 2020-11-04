@@ -29,8 +29,9 @@ Vue.component(Spinner.name, Spinner);
 Vue.component(TabContainer.name, TabContainer);
 Vue.component(TabContainerItem.name, TabContainerItem);
 Vue.component(Navbar.name, Navbar);
+Vue.component(Picker.name, Picker);
 Vue.component(TabItem.name, TabItem);
-Vue.component('no-data', NoData)
+Vue.component('no-data', NoData);
 
 Vue.use(VueCookie);
 Vue.use(Tips);
@@ -49,14 +50,15 @@ import {
   TabContainer,
   TabContainerItem,
   Navbar,
-  TabItem
+  TabItem,
+  Picker
 } from "mint-ui";
 Vue.use(InfiniteScroll);
 Vue.use(TabContainer);
 Vue.use(TabContainerItem);
 Vue.use(Navbar);
 Vue.use(TabItem);
-
+Vue.use(Picker);
 
 window.Toast= Toast;
 window.MessageBox= MessageBox;

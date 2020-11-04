@@ -1,5 +1,6 @@
 const register = 'user/register';   //注册
 const regsms = 'user/regsms';   //注册短信验证码
+const validSms = 'user/validSms';   //校验注册短信验证码
 
 const login = 'user/login';   //登录
 const forget = 'user/forget';   //忘记密码
@@ -76,6 +77,7 @@ export default {
   cancelBack,
   register,
   regsms,
+  validSms,
   login,
   forget,
   sms,
