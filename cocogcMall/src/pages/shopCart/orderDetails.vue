@@ -166,7 +166,10 @@
                     <span>税费</span>
                     <span>{{dataList.taxFee|toDecimal2(dataList.taxFee)}}</span>
                 </li>
-
+                <li v-if="dataList.preferentialFee">
+                    <span>优惠费用</span>
+                    <span style="color:#FF6600">-{{dataList.preferentialFee|toDecimal2}}</span>
+                </li>
             </ul>
             <p class="od-realPrice">
                 <span>实付：</span>

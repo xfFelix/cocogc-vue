@@ -116,6 +116,10 @@
                         <span>税费</span>
                         <span>{{dataItem.taxFee|toDecimal2}}</span>
                     </p>
+                    <p v-if="dataItem.preferentialFee">
+                        <span>优惠费用</span>
+                        <span style="color:#FF6600">-{{dataItem.preferentialFee|toDecimal2}}</span>
+                    </p>
                     <p>
                         <span>合计</span>
                         <span style="color: #30ce84;">{{dataItem.totalMoney|toDecimal2}}</span>
