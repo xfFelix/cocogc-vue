@@ -7,6 +7,14 @@ export const IsEmpty = str => {
     return false;
 }
 
+/**
+ * @description 修改手机号中间为*
+ * @param mobile
+ */
+export const formatPhone = (mobile) => {
+  return mobile.replace(/(\d{3})\d*(\d{4})/, "$1****$2")
+}
+
 export const IsMobile = mobile => {
   return IsChinaMobile(mobile) || IsHKMobile(mobile);
 }
