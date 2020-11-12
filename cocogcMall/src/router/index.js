@@ -36,6 +36,7 @@ import Layout from '@/pages/layout/Layout'
 import getInfo from './hook/getInfo';
 import scrollTop from './hook/scrollTop'
 import getVendorId from './hook/getVendorId'
+import sendBaidu from './hook/sendBaidu'
 Vue.use(Router)
 
 const router = new Router({
@@ -266,4 +267,5 @@ const router = new Router({
 getInfo(router)
 scrollTop(router)
 getVendorId(router)
+sendBaidu(router)
 export default router
