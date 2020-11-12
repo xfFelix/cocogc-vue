@@ -19,7 +19,7 @@
                         </div>
                         <div class="address-editDel">
                             <p class="address-edit" @click.stop="addressEditC(item,index)">
-                                <span class="j1Png address-editImg"></span>
+                                <span class="address-editImg"></span>
                                 <span>编辑</span>
                             </p>
                             <p class="address-del">
@@ -157,22 +157,35 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/scss/color.scss';
 .addressMag{
-  background: #eef1f6;
-  padding-bottom: 0.5rem;
+  background: #F5F5F5;
+  // padding-bottom: 0.5rem;
+  min-height: 100vh;
+  position: relative;
 .address-content {
     li {
         background: #fff;
-        margin: 0.2rem 0.28rem;
+        margin: 0.24rem 0.32rem;
         font-size: 0.28rem;
+        border-radius: 0.2rem;
+        padding: 0.32rem;
         .address-infoW {
-            padding: 0.3rem 0.32rem 0.2rem 0.32rem;
+          padding-bottom: 0.2rem;
+            // padding: 0.3rem 0.32rem 0.2rem 0.32rem;
             .address-nameTel {
-                color: #000;
+              font-size: 0.32rem;
+              color: #1A1A1A;
+              font-weight: bold;
+              span {
+                &:last-child {
+                  margin-left: 0.3rem;
+                }
+              }
             }
             .address-address {
-                color: #666666;
-                line-height: 0.5rem;
+                color: #9D9D9D;
+                line-height: 0.6rem;
             }
         }
         .address-operW {
@@ -180,7 +193,8 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.24rem 0.32rem;
+            // padding: 0.24rem 0.32rem;
+            padding-top: 0.24rem;
             .address-def {
                 display: flex;
                 align-items: center;
@@ -196,26 +210,30 @@ export default {
                 }
             }
             .address-editDel {
-                color: #333;
+                color: #9D9D9D;
                 display: flex;
                 align-items: center;
                 .address-edit {
                     display: flex;
                     align-items: center;
                     .address-editImg {
-                        width: 0.35rem;
-                        height: 0.35rem;
-                        background-position: -1.4rem -1.26rem;
+                        width: 0.4rem;
+                        height: 0.4rem;
+                        // background-position: -1.4rem -1.26rem;
                         margin-right: 0.1rem;
+                        background: url(/static/images/me/address/icon_bianjidizhi.png);
+                        background-size: 100% 100%;
                     }
                 }
                 .address-del {
                     display: flex;
                     align-items: center;
                     .address-delImg {
-                        width: 0.35rem;
-                        height: 0.35rem;
-                        background-position: -0.95rem -1.26rem;
+                        width: 0.4rem;
+                        height: 0.4rem;
+                        background: url(/static/images/me/address/icon_shanchudizhi.png);
+                        background-size: 100% 100%;
+                        // background-position: -0.95rem -1.26rem;
                         margin-right: 0.1rem;
                         margin-left: 0.37rem;
                     }
@@ -227,8 +245,18 @@ export default {
 }
 
     .addBnt {
-      background: #30ce84;
-      margin: 2rem 0.26rem 0 0.26rem;
+      position: absolute;
+      left: 50%;
+      bottom: 1rem;
+      margin-left: -3.43rem;
+      width: 6.86rem;
+      background: $theme;
+      color: #ffffff !important;
+      font-size: 0.32rem;
+      font-weight: bold;
+      border-radius: 10px;
+      // background: #30ce84;
+      // margin: 2rem 0.26rem 0 0.26rem;
     }
 
 .address-fixedWrap {

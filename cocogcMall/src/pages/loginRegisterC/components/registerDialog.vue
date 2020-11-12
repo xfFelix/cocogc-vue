@@ -46,11 +46,12 @@ export default {
   .dialogW {
     position: fixed;
     top: 50%;
-    left: 0;
+    left: 50%;
     margin-top: -1.16rem;
-    width: 100%;
+    margin-left: -2.88rem;
+    width: 5.76rem;
     height: 2.36rem;
-    padding: 0 0.88rem;
+    // padding: 0 0.88rem;
     box-sizing: border-box;
     .dialog {
       width: 100%;

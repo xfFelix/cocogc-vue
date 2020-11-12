@@ -81,11 +81,12 @@ export default {
   .sms-dialogW {
     position: fixed;
     top: 50%;
-    left: 0;
+    left: 50%;
     margin-top: -2.12rem;
-    width: 100%;
+    margin-left: -2.88rem;
+    width: 5.76rem;
     height: 4.26rem;
-    padding: 0 0.88rem;
+    // padding: 0 0.88rem;
     box-sizing: border-box;
     .sms-dialog {
       position: relative;

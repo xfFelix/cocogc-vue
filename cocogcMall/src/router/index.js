@@ -12,6 +12,8 @@ import channel from '@/pages/channel';
 
 import account from '@/pages/account/account';
 import setUp from '@/pages/account/setUp';
+import about from '@/pages/account/about';
+import baseInfo from '@/pages/account/baseInfo';
 import addressMag from '@/pages/shopCart/addressMag';
 import addressEdit from '@/pages/shopCart/addressEdit';
 
@@ -168,6 +170,18 @@ const router = new Router({
       name: 'setUp',
       component: setUp,
       meta: { title: '设置', requireAuth: true },
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: about,
+      meta: { title: '关于椰云', requireAuth: true },
+    },
+    {
+      path: '/baseInfo',
+      name: 'baseInfo',
+      component: baseInfo,
+      meta: { title: '基础信息', requireAuth: true },
     },
     {
       path: '/goodsDetail/:goodId',

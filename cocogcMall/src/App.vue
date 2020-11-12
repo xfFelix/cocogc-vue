@@ -54,14 +54,15 @@ export default {
     width: 100%;
     height: 100%;
     // min-height: 100vh;
-    background:#eef1f6;
+    background:#F5F5F5;
 }
 
 .order-head {
-    height: 1.48rem;
+    // height: 1.48rem;
+    height: 0.88rem;
     background: #fff;
     text-align: center;
-    line-height: 1.48rem;
+    line-height: 0.88rem;
     font-size: 0.28rem;
     color: #000000;
     font-weight: 100;
@@ -74,7 +75,7 @@ export default {
         background-position: -0.2rem -0.74rem;
         position: absolute;
         left: 0.32rem;
-        top: 0.56rem;
+        top: 0.28rem;
         transform: rotate(180deg);
     }
 }

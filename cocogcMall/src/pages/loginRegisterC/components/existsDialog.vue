@@ -38,11 +38,12 @@ export default {
   .exists-dialogW {
     position: fixed;
     top: 50%;
-    left: 0;
+    left: 50%;
     margin-top: -2.12rem;
-    width: 100%;
+    margin-left: -2.88rem;
+    width: 5.76rem;
     height: 3.66rem;
-    padding: 0 0.88rem;
+    // padding: 0 0.88rem;
     box-sizing: border-box;
     .exists-dialog {
       width: 100%;

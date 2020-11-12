@@ -1,6 +1,7 @@
 <template>
   <div class="no-data" v-if="open">
     <img src="/static/images/home/nothing.png" alt="">
+    <p>暂无数据</p>
   </div>
 </template>
 
@@ -29,12 +30,18 @@ export default {
 .no-data{
   display: flex;
   width: 100%;
-  height: 200px;
+  height: 10rem;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   img{
-    width: 2.22rem;
-    height: 2.22rem;
+    width: 3rem;
+    height: 3rem;
+  }
+  p {
+    margin-top: 0.2rem;
+    font-size: 0.27rem;
+    color: #7F7F7F;
   }
 }
 </style>

@@ -24,7 +24,7 @@
                 <li class="one-bottom-px">
                     <p>
                         <span>所在地区</span>
-                        <textarea type="text" placeholder="省市区县、乡镇等" v-model.trim="takeAddress"  @click="fixedShowC()" readonly="" style="height:auto"></textarea>
+                        <textarea class="area" type="text" placeholder="省市区县、乡镇等" v-model.trim="takeAddress"  @click="fixedShowC()" readonly=""></textarea>
                     </p>
                     <p class="j1Png addEdid-delInp" @click="takeAddressC" v-if="takeAddress">
                     </p>
@@ -41,10 +41,11 @@
             </ul>
             <div class="address-operW">
                 <div class="address-def" @click="addressDef=!addressDef">
-                    <span class="j1Png " :class="addressDef?'address-defImg':'address-defImgNo'"></span>
+
                     <span class="address-defAddress">
-                        <span>设为默认地址</span>
+                        设为默认地址
                     </span>
+                    <span class="j1Png " :class="addressDef?'address-defImg':'address-defImgNo'"></span>
                 </div>
             </div>
         </div>
@@ -205,20 +206,30 @@ export default {
 };
 </script>
 <style lang="scss">
+@import '~@/scss/color.scss';
+.addressEdit {
+  position: relative;
+}
 .addEdit-contentWrap {
     background: #fff;
-    margin: 0.2rem 0.28rem;
+    margin: 0.32rem 0.32rem;
     padding: 0 0.4rem;
+    border-radius: 0.2rem;
     .addEdit-content {
         font-size: 0.28rem;
         li {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 0.36rem 0 0.16rem 0;
+            // align-items: center;
+            padding: 0.3rem 0 0.3rem 0;
             p:nth-of-type(1) {
-                width: 90%;
+                width: 100%;
                 display: flex;
+                font-size: 0.32rem;
+                color: #1A1A1A;
+                .area {
+                  height: 0.4rem;
+                }
                 span:nth-of-type(1) {
                     width: 24%;
                     display: inline-block;
@@ -226,17 +237,18 @@ export default {
             }
 
             input {
-                font-weight: bold;
-                color: #000;
-                height: 100%;
-                font-size: 0.27rem;
+                // font-weight: bold;
+                color: #1A1A1A;
+                // height: 100%;
+                font-size: 0.32rem;
+                margin-left: 0.2rem;
             }
              ::-webkit-input-placeholder {
                 /* WebKit, Blink, Edge */
                 color: #999999;
-                font-size: 0.26rem;
+                font-size: 0.32rem;
                 font-weight: 100;
-                line-height: 0.4rem;
+                // line-height: 0.4rem;
             }
 
              :-moz-placeholder {
@@ -260,11 +272,13 @@ export default {
                 font-weight: 100;
             }
             .addEdid-delInp {
-                width: 0.45rem;
-                height: 0.45rem;
-                background-color: #efefef;
-                border-radius: 50%;
-                background-position: -4.78rem -1.44rem;
+                width: 0.43rem;
+                height: 0.4rem;
+                background-image: url(/static/images/me/address/icon_dizhi_close.png);
+                background-size: 100% 100%;
+                // background-color: #efefef;
+                // border-radius: 50%;
+                // background-position: -4.78rem -1.44rem;
             }
         }
         li:nth-of-type(1),
@@ -283,14 +297,16 @@ export default {
 }
 
 .address-operW {
-    font-size: 0.24rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.24rem 0;
+    font-size: 0.32rem;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    padding: 0.3rem 0;
+
     .address-def {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         .address-defImg,
         .address-defImgNo {
             width: 0.34rem;
@@ -303,20 +319,25 @@ export default {
             background-position: -2.94rem -1.52rem;
         }
         .address-defAddress {
-            color: #999999;
-            margin-left: 0.08rem;
+            color: #1A1A1A;
         }
     }
 }
 
 .address-keep {
-    margin: 0.2rem 0.28rem;
-    height: 45px;
-    background: #30ce84;
-    border-radius: 40px;
-    line-height: 45px;
+    position: absolute;
+    left: 50%;
+    bottom: 1rem;
+    margin-left: -3.43rem !important;
+    width: 6.86rem;
+    // margin: 0.2rem 0.28rem;
+    height: 0.96rem;
+    background: $theme;
+    border-radius: 0.2rem;
+    line-height: 0.96rem;
     color: #fff;
-    font-size: 0.3rem;
+    font-size: 0.32rem;
+    font-weight: bold;
     text-align: center;
 }
 
@@ -324,11 +345,13 @@ textarea {
     border: none;
     resize: none;
     outline: none;
-    font-weight: bold;
-    color: #000;
+    color: #1A1A1A;
     width: 70%;
     height: 1.38rem;
+    line-height: 0.44rem;
+    font-size: 0.32rem;
     margin-top: 0.05rem;
+    margin-left: 0.2rem;
 }
 
 </style>
